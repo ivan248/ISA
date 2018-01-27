@@ -14,6 +14,6 @@ public class Hello {
 
 	 @RequestMapping(method=RequestMethod.GET)
 	 public @ResponseBody String sayHello() {
-	        return "Hellosfjyk.o.okuikiks!";
+	        return "Hellosfjyk.o.okuikikyjyjys!";
 	    }
 }
