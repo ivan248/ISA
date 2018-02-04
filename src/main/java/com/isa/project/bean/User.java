@@ -30,13 +30,20 @@ public class User {
     
     @Column(name = "phoneNumber")
     private int phoneNumber;
+    
+    @Column(name = "enabled")
+    private boolean enabled;
+    
+	@Column(name = "confirmation_token")
+	private String confirmationToken;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
     
     public User() {
-    	
+    	super();
+    	this.enabled = false;
     }
 
     public User(User user) {
@@ -44,6 +51,25 @@ public class User {
 		this.passwordHash = user.getPasswordHash();
 		this.roles = user.getRoles();
 		this.user_id = user.getId();
+		this.enabled = false;
+	}
+    
+    
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getConfirmationToken() {
+		return confirmationToken;
+	}
+
+	public void setConfirmationToken(String confirmationToken) {
+		this.confirmationToken = confirmationToken;
 	}
 
 	public Long getId() {

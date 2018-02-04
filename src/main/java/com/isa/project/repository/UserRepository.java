@@ -11,5 +11,6 @@ import com.isa.project.bean.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	Optional<User> findByEmail(String email); // lakse se handluju null slucajevi
+	User findByConfirmationToken(String confirmationToken);
 
 }
