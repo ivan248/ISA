@@ -81,11 +81,15 @@
 		    <optional>true</optional>
 	  	</dependency>
 	  	
-	  	<!-- ZA BAZE -->
+	  	<!-- SECURITY -->
 	 
+		 <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 		
 		
-		<!-- ZA BAZE -->
+		<!-- SECURITY -->
 		
 	</dependencies>
 
