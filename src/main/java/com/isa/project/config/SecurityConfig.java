@@ -25,18 +25,11 @@ import com.isa.project.service.implementation.CurrentUserDetailsService;
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER) // iskljucio sam da stalno nudi logovanje
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	@Autowired
-	private UserDetailsService userDetailsService;
+
 	
 	@Autowired
 	private CurrentUserDetailsService userDetailService; // custom - ja napravio
-	
-	// https://stackoverflow.com/questions/46297832/required-a-bean-of-type-org-springframework-security-core-userdetails-userdetai
-	@Bean
-	public UserDetailsService userDetailsService() {
-	    return super.userDetailsService();
-	}
-	
+
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
 		

@@ -91,7 +91,7 @@ public class LoginController {
 		u.setRoles(s);
 		u.setEnabled(false); // NIJE POTVRDIO KONFIRMACIONI MAIL
 		if (password.equals(passwordRepeat))
-			u.setPasswordHash(new BCryptPasswordEncoder().encode(password));
+			u.setPasswordHash(new BCryptPasswordEncoder().encode(password)+"1");
 		else
 			return "Greska uneli ste razlicite sifre!";
 		
@@ -136,11 +136,13 @@ public class LoginController {
 		} else { // Token found
 			System.out.println("Pronasao usera sa datim tokenom!");
 			user.setEnabled(true);
+			user.setPasswordHash(user.getPasswordHash().substring(0, user.getPasswordHash().length() - 1));
+			// TODO: OVO PROVERI SA ASISTENTOM DA LI MOZE NA DRUGACIJI NACIN
 			userRepository.save(user);
 		}
 			
 		
-		return "/login/home";		
+		return "/login/login";		
 	}
 
 

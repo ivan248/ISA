@@ -17,16 +17,25 @@ public class CurrentUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		Optional<User> optionalUser = userRepository.findByEmail(email);
-		
+
 		optionalUser.orElseThrow(() -> new UsernameNotFoundException("User with given email not found"));
-		CurrentUser currentUser = optionalUser
-			.map(user ->{ return new CurrentUser(user); }).get(); // if value is present map will be called and it will return it
-		
-		
+
+		CurrentUser currentUser = optionalUser.map(user -> {
+			return new CurrentUser(user);
+		}).get(); // if value is present map will be called and it will return
+					// it
+
+		if (!currentUser.isEnabled()) {
+			System.out.println("Usao u CurrentUserDetailsService, u if-u za proveru enableda.");
+
+			throw new UsernameNotFoundException("User with given email was not activated.");
+			
+
+		}
 		return currentUser;
 	}
 
