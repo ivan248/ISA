@@ -1,119 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> </meta>
-		<title>Login or register</title>
-<!-- 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-<!--         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
-		
-		
-		
+<head>
+<meta charset="ISO-8859-1"> </meta>
+<title>LOGIN</title>
+</head>
+<body>
 
-	<script th:src="@{/resources/templates/login/login.js}"></script>
-	
-	<link th:href="@{/resources/templates/bootstrap/bootstrap.min.css}" rel="stylesheet" />
-	
-	</head>
-	<body background="/resources/templates/login/loginSlika.jpg">
-		
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        
+<h1>Login page</h1>
    
-<div id="login-overlay" class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h1 class="modal-title" id="myModalLabel"> <b></b></h1>
-          </div>
-          <div class="modal-body">
-              <div class="row">
-                  
-                  <div class="col-xs-6">
-                      
-                      <div class="well">
-                            <h4 class="modal-title" id="myModalLabel">Login to <b>FORUMI</b></h4> or enter as guest <a onclick="loginGuest()">here.</a>
-                          <br/>
-        <br/>
-        
-                          
-                          <form id="loginForm" method="POST">
-                              <div class="form-group">
-                                  <label for="username" class="control-label">Username</label>
-                                   <input class="form-control" placeholder="Username" name="username" type="text" title="Please enter your username"/>
-                                             <span class="help-block"></span>
-                              </div>
-                              <div class="form-group">
-                                  <label for="password" class="control-label">Password</label>
-                                   <input class="form-control" placeholder="Password" name="password" type="password" title="Please enter your password"/>
-                                 
-                                  <span class="help-block"></span>
-                              </div>
-                             
-                              <input class="btn btn-lg btn-primary btn-block" type="button" value="Login"  />
-                              <button type="submit">Sign in</button>
-                          </form>
-                      </div>
-                  </div>
-                  <div class="col-xs-6">
-                      <p class="lead">Register for FORUMI <span class="text-success"></span></p>
-                      
-                        <form  id = "registracija" method="post" >
-                            <fieldset>
-                                <div class="form-group">
-                                    <input required = "true" class="form-control" placeholder="yourmail@example.com" id="email" type="text" name="email"/>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <input  required = "true" class="form-control" placeholder="Username" id="username" type="text" name="username"/>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <input required = "true" class="form-control" placeholder="Password" id="password" type="password" name="password"/>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Name" id="name" type="text" name="name" onkeyup="this.value=this.value.replace(/[^a-z]/g,'');"/>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Surname" id="surname" type="text" name="surname" onkeyup="this.value=this.value.replace(/[^a-z]/g,'');"/>
-                                </div>
-                                
-                                
-                            
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Phone" id="phone" type="text" name="phone"/>
-                                </div>
-                                
-                                
-                                
-                                
-                                
-                                
-                                <input class="btn btn-lg btn-primary btn-block" type="button" value="Register" id="registerButton" onclick="validate()"/>
-                                
-                                
-                                
-                            </fieldset>
-                        </form>
-                        
-                       <h2 id='result'> </h2>
-                    
-                  </div>
-              </div>
-          </div>
-      </div>
+    <form th:action="@{/login}" method="post"> <!-- ovo je jako bitno za login -->
+      <label for="username">Email</label>:
+      <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
+      <label for="password">Password</label>:
+      <input type="password" id="password" name="password" /> <br />
+      <input type="submit" value="Prijava" />
+    </form>
 
-  </div>    
-        
-<!--         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
-        
-		
-	</body>
+	<form th:action="@{/login/registration}" method="get"> <!-- ovo je jako bitno za login -->
+		<input type="submit" value="Registracija" />
+    </form>
+	
+</body>
 </html>

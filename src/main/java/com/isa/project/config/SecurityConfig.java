@@ -42,10 +42,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.csrf().disable();
 		http.authorizeRequests()
-			.antMatchers("**/login/all").hasRole("USER")
+		    .antMatchers("/login").permitAll()
+			.antMatchers("**/login/all").hasRole("SYS_ADMIN")
 			.anyRequest().permitAll()
 			.and()
-			.formLogin().permitAll(); // defaultna springova login strana, mogu neku svoju da stavim
+            .formLogin()
+            .loginPage("/login")
+            .defaultSuccessUrl("/login/home"); // defaultna springova login strana, mogu neku svoju da stavim .formLogin().permitAll()
 		
 /*        http.authorizeRequests()
                 .antMatchers("/", "/login/**").permitAll() // koje putanje su svima dostupne
@@ -53,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().fullyAuthenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/login")s
                 .failureUrl("/login")
                 .usernameParameter("email")
                 .permitAll()
@@ -69,12 +72,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .maximumSessions(1); // broj sesija po jednom useru, nmz na 2 browsera istovremeno ako je 1
 */    }
+	
+
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
      
     	
-    	auth.userDetailsService(userDetailService).passwordEncoder(new org.springframework.security.crypto.password.PasswordEncoder() {
+    	auth.userDetailsService(userDetailService).
+    			passwordEncoder(new BCryptPasswordEncoder());
+    	
+    	
+    	
+    /*	(new org.springframework.security.crypto.password.PasswordEncoder() {
 			
 			@Override
 			public boolean matches(CharSequence arg0, String arg1) {
@@ -88,7 +98,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				return arg0.toString();
 			}
 		});
-    	
+    	*/
     	/*   auth.userDetailsService(userDetailsService)
                 .passwordEncoder(new BCryptPasswordEncoder());
         auth.inMemoryAuthentication().

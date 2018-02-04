@@ -18,6 +18,18 @@ public class User {
 
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
+    
+    @Column(name = "firstName", nullable = false)
+    private String firstName;
+    
+    @Column(name = "lastName", nullable = false)
+    private String lastName;
+    
+    @Column(name = "city")
+    private String city;
+    
+    @Column(name = "phoneNumber")
+    private int phoneNumber;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -68,13 +80,56 @@ public class User {
 		this.user_id = id;
 	}
 
+	
+	
+	public Long getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public int getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(int phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
 	@Override
-    public String toString() {
-        return "User{" +
-                "id=" + user_id +
-                ", email='" + email +
-                ", passwordHash='" + passwordHash.substring(0, 10) +
-                ", role=" + roles +
-                '}';
-    }
+	public String toString() {
+		return "User [user_id=" + user_id + ", email=" + email + ", passwordHash=" + passwordHash + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", city=" + city + ", phoneNumber=" + phoneNumber + ", roles="
+				+ roles + "]";
+	}
+
+
+	
+	
 }
