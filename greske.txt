@@ -1,2 +1,2 @@
 Spring application start error: sources must not be empty
-Ides na main klasu i run.
+Ides na main klasu i run...
