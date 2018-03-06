@@ -7,29 +7,26 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.isa.project.bean.Role;
 import com.isa.project.bean.User;
-import com.isa.project.config.OnRegistrationCompleteEvent;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.service.UserService;
 import com.isa.project.service.implementation.EmailService;
 
 @Controller // This means that this class is a Controller
+@CrossOrigin
 @RequestMapping(value = "/login") // This means URL's start with /login (after									// Application path)
 public class LoginController {
 
@@ -144,7 +141,15 @@ public class LoginController {
 		
 		return "/login/login";		
 	}
-
+	
+	
+	@RequestMapping(value = "/test", method = RequestMethod.POST)
+	public ResponseEntity<String> test() {
+		
+		System.out.println("Pogodio.");
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
 
 }

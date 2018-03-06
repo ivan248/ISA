@@ -41,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
             .formLogin()
             .loginPage("/login")
+            .failureUrl("/login")
             .defaultSuccessUrl("/login/home"); // defaultna springova login strana, mogu neku svoju da stavim .formLogin().permitAll()
 		
 /*        http.authorizeRequests()
