@@ -6,14 +6,19 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 
+const httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+};
+  
  
  @Injectable()
  export class LoginService {  
 
-    private url : string = "http://localhost:8080/login/test";
+    private url : string = "http://localhost:8080/api/login/test";
 
-    constructor(private http:Http) {
+    constructor(private http:HttpClient) {
 
     }
 
@@ -21,9 +26,20 @@ import 'rxjs/add/operator/toPromise';
 
 
        let vraceno  = ""; 
-       this.http.post(this.url, "data").map(data => console.log(data));   
+       const user = {
+           "username" : "test",
+           "password" : "test"
+       }
+       let header=new Headers({'Content-Type': 'application/json'});
+       this.http.post(this.url, user,  httpOptions).map(data => console.log(data));   
 
-       return this.http.post(this.url, "data").map(data => console.log(data)); 
-    } 
+       return this.http.post(this.url, user,  httpOptions).map(data => console.log(data)); 
+    }
+
+    submitRegistration(user : any) : Observable<any> {
+
+        let json = JSON.parse(JSON.stringify(user));
+        return this.http.post("http://localhost:8080/api/login/registrationMessage", json);
+    }
 
  } 

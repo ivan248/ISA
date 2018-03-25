@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { LoginService } from '../../services/login-service.service';
 
 @Component({
   selector: 'registration-component',
@@ -14,7 +16,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrationComponent implements OnInit {
  
-    constructor() {
+    constructor(private loginService : LoginService) {
 
     }
 
@@ -25,5 +27,12 @@ export class RegistrationComponent implements OnInit {
 
     onClick() {
     
+    }
+
+    onSubmit(form : NgForm) {
+
+      console.log(form.value);
+      this.loginService.submitRegistration(form.value).subscribe(data => console.log("Poslato"));
+
     }
 }

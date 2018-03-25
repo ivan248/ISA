@@ -6,12 +6,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -20,9 +21,9 @@ import com.isa.project.service.implementation.CurrentUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true) // da bi mogao preauthorize u kontroleru da koristim
-@EnableJpaRepositories(basePackageClasses = UserRepository.class) // injectuje sve klase koje trebaju za jpa repository
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER) // iskljucio sam da stalno nudi logovanje
+//@EnableGlobalMethodSecurity(prePostEnabled = true) // da bi mogao preauthorize u kontroleru da koristim
+//@EnableJpaRepositories(basePackageClasses = UserRepository.class) // injectuje sve klase koje trebaju za jpa repository
+//@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER) // iskljucio sam da stalno nudi logovanje
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 
@@ -30,19 +31,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private CurrentUserDetailsService userDetailService; // custom - ja napravio
 
+	@Autowired
+	AuthenticationManagerBuilder authenticationManager;
+	
+	@Autowired
+	UserDetailsService userDService;
+	
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+		
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
 		
 		http.csrf().disable();
+		
+//		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		
 		http.authorizeRequests()
-		    .antMatchers("/login").permitAll()
-			.antMatchers("**/login/all").hasRole("SYS_ADMIN")
-			.anyRequest().permitAll()
-			.and()
-            .formLogin()
-            .loginPage("/login")
-            .failureUrl("/login")
-            .defaultSuccessUrl("/login/home"); // defaultna springova login strana, mogu neku svoju da stavim .formLogin().permitAll()
+		    .antMatchers("api/login/test").permitAll()
+		    .antMatchers("api/login/registrationMessage").hasAuthority("ROLE_SYS_ADMIN")
+			//.antMatchers("api/login/all").hasRole("SYS_ADMIN")
+			.anyRequest().permitAll();
+		
+        //    .defaultSuccessUrl("/login/home"); // defaultna springova login strana, mogu neku svoju da stavim .formLogin().permitAll()
 		
 /*        http.authorizeRequests()
                 .antMatchers("/", "/login/**").permitAll() // koje putanje su svima dostupne
@@ -73,7 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
      
     	
-    	auth.userDetailsService(userDetailService).
+    	auth.userDetailsService(userDService).
     			passwordEncoder(new BCryptPasswordEncoder());
     	
     	

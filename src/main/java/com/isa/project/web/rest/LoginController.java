@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +30,7 @@ import com.isa.project.service.implementation.EmailService;
 
 @Controller // This means that this class is a Controller
 @CrossOrigin
-@RequestMapping(value = "/login") // This means URL's start with /login (after									// Application path)
+@RequestMapping(value = "/api/login") // This means URL's start with /login (after									// Application path)
 public class LoginController {
 
 	// This means to get the bean called userRepository
@@ -40,6 +43,9 @@ public class LoginController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserDetailsService userDetailsService;
 	
 
 
@@ -66,31 +72,34 @@ public class LoginController {
 		return "login/registration";
 	}
 
-	@RequestMapping(value = "/registrationMessage", method = RequestMethod.POST)
-	public String displayregistrationMessage(@RequestParam String email, @RequestParam String password,
-			@RequestParam String passwordRepeat, @RequestParam String ime, @RequestParam String prezime,
-			@RequestParam String grad, @RequestParam int brojTelefona,
-			HttpServletRequest request) {
+	@RequestMapping(value = "/registrationMessage", method = RequestMethod.POST, consumes="application/json")
+	public ResponseEntity displayregistrationMessage(@RequestBody Object obj) {
 
-		Role r = new Role();
+		
+		System.out.println(obj + " pogodio registraciju");
+		/*Role r = new Role();
+		
 		r.setRole("REGISTERED_USER");
 
+		User user = new User();
+		System.out.println("Primio usera : " + user);
+		
 		Set<Role> s = new HashSet<Role>();
 		s.add(r);
 
 		User u = new User();
 
-		u.setEmail(email);
-		u.setFirstName(ime);
-		u.setLastName(prezime);
-		u.setCity(grad);
-		u.setPhoneNumber(brojTelefona);
+		u.setEmail(user.getEmail());
+		u.setFirstName(user.getFirstName());
+		u.setLastName(user.getLastName());
+		u.setCity(user.getCity());
+		u.setPhoneNumber(user.getPhoneNumber());
 		u.setRoles(s);
 		u.setEnabled(false); // NIJE POTVRDIO KONFIRMACIONI MAIL
-		if (password.equals(passwordRepeat))
-			u.setPasswordHash(new BCryptPasswordEncoder().encode(password)+"1");
-		else
-			return "Greska uneli ste razlicite sifre!";
+		//if (password.equals(passwordRepeat))
+			u.setPasswordHash(new BCryptPasswordEncoder().encode("123456"));
+		//else
+			//return "Greska uneli ste razlicite sifre!";
 		
 	    u.setConfirmationToken(UUID.randomUUID().toString());
         
@@ -107,18 +116,18 @@ public class LoginController {
 		
 		emailService.sendEmail(registrationEmail);
 		
-/*		modelAndView.addObject("confirmationMessage", "A confirmation e-mail has been sent to " + u.getEmail());
+		modelAndView.addObject("confirmationMessage", "A confirmation e-mail has been sent to " + u.getEmail());
 		modelAndView.setViewName("register");
-		*/
+		
 		// SLANJE KONFIRMACIONOG MAILA
 		
 
 		//userRepository.save(u);
 
 		System.out.println("Pokupljeni ovi podaci: " + u);
-		System.out.println("A confirmation e-mail has been sent to " + u.getEmail());
+		System.out.println("A confirmation e-mail has been sent to " + u.getEmail());*/
 
-		return "login/registrationMessage";
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	// Process confirmation link
@@ -133,8 +142,6 @@ public class LoginController {
 		} else { // Token found
 			System.out.println("Pronasao usera sa datim tokenom!");
 			user.setEnabled(true);
-			user.setPasswordHash(user.getPasswordHash().substring(0, user.getPasswordHash().length() - 1));
-			// TODO: OVO PROVERI SA ASISTENTOM DA LI MOZE NA DRUGACIJI NACIN
 			userRepository.save(user);
 		}
 			
@@ -143,13 +150,20 @@ public class LoginController {
 	}
 	
 	
-	@RequestMapping(value = "/test", method = RequestMethod.POST)
-	public ResponseEntity<String> test() {
+	@RequestMapping(value = "/test", method = RequestMethod.POST,
+			consumes="application/json",
+			produces="application/json")
+	public ResponseEntity<String> test(@RequestBody Object uu) {
 		
-		System.out.println("Pogodio.");
-		
+
+		UserDetails user = userDetailsService.loadUserByUsername("admin@admin");
+		System.out.println("Pogodio." + user.getUsername() + user.getPassword());
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+				user, null, user.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+		System.out.println("testiranjeee " + SecurityContextHolder.getContext().getAuthentication());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
+// janca@janca sifra 123
 
 }

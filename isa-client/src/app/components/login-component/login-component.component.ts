@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login-component',
@@ -43,7 +44,8 @@ import { LoginService } from '../../services/login-service.service';
 })
 export class LoginComponent implements OnInit {
  
-    constructor(private loginService:LoginService) {
+    constructor(private loginService:LoginService,
+            private router : Router) {
 
     }
 
@@ -51,7 +53,7 @@ export class LoginComponent implements OnInit {
 
     }
 
-    onClick() {
-        this.loginService.getLogin().subscribe(data => console.log(data));
+    onSubmit() {
+      this.loginService.getLogin().subscribe( data => this.router.navigateByUrl("/registration") );
     }
 }
