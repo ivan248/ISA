@@ -1,0 +1,61 @@
+package com.isa.project.service.implementation;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.isa.project.bean.Item;
+
+import com.isa.project.repository.ItemRepository;
+import com.isa.project.service.FanZoneService;
+
+@Service
+public class FanZoneServiceImpl implements FanZoneService{
+	
+	
+	@Autowired
+	private ItemRepository itemRepository;
+	
+	@Override
+	public List<Item> getAllApprovedItems() {
+		return itemRepository.findAllByApproved(true);
+	}
+	
+	@Override
+	public List<Item> getAllUnApprovedItems(){
+		return itemRepository.findAllByApproved(false);
+	}
+
+	@Override
+	public Boolean addItem(Item item) {
+		try {
+			itemRepository.saveAndFlush(item);
+		}
+		catch(Exception e) {
+			System.out.println("Error occured while writing to database. Constraints were not satisfied.");
+			e.printStackTrace();
+			return false;
+		}
+		
+		
+		return true;
+	}
+
+	@Override
+	public Boolean deleteItem(int id) {
+		try {
+			itemRepository.delete(id);
+		}
+		catch(Exception e) {
+			System.out.println("Error occured while deleting item from database.");
+			e.printStackTrace();
+			return false;
+		}	
+		
+		return true;
+	}
+
+
+
+}
