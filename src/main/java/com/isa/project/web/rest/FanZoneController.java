@@ -1,4 +1,4 @@
-package com.isa.project.controllers;
+package com.isa.project.web.rest;
 
 
 import java.sql.Date;

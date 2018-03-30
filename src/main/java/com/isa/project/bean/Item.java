@@ -25,6 +25,8 @@ public class Item implements Serializable {
 		this.currentBid = currentBid;
 		this.approved = false;
 		this.description = description;
+		this.sold = false;
+		this.someoneBid = false;
 		java.util.Date date = new java.util.Date();
 		Date sqlDate = new java.sql.Date(date.getTime());
 		System.out.println("PRI KREIRANJU ITEMA : " + sqlDate.toString() );
@@ -68,6 +70,9 @@ public class Item implements Serializable {
 	
 	//@OneToOne //TODO: obelezi kada bude autor u bazi
 	//private User author;
+	//@OneToOne //TODO: obelezi kada bude autor u bazi
+	//private User buyer;
+	
 	
 	public Integer getItemID() {
 		return itemID;
@@ -136,6 +141,27 @@ public class Item implements Serializable {
 	@Column
 	private Boolean approved;
 	
+	@Column 
+	private Boolean sold;
+	
+	@Column 
+	private Boolean someoneBid;
+
+	public Boolean getSomeoneBid() {
+		return someoneBid;
+	}
+
+	public void setSomeoneBid(Boolean someoneBid) {
+		this.someoneBid = someoneBid;
+	}
+
+	public Boolean getSold() {
+		return sold;
+	}
+
+	public void setSold(Boolean sold) {
+		this.sold = sold;
+	}
 	
 	
 	

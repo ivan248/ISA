@@ -13,7 +13,9 @@ public interface FanZoneService {
 	List<Item> getAllUnApprovedItems();
 	Boolean addItem(Item item);
 	Boolean deleteItem(int id);
+	
 	//TODO: vraac sve iteme prijavljenog korisnika
+	//TODO: vraca sve ponude prijavljenog korisnika
 	
 
 }

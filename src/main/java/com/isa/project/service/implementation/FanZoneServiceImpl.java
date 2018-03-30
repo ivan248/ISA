@@ -45,6 +45,7 @@ public class FanZoneServiceImpl implements FanZoneService{
 	@Override
 	public Boolean deleteItem(int id) {
 		try {
+			//obavesti autora da mu je ponuda odbijena.. nema brisanja radi evidencije
 			itemRepository.delete(id);
 		}
 		catch(Exception e) {
@@ -55,6 +56,8 @@ public class FanZoneServiceImpl implements FanZoneService{
 		
 		return true;
 	}
+
+	
 
 
 
