@@ -155,6 +155,10 @@ public class LoginController {
 			produces="application/json")
 	public ResponseEntity<String> test(@RequestBody Object uu) {
 		
+		
+		
+		
+		System.out.println("Pogodio confirm! ***");
 
 		UserDetails user = userDetailsService.loadUserByUsername("admin@admin");
 		System.out.println("Pogodio." + user.getUsername() + user.getPassword());
