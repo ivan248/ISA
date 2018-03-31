@@ -1,0 +1,21 @@
+
+<h2>Theatres</h2>
+<ul class="theatresArray">
+   <li *ngFor="let t of theatresArray"
+    [class.selected]="t === selectedTheatre"
+    (click)="onSelect(t)">
+    <span class="badge">{{t.name}}</span> {{t.address}}
+  </li>
+</ul>
+
+<div *ngIf="selectedTheatre">
+ 
+        <h2>{{ selectedTheatre.name | uppercase }} Details</h2>
+        <div><span>id: </span>{{selectedTheatre.id}}</div>
+        <div>
+          <label>name:
+            <input [(ngModel)]="selectedTheatre.name" placeholder="name">
+          </label>
+        </div>
+       
+      </div>

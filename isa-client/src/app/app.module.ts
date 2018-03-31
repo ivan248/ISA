@@ -13,6 +13,11 @@ import { LoginComponent }                       from './components/login-compone
 import { RegistrationComponent }                from './components/registration-component/registration-component.component';
 import { ProfileComponent }                     from './components/profile-component/profile-component.component';
 import { routing }                              from './app.routing';
+import { HomeComponent } from './components/home-component/home-component.component';
+import { TheatresComponent } from './components/theatre-component/theatre-component.component';
+import { HomeService } from './services/home-service.service';
+import { TheatresService } from './services/theatres-service.service';
+import { CinemaComponent } from './components/cinema-component/cinema-component.component';
 
 
 @NgModule({
@@ -20,7 +25,10 @@ import { routing }                              from './app.routing';
     AppComponent,
     LoginComponent,
     RegistrationComponent,
-    ProfileComponent
+    ProfileComponent,
+    HomeComponent,
+    TheatresComponent,
+    CinemaComponent
   ],
   imports: [
     routing,
@@ -29,7 +37,7 @@ import { routing }                              from './app.routing';
     FormsModule,
     HttpClientModule
   ],
-  providers: [ LoginService ],
+  providers: [ LoginService, HomeService, TheatresService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

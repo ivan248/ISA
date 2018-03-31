@@ -3,6 +3,10 @@ import {RouterModule, Routes}       from "@angular/router";
 import { LoginComponent }           from "./components/login-component/login-component.component";
 import { RegistrationComponent }    from "./components/registration-component/registration-component.component";
 import { ProfileComponent }         from "./components/profile-component/profile-component.component";
+import { HomeComponent } from "./components/home-component/home-component.component";
+import { TheatresComponent } from "./components/theatre-component/theatre-component.component";
+import { CinemaComponent } from "./components/cinema-component/cinema-component.component";
+
 
 const appRoutes: Routes = 
 [
@@ -17,7 +21,14 @@ const appRoutes: Routes =
        component: RegistrationComponent }, 
 
     {  path: 'profile',   
-       component: ProfileComponent }
+       component: ProfileComponent },
+    {  path: 'home',   
+       component: HomeComponent },
+
+    {  path: 'theatres',   
+       component: TheatresComponent },
+    {  path: 'cinemas',   
+       component: CinemaComponent }
     // {
     //     path: '**',
     //     component: PageNotFoundComponent
