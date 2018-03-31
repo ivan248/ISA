@@ -23,3 +23,5 @@ dist/
 nbdist/
 .nb-gradle/
 /bin/
+src/main/java/com/isa/project/web/rest/LoginController.java
+src/main/java/com/isa/project/web/rest/LoginController.java

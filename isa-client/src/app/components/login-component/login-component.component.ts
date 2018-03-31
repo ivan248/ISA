@@ -44,6 +44,9 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
  
+    private password : any;
+    private email : any;
+
     constructor(private loginService:LoginService,
             private router : Router) {
 
@@ -54,6 +57,6 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit() {
-      this.loginService.getLogin().subscribe( data => this.router.navigateByUrl("/registration") );
+      this.loginService.getLogin(this.password, this.email).subscribe( data => this.router.navigateByUrl("/registration") );
     }
 }
