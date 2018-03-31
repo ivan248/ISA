@@ -28,7 +28,8 @@ public class VerificationToken {
      
     private Date expiryDate;
     
-    private Date calculateExpiryDate(int expiryTimeInMinutes) {
+    @SuppressWarnings("unused")
+	private Date calculateExpiryDate(int expiryTimeInMinutes) {
         final Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(new Date().getTime());
         cal.add(Calendar.MINUTE, expiryTimeInMinutes);

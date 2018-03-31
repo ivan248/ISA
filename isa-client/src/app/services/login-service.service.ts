@@ -22,18 +22,18 @@ const httpOptions = {
 
     }
 
-    getLogin(): Observable<any> { 
+    getLogin(password : any, username : any): Observable<any> { 
 
 
        let vraceno  = ""; 
        const user = {
-           "username" : "test",
-           "password" : "test"
+           "username" : username,
+           "password" : password
        }
        let header=new Headers({'Content-Type': 'application/json'});
        this.http.post(this.url, user,  httpOptions).map(data => console.log(data));   
 
-       return this.http.post(this.url, user,  httpOptions).map(data => console.log(data)); 
+       return this.http.post("http://localhost:8080/login", user,  httpOptions).map(data => console.log(data)); 
     }
 
     submitRegistration(user : any) : Observable<any> {
