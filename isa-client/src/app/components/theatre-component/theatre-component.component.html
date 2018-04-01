@@ -1,5 +1,7 @@
 
-<h2>Theatres</h2>
+<h1>Theatres</h1>
+<br>
+<br>
 <ul class="theatresArray">
    <li *ngFor="let t of theatresArray"
     [class.selected]="t === selectedTheatre"
@@ -7,15 +9,12 @@
     <span class="badge">{{t.name}}</span> {{t.address}}
   </li>
 </ul>
-
+<br>
 <div *ngIf="selectedTheatre">
  
         <h2>{{ selectedTheatre.name | uppercase }} Details</h2>
-        <div><span>id: </span>{{selectedTheatre.id}}</div>
-        <div>
-          <label>name:
-            <input [(ngModel)]="selectedTheatre.name" placeholder="name">
-          </label>
-        </div>
+        <br>
+        <div><span>address: </span>{{selectedTheatre.address}}</div>
+        <div><span>description: </span>{{selectedTheatre.description}}</div>
        
       </div>

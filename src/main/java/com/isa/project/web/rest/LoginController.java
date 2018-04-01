@@ -127,18 +127,7 @@ public class LoginController {
         applicationUserRepository.save(user);
     }
 	
-<<<<<<< HEAD
-	@RequestMapping(value = "/test", method = RequestMethod.POST,
-			consumes="application/json",
-			produces="application/json")
-	public ResponseEntity<String> test(@RequestBody Object uu) {
-		
-		
-		
-		
-		System.out.println("Pogodio confirm! ***");
-=======
->>>>>>> 6232f4c4285c39c2022f2e77d172f3f5e0dd0a86
+
 
 // janca@janca sifra 123
 
