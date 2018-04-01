@@ -11,19 +11,19 @@ import { HomeService } from '../../services/home-service.service';
     color: white;
   }
   .theatresArray {
-    margin: 0 0 2em 0;
+    margin: 0 0 0 0;
     list-style-type: none;
     padding: 0;
-    width: 15em;
+    width: 20em;
   }
   .theatresArray li {
     cursor: pointer;
     position: relative;
     left: 0;
     background-color: #EEE;
-    margin: .5em;
+    margin: 0.5em;
     padding: .3em 0;
-    height: 1.6em;
+    height: 6em;
     border-radius: 4px;
   }
   .theatresArray li.selected:hover {
@@ -43,13 +43,13 @@ import { HomeService } from '../../services/home-service.service';
     display: inline-block;
     font-size: small;
     color: white;
-    padding: 0.8em 0.7em 0 0.7em;
+    padding: 0.8em 1em 0 0.7em;
     background-color: #607D8B;
     line-height: 1em;
     position: relative;
     left: -1px;
     top: -4px;
-    height: 1.8em;
+    height: 2em;
     margin-right: .8em;
     border-radius: 4px 0 0 4px;
   }`]

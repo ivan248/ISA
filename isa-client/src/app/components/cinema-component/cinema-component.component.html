@@ -1,7 +1,19 @@
-<h1>hello</h1>
-<div *ngFor="let t of cinemasArray">
-    <p>
-        {{t.name}}
-    </p>
-
-</div>
+<h1>Cinemas</h1>
+<br>
+<br>
+<ul class="cinemasArray">
+   <li *ngFor="let c of cinemasArray"
+    [class.selected]="c === selectedCinema"
+    (click)="onSelect(c)">
+    <span class="badge">{{c.name}}</span> {{c.address}}
+  </li>
+</ul>
+<br>
+<div *ngIf="selectedCinema">
+ 
+        <h2>{{ selectedCinema.name | uppercase }} Details</h2>
+        <br>
+        <div><span>address: </span>{{selectedCinema.address}}</div>
+        <div><span>description: </span>{{selectedCinema.description}}</div>
+       
+      </div>
