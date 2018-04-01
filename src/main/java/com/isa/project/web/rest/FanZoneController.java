@@ -2,35 +2,39 @@ package com.isa.project.web.rest;
 
 
 import java.sql.Date;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.Item;
-
-
 import com.isa.project.service.implementation.FanZoneServiceImpl;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/fanzone")
 public class FanZoneController {
 	
 	@Autowired 
 	private FanZoneServiceImpl fanZoneService;
 	
-	@RequestMapping("/")
+	@RequestMapping(value="/", method= RequestMethod.GET)
 	public List<Item> getAllItems(){
 		return fanZoneService.getAllApprovedItems();
 	}
 	
-	@RequestMapping(value= "/additem/{name}/{description}/{currentBid}/{endDate}", method=RequestMethod.POST)
+	@RequestMapping(value="/unapproved", method= RequestMethod.GET)
+	public List<Item> getAllUnApprovedItems(){
+		return fanZoneService.getAllUnApprovedItems();
+	}
+	
+	@RequestMapping(value= "/additem/{name}/{description}/{currentBid}/{endDate}", method=RequestMethod.GET)
 	public Boolean addItem( @PathVariable("currentBid") float currentBid, @PathVariable("description") String description,
 							@PathVariable("endDate") String endDate, @PathVariable("name") String name) 
 	{

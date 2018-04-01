@@ -6,6 +6,7 @@ import { ProfileComponent }         from "./components/profile-component/profile
 import { HomeComponent } from "./components/home-component/home-component.component";
 import { TheatresComponent } from "./components/theatre-component/theatre-component.component";
 import { CinemaComponent } from "./components/cinema-component/cinema-component.component";
+import { FanzoneComponent } from "./components/fanzone-component/fanzone-component.component";
 
 
 const appRoutes: Routes = 
@@ -28,7 +29,9 @@ const appRoutes: Routes =
     {  path: 'theatres',   
        component: TheatresComponent },
     {  path: 'cinemas',   
-       component: CinemaComponent }
+       component: CinemaComponent },
+    {  path: 'fanzone',
+       component: FanzoneComponent }
     // {
     //     path: '**',
     //     component: PageNotFoundComponent
