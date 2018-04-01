@@ -21,6 +21,7 @@ import { CinemaComponent } from './components/cinema-component/cinema-component.
 import { FanzoneComponent } from './components/fanzone-component/fanzone-component.component';
 import { ItemComponent } from './components/fanzone-component/item-component/item-component.component'
 import { FanzoneService } from './services/fanzone-service';
+import { AdditemComponent } from './components/additem-component/additem-component.component'
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { FanzoneService } from './services/fanzone-service';
     TheatresComponent,
     CinemaComponent,
     FanzoneComponent,
-    ItemComponent
+    ItemComponent,
+    AdditemComponent
   ],
   imports: [
     routing,
@@ -42,7 +44,7 @@ import { FanzoneService } from './services/fanzone-service';
     FormsModule,
     HttpClientModule
   ],
-  providers: [ LoginService, HomeService, TheatresService,FanzoneService],
+  providers: [ LoginService, HomeService, TheatresService, FanzoneService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

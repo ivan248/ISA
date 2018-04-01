@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ItemComponent} from './item-component/item-component.component'
 import { FanzoneService } from '../../services/fanzone-service'
 import { Response } from '@angular/http'
- 
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'fanzone-component',
@@ -13,7 +13,7 @@ export class FanzoneComponent implements OnInit {
 
   items : any;
   
-  constructor( private fanzoneService: FanzoneService) {
+  constructor( private fanzoneService: FanzoneService, private router: Router) {
     
 }
 
@@ -27,5 +27,11 @@ ngOnInit(){
     }
   );
 }
+
+
+onClick() {
+  this.router.navigateByUrl('/additem');
+}
+
 
 }
