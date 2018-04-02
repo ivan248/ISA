@@ -13,15 +13,15 @@
   <div class="jumbotron">
     <h1>Fanzone</h1>      
     <!--<p>Browse and bid on !</p> -->
-    <button class="btn btn-dark btn-lg" (click)="onClick()">Add new item</button>
+    <button class="btn btn-dark btn-lg" (click)="onClickAddNewItem()">Add new item</button>
   </div>
   
 </div>
 
 
 
-<div class="container" *ngFor="let i of items">
-    <item-component [item] = i></item-component>
+<div class="container" >
+    <item-component [items] = approveditems></item-component>
     <hr>
 </div>
 

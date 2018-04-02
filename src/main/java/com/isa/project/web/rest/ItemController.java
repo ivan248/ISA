@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.isa.project.bean.Item;
 
 import com.isa.project.repository.ItemRepository;
-import com.isa.project.service.implementation.ItemServiceImpl;
+import com.isa.project.service.ItemService;
+
 
 @RestController
 @CrossOrigin
@@ -19,7 +20,7 @@ import com.isa.project.service.implementation.ItemServiceImpl;
 public class ItemController {
 	
 	@Autowired
-	private ItemServiceImpl itemService;
+	private ItemService itemService;
 	
 	@Autowired 
 	private ItemRepository itemRepository;

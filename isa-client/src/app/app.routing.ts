@@ -33,7 +33,7 @@ const appRoutes: Routes =
        component: CinemaComponent },
     {  path: 'fanzone',
        component: FanzoneComponent },
-    {  path: 'additem',
+    {  path: 'addnewitem',
        component: AdditemComponent }
     // {
     //     path: '**',

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { FanzoneService } from '../../services/fanzone-service';
+import { Router } from '@angular/router';
 
  
 
@@ -10,24 +12,29 @@ import { NgForm } from '@angular/forms';
 
 export class AdditemComponent implements OnInit {
 
-item = {
-  name : "",
-  description : "",
-  currentBid : 0,
-  endDate : "",
-  image : ""
-};
-  
-  constructor() {
+  item = {
+    name : "",
+    description : "",
+    currentBid : 0,
+    endDate : "",
+    image : ""
+  };
     
-}
+    constructor(private fanzone: FanzoneService, private router:Router) {
+      
+  }
 
-ngOnInit(){
+  ngOnInit(){
 
-}
+  }
 
-onSubmit(form: NgForm){
-  console.log(this.item);
-}
+  onSubmit(){
+    this.fanzone.sendNewItem(this.item)
+      .subscribe();
+    this.router.navigateByUrl('/fanzone');
+  }
+
+
+
 
 }

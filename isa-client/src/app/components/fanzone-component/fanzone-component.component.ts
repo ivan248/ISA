@@ -11,7 +11,7 @@ import { Router } from '@angular/router'
 
 export class FanzoneComponent implements OnInit {
 
-  items : any;
+  approveditems : any;
   
   constructor( private fanzoneService: FanzoneService, private router: Router) {
     
@@ -21,7 +21,7 @@ ngOnInit(){
   this.fanzoneService.getApprovedItems()
   .subscribe(
     data=> 
-    {this.items = data;
+    {this.approveditems = data;
       
       console.log(data);
     }
@@ -29,8 +29,8 @@ ngOnInit(){
 }
 
 
-onClick() {
-  this.router.navigateByUrl('/additem');
+onClickAddNewItem() {
+  this.router.navigateByUrl('/addnewitem');
 }
 
 

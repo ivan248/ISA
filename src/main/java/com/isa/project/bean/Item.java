@@ -20,13 +20,14 @@ public class Item implements Serializable {
 	
 	public Item() {}
 	
-	public Item(String name,String description, float currentBid,Date endDate ) {
+	public Item(String name,String description, float currentBid,Date endDate,String image ) {
 		this.name = name;
 		this.currentBid = currentBid;
 		this.approved = false;
 		this.description = description;
 		this.sold = false;
 		this.someoneBid = false;
+		this.image = image;
 		java.util.Date date = new java.util.Date();
 		Date sqlDate = new java.sql.Date(date.getTime());
 		System.out.println("PRI KREIRANJU ITEMA : " + sqlDate.toString() );
@@ -51,11 +52,23 @@ public class Item implements Serializable {
 	
 	
 	//TODO: SLika fali za item
+	
+	@Column
+	private String image;
+	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	@Size(min = 3, max = 100)
 	@Column(length = 100)
 	private String name;
 	
-	@Size(min = 20, max = 300)
+	@Size(min = 10, max = 300)
 	@Column(length = 300)
 	private String description;
 	

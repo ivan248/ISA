@@ -2,7 +2,7 @@ package com.isa.project.web.dto;
 
 import java.sql.Date;
 
-public class NewItemDto {
+public class AddNewItemDto {
 	private String name;
 	private String description;
 	
@@ -10,7 +10,7 @@ public class NewItemDto {
 	private Date endDate;
 	private String image;
 	
-	public NewItemDto() {
+	public AddNewItemDto() {
 		
 	}
 	
