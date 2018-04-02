@@ -13,20 +13,16 @@
   <div class="jumbotron">
     <h1>Fanzone</h1>      
     <!--<p>Browse and bid on !</p> -->
+    <button class="btn btn-dark btn-lg" (click)="onClickAddNewItem()">Add new item</button>
   </div>
-
-  <div class="fixed-top">
-    <div >
-      <a href="login">Sign in/Log in</a>
-    </div>
-  </div>
-      
+  
 </div>
 
 
 
-<div class="container" *ngFor="let i of items">
-    <item-component [item] = i></item-component>
+<div class="container" >
+    <item-component [items] = approveditems></item-component>
+    <hr>
 </div>
 
 

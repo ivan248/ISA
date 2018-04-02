@@ -25,3 +25,4 @@ nbdist/
 /bin/
 src/main/java/com/isa/project/web/rest/LoginController.java
 src/main/java/com/isa/project/web/rest/LoginController.java
+src/main/java/com/isa/project/config/SecurityConfiguration.java

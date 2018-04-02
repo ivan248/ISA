@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ItemService } from '../../../services/item-service';
 
 
 @Component({
@@ -7,6 +8,19 @@ import { Component, Input } from '@angular/core';
 })
 
 export class ItemComponent {
-    @Input() item : any;
+    @Input() items : any[];
+
+    constructor(private itemService: ItemService){
+
+    }
+
+    onClickDelete(id: number){
+      var index = this.items.indexOf('itemID',id)
+      this.items.splice(index,1);
+      console.log(this.items);
+      this.itemService.deleteItem(id);
+    }
 
 }
+
+
