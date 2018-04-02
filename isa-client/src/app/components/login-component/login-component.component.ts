@@ -57,6 +57,6 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit() {
-      this.loginService.getLogin(this.password, this.email).subscribe( data => this.router.navigateByUrl("/registration") );
+      this.loginService.getLogin(this.password, this.email).subscribe( data => this.router.navigateByUrl("/profile") );
     }
 }

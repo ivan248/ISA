@@ -25,6 +25,8 @@ const appRoutes: Routes =
        component: ProfileComponent },
     {  path: 'home',   
        component: HomeComponent },
+    {  path: 'profile',   
+       component: ProfileComponent },
 
     {  path: 'theatres',   
        component: TheatresComponent },

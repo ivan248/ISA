@@ -11,9 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -26,24 +24,6 @@ import com.isa.project.security.jwt.JWTAuthorizationFilter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-    
-    // TODO: dodato ovo proveri da li moze drugacije
-    @Bean
-    public UserDetailsService userDetailsService() {
-    	return new UserDetailsService() {
-			
-			@Override
-			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		};
-    }
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -53,12 +33,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		/*http.cors().and().csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-		.antMatchers("api/home/getCinemas").permitAll()
+		http.cors().and().csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+		.antMatchers(HttpMethod.GET,"/api/login/confirm").permitAll()
 				.anyRequest().authenticated().and().addFilter(new JWTAuthenticationFilter(authenticationManager()))
 				.addFilter(new JWTAuthorizationFilter(authenticationManager()))
 				// this disables session creation on Spring Security
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);*/
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 
 	@Override

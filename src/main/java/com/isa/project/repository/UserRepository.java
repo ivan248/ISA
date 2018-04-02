@@ -6,4 +6,5 @@ import com.isa.project.bean.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 	 User findByUsername(String username);
+	 User findByConfirmationToken(String token);
 }

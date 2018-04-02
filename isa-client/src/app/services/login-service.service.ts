@@ -39,7 +39,7 @@ const httpOptions = {
     submitRegistration(user : any) : Observable<any> {
 
         let json = JSON.parse(JSON.stringify(user));
-        return this.http.post("http://localhost:8080/api/login/registrationMessage", json);
+        return this.http.post("http://localhost:8080/api/login/registrationMessage", json, httpOptions);
     }
 
  } 
