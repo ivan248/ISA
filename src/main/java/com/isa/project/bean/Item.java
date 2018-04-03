@@ -10,8 +10,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -34,36 +38,22 @@ public class Item implements Serializable {
 		
 		this.beginDate = sqlDate;
 		this.endDate = endDate;
-		
+		this.buyer = null;
 	}
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer itemID;
-	
-//	@ManyToOne()
-//	@JoinColumn(name = "id", nullable=false)
-//	private FanZone fanZone;
-	
-	
+		
 	//TODO: SLika fali za item
 	
 	@Column
 	private String image;
 	
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
+	
 	@Size(min = 3, max = 100)
 	@Column(length = 100)
 	private String name;
@@ -81,11 +71,24 @@ public class Item implements Serializable {
 	@Column(name = "currentBid")
 	private float currentBid;
 	
-	//@OneToOne //TODO: obelezi kada bude autor u bazi
-	//private User author;
-	//@OneToOne //TODO: obelezi kada bude autor u bazi
-	//private User buyer;
+	@NotNull
+	@ManyToOne 
+	@JoinColumn(name="ownerID")
+	private User owner;
 	
+	@OneToOne 
+	@JoinColumn(name="buyerID")
+	private User buyer;
+	
+	@Column
+	private Boolean approved;
+	
+	@Column 
+	private Boolean sold;
+	
+	@Column 
+	private Boolean someoneBid;
+
 	
 	public Integer getItemID() {
 		return itemID;
@@ -135,13 +138,13 @@ public class Item implements Serializable {
 		this.currentBid = currentBid;
 	}
 
-//TODO: odkomentarisi	public User getAuthor() {
-//		return author;
-//	}
-//
-//	public void setAuthor(User author) {
-//		this.author = author;
-//	}
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
 
 	public Boolean getApproved() {
 		return approved;
@@ -151,15 +154,7 @@ public class Item implements Serializable {
 		this.approved = approved;
 	}
 
-	@Column
-	private Boolean approved;
 	
-	@Column 
-	private Boolean sold;
-	
-	@Column 
-	private Boolean someoneBid;
-
 	public Boolean getSomeoneBid() {
 		return someoneBid;
 	}
@@ -176,7 +171,14 @@ public class Item implements Serializable {
 		this.sold = sold;
 	}
 	
-	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	
 
 }

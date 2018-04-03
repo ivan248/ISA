@@ -20,6 +20,16 @@ import 'rxjs/Rx';
         }).subscribe(data =>console.log(data));
 
     }
+
+    getItem(id: any){
+        let params = new HttpParams().append('id',id);
+        
+        
+        return this.http.get('http://localhost:8080/fanzone/getitem',{
+            params: params
+        });
+
+    }
     
 
  } 
