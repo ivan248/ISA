@@ -57,6 +57,10 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit() {
-      this.loginService.getLogin(this.password, this.email).subscribe( data => this.router.navigateByUrl("/profile") );
+      this.loginService.getLogin(this.password, this.email)
+      .subscribe( data=>{
+        localStorage.setItem('token', data.token);
+        this.router.navigateByUrl("/profile");
+    } );
     }
 }

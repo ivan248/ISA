@@ -9,7 +9,16 @@ import 'rxjs/add/operator/toPromise';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     }),
+};
+
+const httpOptions1 = {
+    headers: new HttpHeaders({ 
+        'Content-Type': 'application/json'
+     }),
 };
   
  
@@ -30,13 +39,17 @@ const httpOptions = {
            "username" : username,
            "password" : password
        }
-       let header=new Headers({'Content-Type': 'application/json'});
-       this.http.post(this.url, user,  httpOptions).map(data => console.log(data));   
+       let header = new HttpHeaders({'Content-Type': 'application/json'});  
 
-       return this.http.post("http://localhost:8080/login", user,  httpOptions).map(data => console.log(data)); 
+
+
+       return this.http.post("http://localhost:8080/api/login/login", user, httpOptions1); 
     }
 
     submitRegistration(user : any) : Observable<any> {
+
+        if(localStorage.getItem('token') == null)
+        return new Observable<any>();
 
         let json = JSON.parse(JSON.stringify(user));
         return this.http.post("http://localhost:8080/api/login/registrationMessage", json, httpOptions);

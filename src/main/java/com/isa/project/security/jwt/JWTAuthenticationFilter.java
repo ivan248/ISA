@@ -1,43 +1,63 @@
 package com.isa.project.security.jwt;
 
-import static com.isa.project.security.SecurityConstants.EXPIRATION_TIME;
-import static com.isa.project.security.SecurityConstants.HEADER_STRING;
-import static com.isa.project.security.SecurityConstants.SECRET;
-import static com.isa.project.security.SecurityConstants.TOKEN_PREFIX;
-
 import java.io.IOException;
-import java.sql.Date;
-import java.util.ArrayList;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.isa.project.bean.User;
-
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	
-	private AuthenticationManager authenticationManager;
+	@Autowired
+	private TokenProvider tokenProvider;
+	
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
+	@Override
+    public void doFilter(ServletRequest request, ServletResponse response,
+                         FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        String authToken = httpRequest.getHeader("X-Auth-Token");
+        String username = tokenProvider.getUsernameFromToken(authToken);
+
+        if (username != null
+                && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = this.userDetailsService
+                    .loadUserByUsername(username);
+            if (tokenProvider.validateToken(authToken)) {
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource()
+                        .buildDetails(httpRequest));
+                SecurityContextHolder.getContext().setAuthentication(
+                        authentication);
+            }
+        }
+
+        chain.doFilter(request, response);
+    }
+/*	private AuthenticationManager authenticationManager;
 	
 
 	
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
-    }
+    }*/
 	
-    @Override
+  /*  @Override
     public Authentication attemptAuthentication(HttpServletRequest req,
                                                 HttpServletResponse res) {
         try {
@@ -65,9 +85,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .setSubject(auth.getName())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
-                .compact();
-        res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
-        
-    }
+                .compact();        
+    }*/
 
 }
