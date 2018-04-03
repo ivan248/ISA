@@ -57,6 +57,7 @@ public class ItemServiceImpl implements ItemService {
 	public Boolean approveItem(int id) { 
 		try {
 			Item i = itemRepository.findOneByItemID(id);
+			System.out.println(i.toString());
 			i.setApproved(true);
 			itemRepository.flush();
 			return true;

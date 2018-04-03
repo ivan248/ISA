@@ -10,7 +10,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -34,23 +37,16 @@ public class Item implements Serializable {
 		
 		this.beginDate = sqlDate;
 		this.endDate = endDate;
-		
+		this.setBuyer(null);
 	}
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer itemID;
-	
-//	@ManyToOne()
-//	@JoinColumn(name = "id", nullable=false)
-//	private FanZone fanZone;
-	
-	
+		
 	//TODO: SLika fali za item
 	
 	@Column
@@ -81,10 +77,20 @@ public class Item implements Serializable {
 	@Column(name = "currentBid")
 	private float currentBid;
 	
-	//@OneToOne //TODO: obelezi kada bude autor u bazi
-	//private User author;
-	//@OneToOne //TODO: obelezi kada bude autor u bazi
-	//private User buyer;
+	@ManyToOne 
+	@JoinColumn(name="ownerID")
+	private User owner;
+	public User getBuyer() {
+		return buyer;
+	}
+
+	public void setBuyer(User buyer) {
+		this.buyer = buyer;
+	}
+
+	@OneToOne 
+	@JoinColumn(name="buyerID")
+	private User buyer;
 	
 	
 	public Integer getItemID() {
@@ -135,13 +141,13 @@ public class Item implements Serializable {
 		this.currentBid = currentBid;
 	}
 
-//TODO: odkomentarisi	public User getAuthor() {
-//		return author;
-//	}
-//
-//	public void setAuthor(User author) {
-//		this.author = author;
-//	}
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
 
 	public Boolean getApproved() {
 		return approved;

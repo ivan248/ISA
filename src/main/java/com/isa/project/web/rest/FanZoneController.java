@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.Item;
+import com.isa.project.repository.UserRepository;
 import com.isa.project.service.FanZoneService;
-
+import com.isa.project.web.Converter;
 import com.isa.project.web.dto.AddNewItemDto;
-import com.isa.project.web.dto.DTOConverter;
+
 
 @RestController
 @CrossOrigin
@@ -28,6 +29,9 @@ public class FanZoneController {
 	
 	@Autowired 
 	private FanZoneService fanZoneService;
+	//TODO: Obrisi
+	@Autowired
+	private UserRepository userRepository;
 	
 	@RequestMapping(value="/", method= RequestMethod.GET)
 	public List<Item> getAllItems(){
@@ -45,13 +49,14 @@ public class FanZoneController {
 		
 		
 		System.out.println("ONO STO JE SIGLO: " + newItemDTO.toString());
-		Item i = DTOConverter.convertAddNewItemToItem(newItemDTO);
+		Item i = Converter.convertAddNewItemToItem(newItemDTO);
 		int status = i.getEndDate().compareTo(i.getBeginDate());  //provera da li je unesen krajnji datum stariji ili mladji od danasnjeg
 	    if (status <=0) {
 	    	System.out.println("Can't enter end date from the past.");
 	      	return  new ResponseEntity<Item>(i,HttpStatus.BAD_REQUEST);
 	    }
-	    
+	    //TODO: i.setAuthor= session.thisuser;
+	    i.setOwner(userRepository.findByUsername("fiko"));
 	    fanZoneService.addItem(i);
       
 		return new ResponseEntity<Item>(i,HttpStatus.OK);
