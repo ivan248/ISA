@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -77,6 +78,7 @@ public class Item implements Serializable {
 	@Column(name = "currentBid")
 	private float currentBid;
 	
+	@NotNull
 	@ManyToOne 
 	@JoinColumn(name="ownerID")
 	private User owner;

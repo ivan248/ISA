@@ -48,11 +48,11 @@ const httpOptions1 = {
 
     submitRegistration(user : any) : Observable<any> {
 
-        if(localStorage.getItem('token') == null)
-        return new Observable<any>();
+        // if(localStorage.getItem('token') == null)
+        // return new Observable<any>();
 
         let json = JSON.parse(JSON.stringify(user));
-        return this.http.post("http://localhost:8080/api/login/registrationMessage", json, httpOptions);
+        return this.http.post("http://localhost:8080/api/login/registrationMessage", json, httpOptions1);
     }
 
  } 
