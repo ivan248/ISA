@@ -38,7 +38,7 @@ public class Item implements Serializable {
 		
 		this.beginDate = sqlDate;
 		this.endDate = endDate;
-		this.setBuyer(null);
+		this.buyer = null;
 	}
 
 
@@ -53,14 +53,7 @@ public class Item implements Serializable {
 	@Column
 	private String image;
 	
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
+	
 	@Size(min = 3, max = 100)
 	@Column(length = 100)
 	private String name;
@@ -82,18 +75,20 @@ public class Item implements Serializable {
 	@ManyToOne 
 	@JoinColumn(name="ownerID")
 	private User owner;
-	public User getBuyer() {
-		return buyer;
-	}
-
-	public void setBuyer(User buyer) {
-		this.buyer = buyer;
-	}
-
+	
 	@OneToOne 
 	@JoinColumn(name="buyerID")
 	private User buyer;
 	
+	@Column
+	private Boolean approved;
+	
+	@Column 
+	private Boolean sold;
+	
+	@Column 
+	private Boolean someoneBid;
+
 	
 	public Integer getItemID() {
 		return itemID;
@@ -159,15 +154,7 @@ public class Item implements Serializable {
 		this.approved = approved;
 	}
 
-	@Column
-	private Boolean approved;
 	
-	@Column 
-	private Boolean sold;
-	
-	@Column 
-	private Boolean someoneBid;
-
 	public Boolean getSomeoneBid() {
 		return someoneBid;
 	}
@@ -184,7 +171,14 @@ public class Item implements Serializable {
 		this.sold = sold;
 	}
 	
-	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	
 
 }
