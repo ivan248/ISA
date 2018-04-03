@@ -34,6 +34,11 @@ const httpOptions = {
         return this.http.post(this.url, json, httpOptions);
     }
 
+    getTheatres(){
+
+        return this.http.get("http://localhost:8080/api/home/getTheatres/");
+    }
+
   
 
  } 

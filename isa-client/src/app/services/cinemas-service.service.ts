@@ -14,9 +14,9 @@ const httpOptions = {
   
  
  @Injectable()
- export class HomeService {  
+ export class TheatresService {  
 
-    private url : string = "http://localhost:8080/api/home/test";
+    private url : string = "http://localhost:8080/api/cinemas/test";
 
     constructor(private http:HttpClient) {
 
@@ -34,13 +34,9 @@ const httpOptions = {
         return this.http.post(this.url, json, httpOptions);
     }
 
-  //  getTheatres(){
-  //      return this.http.get("http://localhost:8080/api/home/getTheatres");
-  //  }
-
     getCinemas(){
-        
-        return this.http.get("http://localhost:8080/api/home/getCinemas");
+
+        return this.http.get("http://localhost:8080/api/home/getCinemas/");
     }
 
   
