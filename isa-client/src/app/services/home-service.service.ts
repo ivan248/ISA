@@ -9,7 +9,10 @@ import 'rxjs/add/operator/toPromise';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     }),
 };
   
  
@@ -34,13 +37,19 @@ const httpOptions = {
         return this.http.post(this.url, json, httpOptions);
     }
 
+<<<<<<< HEAD
   //  getTheatres(){
   //      return this.http.get("http://localhost:8080/api/home/getTheatres");
   //  }
+=======
+    getTheatres(){
+        return this.http.get("http://localhost:8080/api/home/getTheatres", httpOptions);
+    }
+>>>>>>> 173077e047aef4ba354ac5c36a2db0bf9a48824f
 
     getCinemas(){
         
-        return this.http.get("http://localhost:8080/api/home/getCinemas");
+        return this.http.get("http://localhost:8080/api/home/getCinemas", httpOptions);
     }
 
   

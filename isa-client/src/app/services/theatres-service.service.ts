@@ -9,7 +9,10 @@ import 'rxjs/add/operator/toPromise';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     }),
 };
   
  
