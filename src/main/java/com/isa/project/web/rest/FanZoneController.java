@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.Item;
+import com.isa.project.repository.ItemRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.service.FanZoneService;
 import com.isa.project.web.Converter;
@@ -26,6 +27,9 @@ import com.isa.project.web.dto.AddNewItemDto;
 @CrossOrigin
 @RequestMapping(value = "/fanzone")
 public class FanZoneController {
+	
+	@Autowired
+	private ItemRepository itemRepository;
 	
 	@Autowired 
 	private FanZoneService fanZoneService;
@@ -69,6 +73,14 @@ public class FanZoneController {
 	public ResponseEntity<Boolean> deleteItem(@RequestParam("id") int id) {
 		System.out.println("Usao u delete");
 		return new ResponseEntity<Boolean>(fanZoneService.deleteItem(id),HttpStatus.OK);
+		
+		
+	}
+	
+	@GetMapping("/getitem")
+	public ResponseEntity<Item> getItem(@RequestParam("id") int id) {
+		System.out.println("Usao u getitem");
+		return new ResponseEntity<Item>(itemRepository.findOneByItemID(id),HttpStatus.OK);
 		
 		
 	}

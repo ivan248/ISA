@@ -8,6 +8,7 @@ import { TheatresComponent } from "./components/theatre-component/theatre-compon
 import { CinemaComponent } from "./components/cinema-component/cinema-component.component";
 import { FanzoneComponent } from "./components/fanzone-component/fanzone-component.component";
 import { AdditemComponent } from "./components/additem-component/additem-component.component";
+import { EditItemComponent } from "./components/fanzone-component/edititem-component/edititem-component.component";
 
 
 const appRoutes: Routes = 
@@ -36,7 +37,9 @@ const appRoutes: Routes =
     {  path: 'fanzone',
        component: FanzoneComponent },
     {  path: 'addnewitem',
-       component: AdditemComponent }
+       component: AdditemComponent },
+    {  path: 'edititem',
+       component: EditItemComponent}
     // {
     //     path: '**',
     //     component: PageNotFoundComponent

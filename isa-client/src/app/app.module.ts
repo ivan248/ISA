@@ -2,7 +2,7 @@ import { BrowserModule }                        from '@angular/platform-browser'
 import { NgModule }                             from '@angular/core';
 import { ReactiveFormsModule,FormsModule }      from '@angular/forms';
 import { RouterModule, Routes }                 from '@angular/router';
-import {HttpClientModule, HttpClient}           from '@angular/common/http';
+import { HttpClientModule, HttpClient}           from '@angular/common/http';
 
 
 
@@ -23,6 +23,9 @@ import { ItemComponent } from './components/fanzone-component/item-component/ite
 import { FanzoneService } from './services/fanzone-service';
 import { AdditemComponent } from './components/additem-component/additem-component.component'
 import { ItemService } from './services/item-service';
+import { DataService } from './services/data-service';
+import { EditItemComponent } from './components/fanzone-component/edititem-component/edititem-component.component';
+
 
 
 @NgModule({
@@ -36,7 +39,8 @@ import { ItemService } from './services/item-service';
     CinemaComponent,
     FanzoneComponent,
     ItemComponent,
-    AdditemComponent
+    AdditemComponent,
+    EditItemComponent
   ],
   imports: [
     routing,
@@ -45,7 +49,8 @@ import { ItemService } from './services/item-service';
     FormsModule,
     HttpClientModule
   ],
-  providers: [ LoginService, HomeService, TheatresService, FanzoneService, ItemService],
+  providers: [ LoginService, HomeService, TheatresService, FanzoneService, ItemService,DataService
+               ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-export class Car
+export class Item
 {
     public itemID : number;
     public name : String;
@@ -28,6 +28,7 @@ export class Car
         this.someoneBid = obj.someoneBid;
 
     }
+
 
 
  }
