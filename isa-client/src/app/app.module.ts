@@ -32,6 +32,7 @@ import { PendingComponent } from './components/fanzone-component/pending-compone
 import { CinemasService } from './services/cinemas-service.service';
 import { ItemprofileComponent } from './components/fanzone-component/itemprofile-component/itemprofile-component.component';
 import { BidService } from './services/bid-service';
+import { ViewTheatreComponent } from './components/viewTheatre-component/viewTheatre-component.component';
 
 
 
@@ -50,7 +51,8 @@ import { BidService } from './services/bid-service';
     AdditemComponent,
     EditItemComponent,
     PendingComponent,
-    ItemprofileComponent
+    ItemprofileComponent,
+    ViewTheatreComponent
   ],
   imports: [
     routing,
