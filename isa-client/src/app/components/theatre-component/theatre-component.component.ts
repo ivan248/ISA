@@ -86,9 +86,12 @@ export class TheatresComponent implements OnInit {
     onSelect(theatre: any): void {
       this.selectedTheatre = theatre;
     }
-    onClickOpenPage(selectedTheatre){
-      console.log(selectedTheatre.name);
-      this.router.navigateByUrl('/viewTheatre');
+    onClickOpenPage(Theatre:any): void{
+        this.selectedTheatre=Theatre;
+        this.theatresService.selectTheatre(this.selectedTheatre);
+       // this.dataService.changeEdditedItem(this.selectedTheatre);
+       console.log("1"+this.selectedTheatre.name);
+        this.router.navigateByUrl('/viewTheatre');
       
     }
 

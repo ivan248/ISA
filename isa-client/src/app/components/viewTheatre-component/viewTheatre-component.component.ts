@@ -16,17 +16,19 @@ export class ViewTheatreComponent implements OnInit {
 
     private currentTheatre: any;
     
+    
 
    
 
     constructor(private theatresService: TheatresService,
             private router : Router) {
-              this.theatresService.getTheatres().subscribe(data=>{;console.log(data);});
+              
     }
 
     ngOnInit() {
-      
-    }
+       // this.theatresService.selectTheatre(this.currentTheatre).subscribe(currentTheatre => this.currentTheatre = currentTheatre);
+        this.theatresService.currentth.subscribe(currentTheatre => this.currentTheatre = currentTheatre);
+      }
 
   
 
