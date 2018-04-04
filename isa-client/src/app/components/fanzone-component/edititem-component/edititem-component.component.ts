@@ -14,7 +14,7 @@ import { ItemService } from '../../../services/item-service';
 export class EditItemComponent implements OnInit {
     constructor(private dataService: DataService,
                 private router: Router,
-                private itemSerice: ItemService){
+                private itemService: ItemService){
 
     }
 
@@ -36,7 +36,7 @@ export class EditItemComponent implements OnInit {
         let index = this.itemList.indexOf(updateItem);
 
         this.itemList[index] = this.item;
-         this.itemSerice.sendEdditedItem(this.item)
+         this.itemService.sendEdditedItem(this.item)
           .subscribe();
          this.router.navigateByUrl('/fanzone');
       }

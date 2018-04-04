@@ -39,7 +39,7 @@ const httpOptions = {
 
     getTheatres(){
 
-        return this.http.get("http://localhost:8080/api/home/getTheatres/");
+        return this.http.get("http://localhost:8080/api/home/getTheatres", httpOptions);
     }
 
   

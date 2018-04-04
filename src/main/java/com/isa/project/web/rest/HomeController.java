@@ -41,7 +41,7 @@ public class HomeController {
 		
 	}
 	
-	//@PreAuthorize("hasAuthority('REGISTERED_USER')")
+	@PreAuthorize("hasAuthority('REGISTERED_USER')")
 	@RequestMapping(value = "/getTheatres", method = RequestMethod.GET,
 			produces="application/json")
 	public ResponseEntity<ArrayList<Theatre>> getThetres(){
@@ -57,7 +57,7 @@ public class HomeController {
 		
 	}
 	
-	//@PreAuthorize("hasAuthority('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/getCinemas", method = RequestMethod.GET,
 			produces="application/json")
 	public ResponseEntity<ArrayList<Cinema>> getCinemas(){

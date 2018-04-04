@@ -9,6 +9,12 @@ export class DataService {
 
   private itemListForShow = new BehaviorSubject<Item[]>(new Array<Item>());
   currentItemListForShow = this.itemListForShow.asObservable();
+
+  private unapproveditemListForShow = new BehaviorSubject<Item[]>(new Array<Item>());
+  currentUnapprovedItemListForShow = this.unapproveditemListForShow.asObservable();
+
+  private selectedItem = new BehaviorSubject<Item>(new Item(new Object()));
+  currentSelectedItem = this.selectedItem.asObservable();
   
   constructor() { }
   
@@ -18,6 +24,16 @@ export class DataService {
 
   changeItemListForShow(itemListForShow: Item[]){
     this.itemListForShow.next(itemListForShow);
+  }
+
+  changeUnapprovedItemListForShow(unapprovedItemListForShow: Item[]){
+    this.unapproveditemListForShow.next(unapprovedItemListForShow);
+  }
+
+  changeSelectedItem(item: Item) {
+    console.log("SETOVANEJ: ");
+    console.log(item);
+    this.selectedItem.next(item);
   }
   
   }

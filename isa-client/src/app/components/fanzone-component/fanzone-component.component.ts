@@ -14,6 +14,7 @@ export class FanzoneComponent implements OnInit {
 
   approveditems : any;
   
+
   constructor( private fanzoneService: FanzoneService, private router: Router,
                 private dataService: DataService
     ) {

@@ -33,11 +33,29 @@ export class ItemComponent implements OnInit {
      //Dobijam id itema koji treba da editujem i sa sajta vucem ceo taj item
       this.itemService.getItem(id).subscribe(data => {
         this.item = data;
-        //console.log(this.item);
+        console.log(this.item);
         this.dataService.changeEdditedItem(this.item);
         this.router.navigateByUrl('/edititem');
       });
       
+      
+    }
+
+    onClickApprove(id: number){
+      var index = this.items.indexOf('itemID',id)
+      this.items.splice(index,1);
+      console.log(this.items);
+      this.itemService.approveItem(id);
+     
+    }
+
+    onClickSetSelectedItem(id: number){ //klikom na card kazemo da smo izabrali taj item i sa njim dalje radimo
+      
+        this.itemService.getItem(id).subscribe(data => {
+        this.item = data;
+        this.dataService.changeSelectedItem(this.item);
+        this.router.navigateByUrl('/itemprofile')
+      });
       
     }
 
