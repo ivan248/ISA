@@ -9,12 +9,15 @@ import 'rxjs/add/operator/toPromise';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     }),
 };
   
  
  @Injectable()
- export class TheatresService {  
+ export class CinemasService {  
 
     private url : string = "http://localhost:8080/api/cinemas/test";
 
@@ -35,7 +38,6 @@ const httpOptions = {
     }
 
     getCinemas(){
-
         return this.http.get("http://localhost:8080/api/home/getCinemas/");
     }
 

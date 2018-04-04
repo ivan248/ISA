@@ -17,7 +17,7 @@ import { HomeComponent } from './components/home-component/home-component.compon
 import { TheatresComponent } from './components/theatre-component/theatre-component.component';
 import { HomeService } from './services/home-service.service';
 import { TheatresService } from './services/theatres-service.service';
-import { CinemaComponent } from './components/cinema-component/cinema-component.component';
+import { CinemasComponent } from './components/cinema-component/cinema-component.component';
 import { FanzoneComponent } from './components/fanzone-component/fanzone-component.component';
 import { ItemComponent } from './components/fanzone-component/item-component/item-component.component'
 import { FanzoneService } from './services/fanzone-service';
@@ -25,6 +25,7 @@ import { AdditemComponent } from './components/additem-component/additem-compone
 import { ItemService } from './services/item-service';
 import { DataService } from './services/data-service';
 import { EditItemComponent } from './components/fanzone-component/edititem-component/edititem-component.component';
+import { CinemasService } from './services/cinemas-service.service';
 
 
 
@@ -36,7 +37,7 @@ import { EditItemComponent } from './components/fanzone-component/edititem-compo
     ProfileComponent,
     HomeComponent,
     TheatresComponent,
-    CinemaComponent,
+    CinemasComponent,
     FanzoneComponent,
     ItemComponent,
     AdditemComponent,
@@ -49,7 +50,7 @@ import { EditItemComponent } from './components/fanzone-component/edititem-compo
     FormsModule,
     HttpClientModule
   ],
-  providers: [ LoginService, HomeService, TheatresService, FanzoneService, ItemService,DataService
+  providers: [ LoginService, HomeService, TheatresService, FanzoneService, ItemService,DataService, CinemasService
                ],
   bootstrap: [AppComponent]
 })

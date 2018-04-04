@@ -21,11 +21,9 @@ export class HomeComponent implements OnInit {
 
     }
 
-    onClick(){
-        let vracenoSaBacka;
-        this.homeService.submitTest(this.ime).subscribe(data => console.log(data));
-        console.log(this.ime);
 
+    onClickSignInLogIn(){
+        this.router.navigateByUrl('/login');
     }
 
 

@@ -37,15 +37,9 @@ const httpOptions = {
         return this.http.post(this.url, json, httpOptions);
     }
 
-<<<<<<< HEAD
   //  getTheatres(){
   //      return this.http.get("http://localhost:8080/api/home/getTheatres");
   //  }
-=======
-    getTheatres(){
-        return this.http.get("http://localhost:8080/api/home/getTheatres", httpOptions);
-    }
->>>>>>> 173077e047aef4ba354ac5c36a2db0bf9a48824f
 
     getCinemas(){
         
