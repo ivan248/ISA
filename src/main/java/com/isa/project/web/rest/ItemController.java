@@ -6,12 +6,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.Item;
 
 
 import com.isa.project.service.ItemService;
+;
 
 
 @RestController
@@ -31,13 +33,14 @@ public class ItemController {
 		return itemService.editItem(item);
 	}
 	
-	@RequestMapping(value="/approve/{id}", method = RequestMethod.GET)
-	public Boolean approveItem(@PathVariable("id") int id) {
+	@RequestMapping(value="/approve", method = RequestMethod.GET)
+	public Boolean approveItem(@RequestParam("id") int id) {
 		return itemService.approveItem(id);
 	}
 	
-	@RequestMapping(value="/bid/{id}/{bid}", method = RequestMethod.POST) //promena ponude
-	public Boolean bid(@PathVariable("id") int id , @PathVariable("bid") float bid) {
+	@RequestMapping(value="/bid", method = RequestMethod.POST) //promena ponude
+	public Boolean bid(@RequestParam float bid, @RequestParam int id) {
+		System.out.println("usao u bid, parametri: " + bid + " " + id);
 		return itemService.bid(id, bid);
 	}
 	

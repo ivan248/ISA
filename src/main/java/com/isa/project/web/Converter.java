@@ -5,10 +5,12 @@ import java.util.Set;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.isa.project.bean.Bid;
 import com.isa.project.bean.Item;
 import com.isa.project.bean.Role;
 import com.isa.project.bean.User;
 import com.isa.project.web.dto.AddNewItemDto;
+import com.isa.project.web.dto.BidDTO;
 import com.isa.project.web.dto.RegistrationUserDto;
 
 public class Converter {
@@ -46,6 +48,8 @@ public class Converter {
 		Item newItem = new Item(newItemDTO.getName(), newItemDTO.getDescription(),newItemDTO.getCurrentBid(),newItemDTO.getEndDate(),newItemDTO.getImage());
 		return newItem;
 	}
+	
+	
 
 
 }

@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import javax.persistence.OneToOne;
+
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -38,7 +38,7 @@ public class Item implements Serializable {
 		
 		this.beginDate = sqlDate;
 		this.endDate = endDate;
-		this.buyer = null;
+		
 	}
 
 
@@ -76,9 +76,7 @@ public class Item implements Serializable {
 	@JoinColumn(name="ownerID")
 	private User owner;
 	
-	@OneToOne 
-	@JoinColumn(name="buyerID")
-	private User buyer;
+	
 	
 	@Column
 	private Boolean approved;

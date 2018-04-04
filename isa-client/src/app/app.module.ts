@@ -30,6 +30,8 @@ import { DataService } from './services/data-service';
 import { EditItemComponent } from './components/fanzone-component/edititem-component/edititem-component.component';
 import { PendingComponent } from './components/fanzone-component/pending-component/pending-component.component';
 import { CinemasService } from './services/cinemas-service.service';
+import { ItemprofileComponent } from './components/fanzone-component/itemprofile-component/itemprofile-component.component';
+import { BidService } from './services/bid-service';
 import { ViewTheatreComponent } from './components/viewTheatre-component/viewTheatre-component.component';
 import { ViewCinemaComponent } from './components/viewCinema-component/viewCinema-component.component';
 
@@ -51,7 +53,8 @@ import { ViewCinemaComponent } from './components/viewCinema-component/viewCinem
     EditItemComponent,
     PendingComponent,
     ViewTheatreComponent,
-    ViewCinemaComponent
+    ViewCinemaComponent,
+    ItemprofileComponent
   ],
   imports: [
     routing,
@@ -68,7 +71,8 @@ import { ViewCinemaComponent } from './components/viewCinema-component/viewCinem
        ItemService,
        DataService,
         CinemasService,
-        ProfileService
+        ProfileService,
+      BidService
                ],
   bootstrap: [AppComponent]
 })
