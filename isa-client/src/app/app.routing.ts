@@ -5,9 +5,10 @@ import { RegistrationComponent }    from "./components/registration-component/re
 import { ProfileComponent }         from "./components/profile-component/profile-component.component";
 import { HomeComponent } from "./components/home-component/home-component.component";
 import { TheatresComponent } from "./components/theatre-component/theatre-component.component";
-import { CinemaComponent } from "./components/cinema-component/cinema-component.component";
+import { CinemasComponent } from "./components/cinema-component/cinema-component.component";
 import { FanzoneComponent } from "./components/fanzone-component/fanzone-component.component";
 import { AdditemComponent } from "./components/additem-component/additem-component.component";
+import { EditItemComponent } from "./components/fanzone-component/edititem-component/edititem-component.component";
 
 
 const appRoutes: Routes = 
@@ -32,11 +33,13 @@ const appRoutes: Routes =
     {  path: 'theatres',   
        component: TheatresComponent },
     {  path: 'cinemas',   
-       component: CinemaComponent },
+       component: CinemasComponent },
     {  path: 'fanzone',
        component: FanzoneComponent },
     {  path: 'addnewitem',
-       component: AdditemComponent }
+       component: AdditemComponent },
+    {  path: 'edititem',
+       component: EditItemComponent}
     // {
     //     path: '**',
     //     component: PageNotFoundComponent

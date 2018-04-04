@@ -51,12 +51,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 		//http.authorizeRequests()
 				//.antMatchers("/api/profile/get").hasRole("REGISTERED_USER")
 				//.antMatchers("/api/login/login").permitAll();
 				//.antMatchers("/api/home/getCinemas").access("hasRole('REGISTERED_USER')");
+
+
 		http.cors().and().csrf().disable();
 		
 		

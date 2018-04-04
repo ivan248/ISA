@@ -66,13 +66,20 @@ export class TheatresComponent implements OnInit {
 
    
 
-    constructor(private homeService: HomeService,
+    constructor(private theatresService: TheatresService,
             private router : Router) {
-              this.homeService.getTheatres().subscribe(data=>{this.theatresArray=data;console.log(data);});
+              this.theatresService.getTheatres().subscribe(data=>{this.theatresArray=data;console.log(data);});
     }
 
     ngOnInit() {
-    
+      this.theatresService.getTheatres()
+      .subscribe(
+        data=> 
+        {this.theatresArray = data;
+          
+          console.log(data);
+        }
+      );
       
     }
 

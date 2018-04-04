@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CinemasService } from '../../services/cinemas-service.service';
 import { HomeService } from '../../services/home-service.service';
 
 @Component({
-  selector: 'cinema-component',
+  selector: 'cinemas-component',
   templateUrl: './cinema-component.component.html',
   styles : [`.selected {
     background-color: #CFD8DC !important;
@@ -52,33 +53,39 @@ import { HomeService } from '../../services/home-service.service';
     margin-right: .8em;
     border-radius: 4px 0 0 4px;
   }`]
-
+  
  
 })
 
-export class CinemaComponent implements OnInit {
+export class CinemasComponent implements OnInit {
  
 
     private cinemasArray: any;
 
     private selectedCinema: any;
+
    
 
-    constructor(private homeService: HomeService,
+    constructor(private cinemasService: CinemasService,
             private router : Router) {
-                this.homeService.getCinemas().subscribe(data=>{this.cinemasArray=data;console.log(data);}); 
+              this.cinemasService.getCinemas().subscribe(data=>{this.cinemasArray=data;console.log(data);});
     }
 
     ngOnInit() {
-    
+      this.cinemasService.getCinemas()
+      .subscribe(
+        data=> 
+        {this.cinemasArray = data;
+          
+          console.log(data);
+        }
+      );
       
     }
 
     onSelect(cinema: any): void {
-        this.selectedCinema = cinema;
-      }
+      this.selectedCinema = cinema;
+    }
 
-    
-    
 
 }

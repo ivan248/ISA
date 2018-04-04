@@ -1,6 +1,5 @@
 package com.isa.project.bean;
 
-import java.util.Set;
 
 import javax.persistence.*;
 
