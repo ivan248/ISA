@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ItemService } from '../../../services/item-service';
 import { Item } from '../../../model/item';
 import { DataService } from '../../../services/data-service';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './item-component.component.html'
 })
 
-export class ItemComponent {
+export class ItemComponent implements OnInit {
     @Input() items : any[];
     
     item : any;
@@ -18,6 +18,9 @@ export class ItemComponent {
                 private router: Router){
 
     }
+
+   ngOnInit(){this.dataService.changeItemListForShow(this.items);
+   }
 
     onClickDelete(id: number){
       var index = this.items.indexOf('itemID',id)

@@ -30,6 +30,18 @@ import 'rxjs/Rx';
         });
 
     }
+
+    sendEdditedItem(item : any){
+        const body = JSON.parse(JSON.stringify(item));
+        const headers = new HttpHeaders();
+        headers.append('Content-type','application/json');
+        console.log(body);
+
+        return this.http.post('http://localhost:8080/item/edit',body,{
+            headers: headers
+        } );
+
+    }
     
 
  } 

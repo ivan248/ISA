@@ -11,9 +11,17 @@
 
 <div class="container">
   <div class="jumbotron">
-    <h1>Fanzone</h1>      
-    <!--<p>Browse and bid on !</p> -->
-    <button class="btn btn-dark btn-lg" (click)="onClickAddNewItem()">Add new item</button>
+    <div class="row">
+      <div class="col">
+          <h1>Fanzone</h1>      
+          <!--<p>Browse and bid on !</p> -->
+          <button class="btn btn-dark btn-lg" (click)="onClickAddNewItem()">Add new item</button>
+      </div>
+      <div class="col text-right">
+          <button class="btn btn-dark btn-md" (click)="onClickPending()">Pending items</button>
+      </div>
+    </div>
+    
   </div>
   
 </div>

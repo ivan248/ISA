@@ -33,16 +33,7 @@ const httpOptions = {
 
     }
 
-    deleteItem(){
-        const headers = new HttpHeaders().append('Content-Type','Application/json');
-        let body = new HttpParams();
-        body = body.set('id', '1');
-        
-        return this.http.post('http://localhost:8080/fanzone/deleteitem', body, {
-            headers: headers
-        });
-
-    }
+   
     
 
  } 

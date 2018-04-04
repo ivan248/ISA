@@ -25,6 +25,7 @@ import { AdditemComponent } from './components/additem-component/additem-compone
 import { ItemService } from './services/item-service';
 import { DataService } from './services/data-service';
 import { EditItemComponent } from './components/fanzone-component/edititem-component/edititem-component.component';
+import { PendingComponent } from './components/fanzone-component/pending-component/pending-component.component';
 
 
 
@@ -40,7 +41,8 @@ import { EditItemComponent } from './components/fanzone-component/edititem-compo
     FanzoneComponent,
     ItemComponent,
     AdditemComponent,
-    EditItemComponent
+    EditItemComponent,
+    PendingComponent
   ],
   imports: [
     routing,

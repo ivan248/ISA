@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.Item;
 
-import com.isa.project.repository.ItemRepository;
+
 import com.isa.project.service.ItemService;
 
 
@@ -22,16 +22,12 @@ public class ItemController {
 	@Autowired
 	private ItemService itemService;
 	
-	@Autowired 
-	private ItemRepository itemRepository;
+
 	
-	@RequestMapping(value="/edit1/{id}", method = RequestMethod.GET) //mozda ce biti lakse da se ovo uradi ako posaljem ceo Objekat item
-	public Item editItemStep1(@PathVariable("id")int id) { //Kada se klikne edit dugme da se nadje odgovarajuci item i polja forme da se napune odgovarajucim vrednostima
-		return itemRepository.findOneByItemID(id);
-	}
 	
-	@RequestMapping(value="/edit2", method = RequestMethod.POST) //ovaj drugi korak edita zapravo menja item u BP
-	public Boolean editItemStep2(@RequestBody Item item) {
+	@RequestMapping(value="/edit", method = RequestMethod.POST) //ovaj drugi korak edita zapravo menja item u BP
+	public Boolean editItemStep(@RequestBody Item item) {
+		System.out.println("Promenio!");
 		return itemService.editItem(item);
 	}
 	
