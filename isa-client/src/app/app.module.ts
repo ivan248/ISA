@@ -30,6 +30,7 @@ import { DataService } from './services/data-service';
 import { EditItemComponent } from './components/fanzone-component/edititem-component/edititem-component.component';
 import { PendingComponent } from './components/fanzone-component/pending-component/pending-component.component';
 import { CinemasService } from './services/cinemas-service.service';
+import { ViewTheatreComponent } from './components/viewTheatre-component/viewTheatre-component.component';
 
 
 
@@ -47,7 +48,8 @@ import { CinemasService } from './services/cinemas-service.service';
     ItemComponent,
     AdditemComponent,
     EditItemComponent,
-    PendingComponent
+    PendingComponent,
+    ViewTheatreComponent
   ],
   imports: [
     routing,

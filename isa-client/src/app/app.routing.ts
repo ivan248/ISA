@@ -10,6 +10,7 @@ import { FanzoneComponent } from "./components/fanzone-component/fanzone-compone
 import { AdditemComponent } from "./components/additem-component/additem-component.component";
 import { EditItemComponent } from "./components/fanzone-component/edititem-component/edititem-component.component";
 import { PendingComponent } from "./components/fanzone-component/pending-component/pending-component.component";
+import { ViewTheatreComponent } from "./components/viewTheatre-component/viewTheatre-component.component";
 
 
 const appRoutes: Routes = 
@@ -42,7 +43,11 @@ const appRoutes: Routes =
     {  path: 'edititem',
        component: EditItemComponent},
     {   path: 'pending',
-        component: PendingComponent}
+        component: PendingComponent},
+    {
+        path: 'viewTheatre',
+        component: ViewTheatreComponent
+    }
     // {
     //     path: '**',
     //     component: PageNotFoundComponent
