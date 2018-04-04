@@ -23,6 +23,7 @@ import { ItemComponent } from './components/fanzone-component/item-component/ite
 import { FanzoneService } from './services/fanzone-service';
 import { AdditemComponent } from './components/additem-component/additem-component.component'
 import { ItemService } from './services/item-service';
+import { ProfileService } from './services/profile-service';
 
 
 @NgModule({
@@ -45,7 +46,7 @@ import { ItemService } from './services/item-service';
     FormsModule,
     HttpClientModule
   ],
-  providers: [ LoginService, HomeService, TheatresService, FanzoneService, ItemService],
+  providers: [ LoginService, HomeService, TheatresService, FanzoneService, ItemService, ProfileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

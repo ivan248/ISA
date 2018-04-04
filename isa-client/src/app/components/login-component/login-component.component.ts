@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+      //localStorage.setItem('token', 'ovde bi token trebao da bude');
 
     }
 
@@ -62,5 +63,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', data.token);
         this.router.navigateByUrl("/profile");
     } );
+
+    console.log(localStorage.getItem('token') + " zavrio sa loginom");
     }
 }

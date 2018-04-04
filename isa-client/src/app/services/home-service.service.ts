@@ -6,7 +6,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 const httpOptions = {
     headers: new HttpHeaders({ 
@@ -43,7 +43,15 @@ const httpOptions = {
 
     getCinemas(){
         
-        return this.http.get("http://localhost:8080/api/home/getCinemas", httpOptions);
+        return this.http
+        .get("http://localhost:8080/api/home/getCinemas", httpOptions)
+        .map(data => data)
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " " + err.error.error + " \n" + err.error.message);
+            return Observable.throw(err);
+        }
+    );
     }
 
   

@@ -25,14 +25,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		com.isa.project.bean.User user = userRepository.findByUsername(username);
+		com.isa.project.bean.User user = userRepository.findByUsername(username).get();
 		if(user == null) {
 			throw new UsernameNotFoundException(username); 
 		}
 		
+		List<GrantedAuthority> grantedAuthorities = user.getRoles().stream()
+				.map(authority -> new SimpleGrantedAuthority(authority.getRole()))
+						.collect(Collectors.toList());
 		// ovde dodajem role koje ima i da li je enablovan
 		
-		return new User(user.getUsername(), user.getPassword(), emptyList());
+		System.out.println(grantedAuthorities);
+		
+		return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
 	}
 	
 	private org.springframework.security.core.userdetails.User createSpringSecUser(com.isa.project.bean.User user) {

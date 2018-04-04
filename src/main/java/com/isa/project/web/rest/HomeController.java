@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +30,7 @@ public class HomeController {
 		
 	}
 	
-	
+	//@PreAuthorize("hasAuthority('REGISTERED_USER')")
 	@RequestMapping(value = "/getTheatres", method = RequestMethod.GET,
 			produces="application/json")
 	public ResponseEntity<ArrayList<Theatre>> getThetres(){
@@ -42,7 +43,8 @@ public class HomeController {
 		return new ResponseEntity<>(listaPozorista, HttpStatus.OK);
 		
 	}
-
+	
+	//@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/getCinemas", method = RequestMethod.GET,
 			produces="application/json")
 	public ResponseEntity<ArrayList<Cinema>> getCinemas(){
