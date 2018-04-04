@@ -31,6 +31,7 @@ import { EditItemComponent } from './components/fanzone-component/edititem-compo
 import { PendingComponent } from './components/fanzone-component/pending-component/pending-component.component';
 import { CinemasService } from './services/cinemas-service.service';
 import { ViewTheatreComponent } from './components/viewTheatre-component/viewTheatre-component.component';
+import { ViewCinemaComponent } from './components/viewCinema-component/viewCinema-component.component';
 
 
 
@@ -49,7 +50,8 @@ import { ViewTheatreComponent } from './components/viewTheatre-component/viewThe
     AdditemComponent,
     EditItemComponent,
     PendingComponent,
-    ViewTheatreComponent
+    ViewTheatreComponent,
+    ViewCinemaComponent
   ],
   imports: [
     routing,

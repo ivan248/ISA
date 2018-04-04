@@ -11,6 +11,7 @@ import { AdditemComponent } from "./components/additem-component/additem-compone
 import { EditItemComponent } from "./components/fanzone-component/edititem-component/edititem-component.component";
 import { PendingComponent } from "./components/fanzone-component/pending-component/pending-component.component";
 import { ViewTheatreComponent } from "./components/viewTheatre-component/viewTheatre-component.component";
+import { ViewCinemaComponent } from "./components/viewCinema-component/viewCinema-component.component";
 
 
 const appRoutes: Routes = 
@@ -47,6 +48,10 @@ const appRoutes: Routes =
     {
         path: 'viewTheatre',
         component: ViewTheatreComponent
+    },
+    {
+        path: 'viewCinema',
+        component: ViewCinemaComponent
     }
     // {
     //     path: '**',

@@ -14,7 +14,7 @@ import { HomeService } from '../../services/home-service.service';
     margin: 0 0 0 0;
     list-style-type: none;
     padding: 0;
-    width: 20em;
+    width: 25em;
   }
   .theatresArray li {
     cursor: pointer;
@@ -89,8 +89,6 @@ export class TheatresComponent implements OnInit {
     onClickOpenPage(Theatre:any): void{
         this.selectedTheatre=Theatre;
         this.theatresService.selectTheatre(this.selectedTheatre);
-       // this.dataService.changeEdditedItem(this.selectedTheatre);
-       console.log("1"+this.selectedTheatre.name);
         this.router.navigateByUrl('/viewTheatre');
       
     }

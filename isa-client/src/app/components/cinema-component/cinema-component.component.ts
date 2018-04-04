@@ -87,5 +87,12 @@ export class CinemasComponent implements OnInit {
       this.selectedCinema = cinema;
     }
 
+    onClickOpenPage(Cinema:any): void{
+      this.selectedCinema=Cinema;
+      this.cinemasService.selectCinema(this.selectedCinema);
+      this.router.navigateByUrl('/viewCinema');
+    
+  }
+
 
 }

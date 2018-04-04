@@ -26,7 +26,6 @@ export class ViewTheatreComponent implements OnInit {
     }
 
     ngOnInit() {
-       // this.theatresService.selectTheatre(this.currentTheatre).subscribe(currentTheatre => this.currentTheatre = currentTheatre);
         this.theatresService.currentth.subscribe(currentTheatre => this.currentTheatre = currentTheatre);
       }
 

@@ -2,22 +2,36 @@
   <div class="jumbotron">
     <h1>Theatres</h1>      
   </div>
+  </div>
 <br>
 <br>
-<ul class="theatresArray">
-   <li *ngFor="let t of theatresArray"
-    [class.selected]="t === selectedTheatre"
-    (click)="onSelect(t)">
-    <span class="badge">{{t.name}}</span> {{t.address}}
-  </li>
-</ul>
-<br>
-<div *ngIf="selectedTheatre">
+<div class="row">
+  <div class="col-sm">
+    <ul class="theatresArray">
+      <li *ngFor="let t of theatresArray"
+        [class.selected]="t === selectedTheatre"
+        (click)="onSelect(t)">
+        <span class="badge">{{t.name}}</span> {{t.address}}
+      </li>
+    </ul>
+  </div>
+  <br>
+
+  <div class="col-xl">
+    <div *ngIf="selectedTheatre">
  
         <h2>{{ selectedTheatre.name | uppercase }} Details</h2>
         <br>
         <div><span>address: </span>{{selectedTheatre.address}}</div>
         <div><span>description: </span>{{selectedTheatre.description}}</div>
         <button class="btn" (click)="onClickOpenPage(selectedTheatre)" >Open page</button>
+        <button class="btn" (click)="onClickEditPage(selectedTheatre)" >Edit theatre</button>
        
       </div>
+    </div>
+    <div class="col-sm"></div>
+
+
+
+    
+</div>

@@ -1,6 +1,7 @@
 import { Injectable  } from '@angular/core';  
 import { Observable } from 'rxjs/Observable';
 import { Http } from '@angular/http';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 import 'rxjs/add/operator/map';
@@ -20,26 +21,24 @@ const httpOptions = {
  export class CinemasService {  
 
     private url : string = "http://localhost:8080/api/cinemas/test";
+    private selectedTheatre: any;
+
+    private c = new BehaviorSubject<any>(new Object(new Object()));
+    currentc = this.c.asObservable();
 
     constructor(private http:HttpClient) {
 
     }
 
-   
-    submitTest(user : any) : Observable<any> {
-
-        const user2 = {
-            "username" : user,
-            "password" : "test"
-        }
-
-        let json = JSON.parse(JSON.stringify(user2));
-        return this.http.post(this.url, json, httpOptions);
-    }
 
     getCinemas(){
+
         return this.http.get("http://localhost:8080/api/home/getCinemas/");
     }
+
+    selectCinema(cinema: any) {
+        this.c.next(cinema);
+      }
 
   
 
