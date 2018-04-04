@@ -2,7 +2,6 @@ package com.isa.project.web.rest;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,10 +49,6 @@ public class LoginController {
 	public ResponseEntity<String> displayregistrationMessage(
 			@RequestBody RegistrationUserDto registrationUserDto,
 			HttpServletRequest request) {
-
-		//TokenProvider tp = new TokenProvider();
-		//String name = tp.getUsernameFromToken(token);
-		//System.out.println(name + " pogodio registraciju");*/
 		
 		System.out.println(registrationUserDto  + " ovo je user dobijen DTO");
 		

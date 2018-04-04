@@ -14,33 +14,32 @@ const httpOptions = {
         'X-Auth-Token' : localStorage.getItem('token')
      }),
 };
+
+const httpOptions1 = {
+    headers: new HttpHeaders({ 
+        'Content-Type': 'application/json'
+     }),
+};
   
  
  @Injectable()
- export class CinemasService {  
+ export class ProfileService {  
 
-    private url : string = "http://localhost:8080/api/cinemas/test";
+    private url : string = "http://localhost:8080/api/profile/";
 
     constructor(private http:HttpClient) {
 
     }
 
-   
-    submitTest(user : any) : Observable<any> {
-
-        const user2 = {
-            "username" : user,
-            "password" : "test"
-        }
-
-        let json = JSON.parse(JSON.stringify(user2));
-        return this.http.post(this.url, json, httpOptions);
+    getLoggedUser(): Observable<any> {
+        console.log(localStorage.getItem('token')); 
+         return this.http.get(this.url, httpOptions); 
     }
 
-    getCinemas(){
-        return this.http.get("http://localhost:8080/api/home/getCinemas/");
+    getSomething() {
+        
+        console.log(localStorage.getItem('token') + "getdugme"); 
+        return this.http.get(this.url+"get", httpOptions);
     }
-
-  
 
  } 

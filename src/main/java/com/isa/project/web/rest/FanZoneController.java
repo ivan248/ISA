@@ -60,7 +60,7 @@ public class FanZoneController {
 	      	return  new ResponseEntity<Item>(i,HttpStatus.BAD_REQUEST);
 	    }
 	    //TODO: i.setAuthor= session.thisuser;
-	    i.setOwner(userRepository.findByUsername("fpetrovic@ymail.com"));
+	    i.setOwner(userRepository.findByUsername("fpetrovic@ymail.com").get());
 	    fanZoneService.addItem(i);
       
 		return new ResponseEntity<Item>(i,HttpStatus.OK);
