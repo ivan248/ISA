@@ -31,16 +31,17 @@ export class ItemprofileComponent implements OnInit {
   
 
   onSubmit() {
+    
     if (this.value <= this.item.currentBid){
       alert("Your bid must be higher than current");
     } else {
-      let bid = new BidDTO(this.item.itemID, this.value );
-      console.log(bid);
+      let bid = new BidDTO(this.item, this.value );
 
-      //prvo promeni current bid
-      this.itemService.changeCurrentBid(this.value,this.item.itemID);
+      
       //drugo dodaj BID
-      //this.bidService.sendNewBid(bid).subscribe(data => console.log(data));
+      this.bidService.sendNewBid(bid).subscribe(data => console.log(data));
+      this.itemService.changeCurrentBid(this.value,this.item);
+      this.item.currentBid = this.value;
 
       //this.router.navigateByUrl('/itemprofile');
 

@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+
+<div class="container">
+  <div class="jumbotron">
+    <div class="row">
+      <div class="col">
+          <h1>My Fanzone</h1>  
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li class="nav-item border-right">
+      <a class="nav-link" data-toggle="tab"  (click)="onClickMyBids()" [routerLink]="">My bids</a>
+    </li>
+    <li class="nav-item border-right">
+      <a class="nav-link" data-toggle="tab" [routerLink]="" (click)="onClickMyItems()">My items</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab"  [routerLink]="" (click)="onClickBoughtItems()">Bought items</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+
+<div class="container" >
+    <h1>Ovo treba odraditi (ne pise u specifikaciji)</h1>
+</div>
+
+
+
+</body>
+</html>

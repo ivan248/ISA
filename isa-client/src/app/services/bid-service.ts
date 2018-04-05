@@ -5,12 +5,11 @@ import 'rxjs/Rx';
 import { BidDTO } from '../model/bidDTO';
 
 
-const httpOptions = {
-    headers: new HttpHeaders({ 
+
+    const headers = new HttpHeaders({ 
         'Content-Type': 'application/json',
         'X-Auth-Token' : localStorage.getItem('token')
-     }),
-};
+     });
 
  @Injectable()
  export class BidService {  
@@ -21,10 +20,8 @@ const httpOptions = {
 
     sendNewBid(bid : BidDTO){
         const body = JSON.parse(JSON.stringify(bid));
-        console.log("Body: ");
-        console.log(body);
 
-        return this.http.post('http://localhost:8080/bid/add',body,httpOptions);
+        return this.http.post('http://localhost:8080/bid/add',body,{ headers: headers});
 
     }
 

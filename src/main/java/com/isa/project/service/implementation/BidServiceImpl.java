@@ -22,8 +22,15 @@ public class BidServiceImpl implements BidService {
 
 	@Override
 	public Boolean addBid(Bid bid) {
-		bidRepository.saveAndFlush(bid);
-		return null;
+		try {
+			System.out.println("SAVEOVAO BID");
+			bidRepository.saveAndFlush(bid);
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 
 }

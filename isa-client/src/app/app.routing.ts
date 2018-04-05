@@ -7,12 +7,13 @@ import { HomeComponent } from "./components/home-component/home-component.compon
 import { TheatresComponent } from "./components/theatre-component/theatre-component.component";
 import { CinemasComponent } from "./components/cinema-component/cinema-component.component";
 import { FanzoneComponent } from "./components/fanzone-component/fanzone-component.component";
-import { AdditemComponent } from "./components/additem-component/additem-component.component";
+import { AdditemComponent } from "./components/fanzone-component/additem-component/additem-component.component";
 import { EditItemComponent } from "./components/fanzone-component/edititem-component/edititem-component.component";
 import { PendingComponent } from "./components/fanzone-component/pending-component/pending-component.component";
 import { ItemprofileComponent } from "./components/fanzone-component/itemprofile-component/itemprofile-component.component";
 import { ViewTheatreComponent } from "./components/viewTheatre-component/viewTheatre-component.component";
 import { ViewCinemaComponent } from "./components/viewCinema-component/viewCinema-component.component";
+import { MyfanzoneComponent } from "./components/fanzone-component/myfanzone-component/myfanzone-component.component";
 
 
 const appRoutes: Routes = 
@@ -50,16 +51,14 @@ const appRoutes: Routes =
         component: ItemprofileComponent},
     {
         path: 'viewTheatre',
-        component: ViewTheatreComponent
-    },
+        component: ViewTheatreComponent},
     {
         path: 'viewCinema',
-        component: ViewCinemaComponent
-    }
-    // {
-    //     path: '**',
-    //     component: PageNotFoundComponent
-    // }
+        component: ViewCinemaComponent },
+    {
+        path: 'myfanzone',
+        component: MyfanzoneComponent}
+    
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
