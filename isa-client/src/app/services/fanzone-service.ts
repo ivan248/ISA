@@ -3,12 +3,10 @@ import { Http, Response } from '@angular/http';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http' ;
 import 'rxjs/Rx';
 
-const httpOptions = {
-    headers: new HttpHeaders({ 
-        'Content-Type': 'application/json',
-        'X-Auth-Token' : localStorage.getItem('token')
-     }),
-};
+const headers = new HttpHeaders({ 
+    'Content-Type': 'application/json',
+    'X-Auth-Token' : localStorage.getItem('token')
+ });
 
  @Injectable()
  export class FanzoneService {  
@@ -19,11 +17,11 @@ const httpOptions = {
 
     getApprovedItems(){
 
-        return this.http.get("http://localhost:8080/fanzone/");
+        return this.http.get("http://localhost:8080/fanzone/",{ headers: headers});
     }
 
     getUnApprovedItems(){
-        return this.http.get("http://localhost:8080/fanzone/unapproved");
+        return this.http.get("http://localhost:8080/fanzone/unapproved",{ headers: headers});
     }
 
     
@@ -32,9 +30,9 @@ const httpOptions = {
         const body = JSON.parse(JSON.stringify(item));
         const headers = new HttpHeaders();
         headers.append('Content-type','application/json');
-        console.log(body);
+        
 
-        return this.http.post('http://localhost:8080/fanzone/additem',body,httpOptions);
+        return this.http.post('http://localhost:8080/fanzone/additem',body,{ headers: headers});
 
     }
 

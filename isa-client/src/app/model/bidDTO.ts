@@ -2,7 +2,7 @@ import { Item } from "./item";
 
 export class BidDTO
 {
-    public bidvalue : number;
+    public bid : number;
     public item : Item;
 
 
@@ -10,7 +10,7 @@ export class BidDTO
     constructor(item: Item, bidvalue: number) {
         this.item = item;
         
-        this.bidvalue = bidvalue;
+        this.bid = bidvalue;
 
     }
 

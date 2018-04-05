@@ -21,7 +21,7 @@ import { CinemasComponent } from './components/cinema-component/cinema-component
 import { FanzoneComponent } from './components/fanzone-component/fanzone-component.component';
 import { ItemComponent } from './components/fanzone-component/item-component/item-component.component'
 import { FanzoneService } from './services/fanzone-service';
-import { AdditemComponent } from './components/additem-component/additem-component.component'
+import { AdditemComponent } from './components/fanzone-component/additem-component/additem-component.component'
 import { ItemService } from './services/item-service';
 
 import { ProfileService } from './services/profile-service';
@@ -34,7 +34,11 @@ import { ItemprofileComponent } from './components/fanzone-component/itemprofile
 import { BidService } from './services/bid-service';
 import { ViewTheatreComponent } from './components/viewTheatre-component/viewTheatre-component.component';
 import { ViewCinemaComponent } from './components/viewCinema-component/viewCinema-component.component';
+<<<<<<< HEAD
 import { EditCinemaComponent } from './components/editCinema-component/editCinema-component.component';
+=======
+import { MyfanzoneComponent } from './components/fanzone-component/myfanzone-component/myfanzone-component.component';
+>>>>>>> b06df73fb3fc394ff9cb97bf788081f92b0f79cf
 
 
 
@@ -56,7 +60,11 @@ import { EditCinemaComponent } from './components/editCinema-component/editCinem
     ViewTheatreComponent,
     ViewCinemaComponent,
     ItemprofileComponent,
+<<<<<<< HEAD
     EditCinemaComponent
+=======
+    MyfanzoneComponent
+>>>>>>> b06df73fb3fc394ff9cb97bf788081f92b0f79cf
   ],
   imports: [
     routing,

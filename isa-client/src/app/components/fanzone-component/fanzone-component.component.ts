@@ -41,5 +41,9 @@ onClickPending(){
   this.router.navigateByUrl('/pending');
 }
 
+onClickMyFanzone(){
+  this.router.navigateByUrl('/myfanzone');
+}
+
 
 }

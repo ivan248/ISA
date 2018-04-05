@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { FanzoneService } from '../../services/fanzone-service';
+import { FanzoneService } from '../../../services/fanzone-service';
 import { Router } from '@angular/router';
 
  

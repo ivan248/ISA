@@ -4,15 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.isa.project.bean.Bid;
 import com.isa.project.bean.Item;
-
-
+import com.isa.project.bean.User;
+import com.isa.project.repository.UserRepository;
+import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.ItemService;
+import com.isa.project.web.dto.BidDTO;
 ;
 
 
@@ -24,6 +28,8 @@ public class ItemController {
 	@Autowired
 	private ItemService itemService;
 	
+	@Autowired
+	private UserRepository userRepository;
 
 	
 	
@@ -39,9 +45,23 @@ public class ItemController {
 	}
 	
 	@RequestMapping(value="/bid", method = RequestMethod.POST) //promena ponude
-	public Boolean bid(@RequestParam float bid, @RequestParam int id) {
-		System.out.println("usao u bid, parametri: " + bid + " " + id);
-		return itemService.bid(id, bid);
+	public Boolean bid(@RequestBody BidDTO bid,  @RequestHeader(value="X-Auth-Token") String token) {
+		if( bid.getBid() <= bid.getItem().getCurrentBid()) {
+			return false;
+		} else {
+			
+			
+			Bid b = new Bid();
+			TokenProvider p = new TokenProvider();
+			User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+			
+			b.setBuyer(currentUser);
+			b.setItem(bid.getItem());
+			b.setValue(bid.getBid());
+			
+			return itemService.bid(bid.getItem().getItemID(), bid.getBid());
+		}
+		
 	}
 	
 	@RequestMapping(value="/acceptbid/{id}", method = RequestMethod.POST) //promena ponude
