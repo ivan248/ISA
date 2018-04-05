@@ -34,11 +34,8 @@ import { ItemprofileComponent } from './components/fanzone-component/itemprofile
 import { BidService } from './services/bid-service';
 import { ViewTheatreComponent } from './components/viewTheatre-component/viewTheatre-component.component';
 import { ViewCinemaComponent } from './components/viewCinema-component/viewCinema-component.component';
-<<<<<<< HEAD
 import { EditCinemaComponent } from './components/editCinema-component/editCinema-component.component';
-=======
 import { MyfanzoneComponent } from './components/fanzone-component/myfanzone-component/myfanzone-component.component';
->>>>>>> b06df73fb3fc394ff9cb97bf788081f92b0f79cf
 
 
 
@@ -60,11 +57,8 @@ import { MyfanzoneComponent } from './components/fanzone-component/myfanzone-com
     ViewTheatreComponent,
     ViewCinemaComponent,
     ItemprofileComponent,
-<<<<<<< HEAD
-    EditCinemaComponent
-=======
+    EditCinemaComponent,
     MyfanzoneComponent
->>>>>>> b06df73fb3fc394ff9cb97bf788081f92b0f79cf
   ],
   imports: [
     routing,
