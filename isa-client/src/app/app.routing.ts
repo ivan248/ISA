@@ -13,6 +13,7 @@ import { PendingComponent } from "./components/fanzone-component/pending-compone
 import { ItemprofileComponent } from "./components/fanzone-component/itemprofile-component/itemprofile-component.component";
 import { ViewTheatreComponent } from "./components/viewTheatre-component/viewTheatre-component.component";
 import { ViewCinemaComponent } from "./components/viewCinema-component/viewCinema-component.component";
+import { EditCinemaComponent } from "./components/editCinema-component/editCinema-component.component";
 
 
 const appRoutes: Routes = 
@@ -55,6 +56,10 @@ const appRoutes: Routes =
     {
         path: 'viewCinema',
         component: ViewCinemaComponent
+    },
+    {
+        path: 'editCinema',
+        component: EditCinemaComponent
     }
     // {
     //     path: '**',

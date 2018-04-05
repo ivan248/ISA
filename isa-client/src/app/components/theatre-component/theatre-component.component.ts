@@ -93,6 +93,10 @@ export class TheatresComponent implements OnInit {
       
     }
 
+    onClickEditPage(Theatre:any): void{
+        
+    }
+
        
        
  

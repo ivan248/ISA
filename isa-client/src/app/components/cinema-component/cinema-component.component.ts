@@ -64,7 +64,7 @@ export class CinemasComponent implements OnInit {
 
     private selectedCinema: any;
 
-   
+    private editButtonHidden: boolean = false;
 
     constructor(private cinemasService: CinemasService,
             private router : Router) {
@@ -91,8 +91,17 @@ export class CinemasComponent implements OnInit {
       this.selectedCinema=Cinema;
       this.cinemasService.selectCinema(this.selectedCinema);
       this.router.navigateByUrl('/viewCinema');
+     // this.editButtonHidden=true;
     
   }
+
+  onClickEditPage(Cinema:any): void{
+    this.selectedCinema=Cinema;
+    this.cinemasService.selectCinema(this.selectedCinema);
+   // this.cinemasService.selectedList();
+    this.router.navigateByUrl('/editCinema');
+  
+}
 
 
 }

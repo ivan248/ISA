@@ -48,7 +48,6 @@ const httpOptions = {
     }
 
     selectTheatre(theatre: any) {
-        console.log("2"+theatre.name);
         this.th.next(theatre);
       }
 

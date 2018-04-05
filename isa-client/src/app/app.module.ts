@@ -34,6 +34,7 @@ import { ItemprofileComponent } from './components/fanzone-component/itemprofile
 import { BidService } from './services/bid-service';
 import { ViewTheatreComponent } from './components/viewTheatre-component/viewTheatre-component.component';
 import { ViewCinemaComponent } from './components/viewCinema-component/viewCinema-component.component';
+import { EditCinemaComponent } from './components/editCinema-component/editCinema-component.component';
 
 
 
@@ -54,7 +55,8 @@ import { ViewCinemaComponent } from './components/viewCinema-component/viewCinem
     PendingComponent,
     ViewTheatreComponent,
     ViewCinemaComponent,
-    ItemprofileComponent
+    ItemprofileComponent,
+    EditCinemaComponent
   ],
   imports: [
     routing,

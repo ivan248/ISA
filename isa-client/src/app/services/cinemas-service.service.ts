@@ -26,11 +26,18 @@ const httpOptions = {
     private c = new BehaviorSubject<any>(new Object(new Object()));
     currentc = this.c.asObservable();
 
+    private cList= new BehaviorSubject<any[]>(new Array<any>());
+    currentcList = this.cList.asObservable();
+
     constructor(private http:HttpClient) {
 
     }
 
 
+  /*  getCinemas(){
+
+        return this.http.get("http://localhost:8080/api/home/getCinemas");
+    }*/
     getCinemas(){
         return this.http.get("http://localhost:8080/api/home/getCinemas",httpOptions).map(data => data)
         .catch((err:HttpErrorResponse) =>
@@ -38,10 +45,16 @@ const httpOptions = {
             alert(err.status + " " + err.error.error + " \n" + err.error.message);
             return Observable.throw(err);
         });
+
+       
     }
 
     selectCinema(cinema: any) {
         this.c.next(cinema);
+      }
+    
+    selectedList(cinemaList: any[]){
+        this.cList.next(cinemaList);
       }
 
   

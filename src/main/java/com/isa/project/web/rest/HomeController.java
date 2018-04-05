@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.isa.project.bean.Cinema;
+import com.isa.project.bean.Item;
 import com.isa.project.bean.Theatre;
 import com.isa.project.bean.User;
 import com.isa.project.service.CinemaService;
@@ -45,31 +46,33 @@ public class HomeController {
 	@RequestMapping(value = "/getTheatres", method = RequestMethod.GET,
 			produces="application/json")
 	public ResponseEntity<ArrayList<Theatre>> getThetres(){
-		/*Theatre t1 = new Theatre((long) 1, "SNP", "Adresa1", "opis1");
-		Theatre t2 = new Theatre((long) 2, "NP", "Adresa2", "opis2");
-		
-		ArrayList<Theatre> listaPozorista = new ArrayList<>();
-		listaPozorista.add(t1);
-		listaPozorista.add(t2); */
 		ArrayList<Theatre> listaPozorista = new ArrayList<>();
 		listaPozorista = theatreService.getAllTheatres();
 		return new ResponseEntity<>(listaPozorista, HttpStatus.OK);
 		
 	}
 	
-	@PreAuthorize("hasAuthority('ADMIN')")
+	//@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/getCinemas", method = RequestMethod.GET,
 			produces="application/json")
 	public ResponseEntity<ArrayList<Cinema>> getCinemas(){
-		/*Cinema c1 = new Cinema((long) 1, "Arena", "Adresa1", "opis1");
-		Cinema c2 = new Cinema((long) 2, "Neki bioskop", "Adresa2", "opis2");
-		
-		ArrayList<Cinema> listaBioskopa = new ArrayList<>();
-		listaBioskopa.add(c1);
-		listaBioskopa.add(c2);*/
 		ArrayList<Cinema> listaBioskopa = new ArrayList<>();
 		listaBioskopa = cinemaService.getAllCinemas();
+		System.out.println(listaBioskopa);
 		return new ResponseEntity<>(listaBioskopa, HttpStatus.OK);
+		
+	}
+	
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@RequestMapping(value = "/editCinema", method = RequestMethod.GET,
+			produces="application/json")
+	public ResponseEntity<Cinema> editCinema(@RequestBody Cinema cinema){
+		
+		
+		ArrayList<Cinema> listaBioskopa = new ArrayList<>();
+		listaBioskopa = cinemaService.getAllCinemas();
+		System.out.println(listaBioskopa);
+		return new ResponseEntity<>(cinema, HttpStatus.OK);
 		
 	}
 

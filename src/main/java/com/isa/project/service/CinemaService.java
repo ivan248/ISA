@@ -10,7 +10,7 @@ import com.isa.project.bean.Cinema;
 public interface CinemaService {
 
 	ArrayList<Cinema> getAllCinemas();
-
+	Boolean editCinema(Cinema cinema);
 
 	
 
