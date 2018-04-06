@@ -6,7 +6,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 const httpOptions = {
     headers: new HttpHeaders({ 
@@ -43,7 +43,12 @@ const httpOptions1 = {
 
 
 
-       return this.http.post("http://localhost:8080/api/login/login", user, httpOptions1); 
+       return this.http.post("http://localhost:8080/api/login/login", user, httpOptions1)
+       .catch((err:HttpErrorResponse) =>
+       {
+           alert(err.status + "Unauthorized.");
+           return Observable.throw(err);
+       }); 
     }
 
     submitRegistration(user : any) : Observable<any> {

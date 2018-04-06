@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { User } from '../model/dto/userDTO';
 
 const httpOptions = {
     headers: new HttpHeaders({ 
@@ -15,13 +16,6 @@ const httpOptions = {
      }),
 };
 
-const httpOptions1 = {
-    headers: new HttpHeaders({ 
-        'Content-Type': 'application/json'
-     }),
-};
-  
- 
  @Injectable()
  export class ProfileService {  
 
@@ -32,14 +26,14 @@ const httpOptions1 = {
     }
 
     getLoggedUser(): Observable<any> {
-        console.log(localStorage.getItem('token')); 
-         return this.http.get(this.url, httpOptions); 
+        return this.http.get(this.url, httpOptions).map((data:Observable<any>) => data); 
     }
 
-    getSomething() {
-        
-        console.log(localStorage.getItem('token') + "getdugme"); 
-        return this.http.get(this.url+"get", httpOptions);
+    editUser(user : User) {
+        console.log("ispis iz profile servisa token : \n" + localStorage.getItem('token'));
+        console.log(httpOptions);
+        return this.http.post(this.url + "editUser", user, httpOptions);
     }
+
 
  } 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CinemasService } from '../../services/cinemas-service.service';
+import { HomeService } from '../../services/home-service.service';
 
 @Component({
   selector: 'editCinema-component',
@@ -17,7 +18,8 @@ export class EditCinemaComponent implements OnInit {
 
 
     constructor(private cinemasService: CinemasService,
-            private router : Router) {
+            private router : Router,
+          private homeService: HomeService) {
               
     }
 
@@ -27,6 +29,10 @@ export class EditCinemaComponent implements OnInit {
       }
     onSubmit(){
         console.log(this.currentCinema);
+
+         this.homeService.sendEdditedCinema(this.currentCinema)
+          .subscribe();
+         this.router.navigateByUrl('/cinemas');
     
       }
     

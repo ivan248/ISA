@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../../services/profile-service';
+import { User } from '../../model/dto/userDTO';
 
 @Component({
   selector: 'profile-component',
@@ -7,7 +8,6 @@ import { ProfileService } from '../../services/profile-service';
   styles: [`body {
     padding: 0px;
     }
-
     .container {
       width: auto;
       margin-left: 200px;
@@ -33,23 +33,103 @@ import { ProfileService } from '../../services/profile-service';
       }
       .navbar-inner {
       margin: 0 auto;
-      }`]
+      }
+      
+      
+      body{
+        background: #DAE3E7;
+      }
+      
+      .row{
+        margin-top: 40px;
+      }
+      
+      
+      html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+      div.card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.1);
+      }
+      
+      .header {
+        padding: 10px 0;
+        background: #f5f5f5;
+        border-top: 3px solid #3AAA64;
+      }
+      
+      .list-group {
+          list-style: disc inside;
+      
+      }
+      
+      .list-group-item {
+          display: list-item;
+      }
+      
+       .find-more{
+         text-align: right;
+       }
+      
+      
+      .label-theme{
+        background: #3AAA64;
+        font-size: 14px;
+        padding: .3em .7em .3em;
+        color: #fff;
+        border-radius: .25em;
+      }
+      
+      .label a{
+        color: inherit;
+      }
+      `]
 })
 export class ProfileComponent implements OnInit {
  
-    private loggedUser : any = null;
+    private loggedUser : any;
+    private editClicked : boolean = true;
+
+    private firstName : string;
+    private lastName : string;
+    private username : string;
+    private phoneNumber : number;
+    private city : string;
 
     constructor(private profileService: ProfileService) {
 
     }
 
     ngOnInit() {
-      console.log(localStorage.getItem('token'));
-      this.profileService.getLoggedUser().subscribe(data => this.loggedUser = data);
+      this.profileService.getLoggedUser().subscribe(data =>{
+        this.loggedUser = data;
+        this.firstName = data.firstName;
+        this.lastName = data.lastName;
+        this.username = data.username;
+        this.phoneNumber = data.phoneNumber;
+        this.city = data.city;
+      } );
+      
     }
 
-    onSubmit() {
-      this.profileService.getSomething().subscribe(data => console.log(data));
+    editButtonClicked() {
+      this.editClicked = !this.editClicked;
+      this.firstName = this.loggedUser.firstName;
+      this.lastName = this.loggedUser.lastName;
+      this.username = this.loggedUser.username;
+      this.phoneNumber = this.loggedUser.phoneNumber;
+      this.city = this.loggedUser.city;
     }
 
+    confirmEdit() {
+      console.log();
+      this.editClicked = !this.editClicked;
+
+      let user = new User(
+      this.firstName,
+      this.lastName,
+      this.username,
+      this.phoneNumber,
+      this.city);
+
+      this.profileService.editUser(user).subscribe(data => this.loggedUser = data);
+    }
 }

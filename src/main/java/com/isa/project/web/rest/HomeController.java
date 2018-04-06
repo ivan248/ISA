@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.isa.project.bean.Cinema;
-import com.isa.project.bean.Item;
 import com.isa.project.bean.Theatre;
 import com.isa.project.bean.User;
 import com.isa.project.service.CinemaService;
@@ -63,17 +62,23 @@ public class HomeController {
 		
 	}
 	
-	@PreAuthorize("hasAuthority('ADMIN')")
+	//@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/editCinema", method = RequestMethod.GET,
 			produces="application/json")
-	public ResponseEntity<Cinema> editCinema(@RequestBody Cinema cinema){
+	public ResponseEntity editCinema(@RequestBody Cinema cinema){
 		
-		
+		System.out.println("Edit cinema");
 		ArrayList<Cinema> listaBioskopa = new ArrayList<>();
 		listaBioskopa = cinemaService.getAllCinemas();
 		System.out.println(listaBioskopa);
 		return new ResponseEntity<>(cinema, HttpStatus.OK);
 		
+	}
+	
+	@RequestMapping(value="/edit", method = RequestMethod.POST) 
+	public ResponseEntity editItemStep(@RequestBody Cinema cinema) {
+		System.out.println("Editovanje");
+		return new ResponseEntity<>(cinemaService.editCinema(cinema), HttpStatus.OK);
 	}
 
 }

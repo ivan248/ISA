@@ -1,9 +1,9 @@
 <div class="container">
 <form (ngSubmit)="onSubmit(f)" #f="ngForm" >
     <div class="jumbotron">
-        <h1><b>Cinema name: </b></h1> 
+        <h1><b>Theatre name: </b></h1> 
         <input type="text" class="form-control" name="name"
-                                [(ngModel)] = "currentCinema.name"   
+                                [(ngModel)] = "currentTheatre.name"   
                                     required>
                                       
     </div>
@@ -18,7 +18,7 @@
     <div class="card-body">
             <div class="col-8">
                 <input type="text" class="form-control" name="address"
-                [(ngModel)] = "currentCinema.address"   
+                [(ngModel)] = "currentTheatre.address"   
                     required>
             </div>
         </div>
@@ -33,7 +33,7 @@
         <div class="card-body">
                 <div class="col-8">
                     <input type="text" class="form-control" name="description"
-                [(ngModel)] = "currentCinema.description"   
+                [(ngModel)] = "currentTheatre.description"   
                     required>
                 </div>
             </div>

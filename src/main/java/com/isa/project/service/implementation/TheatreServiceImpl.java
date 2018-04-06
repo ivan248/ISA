@@ -20,9 +20,33 @@ public class TheatreServiceImpl implements TheatreService{
 	@Override
 	public ArrayList<Theatre> getAllTheatres() {
 		// TODO Auto-generated method stub
-		System.out.println("theatre service impl");
 		return theatreRepository.findAll();
 	}
+	
+	@Override
+	public Boolean editTheatre(Theatre theatre) {
+
+		try {
+			Theatre t = theatreRepository.findOne(theatre.getTheatre_id());
+			t.setName(theatre.getName());
+			t.setDescription(theatre.getDescription());
+			t.setAddress(theatre.getAddress());
+			t.setTheatre_id(theatre.getTheatre_id());
+			
+			
+			theatreRepository.flush();
+		}
+		catch(Exception e) {
+			System.out.println("Error occured while writing to database. Constraints were not satisfied.********");
+			e.printStackTrace();
+			return false;
+		}
+		
+		
+		return true;
+	}
+
+
 	
 	
 

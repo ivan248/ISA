@@ -11,6 +11,8 @@ public interface TheatreService {
 
 	ArrayList<Theatre> getAllTheatres();
 
+	Boolean editTheatre(Theatre theatre);
+
 
 	
 

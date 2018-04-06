@@ -12,4 +12,5 @@ public interface UserService {
 
 	public boolean registerUser(RegistrationUserDto userDto, HttpServletRequest req);
 	public boolean confirmAccountRegistrationToken(String token);
+	public User editUser(RegistrationUserDto userDto, String username);
 }

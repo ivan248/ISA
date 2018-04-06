@@ -74,4 +74,18 @@ public class UserSeviceImpl implements UserService {
 		return true;
 
 	}
+
+	@Override
+	public User editUser(RegistrationUserDto userDto, String username) {
+		
+		User logged = userRepository.findByUsername(username).get();
+		logged.setCity(userDto.getCity());
+		logged.setFirstName(userDto.getFirstName());
+		logged.setLastName(userDto.getLastName());
+		logged.setPhoneNumber(userDto.getPhoneNumber());
+		
+		userRepository.save(logged);
+		
+		return logged;
+	}
 }

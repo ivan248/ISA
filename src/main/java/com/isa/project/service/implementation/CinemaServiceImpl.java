@@ -26,17 +26,19 @@ public class CinemaServiceImpl implements CinemaService{
 	@Override
 	public Boolean editCinema(Cinema cinema) {
 		System.out.println("Editovanje bioskopa.");
+		System.out.println("cinema: "+cinema.getName());
 		try {
-			Cinema c = cinemaRepository.findOneByName(cinema.getName());
+			Cinema c = cinemaRepository.findOne(cinema.getCinema_id());
 			c.setName(cinema.getName());
 			c.setDescription(cinema.getDescription());
 			c.setAddress(cinema.getAddress());
+			c.setCinema_id(cinema.getCinema_id());
 			
 			
 			cinemaRepository.flush();
 		}
 		catch(Exception e) {
-			System.out.println("Error occured while writing to database. Constraints were not satisfied.");
+			System.out.println("Error occured while writing to database. Constraints were not satisfied.********");
 			e.printStackTrace();
 			return false;
 		}

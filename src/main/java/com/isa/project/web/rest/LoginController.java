@@ -80,6 +80,7 @@ public class LoginController {
     	
 		System.out.println("pogodio login");
 		
+		try {
 		UserDetails details = userDetailsService.loadUserByUsername(loginDTO.getUsername());
 		UsernamePasswordAuthenticationToken authenticationToken =
 				new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
@@ -89,8 +90,16 @@ public class LoginController {
 		
 		String jwt = tokenProvider.generateToken(details);
 		
-	
 		return new ResponseEntity<>(new JWTTokenResponse(jwt),HttpStatus.OK);
+		} catch(Exception e) {
+			
+			e.printStackTrace();
+			System.out.println("usao u catch login ");
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		
+	
+		
 			
 
     }

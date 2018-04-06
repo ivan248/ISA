@@ -35,6 +35,7 @@ import { BidService } from './services/bid-service';
 import { ViewTheatreComponent } from './components/viewTheatre-component/viewTheatre-component.component';
 import { ViewCinemaComponent } from './components/viewCinema-component/viewCinema-component.component';
 import { EditCinemaComponent } from './components/editCinema-component/editCinema-component.component';
+import { EditTheatreComponent } from './components/editTheatre-component/editTheatre-component.component';
 import { MyfanzoneComponent } from './components/fanzone-component/myfanzone-component/myfanzone-component.component';
 import { AddnewitemComponent } from './components/fanzone-component/addnewitem-component/addnewitem-component.component';
 
@@ -61,8 +62,9 @@ import { AddnewitemComponent } from './components/fanzone-component/addnewitem-c
     ItemprofileComponent,
     EditCinemaComponent,
     MyfanzoneComponent,
-    AddnewitemComponent
-    
+    AddnewitemComponent,
+    EditTheatreComponent,
+    MyfanzoneComponent
   ],
   imports: [
     routing,
