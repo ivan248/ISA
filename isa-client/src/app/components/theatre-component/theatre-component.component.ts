@@ -94,6 +94,9 @@ export class TheatresComponent implements OnInit {
     }
 
     onClickEditPage(Theatre:any): void{
+      this.selectedTheatre=Theatre;
+      this.theatresService.selectTheatre(this.selectedTheatre);
+      this.router.navigateByUrl('/editTheatre');
         
     }
 

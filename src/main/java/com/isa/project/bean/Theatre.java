@@ -20,11 +20,11 @@ public class Theatre {
     @Column(name = "description", nullable = false)
     private String description;
 
-	public Long getCinema_id() {
+	public Long getTheatre_id() {
 		return theatre_id;
 	}
 
-	public void setCinema_id(Long theatre_id) {
+	public void setTheatre_id(Long theatre_id) {
 		this.theatre_id = theatre_id;
 	}
 

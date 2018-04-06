@@ -1,0 +1,46 @@
+<div class="container">
+<form (ngSubmit)="onSubmit(f)" #f="ngForm" >
+    <div class="jumbotron">
+        <h1><b>Theatre name: </b></h1> 
+        <input type="text" class="form-control" name="name"
+                                [(ngModel)] = "currentTheatre.name"   
+                                    required>
+                                      
+    </div>
+  <br>
+  <br>
+  <div class="card">
+    <div class="card-body">
+        <div class="col-8">
+            <h4><b>Address: </b></h4>
+        </div>
+    </div>
+    <div class="card-body">
+            <div class="col-8">
+                <input type="text" class="form-control" name="address"
+                [(ngModel)] = "currentTheatre.address"   
+                    required>
+            </div>
+        </div>
+    </div>
+
+<div class="card">
+    <div class="card-body">
+            <div class="col-8">
+                <h4><b>Description: </b></h4>
+            </div>
+        </div>
+        <div class="card-body">
+                <div class="col-8">
+                    <input type="text" class="form-control" name="description"
+                [(ngModel)] = "currentTheatre.description"   
+                    required>
+                </div>
+            </div>
+       
+    </div>
+    <br>
+    <br>
+    <button type="submit"  class="btn btn-dark btn-lg" [disabled] = "!f.valid">Save changes</button>
+    </form>
+  </div>
