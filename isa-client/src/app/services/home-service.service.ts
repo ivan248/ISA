@@ -14,6 +14,11 @@ const httpOptions = {
         'X-Auth-Token' : localStorage.getItem('token')
      }),
 };
+
+const headers = new HttpHeaders({ 
+    'Content-Type': 'application/json',
+    'X-Auth-Token' : localStorage.getItem('token')
+ });
   
  
  @Injectable()
@@ -53,6 +58,17 @@ const httpOptions = {
         }
     );
     }
+
+    sendEdditedCinema(cinema : any){
+        const body = JSON.parse(JSON.stringify(cinema));
+        
+        console.log("sendeditedcinema"+body.name);
+        return this.http.post('http://localhost:8080/api/home/edit',body,{
+            headers: headers
+        } );
+
+    }
+
 
   
 
