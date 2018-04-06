@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.Item;
+import com.isa.project.bean.OfficialItem;
 import com.isa.project.bean.User;
 import com.isa.project.repository.ItemRepository;
+
 import com.isa.project.repository.UserRepository;
 import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.FanZoneService;
@@ -33,16 +35,21 @@ public class FanZoneController {
 	
 	@Autowired
 	private ItemRepository itemRepository;
-	
 	@Autowired 
 	private FanZoneService fanZoneService;
-	//TODO: Obrisi
 	@Autowired
 	private UserRepository userRepository;
+
 	
 	@RequestMapping(value="/", method= RequestMethod.GET)
 	public List<Item> getAllItems(){
 		return fanZoneService.getAllApprovedItems();
+	}
+	
+	@RequestMapping(value="/new", method= RequestMethod.GET)
+	public List<OfficialItem> getAllOfficialItems(){
+		
+		return fanZoneService.getAllOfficialItems();
 	}
 	
 	@RequestMapping(value="/unapproved", method= RequestMethod.GET)
@@ -51,27 +58,18 @@ public class FanZoneController {
 	}
 	
 	@RequestMapping(value="/additem", method=RequestMethod.POST, consumes="application/json")
-	public  ResponseEntity<Item> addItem( @RequestBody AddNewItemDto newItemDTO, @RequestHeader(value="X-Auth-Token") String token
-			) {
-		
+	public  ResponseEntity<Item> addItem( @RequestBody AddNewItemDto newItemDTO, @RequestHeader(value="X-Auth-Token") String token) {
 		
 		TokenProvider p = new TokenProvider();
-		System.out.println(p.getUsernameFromToken(token));
-		
 		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
 		
-		System.out.println("pogodio add item a user je " + logged);
-		
-		
-		System.out.println("ONO STO JE SIGLO: " + newItemDTO.toString());
 		Item i = Converter.convertAddNewItemToItem(newItemDTO);
 		int status = i.getEndDate().compareTo(i.getBeginDate());  //provera da li je unesen krajnji datum stariji ili mladji od danasnjeg
 	    if (status <=0) {
 	    	System.out.println("Can't enter end date from the past.");
 	      	return  new ResponseEntity<Item>(i,HttpStatus.BAD_REQUEST);
 	    }
-	    //TODO: i.setAuthor= session.thisuser;
-	    i.setOwner(userRepository.findByUsername("fpetrovic@ymail.com").get());
+	    i.setOwner(logged);
 	    fanZoneService.addItem(i);
       
 		return new ResponseEntity<Item>(i,HttpStatus.OK);
@@ -92,6 +90,29 @@ public class FanZoneController {
 	public ResponseEntity<Item> getItem(@RequestParam("id") int id) {
 		System.out.println("Usao u getitem");
 		return new ResponseEntity<Item>(itemRepository.findOneByItemID(id),HttpStatus.OK);
+		
+		
+	}
+	
+	@RequestMapping(value="/addofficialitem", method=RequestMethod.POST)
+	public  ResponseEntity<OfficialItem> addOfficialItem( @RequestBody AddNewItemDto newItemDTO) {
+		
+		OfficialItem i = new OfficialItem();// ovde treba dto converter
+//	    i.setCinemaOwner(new DTO.cimane);
+//	    i.setTheatreOwner(new DTO.theatre);
+//	    
+//	    fanZoneService.addOfficialItem(i);
+      
+		//return new ResponseEntity<Item>(fanZoneService.addOfficialItem(i),HttpStatus.OK)
+		return null;
+		
+
+	}
+	
+	@RequestMapping(value = "/deleteofficialitem", method= RequestMethod.DELETE)
+	public ResponseEntity<Boolean> deleteOfficialItem(@RequestParam("id") int id) {
+		System.out.println("Usao u delete official");
+		return new ResponseEntity<Boolean>(fanZoneService.deleteOfficialItem(id),HttpStatus.OK);
 		
 		
 	}

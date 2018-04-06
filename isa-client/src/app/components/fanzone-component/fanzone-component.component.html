@@ -15,7 +15,7 @@
       <div class="col">
           <h1>Fanzone</h1>      
           <!--<p>Browse and bid on !</p> -->
-          <button class="btn btn-dark btn-lg" (click)="onClickAddNewItem()">Add new item</button>
+          
       </div>
       <div class="col text-right">
           <button class="btn btn-dark btn-md" (click)="onClickPending()">Pending items</button>
@@ -26,13 +26,29 @@
   </div>
   
 </div>
+<div class="container" border-bottom>
+  <ul class="nav nav-tabs">
+    <li class="nav-item border-right">
+      <a class="nav-link" data-toggle="tab"  (click)="onClickPreOwnedItems()" [routerLink]="">Pre-owned items</a>
+    </li>
+    <li class="nav-item border-right">
+      <a class="nav-link" data-toggle="tab" [routerLink]="" (click)="onClickNewItems()">New items</a>
+    </li>
+    
+    <hr> <button *ngIf = "preowned" class="btn btn-dark" (click)="onClickAddNewItem()">Add preowned item</button>
+         <button *ngIf = "!preowned" class="btn btn-dark" (click)="onClickAddNewNewItem()">Add new item</button>
+  </ul>
+  <br>
+</div>
 
 
-
-<div class="container" >
+<div class="container" *ngIf = "preowned" >
     <item-component [items] = approveditems></item-component>
 </div>
 
+<div class="container" *ngIf = "!preowned" >
+  <item-component [items] = newitems></item-component>
+</div>
 
 
 </body>

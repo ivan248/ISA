@@ -40,22 +40,45 @@
                                         required
                                         >
                                     </textarea>
+                            </div>
+
+
+                            <label>
+                              Choose where is this item being sold
+                            </label>
+                            <div class="radio" *ngFor="let p of places" >
+                              <input type="radio" [(ngModel)]="item.place" name="place" [value]="p"> {{p}}
                             </div>  
+                            <hr>
+                            <label *ngIf="item.place === 'Cinema'"> Select cinema</label>
+                            <label *ngIf="item.place === 'Theatre'"> Select theatre</label>
                             <div class="form-group">
-                                    <label>Starting bid</label>
-                                    <input type="text" class="form-control" name="currentBid" 
-                                        [(ngModel)] = "item.currentBid" 
+                                <select required title="All cinemas" class="custom-select"  name="cinemas" [(ngModel)]="item.placeID" *ngIf="item.place === 'Cinema'">
+                                    
+                                    <option [value] ="c.cinema_id"  *ngFor='let c  of cinemas' >{{c.name}}</option>
+                                    
+                                </select>
+
+                                <select  required title="All theatres" class="custom-select"  name="theatres" [(ngModel)]="item.placeID" *ngIf="item.place === 'Theatre'">
+                                    
+                                    <option [value] = "t.cinema_id"  *ngFor='let t of theatres' >{{t.name}}</option>
+                                    
+                                </select>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                    <label>Price</label>
+                                    <input type="text" class="form-control selected" name="price" 
+                                        [(ngModel)] = "item.price" 
                                         required
                                         pattern="[+]?([0-9]+([.][0-9]*)?|[.][0-9]+)"
                                     >
                                 </div>  
-                            <hr>           
-                            <div class="form-group">
-                                    <label>Expire date</label>
-                                <input type="date"  min="1000-01-01" max="3000-12-31" class="form-control" value="Expire date"  name="endDate" 
-                                [(ngModel)] = "item.endDate"
-                                required>            
-                            </div>
+                            <hr>
+                                       
+                            
                             <hr>
                             <div class="form-group">
                                     <label> Choose picture </label>

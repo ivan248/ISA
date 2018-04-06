@@ -24,14 +24,15 @@ const headers = new HttpHeaders({
         return this.http.get("http://localhost:8080/fanzone/unapproved",{ headers: headers});
     }
 
+    getNewItems(){
+
+        return this.http.get("http://localhost:8080/fanzone/new",{ headers: headers});
+    }
     
 
     sendNewItem(item : any){
         const body = JSON.parse(JSON.stringify(item));
-        const headers = new HttpHeaders();
-        headers.append('Content-type','application/json');
-        
-
+        console.log("SALJE ITEM");
         return this.http.post('http://localhost:8080/fanzone/additem',body,{ headers: headers});
 
     }

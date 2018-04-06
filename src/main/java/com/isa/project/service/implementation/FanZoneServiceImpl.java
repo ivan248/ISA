@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.isa.project.bean.Item;
-
+import com.isa.project.bean.OfficialItem;
 import com.isa.project.repository.ItemRepository;
+import com.isa.project.repository.OfficialItemRepository;
 import com.isa.project.service.FanZoneService;
 
 @Service
@@ -16,6 +17,9 @@ public class FanZoneServiceImpl implements FanZoneService{
 	
 	@Autowired
 	private ItemRepository itemRepository;
+	
+	@Autowired
+	private OfficialItemRepository officialItemRepository;
 	
 	@Override
 	public List<Item> getAllApprovedItems() {
@@ -55,6 +59,43 @@ public class FanZoneServiceImpl implements FanZoneService{
 		}	
 		
 		return true;
+	}
+
+	
+
+	@Override
+	public Boolean addOfficialItem(OfficialItem item) {
+		try {
+			officialItemRepository.saveAndFlush(item);
+		}
+		catch(Exception e) {
+			System.out.println("Error occured while writing to database. Constraints were not satisfied.");
+			e.printStackTrace();
+			return false;
+		}
+		
+		
+		return true;
+	}
+
+	@Override
+	public Boolean deleteOfficialItem(int id) {
+		try {
+			//obavesti autora da mu je ponuda odbijena.. nema brisanja radi evidencije
+			officialItemRepository.delete(id);
+		}
+		catch(Exception e) {
+			System.out.println("Error occured while deleting item from database.");
+			e.printStackTrace();
+			return false;
+		}	
+		
+		return true;
+	}
+
+	@Override
+	public List<OfficialItem> getAllOfficialItems() {
+		return officialItemRepository.findAll();
 	}
 
 	

@@ -21,6 +21,7 @@ public class ItemServiceImpl implements ItemService {
 			i.setDescription(item.getDescription());
 			i.setEndDate(item.getEndDate());
 			i.setName(item.getName());
+			i.setImage(item.getImage());
 			
 			
 			itemRepository.flush();

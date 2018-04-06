@@ -36,6 +36,8 @@ import { ViewTheatreComponent } from './components/viewTheatre-component/viewThe
 import { ViewCinemaComponent } from './components/viewCinema-component/viewCinema-component.component';
 import { EditCinemaComponent } from './components/editCinema-component/editCinema-component.component';
 import { MyfanzoneComponent } from './components/fanzone-component/myfanzone-component/myfanzone-component.component';
+import { AddnewitemComponent } from './components/fanzone-component/addnewitem-component/addnewitem-component.component';
+
 
 
 
@@ -58,7 +60,9 @@ import { MyfanzoneComponent } from './components/fanzone-component/myfanzone-com
     ViewCinemaComponent,
     ItemprofileComponent,
     EditCinemaComponent,
-    MyfanzoneComponent
+    MyfanzoneComponent,
+    AddnewitemComponent
+    
   ],
   imports: [
     routing,

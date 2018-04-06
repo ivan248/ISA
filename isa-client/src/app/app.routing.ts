@@ -15,6 +15,7 @@ import { ViewTheatreComponent } from "./components/viewTheatre-component/viewThe
 import { ViewCinemaComponent } from "./components/viewCinema-component/viewCinema-component.component";
 import { EditCinemaComponent } from "./components/editCinema-component/editCinema-component.component";
 import { MyfanzoneComponent } from "./components/fanzone-component/myfanzone-component/myfanzone-component.component";
+import { AddnewitemComponent } from "./components/fanzone-component/addnewitem-component/addnewitem-component.component";
 
 
 const appRoutes: Routes = 
@@ -42,7 +43,7 @@ const appRoutes: Routes =
        component: CinemasComponent },
     {  path: 'fanzone',
        component: FanzoneComponent },
-    {  path: 'addnewitem',
+    {  path: 'additem',
        component: AdditemComponent },
     {  path: 'edititem',
        component: EditItemComponent},
@@ -63,7 +64,11 @@ const appRoutes: Routes =
     },
     {
         path: 'myfanzone',
-        component: MyfanzoneComponent}
+        component: MyfanzoneComponent},
+    {
+        path: 'addnewitem',
+        component: AddnewitemComponent},
+    
     
     // {
     //     path: '**',

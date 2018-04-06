@@ -13,6 +13,8 @@ import { DataService } from '../../services/data-service';
 export class FanzoneComponent implements OnInit {
 
   approveditems : any;
+  newitems : any;
+  preowned : boolean = true;
   
 
   constructor( private fanzoneService: FanzoneService, private router: Router,
@@ -22,6 +24,7 @@ export class FanzoneComponent implements OnInit {
 }
 
 ngOnInit(){
+  
   this.fanzoneService.getApprovedItems()
   .subscribe(
     data=> 
@@ -30,10 +33,25 @@ ngOnInit(){
       console.log(data);
     }
   );
+
+  this.fanzoneService.getNewItems()
+    .subscribe(
+    data=> 
+    {this.newitems = data;
+      this.dataService.changeItemListForShow(this.newitems);
+      
+    }
+  );
+
+
 }
 
 
 onClickAddNewItem() {
+  this.router.navigateByUrl('/additem');
+}
+
+onClickAddNewNewItem() {
   this.router.navigateByUrl('/addnewitem');
 }
 
@@ -43,6 +61,25 @@ onClickPending(){
 
 onClickMyFanzone(){
   this.router.navigateByUrl('/myfanzone');
+}
+
+onClickPreOwnedItems() {
+  if(!this.preowned) {
+    this.preowned = true;
+    this.dataService.changeTypeOfItemForShow(this.preowned);
+    
+  }
+  
+
+}
+
+onClickNewItems() {
+  if(this.preowned){
+    this.preowned = false
+    this.dataService.changeTypeOfItemForShow(this.preowned);
+  }
+  
+  
 }
 
 
