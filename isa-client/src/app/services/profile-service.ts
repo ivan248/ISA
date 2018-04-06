@@ -32,8 +32,8 @@ const httpOptions1 = {
     }
 
     getLoggedUser(): Observable<any> {
-        console.log(localStorage.getItem('token')); 
-         return this.http.get(this.url, httpOptions); 
+        console.log(localStorage.getItem('token') + " iz servisa profile"); 
+        return this.http.get(this.url, httpOptions).map((data:Observable<any>) => data); 
     }
 
     getSomething() {

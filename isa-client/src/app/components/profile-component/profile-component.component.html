@@ -41,7 +41,7 @@
       </div>
   </nav>
 
-  <div *ngIf="loggedUser!==null">
+  <div *ngIf="loggedUser!==undefined">
 
       <h3> {{loggedUser.username}} </h3>
       <h3> {{loggedUser.firstName}} </h3>

@@ -58,12 +58,22 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit() {
+
+      console.log(localStorage.getItem('token') + " usao u login");
       this.loginService.getLogin(this.password, this.email)
       .subscribe( data=>{
-        localStorage.setItem('token', data.token);
-        this.router.navigateByUrl("/profile");
+        if(data.token != null)
+        {
+          localStorage.setItem('token', data.token);
+          console.log(localStorage.getItem('token') + " usao u servis i pokupio token n");
+          this.router.navigateByUrl("/profile");
+        }
+
+         
+        
     } );
 
     console.log(localStorage.getItem('token') + " zavrio sa loginom");
+    
     }
 }
