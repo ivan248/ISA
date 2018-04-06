@@ -37,7 +37,7 @@ import { ProfileService } from '../../services/profile-service';
 })
 export class ProfileComponent implements OnInit {
  
-    private loggedUser : any = null;
+    private loggedUser : any;
 
     constructor(private profileService: ProfileService) {
 
