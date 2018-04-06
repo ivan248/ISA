@@ -62,10 +62,10 @@ public class HomeController {
 		
 	}
 	
-	@PreAuthorize("hasAuthority('ADMIN')")
+	//@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/editCinema", method = RequestMethod.GET,
 			produces="application/json")
-	public ResponseEntity<Cinema> editCinema(@RequestBody Cinema cinema){
+	public ResponseEntity editCinema(@RequestBody Cinema cinema){
 		
 		System.out.println("Edit cinema");
 		ArrayList<Cinema> listaBioskopa = new ArrayList<>();
@@ -76,9 +76,9 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/edit", method = RequestMethod.POST) 
-	public Boolean editItemStep(@RequestBody Cinema cinema) {
+	public ResponseEntity editItemStep(@RequestBody Cinema cinema) {
 		System.out.println("Editovanje");
-		return cinemaService.editCinema(cinema);
+		return new ResponseEntity<>(cinemaService.editCinema(cinema), HttpStatus.OK);
 	}
 
 }
