@@ -14,7 +14,6 @@ import com.isa.project.bean.Cinema;
 public interface CinemaRepository extends JpaRepository<Cinema, Long> {
 
 	ArrayList<Cinema> findAll();
-	//Cinema findOneBycinema_id(Long id); ne radi???
 	Cinema findOneByName(String name); 
 	
 	

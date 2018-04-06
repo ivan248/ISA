@@ -63,7 +63,17 @@ const headers = new HttpHeaders({
         const body = JSON.parse(JSON.stringify(cinema));
         
         console.log("sendeditedcinema"+body.name);
-        return this.http.post('http://localhost:8080/api/home/edit',body,{
+        return this.http.post('http://localhost:8080/api/home/editC',body,{
+            headers: headers
+        } );
+
+    }
+
+    sendEdditedTheatre(theatre : any){
+        const body = JSON.parse(JSON.stringify(theatre));
+        
+        console.log("sendeditedtheatre"+body.name);
+        return this.http.post('http://localhost:8080/api/home/editTh',body,{
             headers: headers
         } );
 
