@@ -14,7 +14,7 @@ import com.isa.project.bean.Theatre;
 public interface TheatreRepository extends JpaRepository<Theatre, Long> {
 
 	ArrayList<Theatre> findAll();
-	
+	Theatre findOneById(Long theatreID);
 	
 
 }

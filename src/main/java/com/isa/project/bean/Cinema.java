@@ -9,8 +9,8 @@ public class Cinema {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
-    @Column(name = "cinema_id", nullable = false, updatable = false)
-    private Long cinema_id;
+    @Column(name = "id", nullable = false, updatable = false)
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -22,11 +22,11 @@ public class Cinema {
     private String description;
 
 	public Long getCinema_id() {
-		return cinema_id;
+		return id;
 	}
 
 	public void setCinema_id(Long cinema_id) {
-		this.cinema_id = cinema_id;
+		this.id = cinema_id;
 	}
 
 	public String getName() {
@@ -60,7 +60,7 @@ public class Cinema {
 
 	public Cinema(Long cinema_id, String name, String address, String description) {
 		super();
-		this.cinema_id = cinema_id;
+		this.id = cinema_id;
 		this.name = name;
 		this.address = address;
 		this.description = description;
@@ -69,7 +69,7 @@ public class Cinema {
 
 	@Override
 	public String toString() {
-		return "Cinema [cinema_id=" + cinema_id + ", name=" + name + ", address=" + address + ", description="
+		return "Cinema [cinema_id=" + id + ", name=" + name + ", address=" + address + ", description="
 				+ description + "]";
 	}
 	

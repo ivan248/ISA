@@ -37,6 +37,13 @@ const headers = new HttpHeaders({
 
     }
 
+    sendNewNewItem(item : any){
+        const body = JSON.parse(JSON.stringify(item));
+        console.log("SALJE ITEM");
+        return this.http.post('http://localhost:8080/fanzone/addofficialitem',body,{ headers: headers});
+
+    }
+
    
     
 

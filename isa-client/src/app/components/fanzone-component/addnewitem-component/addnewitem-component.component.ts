@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CinemasService } from '../../../services/cinemas-service.service';
 import { TheatresService } from '../../../services/theatres-service.service';
 import { NgForm } from '@angular/forms';
+import { FanzoneService } from '../../../services/fanzone-service';
 
 @Component({
   selector: 'app-addnewitem-component',
@@ -28,7 +29,7 @@ export class AddnewitemComponent implements OnInit {
 
   
 
-  constructor(private cinemaService: CinemasService, private theatresService: TheatresService) { }
+  constructor(private cinemaService: CinemasService, private theatresService: TheatresService, private fanzoneService: FanzoneService) { }
 
   ngOnInit() {
     this.cinemaService.getCinemas().subscribe(data => {
@@ -44,8 +45,9 @@ export class AddnewitemComponent implements OnInit {
   }
 
   onSubmit(form : NgForm) {
-    console.log(form);
     console.log(this.item);
+
+    this.fanzoneService.sendNewNewItem(this.item).subscribe(data=> console.log(data));
   }
 
 }

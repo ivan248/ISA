@@ -16,16 +16,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Item;
 import com.isa.project.bean.OfficialItem;
+import com.isa.project.bean.Theatre;
 import com.isa.project.bean.User;
+import com.isa.project.repository.CinemaRepository;
 import com.isa.project.repository.ItemRepository;
-
+import com.isa.project.repository.TheatreRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.FanZoneService;
 import com.isa.project.web.Converter;
 import com.isa.project.web.dto.AddNewItemDto;
+import com.isa.project.web.dto.OfficialItemDTO;
 
 
 @RestController
@@ -39,6 +43,11 @@ public class FanZoneController {
 	private FanZoneService fanZoneService;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired 
+	private CinemaRepository cinemaRepository;
+	@Autowired
+	private TheatreRepository theatreRepository;
+	
 
 	
 	@RequestMapping(value="/", method= RequestMethod.GET)
@@ -95,16 +104,27 @@ public class FanZoneController {
 	}
 	
 	@RequestMapping(value="/addofficialitem", method=RequestMethod.POST)
-	public  ResponseEntity<OfficialItem> addOfficialItem( @RequestBody AddNewItemDto newItemDTO) {
+	public  ResponseEntity<Boolean> addOfficialItem( @RequestBody OfficialItemDTO i) {
 		
-		OfficialItem i = new OfficialItem();// ovde treba dto converter
-//	    i.setCinemaOwner(new DTO.cimane);
-//	    i.setTheatreOwner(new DTO.theatre);
-//	    
-//	    fanZoneService.addOfficialItem(i);
+		OfficialItem item = new OfficialItem();
+		item = Converter.convertOfficialItemDTO(i);
+		
+		if(i.getPlace().equals("Cinema")) {
+			Cinema c = cinemaRepository.findOneById(new Long(i.getPlaceID()));
+			item.setCinemaOwner(c);
+		} else if (i.getPlace().equals("Theatre")) {
+			Theatre t = theatreRepository.findOneById(new Long(i.getPlaceID()));
+			item.setTheatreOwner(t);
+		} else {
+			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+		}
+		
+		System.out.println(item);
+		
+		Boolean b = fanZoneService.addOfficialItem(item);
       
-		//return new ResponseEntity<Item>(fanZoneService.addOfficialItem(i),HttpStatus.OK)
-		return null;
+		return new ResponseEntity<Boolean>(true,HttpStatus.OK);
+		
 		
 
 	}

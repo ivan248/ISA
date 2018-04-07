@@ -61,7 +61,7 @@
 
                                 <select  required title="All theatres" class="custom-select"  name="theatres" [(ngModel)]="item.placeID" *ngIf="item.place === 'Theatre'">
                                     
-                                    <option [value] = "t.cinema_id"  *ngFor='let t of theatres' >{{t.name}}</option>
+                                    <option [value] = "t.theatre_id"  *ngFor='let t of theatres' >{{t.name}}</option>
                                     
                                 </select>
                             </div>

@@ -8,8 +8,8 @@ public class Theatre {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
-    @Column(name = "theatre_id", nullable = false, updatable = false)
-    private Long theatre_id;
+    @Column(name = "id", nullable = false, updatable = false)
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -21,11 +21,11 @@ public class Theatre {
     private String description;
 
 	public Long getTheatre_id() {
-		return theatre_id;
+		return id;
 	}
 
 	public void setTheatre_id(Long theatre_id) {
-		this.theatre_id = theatre_id;
+		this.id = theatre_id;
 	}
 
 	public String getName() {
@@ -59,7 +59,7 @@ public class Theatre {
 
 	public Theatre(Long theatre_id, String name, String address, String description) {
 		super();
-		this.theatre_id = theatre_id;
+		this.id = theatre_id;
 		this.name = name;
 		this.address = address;
 		this.description = description;
@@ -68,7 +68,7 @@ public class Theatre {
 
 	@Override
 	public String toString() {
-		return "Cinema [theatre_id=" + theatre_id + ", name=" + name + ", address=" + address + ", description="
+		return "Cinema [theatre_id=" + id + ", name=" + name + ", address=" + address + ", description="
 				+ description + "]";
 	}
 	

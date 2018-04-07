@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 
 
 @Entity
-@Table(name="officialName")
+@Table(name="officialItem")
 public class OfficialItem implements Serializable  {
 
 	public OfficialItem() {}
@@ -32,7 +32,7 @@ public class OfficialItem implements Serializable  {
 		this.image = image;
 		this.reserved = false;
 		this.buyer = null;
-		this.cinemaOwner = c; //Ova dva se medjusobno iskljucuju
+		//this.cinemaOwner = c; //Ova dva se medjusobno iskljucuju
 		this.theatreOwner = t;
 		this.sold = false;
 	}
@@ -84,11 +84,11 @@ public class OfficialItem implements Serializable  {
 	private User buyer;
 	
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(name="cinemaID")
 	private Cinema cinemaOwner;
 	
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(name="theatreID")
 	private Theatre theatreOwner;
 	
 	@Column
