@@ -1,5 +1,6 @@
 package com.isa.project.service.implementation;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
+import com.isa.project.bean.Friend;
 import com.isa.project.bean.User;
+import com.isa.project.repository.FriendRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.service.UserService;
 import com.isa.project.web.Converter;
@@ -22,6 +25,9 @@ public class UserSeviceImpl implements UserService {
 
 	@Autowired
 	private EmailService emailService;
+
+	@Autowired
+	private FriendRepository friendRepository;
 
 	@Override
 	public boolean registerUser(RegistrationUserDto userDto, HttpServletRequest request) {
@@ -77,15 +83,50 @@ public class UserSeviceImpl implements UserService {
 
 	@Override
 	public User editUser(RegistrationUserDto userDto, String username) {
-		
+
 		User logged = userRepository.findByUsername(username).get();
 		logged.setCity(userDto.getCity());
 		logged.setFirstName(userDto.getFirstName());
 		logged.setLastName(userDto.getLastName());
 		logged.setPhoneNumber(userDto.getPhoneNumber());
-		
+
 		userRepository.save(logged);
-		
+
 		return logged;
+	}
+
+	@Override
+	public List<Friend> getFriends(String username) {
+
+		return userRepository.findByUsername(username).get().getFriends();
+	}
+
+	@Override
+	public List<Friend> removeFriend(int id, String username) {
+
+		userRepository.findByUsername(username).get().getFriends().remove(friendRepository.findOne(id));
+		friendRepository.delete(id);
+		return userRepository.findByUsername(username).get().getFriends();
+	}
+
+	@Override
+	public List<User> getAllUsers(String usernameFromToken) {
+
+		List<User> allUsers = userRepository.findAll();
+		int index = 0;
+
+		for (User u : allUsers) {
+			if (u.getUsername().equals(usernameFromToken)) {
+				System.out.println("Pronadjen ulogovani! index: " + index);
+				break;
+			}
+
+			index++;
+		}
+
+		System.out.println("Index posle break-a: " + index);
+		allUsers.remove(index);
+
+		return allUsers;
 	}
 }

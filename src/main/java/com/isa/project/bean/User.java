@@ -1,5 +1,6 @@
 package com.isa.project.bean;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -53,6 +54,11 @@ public class User {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
     
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "friend_id"))
+    private List<Friend> friends;
+ 
+    
     public User() {
     	this.enabled = false;
     }
@@ -60,8 +66,18 @@ public class User {
     public Long getId() {
         return id;
     }
+    
+    
 
-    public String getUsername() {
+    public List<Friend> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(List<Friend> friends) {
+		this.friends = friends;
+	}
+
+	public String getUsername() {
         return username;
     }
 
