@@ -27,11 +27,11 @@ public class TheatreServiceImpl implements TheatreService{
 	public Boolean editTheatre(Theatre theatre) {
 
 		try {
-			Theatre t = theatreRepository.findOne(theatre.getTheatre_id());
+			Theatre t = theatreRepository.findOne(theatre.getId());
 			t.setName(theatre.getName());
 			t.setDescription(theatre.getDescription());
 			t.setAddress(theatre.getAddress());
-			t.setTheatre_id(theatre.getTheatre_id());
+			t.setId(theatre.getId());
 			
 			
 			theatreRepository.flush();

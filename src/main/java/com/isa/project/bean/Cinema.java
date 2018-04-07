@@ -21,12 +21,12 @@ public class Cinema {
     @Column(name = "description", nullable = false)
     private String description;
 
-	public Long getCinema_id() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setCinema_id(Long cinema_id) {
-		this.id = cinema_id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -58,9 +58,9 @@ public class Cinema {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cinema(Long cinema_id, String name, String address, String description) {
+	public Cinema(Long id, String name, String address, String description) {
 		super();
-		this.id = cinema_id;
+		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.description = description;
@@ -69,7 +69,7 @@ public class Cinema {
 
 	@Override
 	public String toString() {
-		return "Cinema [cinema_id=" + id + ", name=" + name + ", address=" + address + ", description="
+		return "Cinema [id" + id + ", name=" + name + ", address=" + address + ", description="
 				+ description + "]";
 	}
 	

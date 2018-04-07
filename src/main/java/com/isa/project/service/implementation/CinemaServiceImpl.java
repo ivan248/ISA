@@ -28,11 +28,11 @@ public class CinemaServiceImpl implements CinemaService{
 		System.out.println("Editovanje bioskopa.");
 		System.out.println("cinema: "+cinema.getName());
 		try {
-			Cinema c = cinemaRepository.findOne(cinema.getCinema_id());
+			Cinema c = cinemaRepository.findOne(cinema.getId());
 			c.setName(cinema.getName());
 			c.setDescription(cinema.getDescription());
 			c.setAddress(cinema.getAddress());
-			c.setCinema_id(cinema.getCinema_id());
+			c.setId(cinema.getId());
 			
 			
 			cinemaRepository.flush();

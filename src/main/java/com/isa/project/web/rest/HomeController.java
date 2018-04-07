@@ -41,7 +41,7 @@ public class HomeController {
 		
 	}
 	
-	@PreAuthorize("hasAuthority('REGISTERED_USER')")
+	//@PreAuthorize("hasAuthority('REGISTERED_USER')")
 	@RequestMapping(value = "/getTheatres", method = RequestMethod.GET,
 			produces="application/json")
 	public ResponseEntity<ArrayList<Theatre>> getThetres(){
@@ -75,10 +75,28 @@ public class HomeController {
 		
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.POST) 
-	public ResponseEntity editItemStep(@RequestBody Cinema cinema) {
+	@RequestMapping(value = "/editTheatre", method = RequestMethod.GET,
+			produces="application/json")
+	public ResponseEntity<Theatre> editTheatre(@RequestBody Theatre theatre){
+
+		ArrayList<Theatre> listaPozorista= new ArrayList<>();
+		listaPozorista = theatreService.getAllTheatres();
+		System.out.println(listaPozorista);
+		return new ResponseEntity<>(theatre, HttpStatus.OK);
+		
+	}
+	
+
+	@RequestMapping(value="/editC", method = RequestMethod.POST) 
+	public ResponseEntity editCinemaPost(@RequestBody Cinema cinema) {
 		System.out.println("Editovanje");
 		return new ResponseEntity<>(cinemaService.editCinema(cinema), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/editTh", method = RequestMethod.POST) 
+	public ResponseEntity editTheatrePost(@RequestBody Theatre theatre) {
+		System.out.println("Editovanje");
+		return new ResponseEntity<>(theatreService.editTheatre(theatre), HttpStatus.OK);
 	}
 
 }
