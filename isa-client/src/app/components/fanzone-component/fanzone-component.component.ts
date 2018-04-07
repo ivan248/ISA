@@ -25,12 +25,22 @@ export class FanzoneComponent implements OnInit {
 
 ngOnInit(){
   
+  this.dataService.currentTypeOfItemForShow.subscribe(data => {
+    if(data == null){
+      console.log("Usao u null");
+      this.dataService.changeTypeOfItemForShow(true);
+    } else {
+      this.preowned = data;
+    }
+  })
+    
+
   this.fanzoneService.getApprovedItems()
   .subscribe(
     data=> 
     {this.approveditems = data;
-      this.dataService.changeItemListForShow(this.approveditems);
-      console.log(data);
+      this.dataService.changePreownedItemListForShow(this.approveditems);
+      
     }
   );
 
@@ -38,11 +48,14 @@ ngOnInit(){
     .subscribe(
     data=> 
     {this.newitems = data;
-      this.dataService.changeItemListForShow(this.newitems);
+      //this.dataService.changeItemListForShow(this.newitems);
       
     }
   );
 
+  
+
+  
 
 }
 

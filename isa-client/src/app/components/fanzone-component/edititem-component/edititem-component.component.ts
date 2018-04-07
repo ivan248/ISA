@@ -24,7 +24,7 @@ export class EditItemComponent implements OnInit {
     ngOnInit(){
         //console.log("Isas")
         this.dataService.currentEdditedItem.subscribe(item => this.item = item);
-        this.dataService.currentItemListForShow.subscribe(itemList => this.itemList = itemList);
+        this.dataService.currentPreownedItemListForShow.subscribe(itemList => this.itemList = itemList);
         //console.log(this.item);
     }
 

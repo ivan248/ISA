@@ -17,6 +17,7 @@ public class OfficialItemServiceImpl implements OfficialItemService {
 	public Boolean editItem(OfficialItem item) {
 		try {
 			OfficialItem i = officialItemRepository.findOneByItemID(item.getItemID());
+			System.out.println("AAAAAAAAAAAAAAAAAAAA " + item.getPrice() );
 			i.setPrice(item.getPrice());
 			i.setDescription(item.getDescription());
 			i.setImage(item.getImage());

@@ -17,6 +17,7 @@ import { EditCinemaComponent } from "./components/editCinema-component/editCinem
 import { EditTheatreComponent } from "./components/editTheatre-component/editTheatre-component.component";
 import { MyfanzoneComponent } from "./components/fanzone-component/myfanzone-component/myfanzone-component.component";
 import { AddnewitemComponent } from "./components/fanzone-component/addnewitem-component/addnewitem-component.component";
+import { EditnewitemComponent } from "./components/fanzone-component/editnewitem-component/editnewitem-component.component";
 
 
 const appRoutes: Routes = 
@@ -73,6 +74,9 @@ const appRoutes: Routes =
     {
         path: 'addnewitem',
         component: AddnewitemComponent},
+    {
+        path: 'editnewitem',
+        component: EditnewitemComponent},    
     
     
     // {

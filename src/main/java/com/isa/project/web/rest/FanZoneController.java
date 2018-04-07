@@ -23,6 +23,7 @@ import com.isa.project.bean.Theatre;
 import com.isa.project.bean.User;
 import com.isa.project.repository.CinemaRepository;
 import com.isa.project.repository.ItemRepository;
+import com.isa.project.repository.OfficialItemRepository;
 import com.isa.project.repository.TheatreRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.security.jwt.TokenProvider;
@@ -47,7 +48,8 @@ public class FanZoneController {
 	private CinemaRepository cinemaRepository;
 	@Autowired
 	private TheatreRepository theatreRepository;
-	
+	@Autowired
+	private OfficialItemRepository officialItemRepository;
 
 	
 	@RequestMapping(value="/", method= RequestMethod.GET)
@@ -98,13 +100,20 @@ public class FanZoneController {
 	@GetMapping("/getitem")
 	public ResponseEntity<Item> getItem(@RequestParam("id") int id) {
 		System.out.println("Usao u getitem");
-		return new ResponseEntity<Item>(itemRepository.findOneByItemID(id),HttpStatus.OK);
-		
-		
+		return new ResponseEntity<Item>(itemRepository.findOneByItemID(id),HttpStatus.OK);	
 	}
 	
+	@GetMapping("/getofficialitem")
+	public ResponseEntity<OfficialItem> getOfficialItem(@RequestParam("id") int id) {
+		System.out.println("Usao u getoffitem");
+		OfficialItem k = officialItemRepository.findOneByItemID(id);
+		System.out.println(k);
+		return new ResponseEntity<OfficialItem>(officialItemRepository.findOneByItemID(id),HttpStatus.OK);	
+	}
+	
+	
 	@RequestMapping(value="/addofficialitem", method=RequestMethod.POST)
-	public  ResponseEntity<Boolean> addOfficialItem( @RequestBody OfficialItemDTO i) {
+	public  ResponseEntity<OfficialItem> addOfficialItem( @RequestBody OfficialItemDTO i) {
 		
 		OfficialItem item = new OfficialItem();
 		item = Converter.convertOfficialItemDTO(i);
@@ -116,16 +125,17 @@ public class FanZoneController {
 			Theatre t = theatreRepository.findOneById(new Long(i.getPlaceID()));
 			item.setTheatreOwner(t);
 		} else {
-			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<OfficialItem>(new OfficialItem(),HttpStatus.BAD_REQUEST);
 		}
 		
-		System.out.println(item);
-		
-		Boolean b = fanZoneService.addOfficialItem(item);
-      
-		return new ResponseEntity<Boolean>(b,HttpStatus.OK);
 		
 		
+		if (fanZoneService.addOfficialItem(item)) {
+			return new ResponseEntity<OfficialItem>(item,HttpStatus.OK);
+			
+		} else {
+			return new ResponseEntity<OfficialItem>(new OfficialItem(),HttpStatus.BAD_REQUEST);
+		}
 
 	}
 	

@@ -19,7 +19,8 @@ export class ItemComponent implements OnInit {
 
     }
 
-   ngOnInit(){this.dataService.changeItemListForShow(this.items);
+   ngOnInit(){
+     this.dataService.changePreownedItemListForShow(this.items);
    }
 
     onClickDelete(id: number){

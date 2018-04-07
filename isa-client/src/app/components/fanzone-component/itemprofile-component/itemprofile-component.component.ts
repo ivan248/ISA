@@ -37,7 +37,7 @@ export class ItemprofileComponent implements OnInit {
     } else {
       let bid = new BidDTO(this.item, this.value );
 
-      
+      console.log(bid);
       //drugo dodaj BID
       this.bidService.sendNewBid(bid).subscribe(data => console.log(data));
       this.itemService.changeCurrentBid(this.value,this.item);

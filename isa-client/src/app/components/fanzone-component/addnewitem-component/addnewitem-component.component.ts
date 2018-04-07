@@ -4,6 +4,8 @@ import { TheatresService } from '../../../services/theatres-service.service';
 import { NgForm } from '@angular/forms';
 import { FanzoneService } from '../../../services/fanzone-service';
 import { Router } from '@angular/router';
+import { DataService } from '../../../services/data-service';
+import { NewItem } from '../../../model/newitem';
 
 @Component({
   selector: 'app-addnewitem-component',
@@ -31,7 +33,7 @@ export class AddnewitemComponent implements OnInit {
   
 
   constructor(private cinemaService: CinemasService, private theatresService: TheatresService, 
-    private fanzoneService: FanzoneService, private router: Router
+    private fanzoneService: FanzoneService, private router: Router, private dataService: DataService
   ) { }
 
   ngOnInit() {
@@ -49,8 +51,12 @@ export class AddnewitemComponent implements OnInit {
 
   onSubmit(form : NgForm) {
     console.log(this.item);
-
-    this.fanzoneService.sendNewNewItem(this.item).subscribe(data=> console.log(data));
+    let newItem : any;
+    let novaLista : any;
+    this.fanzoneService.sendNewNewItem(this.item).subscribe(data=> newItem = data);
+    this.dataService.currentNewItemListForShow.subscribe(data => novaLista = data );
+    novaLista.push(newItem);
+   
     this.router.navigateByUrl("/fanzone");
   }
 

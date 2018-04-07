@@ -7,7 +7,7 @@
                         <img  src="https://www.w3schools.com/images/w3schools_green.jpg" alt="">
                     </div>
                     <div class="col-8">
-                        <h4><b>{{item.name}}</b></h4>
+                        <h4><b>{{item.name}} </b> <span class="badge badge-pill badge-danger float-right">NEW</span></h4> 
                         <hr>
                         <div class="row">
                             <div class="col">
@@ -23,15 +23,11 @@
                     <div class="col">
                         <div class="row">
                             <div class="col">
-                                <p>Where to buy : </p> <p><b>{{item.cinema.name}}</b></p>
-                                {{item.cinema.address}}
+                                <p>Where to buy : </p> <p><b>{{item.cinemaOwner.name}}</b> , {{item.cinemaOwner.address}}</p>
+                                
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <p>Offer expires on : </p> <p> <b>{{item.endDate}}</b></p>
-                            </div>
-                        </div>
+                        
                     </div>
                     
                 </div>
@@ -41,7 +37,7 @@
                     <div class="text-left">
                         <button class="btn btn-dark btn-sm" (click)="onClickDelete(item.itemID)">Delete</button>
                         <button class="btn btn-dark btn-sm" (click)="onClickEdit(item.itemID)">Edit</button>
-                        <button *ngIf="!item.approved" class="btn btn-dark btn-sm" (click)="onClickApprove(item.itemID)">Approve</button>
+                        
                     </div>
                 </div>
             </div>

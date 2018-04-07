@@ -39,6 +39,9 @@
          <button *ngIf = "!preowned" class="btn btn-dark" (click)="onClickAddNewNewItem()">Add new item</button>
   </ul>
   <br>
+  <h2 *ngIf="preowned"> Preowned items for sale</h2>
+  <h2 *ngIf="!preowned"> New items for sale</h2>
+  
 </div>
 
 

@@ -5,7 +5,9 @@ package com.isa.project.web.dto;
 public class OfficialItemDTO {
 	private String name;
 	private String description;
+	private int itemID;
 	
+
 	private float price;
 	
 	private String image;
@@ -28,6 +30,13 @@ public class OfficialItemDTO {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public int getItemID() {
+		return itemID;
+	}
+
+	public void setItemID(int itemID) {
+		this.itemID = itemID;
 	}
 
 	public float getPrice() {

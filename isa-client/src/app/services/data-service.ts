@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Item } from '../model/item'
+import { NewItem } from '../model/newitem'
 import { Subject } from 'rxjs/Subject';
 
 export class DataService {
@@ -8,8 +9,11 @@ export class DataService {
   private edditedItem = new BehaviorSubject<Item>(new Item(new Object()));
   currentEdditedItem = this.edditedItem.asObservable();
 
-  private itemListForShow = new BehaviorSubject<Item[]>(new Array<Item>());
-  currentItemListForShow = this.itemListForShow.asObservable();
+  private preownedItemListForShow = new BehaviorSubject<Item[]>(new Array<Item>());
+  currentPreownedItemListForShow = this.preownedItemListForShow.asObservable();
+
+  private newItemListForShow = new BehaviorSubject<Item[]>(new Array<Item>());
+  currentNewItemListForShow = this.newItemListForShow.asObservable();
 
   private unapproveditemListForShow = new BehaviorSubject<Item[]>(new Array<Item>());
   currentUnapprovedItemListForShow = this.unapproveditemListForShow.asObservable();
@@ -17,8 +21,13 @@ export class DataService {
   private selectedItem = new BehaviorSubject<Item>(new Item(new Object()));
   currentSelectedItem = this.selectedItem.asObservable();
 
-  private typeOfItemForShow:  Subject<boolean> = new BehaviorSubject<boolean>(null);
-  currentTypeOfItemForShow = this.typeOfItemForShow;
+  private selectedNewItem = new BehaviorSubject<NewItem>(new NewItem(new Object()));
+  currentSelectedNewItem = this.selectedNewItem.asObservable();
+
+  private preowned:  Subject<boolean> = new BehaviorSubject<boolean>(null);
+  currentTypeOfItemForShow = this.preowned;
+
+  
   
   constructor() { }
   
@@ -26,8 +35,11 @@ export class DataService {
     this.edditedItem.next(item);
   }
 
-  changeItemListForShow(itemListForShow: Item[]){
-    this.itemListForShow.next(itemListForShow);
+  changePreownedItemListForShow(itemListForShow: Item[]){
+    this.preownedItemListForShow.next(itemListForShow);
+  }
+  changeNewItemListForShow(itemListForShow: Item[]){
+    this.newItemListForShow.next(itemListForShow);
   }
 
   changeUnapprovedItemListForShow(unapprovedItemListForShow: Item[]){
@@ -35,17 +47,18 @@ export class DataService {
   }
 
   changeSelectedItem(item: Item) {
-    console.log("SETOVANEJ: ");
-    console.log(item);
+    
     this.selectedItem.next(item);
   }
 
+  changeSelectedNewItem(item: NewItem) {
+    
+    this.selectedNewItem.next(item);
+  }
+
   changeTypeOfItemForShow(preowned: boolean){
-    this.currentTypeOfItemForShow.next(preowned);
-    console.log("Stiglo: ");
-    console.log(preowned);
-    console.log("currentType:");
-    console.log(this.currentTypeOfItemForShow);
+    this.preowned.next(preowned);
+    
   }
   
   }

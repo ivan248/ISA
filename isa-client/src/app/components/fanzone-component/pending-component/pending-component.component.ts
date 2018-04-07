@@ -21,7 +21,7 @@ export class PendingComponent implements OnInit {
     .subscribe(
       data=> 
       {this.unapproveditems = data;
-        this.dataService.changeItemListForShow(this.unapproveditems);
+        this.dataService.changePreownedItemListForShow(this.unapproveditems);
         console.log(data);
       }
     );
