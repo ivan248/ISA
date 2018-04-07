@@ -142,9 +142,7 @@ public class FanZoneController {
 	@RequestMapping(value = "/deleteofficialitem", method= RequestMethod.DELETE)
 	public ResponseEntity<Boolean> deleteOfficialItem(@RequestParam("id") int id) {
 		System.out.println("Usao u delete official");
-		return new ResponseEntity<Boolean>(fanZoneService.deleteOfficialItem(id),HttpStatus.OK);
-		
-		
+		return new ResponseEntity<Boolean>(fanZoneService.deleteOfficialItem(id),HttpStatus.OK);	
 	}
 	
 	

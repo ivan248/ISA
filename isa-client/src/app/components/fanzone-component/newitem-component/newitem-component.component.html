@@ -23,8 +23,8 @@
                     <div class="col">
                         <div class="row">
                             <div class="col">
-                                <p>Where to buy : </p> <p><b>{{item.cinemaOwner.name}}</b> , {{item.cinemaOwner.address}}</p>
-                                
+                                <p *ngIf="item.cinemaOwner != null">Where to buy : </p> <p *ngIf="item.cinemaOwner != null"><b >{{item.cinemaOwner.name}}</b> , {{item.cinemaOwner.address}}</p>
+                                <p *ngIf="item.theatreOwner != null">Where to buy : </p> <p *ngIf="item.theatreOwner != null"><b>{{item.theatreOwner.name}}</b> , {{item.theatreOwner.address}}</p>
                             </div>
                         </div>
                         

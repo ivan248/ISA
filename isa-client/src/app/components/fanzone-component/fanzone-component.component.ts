@@ -90,6 +90,7 @@ onClickNewItems() {
   if(this.preowned){
     this.preowned = false
     this.dataService.changeTypeOfItemForShow(this.preowned);
+    console.log(this.newitems);
   }
   
   

@@ -50,7 +50,7 @@ export class EditnewitemComponent implements OnInit {
     this.dataService.currentSelectedNewItem.subscribe(data => {
       this.originalItem = data;
       console.log(this.originalItem);
-      if(this.originalItem.cinema === null){
+      if(this.originalItem.cinemaOwner == null){
         this.place="Theatre";
         this.placeID=this.originalItem.theatreOwner.theatre_id;
       } else {
