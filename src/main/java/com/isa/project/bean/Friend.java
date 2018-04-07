@@ -18,63 +18,51 @@ public class Friend {
 
 	@Column(name = "friendUsername")
 	private String friendUsername;
-	
+
 	@Column(name = "friendFirstName")
 	private String friendFirstName;
-	
+
 	@Column(name = "friendLastName")
 	private String friendLastName;
-	
+
+	@Column(name = "enabled")
+	private boolean enabled;
+
 	public Friend() {
-		
+
 	}
-	
-	
-
-
 
 	public Friend(String friendUsername, String friendFirstName, String friendLastName) {
 		super();
 		this.friendUsername = friendUsername;
 		this.friendFirstName = friendFirstName;
 		this.friendLastName = friendLastName;
+		this.enabled = false;
 	}
 
+	public boolean isEnabled() {
+		return enabled;
+	}
 
-
-
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
 	public String getFriendFirstName() {
 		return friendFirstName;
 	}
 
-
-
-
-
 	public void setFriendFirstName(String friendFirstName) {
 		this.friendFirstName = friendFirstName;
 	}
-
-
-
-
 
 	public String getFriendLastName() {
 		return friendLastName;
 	}
 
-
-
-
-
 	public void setFriendLastName(String friendLastName) {
 		this.friendLastName = friendLastName;
 	}
-
-
-
-
 
 	public String getFriendUsername() {
 		return friendUsername;
@@ -96,7 +84,5 @@ public class Friend {
 	public String toString() {
 		return "Friend [friendId=" + friendId + ", friendUsername=" + friendUsername + "]";
 	}
-	
-	
 
 }

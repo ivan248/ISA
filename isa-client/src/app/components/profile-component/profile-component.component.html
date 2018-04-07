@@ -127,10 +127,12 @@
               </thead>
               <tbody>
                 <tr *ngFor="let f of userFriends; let i = index;">
+                  <div *ngIf="f.enabled === true">
                   <th scope="row">{{i+1}}</th>
                   <td>{{f.friendUsername}}</td>
                   <td>{{f.friendFirstName}}</td>
                   <td>{{f.friendLastName}} <button class="btn btn-danger" style="float:right" (click)="removeFriend(f.friendId)"> Remove </button> </td>
+                  </div>
                 </tr>
                 
               </tbody>
@@ -139,6 +141,39 @@
       </div>
   </div>
 <!-- End:Awards -->
+
+<!-- Section:Friend requests -->
+<div class="row" *ngIf="userFriendRequests?.length>0" >
+  <div class="col-md-12">
+      <div class="card card-block">
+        <h2 class="card-title"  style="color:#009688; padding-top:15px; padding-left: 10px;" ><i class="fa fa-trophy fa-fw"></i> Friend requests </h2>
+        <div style="height: 15px"></div>
+        <table class="table table-bordered table-hover">
+          <thead class="thead-default">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Email</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let f of userFriendRequests; let i = index;">
+              <th scope="row">{{i+1}}</th>
+              <td>{{f.friendUsername}}</td>
+              <td>{{f.friendFirstName}}</td>
+              <td>{{f.friendLastName}}
+                   <button class="btn btn-danger" style="float:right" (click)="declineFriend(f.friendId)"> Decline </button>
+                   <button class="btn btn-success" style="float:right" (click)="acceptFriend(f.friendId)"> Accept </button>
+                  </td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>
+<!-- End:Friend requests -->
 
 
 <div class="row">
@@ -164,14 +199,14 @@
                 <th scope="row">{{i+1}}</th>
                 <td>{{u.username}}</td>
                 <td>{{u.firstName}}</td>
-                <td>{{u.lastName}} <button class="btn btn-success" style="float:right"> Add </button> </td>
+                <td>{{u.lastName}} <button class="btn btn-success" style="float:right" (click)="addFriend(u.username)"> Add </button> </td>
               </tr>
 
               <tr [hidden]="!searchButtonClicked" *ngFor="let u of filteredArray; let i = index;">
                 <th scope="row">{{i+1}}</th>
                 <td>{{u.username}}</td>
                 <td>{{u.firstName}}</td>
-                <td>{{u.lastName}} <button class="btn btn-success" style="float:right"> Add </button> </td>
+                <td>{{u.lastName}} <button class="btn btn-success" style="float:right" (click)="addFriend(u.username)"> Add </button> </td>
               </tr>
             </tbody>
           </table>

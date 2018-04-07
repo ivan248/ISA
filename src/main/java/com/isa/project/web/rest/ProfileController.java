@@ -1,5 +1,7 @@
 package com.isa.project.web.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.isa.project.bean.Friend;
 import com.isa.project.bean.User;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.security.jwt.TokenProvider;
@@ -69,13 +72,64 @@ public class ProfileController {
 
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping
 	@RequestMapping(value = "/getAllUsers")
 	public ResponseEntity getAllUsers(@RequestHeader(value = "X-Auth-Token") String token) {
 
 		TokenProvider p = new TokenProvider();
-		
+
 		return new ResponseEntity(userService.getAllUsers(p.getUsernameFromToken(token)), HttpStatus.OK);
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	@PostMapping
+	@RequestMapping(value = "/friendRequest", consumes = "application/json")
+	public ResponseEntity friendRequest(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestBody String username) {
+
+		TokenProvider p = new TokenProvider();
+
+		if (userService.handleFriendRequest(p.getUsernameFromToken(token), username))
+			return new ResponseEntity(HttpStatus.OK);
+
+		return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
+	}
+
+	@GetMapping
+	@RequestMapping(value = "/getFriendRequests")
+	public ResponseEntity<List<Friend>> getFriendRequests(@RequestHeader(value = "X-Auth-Token") String token) {
+
+		TokenProvider p = new TokenProvider();
+
+		return new ResponseEntity<List<Friend>>(userService.getFriendRequests(p.getUsernameFromToken(token)), HttpStatus.OK);
+
+	}
+
+	@GetMapping
+	@RequestMapping(value = "/acceptFriend")
+	public ResponseEntity<List<Friend>> acceptFriend(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestParam("friendId") String id) {
+
+		TokenProvider p = new TokenProvider();
+		
+		return new ResponseEntity<List<Friend>>(userService.acceptFriend(p.getUsernameFromToken(token), Integer.parseInt(id)),HttpStatus.OK);
+
+	
+
+	}
+	
+	@GetMapping
+	@RequestMapping(value = "/declineFriend")
+	public ResponseEntity<List<Friend>> declineFriend(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestParam("friendId") String id) {
+
+		TokenProvider p = new TokenProvider();
+	
+		return new ResponseEntity<List<Friend>>(userService.declineFriend(p.getUsernameFromToken(token), Integer.parseInt(id)),HttpStatus.OK);
+
 
 	}
 

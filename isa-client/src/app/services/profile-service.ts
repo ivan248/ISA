@@ -47,7 +47,7 @@ const httpOptions = {
         let headers = new HttpHeaders({ 
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
-         })
+         });
 
         return this.http
         .get(this.url + "removeFriend", {params:params,headers:headers})
@@ -59,6 +59,43 @@ const httpOptions = {
         .get(this.url + "getAllUsers", httpOptions)
         .map((data:[any]) => data);       
     }
+
+    sendFriendRequest(username : string) {
+        return this.http
+        .post(this.url + "friendRequest", username, httpOptions);
+    }
+
+    getFriendRequests() {
+        return this.http
+        .get(this.url + "getFriendRequests", httpOptions)
+        .map((data:[any])=> data);
+    }
+
+    acceptFriend(friendId : any) {
+
+        let params = new HttpParams().append('friendId',friendId);
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http
+        .get(this.url + "acceptFriend", {params:params,headers:headers});
+    }
+
+    declineFriend(friendId : any) {
+
+        let params = new HttpParams().append('friendId',friendId);
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http
+        .get(this.url + "declineFriend", {params:params,headers:headers});
+    }
+
+    
 
 
  } 

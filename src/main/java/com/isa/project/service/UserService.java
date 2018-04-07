@@ -20,4 +20,8 @@ public interface UserService {
 	public List<Friend> getFriends(String username);
 	public List<Friend> removeFriend(int id, String usernameFromToken);
 	public List<User> getAllUsers(String usernameFromToken);
+	public boolean handleFriendRequest(String currentUser, String friendUsername);
+	public List<Friend> getFriendRequests(String usernameFromToken);
+	public List<Friend> acceptFriend(String usernameFromToken, int id);
+	public List<Friend> declineFriend(String usernameFromToken, int id);
 }

@@ -1,5 +1,6 @@
 package com.isa.project.service.implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -128,5 +129,99 @@ public class UserSeviceImpl implements UserService {
 		allUsers.remove(index);
 
 		return allUsers;
+	}
+
+	@Override
+	public boolean handleFriendRequest(String currentUser, String friendUsername) {
+
+		// provera da li vec ima njega u listi prijatelja da ne moze opet da ga doda
+		for (Friend f : userRepository.findByUsername(currentUser).get().getFriends()) {
+			if (f.getFriendUsername().equals(friendUsername))
+				return false;
+		}
+
+		User curUser = userRepository.findByUsername(currentUser).get();
+		User friendUser = userRepository.findByUsername(friendUsername).get();
+
+		Friend currentUserFriend = new Friend(currentUser, curUser.getFirstName(), curUser.getLastName());
+		Friend friendUserFriend = new Friend(friendUsername, friendUser.getFirstName(), friendUser.getLastName());
+
+		// dodat prijatelj u friend-u
+		friendUser.getFriends().add(currentUserFriend);
+		userRepository.save(friendUser);
+
+		// dodat prijatelj u current user-u
+		curUser.getFriends().add(friendUserFriend);
+		userRepository.save(curUser);
+
+		// ako se potvrdi kod friend-a onda ide enabled na 1 kod oba
+		// ako se odbije onda se brise na oba mesta
+		// dok se nesto od ova 2 ne desi stoji na 0
+		return true;
+	}
+
+	@Override
+	public List<Friend> getFriendRequests(String usernameFromToken) {
+
+		List<Friend> friendRequests = new ArrayList<Friend>();
+
+		for (Friend f : userRepository.findByUsername(usernameFromToken).get().getFriends()) {
+			if (!f.isEnabled()) {
+				friendRequests.add(f);
+			}
+		}
+
+		return friendRequests;
+	}
+
+	@Override
+	public List<Friend> acceptFriend(String usernameFromToken, int id) {
+
+		// enable-uj kod mene onog usera kojeg sam privation
+		Friend friend = friendRepository.findByFriendId(id);
+		friend.setEnabled(true);
+		friendRepository.save(friend);
+
+		// enable-uj kod njega mene, prihvatio sam ga sad moze da me vidi
+		for (Friend f : userRepository.findByUsername(friendRepository.findByFriendId(id).getFriendUsername()).get()
+				.getFriends()) {
+			if (f.getFriendUsername().equals(usernameFromToken)) {
+				f.setEnabled(true);
+				friendRepository.save(f);
+				break;
+			}
+		}
+
+		return getEnabledFriends(usernameFromToken);
+	}
+
+	@Override
+	public List<Friend> declineFriend(String usernameFromToken, int id) {
+
+		// delete usera kojeg sam decline-ovao kod mene
+		Friend friend = friendRepository.findByFriendId(id);
+		friendRepository.delete(friend);
+
+		// delete kod njega mene, declione-ovao sam ga
+		for (Friend f : userRepository.findByUsername(friendRepository.findByFriendId(id).getFriendUsername()).get()
+				.getFriends()) {
+			if (f.getFriendUsername().equals(usernameFromToken)) {
+				friendRepository.delete(f);
+				break;
+			}
+		}
+
+		return getEnabledFriends(usernameFromToken);
+	}
+
+	private List<Friend> getEnabledFriends(String usernameFromToken) {
+		List<Friend> friends = new ArrayList<>();
+
+		for (Friend f : userRepository.findByUsername(usernameFromToken).get().getFriends()) {
+			if (f.isEnabled())
+				friends.add(f);
+		}
+
+		return friends;
 	}
 }

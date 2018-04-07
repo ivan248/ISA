@@ -88,7 +88,9 @@ export class ProfileComponent implements OnInit {
     private loggedUser : any;
     private userFriends : any[] = [];
     private allUsers : any [] = [];
+    private userFriendRequests : any [] = [];
     private filteredArray : any[] = [];
+
     private editClicked : boolean = true;
     private searchButtonClicked : boolean = true;
 
@@ -120,6 +122,11 @@ export class ProfileComponent implements OnInit {
 
       this.profileService.getAllUsers().subscribe(data =>
         this.allUsers = data);
+
+      this.profileService.getFriendRequests().subscribe(data =>
+        {this.userFriendRequests = data;
+          console.log(data);
+        });
       
     }
 
@@ -211,5 +218,20 @@ export class ProfileComponent implements OnInit {
       
       this.searchButtonClicked = true;
 
+    }
+
+    addFriend(friendUsername : string) {
+      this.profileService.sendFriendRequest(friendUsername)
+      .subscribe(data => console.log(data));
+    }
+
+    acceptFriend(friendId : number) {
+      this.profileService.acceptFriend(friendId.toString())
+      .subscribe(data => console.log(data));
+    }
+
+    declineFriend(friendId : number) {
+      this.profileService.declineFriend(friendId.toString())
+      .subscribe(data => console.log(data));
     }
  }
