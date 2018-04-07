@@ -126,24 +126,13 @@
               </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo <button class="btn btn-danger" style="float:right"> Remove </button> </td>
+                <tr *ngFor="let f of userFriends; let i = index;">
+                  <th scope="row">{{i+1}}</th>
+                  <td>{{f.friendUsername}}</td>
+                  <td>{{f.friendFirstName}}</td>
+                  <td>{{f.friendLastName}} <button class="btn btn-danger" style="float:right" (click)="removeFriend(f.friendId)"> Remove </button> </td>
                 </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat <div class="pull-right"><button class="btn btn-danger" style="float:right"> Remove </button> </div></td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter <div class="pull-right"><button class="btn btn-danger" style="float:right"> Remove </button> </div></td>
-                </tr>
+                
               </tbody>
             </table>
           </div>
@@ -158,10 +147,10 @@
           <h2 class="card-title"  style="color:#009688; padding-top:15px; padding-left: 10px;" >
             <i class="fa fa-trophy fa-fw"></i> Find friends</h2>
             
-          <button type="button" class="btn btn-info">Show all</button>
+          <button type="button" class="btn btn-info" (click)="getAllUsers()">Show all</button>
 
           <div style="height: 15px"></div>
-          <table class="table table-bordered table-hover">
+          <table *ngIf="allUsers?.length > 0" class="table table-bordered table-hover">
             <thead class="thead-default">
             <tr>
               <th scope="col">#</th>
@@ -171,29 +160,24 @@
             </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo <button class="btn btn-success" style="float:right"> Add </button> </td>
+              <tr [hidden]="searchButtonClicked" *ngFor="let u of allUsers; let i = index;">
+                <th scope="row">{{i+1}}</th>
+                <td>{{u.username}}</td>
+                <td>{{u.firstName}}</td>
+                <td>{{u.lastName}} <button class="btn btn-success" style="float:right"> Add </button> </td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat <div class="pull-right"><button class="btn btn-success" style="float:right"> Add </button> </div></td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter <div class="pull-right"><button class="btn btn-success" style="float:right"> Add </button> </div></td>
+
+              <tr [hidden]="!searchButtonClicked" *ngFor="let u of filteredArray; let i = index;">
+                <th scope="row">{{i+1}}</th>
+                <td>{{u.username}}</td>
+                <td>{{u.firstName}}</td>
+                <td>{{u.lastName}} <button class="btn btn-success" style="float:right"> Add </button> </td>
               </tr>
             </tbody>
           </table>
-          <input type="text" class="form-control" id="nameSearch" style="text-align:center" placeholder="Enter first name">
-          <input type="text" class="form-control" id="lastNameSearch" style="text-align:center" placeholder="Enter last name">       
-          <button type="button" class="btn btn-primary">Search</button>
+          <input [(ngModel)]="searchName" type="text" class="form-control" id="nameSearch" style="text-align:center" placeholder="Enter first name">
+          <input [(ngModel)]="searchLastName" type="text" class="form-control" id="lastNameSearch" style="text-align:center" placeholder="Enter last name">       
+          <button type="button" class="btn btn-primary" (click)="searchClicked()">Search</button>
         </div>
     </div>
 </div>

@@ -3,13 +3,13 @@ package com.isa.project.web.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.User;
@@ -41,12 +41,42 @@ public class ProfileController {
 
 	@PostMapping
 	@RequestMapping(value = "/editUser", consumes = "application/json")
-	public ResponseEntity<User> getSomething(@RequestHeader(value = "X-Auth-Token") String token,
+	public ResponseEntity<User> editUser(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestBody RegistrationUserDto editedUser) {
 
 		TokenProvider p = new TokenProvider();
 
 		return new ResponseEntity<User>(userService.editUser(editedUser, p.getUsernameFromToken(token)), HttpStatus.OK);
+	}
+
+	@GetMapping
+	@RequestMapping(value = "/getFriends")
+	public ResponseEntity getFriends(@RequestHeader(value = "X-Auth-Token") String token) {
+
+		TokenProvider p = new TokenProvider();
+
+		return new ResponseEntity(userService.getFriends(p.getUsernameFromToken(token)), HttpStatus.OK);
+	}
+
+	@GetMapping
+	@RequestMapping(value = "/removeFriend")
+	public ResponseEntity removeFriend(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestParam("friendId") int id) {
+
+		TokenProvider p = new TokenProvider();
+
+		return new ResponseEntity(userService.removeFriend(id, p.getUsernameFromToken(token)), HttpStatus.OK);
+
+	}
+
+	@GetMapping
+	@RequestMapping(value = "/getAllUsers")
+	public ResponseEntity getAllUsers(@RequestHeader(value = "X-Auth-Token") String token) {
+
+		TokenProvider p = new TokenProvider();
+		
+		return new ResponseEntity(userService.getAllUsers(p.getUsernameFromToken(token)), HttpStatus.OK);
+
 	}
 
 }

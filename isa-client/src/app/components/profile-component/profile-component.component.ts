@@ -86,13 +86,20 @@ import { User } from '../../model/dto/userDTO';
 export class ProfileComponent implements OnInit {
  
     private loggedUser : any;
+    private userFriends : any[] = [];
+    private allUsers : any [] = [];
+    private filteredArray : any[] = [];
     private editClicked : boolean = true;
+    private searchButtonClicked : boolean = true;
 
     private firstName : string;
     private lastName : string;
     private username : string;
     private phoneNumber : number;
     private city : string;
+
+    private searchName : string;
+    private searchLastName : string;
 
     constructor(private profileService: ProfileService) {
 
@@ -107,6 +114,12 @@ export class ProfileComponent implements OnInit {
         this.phoneNumber = data.phoneNumber;
         this.city = data.city;
       } );
+
+      this.profileService.getFriends().subscribe(data =>
+      this.userFriends = data);
+
+      this.profileService.getAllUsers().subscribe(data =>
+        this.allUsers = data);
       
     }
 
@@ -132,4 +145,71 @@ export class ProfileComponent implements OnInit {
 
       this.profileService.editUser(user).subscribe(data => this.loggedUser = data);
     }
-}
+
+    removeFriend(i : number) {
+      this.profileService.removeFriend(i.toString()).subscribe(data =>
+        this.userFriends = data);
+
+    }
+
+    getAllUsers() {
+      this.profileService.getAllUsers().subscribe(data =>
+        this.allUsers = data);
+
+      this.searchButtonClicked = false;
+      this.filteredArray = [];
+    }
+
+    searchClicked() {
+
+     this.filteredArray = [];
+      
+      if(this.searchLastName !== "" && this.searchName !== "")
+      {
+        this.allUsers.forEach((user,index) => {
+            if(user.firstName == this.searchName && user.lastName == this.searchLastName)
+            {
+              if(this.filteredArray
+                .find(x => (x.username == user.username))
+                 === undefined) {
+
+                  this.filteredArray.push(user);
+                }
+            }
+        });
+      }
+      
+      if((this.searchLastName === undefined || this.searchLastName === "") && this.searchName !== "")
+      {
+        this.allUsers.forEach((user,index) => {
+          if(user.firstName == this.searchName)
+          {
+            if(this.filteredArray
+              .find(x => (x.username == user.username))
+               === undefined) {
+
+                this.filteredArray.push(user);
+              }       
+          }
+      });
+      }
+
+      if(this.searchLastName !== "" && (this.searchName === undefined || this.searchName === ""))
+      {
+        this.allUsers.forEach((user,index) => {
+          if(user.lastName == this.searchLastName)
+          {
+            if(this.filteredArray
+              .find(x => (x.username == user.username))
+               === undefined) {
+
+                this.filteredArray.push(user);
+              } 
+          }
+      });
+      }
+      
+      this.searchButtonClicked = true;
+
+    }
+ }
