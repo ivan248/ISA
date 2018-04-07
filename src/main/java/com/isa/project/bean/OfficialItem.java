@@ -33,7 +33,7 @@ public class OfficialItem implements Serializable  {
 		this.reserved = false;
 		this.buyer = null;
 		//this.cinemaOwner = c; //Ova dva se medjusobno iskljucuju
-		this.theatreOwner = t;
+		this.theatre = t;
 		this.sold = false;
 	}
 	
@@ -85,11 +85,11 @@ public class OfficialItem implements Serializable  {
 	
 	@ManyToOne
 	@JoinColumn(name="cinemaID")
-	private Cinema cinemaOwner;
+	private Cinema cinema;
 	
 	@ManyToOne
 	@JoinColumn(name="theatreID")
-	private Theatre theatreOwner;
+	private Theatre theatre;
 	
 	@Column
 	private Boolean sold;
@@ -99,19 +99,19 @@ public class OfficialItem implements Serializable  {
 	}
 
 	public Cinema getCinemaOwner() {
-		return cinemaOwner;
+		return cinema;
 	}
 
 	public void setCinemaOwner(Cinema cinemaOwner) {
-		this.cinemaOwner = cinemaOwner;
+		this.cinema = cinemaOwner;
 	}
 
 	public Theatre getTheatreOwner() {
-		return theatreOwner;
+		return theatre;
 	}
 
 	public void setTheatreOwner(Theatre theatreOwner) {
-		this.theatreOwner = theatreOwner;
+		this.theatre = theatreOwner;
 	}
 
 	public void setItemID(int itemID) {

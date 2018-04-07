@@ -1,0 +1,52 @@
+<div *ngFor="let item of items" >
+    <div class="card" >
+        <div class="w-100">
+            <div class="card-body" (click)="onClickSetSelectedItem(item.itemID)">
+                <div class="row">
+                    <div class="col">
+                        <img  src="https://www.w3schools.com/images/w3schools_green.jpg" alt="">
+                    </div>
+                    <div class="col-8">
+                        <h4><b>{{item.name}}</b></h4>
+                        <hr>
+                        <div class="row">
+                            <div class="col">
+                               Item price: <b>{{item.price}}$</b>
+                            </div>
+                            
+                            
+                            
+                        </div>
+                        <button class="btn btn-success">Reserve this item</button>
+                        
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <p>Where to buy : </p> <p><b>{{item.cinema.name}}</b></p>
+                                {{item.cinema.address}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p>Offer expires on : </p> <p> <b>{{item.endDate}}</b></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="card-footer">  
+                <div class="row">
+                    <div class="text-left">
+                        <button class="btn btn-dark btn-sm" (click)="onClickDelete(item.itemID)">Delete</button>
+                        <button class="btn btn-dark btn-sm" (click)="onClickEdit(item.itemID)">Edit</button>
+                        <button *ngIf="!item.approved" class="btn btn-dark btn-sm" (click)="onClickApprove(item.itemID)">Approve</button>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+</div>
+<hr>
+</div>    

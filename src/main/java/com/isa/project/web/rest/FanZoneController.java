@@ -123,7 +123,7 @@ public class FanZoneController {
 		
 		Boolean b = fanZoneService.addOfficialItem(item);
       
-		return new ResponseEntity<Boolean>(true,HttpStatus.OK);
+		return new ResponseEntity<Boolean>(b,HttpStatus.OK);
 		
 		
 
