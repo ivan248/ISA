@@ -31,3 +31,13 @@
        
     </div>
   </div>
+
+<div>
+    <p>Repertoar: </p>
+    <tr *ngFor="let m of movies; let i = index;">
+            <th scope="row">{{i+1}}</th>
+            <td>{{m.name}}</td>
+            
+          </tr>
+      
+</div>

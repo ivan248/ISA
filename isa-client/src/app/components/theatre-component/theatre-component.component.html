@@ -23,7 +23,9 @@
         <h2>{{ selectedTheatre.name | uppercase }} Details</h2>
         <br>
         <div><span>address: </span>{{selectedTheatre.address}}</div>
+        <br>
         <div><span>description: </span>{{selectedTheatre.description}}</div>
+        <br>
         <button class="btn" (click)="onClickOpenPage(selectedTheatre)" >Open page</button>
         <button class="btn" (click)="onClickEditPage(selectedTheatre)" >Edit theatre</button>
        

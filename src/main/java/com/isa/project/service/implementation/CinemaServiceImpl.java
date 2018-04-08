@@ -1,11 +1,13 @@
 package com.isa.project.service.implementation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.isa.project.bean.Cinema;
+import com.isa.project.bean.Movie;
 import com.isa.project.repository.CinemaRepository;
 import com.isa.project.service.CinemaService;
 
@@ -45,6 +47,13 @@ public class CinemaServiceImpl implements CinemaService{
 		
 		
 		return true;
+	}
+
+
+	@Override
+	public List<Movie> getMovies(String username) {
+		// TODO Auto-generated method stub
+		return cinemaRepository.findOneByName(username).getMovies();
 	}
 
 

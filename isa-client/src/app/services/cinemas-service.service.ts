@@ -13,6 +13,7 @@ const httpOptions = {
     headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
         'X-Auth-Token' : localStorage.getItem('token')
+    
      }),
 };
   
@@ -21,7 +22,7 @@ const httpOptions = {
  export class CinemasService {  
 
     private url : string = "http://localhost:8080/api/cinemas/test";
-    private selectedTheatre: any;
+    private selectedCinema: any;
 
     private c = new BehaviorSubject<any>(new Object(new Object()));
     currentc = this.c.asObservable();
@@ -56,6 +57,12 @@ const httpOptions = {
     selectedList(cinemaList: any[]){
         this.cList.next(cinemaList);
       }
+
+    getMovies(cinema: any) {
+        return this.http
+        .get("http://localhost:8080/api/home/getMovies", httpOptions)
+        .map((data:[any]) => data);
+    }
 
   
 

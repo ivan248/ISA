@@ -1,6 +1,8 @@
 package com.isa.project.bean;
 
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -52,26 +54,41 @@ public class Cinema {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "cinema_movies", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
+    private List<Movie> movies;
+
 	
+    
+ 
+	
+	public List<Movie> getMovies() {
+		return movies;
+	}
+
+	public void setMovies(List<Movie> movies) {
+		this.movies = movies;
+	}
+
 	public Cinema() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cinema(Long id, String name, String address, String description) {
+	public Cinema(Long id, String name, String address, String description, List<Movie> movies) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.description = description;
+		this.movies = movies;
 	}
 
+	
+		
+	
 
-	@Override
-	public String toString() {
-		return "Cinema [id" + id + ", name=" + name + ", address=" + address + ", description="
-				+ description + "]";
-	}
+
 	
 	
 

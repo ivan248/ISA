@@ -15,6 +15,7 @@ export class ViewCinemaComponent implements OnInit {
 
 
     private currentCinema: any;
+    private movies:  any[] = [];
     
     
 
@@ -26,7 +27,10 @@ export class ViewCinemaComponent implements OnInit {
     }
 
     ngOnInit() {
+
         this.cinemasService.currentc.subscribe(currentCinema => this.currentCinema = currentCinema);
+        this.cinemasService.getMovies(this.currentCinema).subscribe(data =>
+          this.movies = data);
       }
 
   

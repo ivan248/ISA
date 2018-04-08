@@ -1,24 +1,39 @@
 <div class="container">
-  <div class="jumbotron">
-    <h1>Cinemas</h1>      
-  </div>
-<br>
-<br>
-<ul class="cinemasArray">
-   <li *ngFor="let c of cinemasArray"
-    [class.selected]="c === selectedCinema"
-    (click)="onSelect(c)">
-    <span class="badge">{{c.name}}</span> {{c.address}}
-  </li>
-</ul>
-<br>
-<div *ngIf="selectedCinema">
- 
-        <h2>{{ selectedCinema.name | uppercase }} Details</h2>
-        <br>
-        <div><span>address: </span>{{selectedCinema.address}}</div>
-        <div><span>description: </span>{{selectedCinema.description}}</div>
-        <button class="btn" (click)="onClickOpenPage(selectedCinema)" >Open page</button>
-        <button class="btn" (click)="onClickEditPage(selectedCinema)" [hidden]="editButtonHidden">Edit cinema</button>
-       
+    <div class="jumbotron">
+      <h1>Cinemas</h1>      
+    </div>
+    </div>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-sm">
+      <ul class="cinemasArray">
+        <li *ngFor="let c of cinemasArray"
+          [class.selected]="c === selectedCinema"
+          (click)="onSelect(c)">
+          <span class="badge">{{c.name}}</span> {{c.address}}
+        </li>
+      </ul>
+    </div>
+    <br>
+  
+    <div class="col-xl">
+      <div *ngIf="selectedCinema">
+   
+          <h2>{{ selectedCinema.name | uppercase }} Details</h2>
+          <br>
+          <div><span>address: </span>{{selectedCinema.address}}</div>
+          <br>
+          <div><span>description: </span>{{selectedCinema.description}}</div>
+          <br>
+          <button class="btn" (click)="onClickOpenPage(selectedCinema)" >Open page</button>
+          <button class="btn" (click)="onClickEditPage(selectedCinema)" >Edit cinema</button>
+         
+        </div>
       </div>
+      <div class="col-sm"></div>
+  
+  
+  
+      
+  </div>

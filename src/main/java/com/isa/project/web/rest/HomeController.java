@@ -8,13 +8,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Theatre;
 import com.isa.project.bean.User;
+import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.CinemaService;
 import com.isa.project.service.TheatreService;
 
@@ -57,7 +61,6 @@ public class HomeController {
 	public ResponseEntity<ArrayList<Cinema>> getCinemas(){
 		ArrayList<Cinema> listaBioskopa = new ArrayList<>();
 		listaBioskopa = cinemaService.getAllCinemas();
-		System.out.println(listaBioskopa);
 		return new ResponseEntity<>(listaBioskopa, HttpStatus.OK);
 		
 	}
@@ -97,6 +100,17 @@ public class HomeController {
 	public ResponseEntity editTheatrePost(@RequestBody Theatre theatre) {
 		System.out.println("Editovanje");
 		return new ResponseEntity<>(theatreService.editTheatre(theatre), HttpStatus.OK);
+	}
+	
+
+	
+	@RequestMapping(value = "/getMovies", method = RequestMethod.GET, produces="application/json")
+	public ResponseEntity getMovies(@RequestParam("cinema") Cinema cinema) {
+
+		System.out.println("cinemaaaaaaaa");
+		System.out.println("CINEMA "+cinema.getName());
+
+		return new ResponseEntity(cinemaService.getMovies(cinema.getName()), HttpStatus.OK);
 	}
 
 }
