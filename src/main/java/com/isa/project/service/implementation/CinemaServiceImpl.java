@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Movie;
 import com.isa.project.repository.CinemaRepository;
+import com.isa.project.repository.MovieRepository;
 import com.isa.project.service.CinemaService;
 
 @Service
@@ -17,6 +18,10 @@ public class CinemaServiceImpl implements CinemaService{
 	
 	@Autowired
 	private CinemaRepository cinemaRepository;
+	
+
+	@Autowired
+	private MovieRepository movieRepository;
 
 
 	@Override
@@ -64,6 +69,31 @@ public class CinemaServiceImpl implements CinemaService{
 		return cinemaRepository.findOneById(id);
 	}
 
+
+	@Override
+	public Boolean deleteMovie(Long movieid, Long cinemaid) {
+		// TODO Auto-generated method stub
+		Movie m = new Movie();
+		m =  movieRepository.findOneById(movieid);
+		Cinema c = new Cinema();
+		c = cinemaRepository.findOneById(cinemaid);
+		
+		try {
+			c.getMovies().remove(m);
+			cinemaRepository.flush();
+			movieRepository.delete(m);
+			movieRepository.flush();
+			
+			
+		}catch (Exception e) {
+			return false;
+
+		}
+		return true;
+	}
+
+
+	
 
 	
 

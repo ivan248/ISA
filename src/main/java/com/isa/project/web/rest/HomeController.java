@@ -106,7 +106,7 @@ public class HomeController {
 	
 	@GetMapping
 	@RequestMapping(value = "/getMovies")
-	public ResponseEntity removeFriend(
+	public ResponseEntity getMovies(
 			@RequestParam("cinema") String cinemaId) {
 
 		Cinema c = new Cinema();
@@ -115,4 +115,16 @@ public class HomeController {
 
 	}
 
+	
+	@RequestMapping(value = "/deleteMovie", method = RequestMethod.DELETE,
+			produces="application/json", consumes="application/json")
+	public ResponseEntity deleteMovie(
+			@RequestParam("movieid") String movieId, @RequestParam("cinemaid") String cinemaId ) {
+
+		System.out.println("movie id: "+movieId);
+		System.out.println("cinema id: "+cinemaId);
+		cinemaService.deleteMovie(Long.parseLong(movieId), Long.parseLong(cinemaId));
+		return new ResponseEntity( HttpStatus.OK);
+
+	}
 }

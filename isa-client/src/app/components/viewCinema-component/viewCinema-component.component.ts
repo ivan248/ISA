@@ -33,9 +33,20 @@ export class ViewCinemaComponent implements OnInit {
           this.movies = data);
       }
 
-      viewMovie(i : number) {
-        console.log(i);
+      viewMovie(id : number) {
+        console.log(id);
         // ovde prikazati sve termine i sale projekcije
+  
+      }
+      deleteMovie(idMovie : number, idCinema: number) {
+        console.log("delete: "+idMovie);
+        console.log("delete: "+idCinema);
+        this.cinemasService.deleteMovie(idMovie, idCinema).subscribe(data =>
+          this.movies = data);
+        this.cinemasService.getMovies(this.currentCinema.id).subscribe(data =>
+          this.movies = data);
+
+        
   
       }
 

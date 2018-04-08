@@ -71,6 +71,21 @@ const httpOptions = {
         .map((data:[any]) => data);
     }
 
+   deleteMovie(movieId: any, cinemaId: any) {
+    let params = new HttpParams().set('movieid',movieId);    
+    params = params.set('cinemaid',cinemaId); 
+
+    let headers = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     });
+
+    return this.http
+    .delete("http://localhost:8080/api/home/deleteMovie", {params:params,headers:headers})
+    .map((data:[any]) => data);
+
+   }
+
   
 
  } 
