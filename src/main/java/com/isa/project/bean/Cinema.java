@@ -54,7 +54,7 @@ public class Cinema {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "cinema_movies", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private List<Movie> movies;
 

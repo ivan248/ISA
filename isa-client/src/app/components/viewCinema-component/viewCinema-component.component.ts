@@ -39,12 +39,9 @@ export class ViewCinemaComponent implements OnInit {
   
       }
       deleteMovie(idMovie : number, idCinema: number) {
-        console.log("delete: "+idMovie);
-        console.log("delete: "+idCinema);
         this.cinemasService.deleteMovie(idMovie, idCinema).subscribe(data =>
           this.movies = data);
-        this.cinemasService.getMovies(this.currentCinema.id).subscribe(data =>
-          this.movies = data);
+       
 
         
   

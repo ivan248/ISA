@@ -79,7 +79,7 @@ public class CinemaServiceImpl implements CinemaService{
 		c = cinemaRepository.findOneById(cinemaid);
 		
 		try {
-			c.getMovies().remove(m);
+			c.getMovies().remove(m); // zabrani ovo
 			cinemaRepository.flush();
 			movieRepository.delete(m);
 			movieRepository.flush();

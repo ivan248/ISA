@@ -123,8 +123,10 @@ public class HomeController {
 
 		System.out.println("movie id: "+movieId);
 		System.out.println("cinema id: "+cinemaId);
+		Cinema c = new Cinema();
+		c = cinemaService.getCinemaById(Long.parseLong(cinemaId));
 		cinemaService.deleteMovie(Long.parseLong(movieId), Long.parseLong(cinemaId));
-		return new ResponseEntity( HttpStatus.OK);
+		return new ResponseEntity(cinemaService.getMovies(c.getName()), HttpStatus.OK);
 
 	}
 }
