@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
-import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpErrorResponse, HttpParams  } from '@angular/common/http';
 
 const httpOptions = {
     headers: new HttpHeaders({ 
@@ -58,9 +58,16 @@ const httpOptions = {
         this.cList.next(cinemaList);
       }
 
-    getMovies(cinema: any) {
+    getMovies(cinemaId: any) {
+  
+        let params = new HttpParams().append('cinema',cinemaId);
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
         return this.http
-        .get("http://localhost:8080/api/home/getMovies", httpOptions)
+        .get("http://localhost:8080/api/home/getMovies", {params:params,headers:headers})
         .map((data:[any]) => data);
     }
 

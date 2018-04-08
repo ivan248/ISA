@@ -21,6 +21,7 @@ public class CinemaServiceImpl implements CinemaService{
 
 	@Override
 	public ArrayList<Cinema> getAllCinemas() {
+		
 		return cinemaRepository.findAll();
 	}
 
@@ -51,9 +52,16 @@ public class CinemaServiceImpl implements CinemaService{
 
 
 	@Override
-	public List<Movie> getMovies(String username) {
+	public List<Movie> getMovies(String name) {
 		// TODO Auto-generated method stub
-		return cinemaRepository.findOneByName(username).getMovies();
+		return cinemaRepository.findOneByName(name).getMovies();
+	}
+
+
+	@Override
+	public Cinema getCinemaById(Long id) {
+		// TODO Auto-generated method stub
+		return cinemaRepository.findOneById(id);
 	}
 
 

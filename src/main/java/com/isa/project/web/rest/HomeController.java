@@ -93,6 +93,7 @@ public class HomeController {
 	@RequestMapping(value="/editC", method = RequestMethod.POST) 
 	public ResponseEntity editCinemaPost(@RequestBody Cinema cinema) {
 		System.out.println("Editovanje");
+		System.out.println(cinemaService.getMovies(cinema.getName()));
 		return new ResponseEntity<>(cinemaService.editCinema(cinema), HttpStatus.OK);
 	}
 	
@@ -102,15 +103,16 @@ public class HomeController {
 		return new ResponseEntity<>(theatreService.editTheatre(theatre), HttpStatus.OK);
 	}
 	
-
 	
-	@RequestMapping(value = "/getMovies", method = RequestMethod.GET, produces="application/json")
-	public ResponseEntity getMovies(@RequestParam("cinema") Cinema cinema) {
+	@GetMapping
+	@RequestMapping(value = "/getMovies")
+	public ResponseEntity removeFriend(
+			@RequestParam("cinema") String cinemaId) {
 
-		System.out.println("cinemaaaaaaaa");
-		System.out.println("CINEMA "+cinema.getName());
+		Cinema c = new Cinema();
+		c = cinemaService.getCinemaById(Long.parseLong(cinemaId));
+		return new ResponseEntity(cinemaService.getMovies(c.getName()), HttpStatus.OK);
 
-		return new ResponseEntity(cinemaService.getMovies(cinema.getName()), HttpStatus.OK);
 	}
 
 }

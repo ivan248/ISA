@@ -47,6 +47,80 @@ public class Movie {
 		this.producer = producer;
 		this.actors = actors;
 	}
+	
+	
+
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+
+	public String getName() {
+		return name;
+	}
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+	public String getGenre() {
+		return genre;
+	}
+
+
+
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+
+	public String getProducer() {
+		return producer;
+	}
+
+
+
+	public void setProducer(String producer) {
+		this.producer = producer;
+	}
+
+
+
+	public ArrayList<String> getActors() {
+		return actors;
+	}
+
+
+
+	public void setActors(ArrayList<String> actors) {
+		this.actors = actors;
+	}
 
 
 
