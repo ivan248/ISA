@@ -44,17 +44,9 @@ export class NewitemComponent implements OnInit {
       });
     }
       
-    // }
-
-    // onClickSetSelectedItem(id: number){ //klikom na card kazemo da smo izabrali taj item i sa njim dalje radimo
-      
-    //     this.newItemService.getItem(id).subscribe(data => {
-    //     this.item = data;
-    //     this.dataService.changeSelectedItem(this.item);
-    //     this.router.navigateByUrl('/itemprofile')
-    //   });
-      
-    // }
+    onClickReserve(id: number) {
+      this.newItemService.reserveItem(id).subscribe(data => console.log(data));
+    }
 
 
 }
