@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.isa.project.bean.OfficialItem;
+import com.isa.project.bean.User;
 import com.isa.project.repository.OfficialItemRepository;
 import com.isa.project.service.OfficialItemService;
 
@@ -64,6 +65,22 @@ public class OfficialItemServiceImpl implements OfficialItemService {
 		}
 		catch(Exception e) {
 			System.out.println("Error occured while writing to database. Constraints were not satisfied.");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public Boolean reserve(int id, User u) {
+		try {
+		
+		OfficialItem i = officialItemRepository.findOneByItemID(id);
+		i.setReserved(true);
+		i.setBuyer(u);
+		
+		officialItemRepository.flush();
+		return true;
+		} catch(Exception e) {
 			e.printStackTrace();
 			return false;
 		}

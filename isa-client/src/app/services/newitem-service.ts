@@ -50,6 +50,16 @@ const headers = new HttpHeaders({
 
     }
 
+    reserveItem(id: any){
+        const body = JSON.parse(JSON.stringify(id));
+        let params = new HttpParams().append("id", id);
+        
+
+        return this.http.post('http://localhost:8080/officialitem/reserve',body,{
+            headers: headers, params: params
+        } );
+    }
+
     
     
 
