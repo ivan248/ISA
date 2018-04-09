@@ -71,7 +71,6 @@ public class CinemaServiceImpl implements CinemaService{
 					for (int i =0; i<projekcije.size(); i++) {
 						if (projekcije.get(i).getId().equals(p.getId())) {
 							filmoviUBioskopu.add(m);
-							System.out.println(m);
 						}
 					}
 				

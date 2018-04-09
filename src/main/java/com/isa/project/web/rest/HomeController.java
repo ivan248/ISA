@@ -93,7 +93,6 @@ public class HomeController {
 	@RequestMapping(value="/editC", method = RequestMethod.POST) 
 	public ResponseEntity editCinemaPost(@RequestBody Cinema cinema) {
 		System.out.println("Editovanje");
-		System.out.println(cinemaService.getMovies(cinema.getName()));
 		return new ResponseEntity<>(cinemaService.editCinema(cinema), HttpStatus.OK);
 	}
 	
