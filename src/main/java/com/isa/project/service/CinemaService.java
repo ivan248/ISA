@@ -16,6 +16,7 @@ public interface CinemaService {
 	public List<Movie> getMovies(String username);
 	Cinema getCinemaById(Long id);
 	public Boolean deleteMovie(Long movieid, Long cinemaid);
+	public Boolean deleteProjection(Long movieid, Long projectionid, Long cinemaid);
 
 	
 

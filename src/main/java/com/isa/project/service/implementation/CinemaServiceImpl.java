@@ -11,6 +11,7 @@ import com.isa.project.bean.Movie;
 import com.isa.project.bean.Projekcija;
 import com.isa.project.repository.CinemaRepository;
 import com.isa.project.repository.MovieRepository;
+import com.isa.project.repository.ProjekcijaRepository;
 import com.isa.project.service.CinemaService;
 
 @Service
@@ -23,6 +24,9 @@ public class CinemaServiceImpl implements CinemaService{
 
 	@Autowired
 	private MovieRepository movieRepository;
+	
+	@Autowired
+	private ProjekcijaRepository projekcijaRepository;
 
 
 	@Override
@@ -109,6 +113,22 @@ public class CinemaServiceImpl implements CinemaService{
 			return false;
 
 		}
+		return true;
+	}
+
+
+	@Override
+	public Boolean deleteProjection(Long movieid, Long projectionid, Long cinemaid) {
+		
+		Cinema c = cinemaRepository.findOneById(cinemaid);
+		Projekcija p = projekcijaRepository.findOneById(projectionid);
+		System.out.println(c.getProjekcije());
+		c.getProjekcije().remove(p); // izbrisana iz liste ali ne iz baze
+		
+		System.out.println(c.getProjekcije());
+		cinemaRepository.flush();
+		projekcijaRepository.flush();
+		
 		return true;
 	}
 

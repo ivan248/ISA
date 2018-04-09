@@ -86,6 +86,23 @@ const httpOptions = {
 
    }
 
+   deleteProjection(movieid: any, projekcijaid:any, cinemaid: any) {
+    let params = new HttpParams().set('movieid',movieid); 
+    params = params.set('projekcijaid',projekcijaid);   
+    params = params.set('cinemaid',cinemaid); 
+
+    let headers = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     });
+
+    return this.http
+    .delete("http://localhost:8080/api/home/deleteProjection", {params:params,headers:headers})
+    .map((data:[any]) => data);
+
+   }
+
+
   
 
  } 

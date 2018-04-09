@@ -128,4 +128,20 @@ public class HomeController {
 		return new ResponseEntity(cinemaService.getMovies(c.getName()), HttpStatus.OK);
 
 	}
+	
+	
+	
+	@RequestMapping(value = "/deleteProjection", method = RequestMethod.DELETE,
+	produces="application/json", consumes="application/json")
+	public ResponseEntity deleteProjection(
+	@RequestParam("movieid") String movieid, @RequestParam("projekcijaid") String projekcijaid, @RequestParam("cinemaid") String cinemaid ) {
+
+
+		Cinema c = new Cinema();
+		c = cinemaService.getCinemaById(Long.parseLong(cinemaid));
+		cinemaService.deleteProjection(Long.parseLong(movieid), Long.parseLong(projekcijaid), Long.parseLong(cinemaid));
+		
+		return new ResponseEntity(cinemaService.getMovies(c.getName()), HttpStatus.OK);
+
+}
 }

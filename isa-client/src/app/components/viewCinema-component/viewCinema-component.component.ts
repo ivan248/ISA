@@ -38,6 +38,24 @@ export class ViewCinemaComponent implements OnInit {
         // ovde prikazati sve termine i sale projekcije
   
       }
+
+      addProjection(id : number) {
+        console.log(id);
+        
+  
+      }
+
+      deleteProjection(movieid : number, projekcijaid: number, cinemaid:number) {
+        console.log(movieid);
+        console.log(projekcijaid);
+        console.log(cinemaid);
+
+        this.cinemasService.deleteProjection(movieid, projekcijaid, cinemaid).subscribe(data =>
+          this.movies = data);
+
+        
+  
+      }
       deleteMovie(idMovie : number, idCinema: number) {
         this.cinemasService.deleteMovie(idMovie, idCinema).subscribe(data =>
           this.movies = data);
