@@ -2,6 +2,7 @@ package com.isa.project.bean;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -29,8 +30,74 @@ public class Movie {
     @Column(name = "actors", nullable = true)
     private ArrayList<String> actors;
     
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "projekcija_movie", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "projekcija_id"))
+    private List<Projekcija> projekcije;
+    
+    
+    
+   public Movie(Long id, String name, String genre, String description, String producer, ArrayList<String> actors,
+			List<Projekcija> projekcije) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.genre = genre;
+		this.description = description;
+		this.producer = producer;
+		this.actors = actors;
+		this.projekcije = projekcije;
+	}
 
+
+
+
+
+
+
+
+
+/* @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "termini_movies", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "termin_id"))
+    private List<Termin> termini;
 	
+    
+    
+	public List<Termin> getTermini() {
+		return termini;
+	}
+
+
+
+	public void setTermini(List<Termin> termini) {
+		this.termini = termini;
+	}*/
+
+
+
+	public List<Projekcija> getProjekcije() {
+		return projekcije;
+	}
+
+
+
+
+
+
+
+
+
+	public void setProjekcije(List<Projekcija> projekcije) {
+		this.projekcije = projekcije;
+	}
+
+
+
+
+
+
+
+
+
 	public Movie() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -38,7 +105,14 @@ public class Movie {
 
 
 
-	public Movie(Long id, String name, String genre, String description, String producer, ArrayList<String> actors) {
+	
+	
+	
+
+
+
+	public Movie(Long id, String name, String genre, String description, String producer, ArrayList<String> actors
+			) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -47,8 +121,6 @@ public class Movie {
 		this.producer = producer;
 		this.actors = actors;
 	}
-	
-	
 
 
 
@@ -127,8 +199,12 @@ public class Movie {
 	@Override
 	public String toString() {
 		return "Movie [id=" + id + ", name=" + name + ", genre=" + genre + ", description=" + description
-				+ ", producer=" + producer + ", actors=" + actors + "]";
+				+ ", producer=" + producer + ", actors=" + actors + ", projekcije=" + projekcije + "]";
 	}
+
+
+
+	
 	
 	
 	

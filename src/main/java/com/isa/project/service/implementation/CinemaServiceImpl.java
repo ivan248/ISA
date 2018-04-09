@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Movie;
+import com.isa.project.bean.Projekcija;
 import com.isa.project.repository.CinemaRepository;
 import com.isa.project.repository.MovieRepository;
 import com.isa.project.service.CinemaService;
@@ -59,7 +60,27 @@ public class CinemaServiceImpl implements CinemaService{
 	@Override
 	public List<Movie> getMovies(String name) {
 		// TODO Auto-generated method stub
-		return cinemaRepository.findOneByName(name).getMovies();
+		List<Projekcija> projekcije = cinemaRepository.findOneByName(name).getProjekcije();
+		List<Movie> filmovi = movieRepository.findAll();
+		List<Movie> filmoviUBioskopu = new ArrayList<>();
+		
+		
+		for (Movie m: filmovi) {
+			for (Projekcija p: m.getProjekcije()) {
+				if (!filmoviUBioskopu.contains(m)) {
+					for (int i =0; i<projekcije.size(); i++) {
+						if (projekcije.get(i).getId().equals(p.getId())) {
+							filmoviUBioskopu.add(m);
+							System.out.println(m);
+						}
+					}
+				
+					
+				}
+			}
+		}
+		
+		return filmoviUBioskopu;
 	}
 
 
@@ -79,7 +100,7 @@ public class CinemaServiceImpl implements CinemaService{
 		c = cinemaRepository.findOneById(cinemaid);
 		
 		try {
-			c.getMovies().remove(m); // zabrani ovo
+			//c.getMovies().remove(m); 
 			cinemaRepository.flush();
 			movieRepository.delete(m);
 			movieRepository.flush();

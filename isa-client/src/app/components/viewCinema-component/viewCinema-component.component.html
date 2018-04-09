@@ -42,7 +42,9 @@
                 <td>{{m.genre}}</td>
                 <td><button class="btn" (click)="viewMovie(m.id)"> View </button></td>
                 <td><button class="btn" (click)="deleteMovie(m.id, currentCinema.id)"> Delete </button></td>
-                            
+                <td *ngFor="let t of m.projekcije">
+                    {{t.id}}
+                </td>                            
             </tr>
         </table>
          
