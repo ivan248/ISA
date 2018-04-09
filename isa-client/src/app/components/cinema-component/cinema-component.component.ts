@@ -85,7 +85,8 @@ export class CinemasComponent implements OnInit {
 
     onSelect(cinema: any): void {
       this.selectedCinema = cinema;
-      this.editButtonHidden=false;
+     // this.editButtonHidden=true;
+      
     }
 
     onClickOpenPage(Cinema:any): void{

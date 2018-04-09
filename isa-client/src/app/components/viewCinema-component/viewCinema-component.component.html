@@ -42,17 +42,36 @@
                 <td>{{m.genre}}</td>
                 <td><button class="btn" (click)="viewMovie(m.id)"> View </button></td>
                 <td><button class="btn" (click)="addProjection(m.id)"> Add projection</button></td>
-                <!--td><button class="btn" (click)="deleteMovie(m.id, currentCinema.id)"> Delete </button></td-->
+                <td><button class="btn" (click)="deleteMovie(m.id, currentCinema.id)"> Delete </button></td>
                 <td *ngFor=" let p1 of currentCinema.projekcije">
+                
                     <div *ngFor=" let p of m.projekcije">
+                    
                         <div *ngIf="p.id==p1.id">
-                        <div class="card">
+                        
+                        <div class="card" [hidden]="!hiddenEditing[p.id]">
+                                
                             <p> {{p.date}}</p>
                             <p> {{p.time}}</p>
                             <p> {{p.place}}</p>
                             <p> {{p.price}}</p>
                             <p><button class="btn" (click)="deleteProjection(m.id, p.id, currentCinema.id)"> Delete projection</button></p>
+                            <p><button class="btn" [hidden]="!hiddenEditing[p.id]" (click)="changeProjection(m.id, p.id, currentCinema.id)"> Change projection</button></p>
                         </div>
+                            <form  [hidden]="hiddenEditing[p.id]" (ngSubmit)="onSubmit(f)" #f="ngForm" >
+                                    <input type="text" class="form-control" name="date"
+                                    [(ngModel)] = "p.date" required>
+                                    <input type="text" class="form-control" name="time"
+                                        [(ngModel)] = "p.time" required> 
+                                    <input type="text" class="form-control" name="place"
+                                        [(ngModel)] = "p.place" required> 
+                                    <input type="text" class="form-control" name="price"
+                                        [(ngModel)] = "p.price" required> 
+                                            
+                            <button type="submit"  class="btn btn-dark btn-lg" [disabled] = "!f.valid">Save changes</button>
+                            </form>
+        
+                      
                     </div>
                     </div>
                     
@@ -63,6 +82,6 @@
     </div>
        
     </div>
-  </div>
+ 
 
  
