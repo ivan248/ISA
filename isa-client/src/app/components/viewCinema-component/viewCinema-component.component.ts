@@ -19,6 +19,7 @@ export class ViewCinemaComponent implements OnInit {
     private movies:  any[] = [];
     private hiddenEditing: boolean[] = [];
     private projekcijaId: any;
+    private numberProjections: any = 20;
 
       
 
@@ -33,10 +34,13 @@ export class ViewCinemaComponent implements OnInit {
         this.cinemasService.currentc.subscribe(currentCinema => this.currentCinema = currentCinema);
         this.cinemasService.getMovies(this.currentCinema.id).subscribe(data =>
         this.movies = data);
-          console.log(this.currentCinema.projekcije.length)
-          for(var i = 1; i <= this.currentCinema.projekcije.length; i++){
-            this.hiddenEditing[i] = true;
-         }
+        this.cinemasService.initBroj.subscribe(numberProjections => this.numberProjections = numberProjections );
+      
+        var data = this.currentCinema.projekcije;
+        data.forEach(p => {
+            this.hiddenEditing[p.id] = true;
+        });
+         
         
 
       }
@@ -54,6 +58,7 @@ export class ViewCinemaComponent implements OnInit {
         this.cinemasService.selectMovie(movie);
 
         this.router.navigateByUrl('/addProjection');
+  
         
         
   
@@ -71,7 +76,6 @@ export class ViewCinemaComponent implements OnInit {
       }
 
       changeProjection(movieid : number, projekcijaid: number, cinemaid:number) {
-        console.log(projekcijaid);
         this.hiddenEditing[projekcijaid] = false;
         this.projekcijaId=projekcijaid;
 
@@ -85,7 +89,8 @@ export class ViewCinemaComponent implements OnInit {
 
       onSubmit(form: NgForm, id: number){
 
-        this.hiddenEditing[this.projekcijaId] = true;
+
+        this.hiddenEditing[id] = true;
         this.cinemasService.sendEdditedProjection(form.value, id)
         .subscribe();
 

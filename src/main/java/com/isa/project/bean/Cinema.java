@@ -62,13 +62,13 @@ public class Cinema {
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "cinema_projekcije", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "projekcija_id"))
-    private List<Projekcija> projekcije;
+    private List<Projection> projekcije;
 
 	
     
     
 	
-public Cinema(Long id, String name, String address, String description, List<Projekcija> projekcije) {
+public Cinema(Long id, String name, String address, String description, List<Projection> projekcije) {
 	super();
 	this.id = id;
 	this.name = name;
@@ -85,11 +85,11 @@ public Cinema(Long id, String name, String address, String description, List<Pro
 		this.movies = movies;
 	} */
 
-	public List<Projekcija> getProjekcije() {
+	public List<Projection> getProjekcije() {
 		return projekcije;
 	}
 
-	public void setProjekcije(List<Projekcija> projekcije) {
+	public void setProjekcije(List<Projection> projekcije) {
 		this.projekcije = projekcije;
 	}
 

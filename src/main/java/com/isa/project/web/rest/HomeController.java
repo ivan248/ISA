@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.isa.project.bean.Cinema;
-import com.isa.project.bean.Projekcija;
+import com.isa.project.bean.Projection;
 import com.isa.project.bean.Theatre;
 import com.isa.project.bean.User;
 import com.isa.project.security.jwt.TokenProvider;
@@ -121,12 +121,11 @@ public class HomeController {
 	public ResponseEntity deleteMovie(
 			@RequestParam("movieid") String movieId, @RequestParam("cinemaid") String cinemaId ) {
 
-		System.out.println("movie id: "+movieId);
-		System.out.println("cinema id: "+cinemaId);
 		Cinema c = new Cinema();
 		c = cinemaService.getCinemaById(Long.parseLong(cinemaId));
-		cinemaService.deleteMovie(Long.parseLong(movieId), Long.parseLong(cinemaId));
-		return new ResponseEntity(cinemaService.getMovies(c.getName()), HttpStatus.OK);
+		System.out.println("Foreign key constraint");
+		//cinemaService.deleteMovie(Long.parseLong(movieId), Long.parseLong(cinemaId));
+		return new ResponseEntity(cinemaService.getMovies(c.getName()), HttpStatus.FORBIDDEN);
 
 	}
 	
@@ -147,9 +146,16 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/editProjection", method = RequestMethod.POST) 
-	public ResponseEntity editProjection(@RequestBody Projekcija projekcija) {
+	public ResponseEntity editProjection(@RequestBody Projection projekcija) {
 		System.out.println("Editovanje"+projekcija);
-		//cinemaService.editCinema(cinema)
-		return new ResponseEntity<>( HttpStatus.OK);
+		
+		return new ResponseEntity<>(cinemaService.editProjection(projekcija), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/addProjection", method = RequestMethod.POST) 
+	public ResponseEntity addProjection(@RequestBody Projection projekcija, @RequestParam("movieid") String movieid, @RequestParam("cinemaid") String cinemaid) {
+		System.out.println("************"+projekcija);
+		
+		return new ResponseEntity<>(cinemaService.addProjection(projekcija, Long.parseLong(movieid), Long.parseLong(cinemaid)), HttpStatus.OK);
 	}
 }

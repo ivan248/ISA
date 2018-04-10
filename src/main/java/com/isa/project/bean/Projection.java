@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "projekcija")
-public class Projekcija {
+public class Projection {
 	
 	 	@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY )
@@ -70,12 +70,12 @@ public class Projekcija {
 			this.price = price;
 		}
 
-		public Projekcija() {
+		public Projection() {
 			super();
 			// TODO Auto-generated constructor stub
 		}
 
-		public Projekcija(Long id, Date date, String time, String place, float price) {
+		public Projection(Long id, Date date, String time, String place, float price) {
 			super();
 			this.id = id;
 			this.date = date;

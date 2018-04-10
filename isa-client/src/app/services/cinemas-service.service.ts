@@ -38,6 +38,9 @@ const headers = new HttpHeaders({
     private cList= new BehaviorSubject<any[]>(new Array<any>());
     currentcList = this.cList.asObservable();
 
+    private initBrojprivate = new BehaviorSubject<any>(new Object(new Object()));
+    initBroj: any = this.initBrojprivate.asObservable();
+
     constructor(private http:HttpClient) {
 
     }
@@ -55,6 +58,7 @@ const headers = new HttpHeaders({
 
     selectCinema(cinema: any) {
         this.c.next(cinema);
+        this.initBrojprivate.next(cinema.projekcije.length);
       }
       
     selectMovie(movie: any) {
@@ -109,7 +113,7 @@ const headers = new HttpHeaders({
 
    }
 
-   sendEdditedProjection(projekcija : any, id: number){
+sendEdditedProjection(projekcija : any, id: number){
     projekcija.id=id;
     const body = JSON.parse(JSON.stringify(projekcija));
     
@@ -117,6 +121,20 @@ const headers = new HttpHeaders({
     return this.http.post('http://localhost:8080/api/home/editProjection',body,{
         headers: headers
     } );
+
+}
+
+addProjection(projekcija: any, movie: any, cinema: any){
+    const body = JSON.parse(JSON.stringify(projekcija));
+    var movieid = movie.id;
+    var cinemaid = cinema.id;
+    let params = new HttpParams().set('movieid',movieid);  
+    params = params.set('cinemaid',cinemaid); 
+    return this.http.post('http://localhost:8080/api/home/addProjection',body,{
+        params:params,
+        headers: headers
+    } );
+
 
 }
 

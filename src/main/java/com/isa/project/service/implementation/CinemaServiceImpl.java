@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Movie;
-import com.isa.project.bean.Projekcija;
+import com.isa.project.bean.Projection;
 import com.isa.project.repository.CinemaRepository;
 import com.isa.project.repository.MovieRepository;
-import com.isa.project.repository.ProjekcijaRepository;
+import com.isa.project.repository.ProjectionRepository;
 import com.isa.project.service.CinemaService;
 
 @Service
@@ -26,7 +26,7 @@ public class CinemaServiceImpl implements CinemaService{
 	private MovieRepository movieRepository;
 	
 	@Autowired
-	private ProjekcijaRepository projekcijaRepository;
+	private ProjectionRepository projekcijaRepository;
 
 
 	@Override
@@ -64,13 +64,13 @@ public class CinemaServiceImpl implements CinemaService{
 	@Override
 	public List<Movie> getMovies(String name) {
 		// TODO Auto-generated method stub
-		List<Projekcija> projekcije = cinemaRepository.findOneByName(name).getProjekcije();
+		List<Projection> projekcije = cinemaRepository.findOneByName(name).getProjekcije();
 		List<Movie> filmovi = movieRepository.findAll();
 		List<Movie> filmoviUBioskopu = new ArrayList<>();
 		
 		
 		for (Movie m: filmovi) {
-			for (Projekcija p: m.getProjekcije()) {
+			for (Projection p: m.getProjekcije()) {
 				if (!filmoviUBioskopu.contains(m)) {
 					for (int i =0; i<projekcije.size(); i++) {
 						if (projekcije.get(i).getId().equals(p.getId())) {
@@ -121,19 +121,23 @@ public class CinemaServiceImpl implements CinemaService{
 	public Boolean deleteProjection(Long movieid, Long projectionid, Long cinemaid) {
 		
 		Cinema c = cinemaRepository.findOneById(cinemaid);
-		Projekcija p = projekcijaRepository.findOneById(projectionid);
-		System.out.println(c.getProjekcije());
+		Movie m = movieRepository.findOne(movieid);
+		Projection p = projekcijaRepository.findOneById(projectionid);
 		c.getProjekcije().remove(p); 
-	
+		m.getProjekcije().remove(p);
+		
+		
+		projekcijaRepository.delete(p);
 		cinemaRepository.flush();
 		projekcijaRepository.flush();
+		movieRepository.flush();
 		
 		return true;
 	}
 
 
 	@Override
-	public Boolean editProjection(Projekcija projekcija) {
+	public Boolean editProjection(Projection projekcija) {
 		try {
 			projekcijaRepository.findOneById(projekcija.getId()).setDate(projekcija.getDate());
 			projekcijaRepository.findOneById(projekcija.getId()).setPlace(projekcija.getPlace());
@@ -145,6 +149,40 @@ public class CinemaServiceImpl implements CinemaService{
 			System.out.println("Error!");
 			return false;
 		}
+		return true;
+	}
+
+
+	@Override
+	public Boolean addProjection(Projection projekcija, Long movieid, Long cinemaid) {
+		try {
+			List<Projection> projekcijeBioskop = cinemaRepository.findOneById(cinemaid).getProjekcije();
+			if (projekcijeBioskop==null) {
+				projekcijeBioskop = new ArrayList<>();
+			}
+			projekcijeBioskop.add(projekcija);
+			cinemaRepository.findOneById(cinemaid).setProjekcije(projekcijeBioskop);
+			cinemaRepository.flush();
+			
+			List<Projection> projekcijeFilmovi = movieRepository.findOneById(movieid).getProjekcije();
+			if (projekcijeFilmovi==null) {
+				projekcijeFilmovi = new ArrayList<>();
+			}
+			projekcijeFilmovi.add(projekcija);
+			movieRepository.findOneById(movieid).setProjekcije(projekcijeFilmovi);
+			movieRepository.flush();
+			
+			
+			
+			projekcijaRepository.saveAndFlush(projekcija);
+		}
+		catch(Exception e) {
+			System.out.println("Error occured while writing to database. Constraints were not satisfied.");
+			e.printStackTrace();
+			return false;
+		}
+		
+		
 		return true;
 	}
 

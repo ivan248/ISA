@@ -7,14 +7,14 @@ import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.isa.project.bean.Projekcija;
+import com.isa.project.bean.Projection;
 
 
 @Repository
 @Transactional
-public interface ProjekcijaRepository extends JpaRepository<Projekcija, Long> {
+public interface ProjectionRepository extends JpaRepository<Projection, Long> {
 
-	Projekcija findOneById(Long id);
+	Projection findOneById(Long id);
 	
 	
 
