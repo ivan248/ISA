@@ -47,10 +47,11 @@ export class ViewCinemaComponent implements OnInit {
   
       }
 
-      addProjection(movieid : number) {
-        console.log(movieid);
+      addProjection(movie : any) {
+        console.log(movie.id);
 
         var cinemaid = this.currentCinema.id;
+        this.cinemasService.selectMovie(movie);
 
         this.router.navigateByUrl('/addProjection');
         

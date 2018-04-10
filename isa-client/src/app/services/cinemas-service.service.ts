@@ -32,6 +32,9 @@ const headers = new HttpHeaders({
     private c = new BehaviorSubject<any>(new Object(new Object()));
     currentc = this.c.asObservable();
 
+    private m = new BehaviorSubject<any>(new Object(new Object()));
+    currentm = this.m.asObservable();
+
     private cList= new BehaviorSubject<any[]>(new Array<any>());
     currentcList = this.cList.asObservable();
 
@@ -52,6 +55,10 @@ const headers = new HttpHeaders({
 
     selectCinema(cinema: any) {
         this.c.next(cinema);
+      }
+      
+    selectMovie(movie: any) {
+        this.m.next(movie);
       }
     
     selectedList(cinemaList: any[]){

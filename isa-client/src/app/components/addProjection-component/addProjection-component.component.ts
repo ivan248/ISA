@@ -14,7 +14,7 @@ import { HomeService } from '../../services/home-service.service';
 export class AddProjectionComponent implements OnInit {
  
     private currentCinema: any;
-    private currentCinemaList: any[];
+    private currentMovie: any;
 
 
     constructor(private cinemasService: CinemasService,
@@ -24,7 +24,8 @@ export class AddProjectionComponent implements OnInit {
     }
 
     ngOnInit() {
-        
+        this.cinemasService.currentc.subscribe(currentCinema => this.currentCinema = currentCinema);
+        this.cinemasService.currentm.subscribe(currentMovie => this.currentMovie = currentMovie);
       
       }
   
