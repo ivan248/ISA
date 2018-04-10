@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login-service.service';
 import { Router } from '@angular/router';
+import { DataService } from '../../services/data-service';
 
 @Component({
   selector: 'login-component',
@@ -38,12 +39,13 @@ export class LoginComponent implements OnInit {
     private email : any;
 
     constructor(private loginService:LoginService,
-            private router : Router) {
+            private router : Router,
+            private dataService : DataService) {
 
     }
 
     ngOnInit() {
-      //localStorage.setItem('token', 'ovde bi token trebao da bude');
+      localStorage.setItem('token', 'ovde bi token trebao da bude');
 
     }
 
@@ -57,7 +59,10 @@ export class LoginComponent implements OnInit {
         {
           localStorage.setItem('token', data.token);
           console.log(localStorage.getItem('token') + " usao u servis i pokupio token n");
-          this.router.navigateByUrl("/profile");
+          alert("Succesfull login!");
+          this.dataService.changeLoginJWT(data.token);
+          this.moveOn();
+          
         }
 
          
@@ -66,5 +71,10 @@ export class LoginComponent implements OnInit {
 
     console.log(localStorage.getItem('token') + " zavrio sa loginom");
     
+    }
+
+    moveOn() {
+      console.log("Pre slanja token je: " + localStorage.getItem('token'));
+      this.router.navigateByUrl("profile");
     }
 }

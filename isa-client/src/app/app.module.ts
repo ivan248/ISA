@@ -45,6 +45,11 @@ import { AddProjectionComponent } from './components/addProjection-component/add
 import { NewitemprofileComponent } from './components/fanzone-component/newitemprofile-component/newitemprofile-component.component';
 import { ItembidsComponent } from './components/fanzone-component/itembids-component/itembids-component.component';
 
+import { ReservationComponent } from './components/reservation-component/reservation-component.component';
+import { StepOneComponent } from './components/reservation-component/step-one/step-one.component';
+import { StepTwoComponent } from './components/reservation-component/step-two/step-two.component';
+import { StepThreeComponent } from './components/reservation-component/step-three/step-three.component';
+import { StepFourComponent } from './components/reservation-component/step-four/step-four.component';
 
 
 
@@ -75,8 +80,13 @@ import { ItembidsComponent } from './components/fanzone-component/itembids-compo
     EditnewitemComponent,
     AddProjectionComponent,
     NewitemprofileComponent,
-    ItembidsComponent
+    ItembidsComponent,
     
+    ReservationComponent,
+    StepOneComponent,
+    StepTwoComponent,
+    StepThreeComponent,
+    StepFourComponent
   ],
   imports: [
     routing,

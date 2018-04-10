@@ -1,0 +1,76 @@
+<div class="progress">
+        <div class="progress-bar" style="width:20%"></div>
+</div>
+
+<h1 class="text-md-center">Step 1</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <blockquote class="blockquote text-center">
+            <p class="mb-0">Cinema is the most beautiful fraud in the world.</p>
+            <footer class="blockquote-footer"> <cite title="Source Title">Jean-Luc Godard</cite></footer>
+        </blockquote>
+    </div>
+</div>
+
+<br>
+<br>
+
+<div class="row">
+
+        <div class="col-lg-6">
+            <button type="button" [class]="changeClassTheatre()" [disabled]="cinemaSelected" style="width:100%" class="btn btn-common" (click)="changeSelected()">Select Theatre</button>               
+        </div>
+
+        <div class="col-lg-6">
+            <button type="button" [class]="changeClassCinema()" [disabled]="!cinemaSelected" style="width:100%" class="btn btn-primary" (click)="changeSelected()">Select Cinema</button>                
+        </div>
+</div>
+
+<br>
+
+<div class="row" [hidden]="!cinemaSelected">
+    <div class="col-md-12">
+        <div class="form-group">
+                <label for="exampleFormControlSelect1"> <h2>Select theatre</h2></label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                </select>
+        </div>
+    </div>
+    <hr>
+    
+    <div class="col-md-12">
+            <label for="theatreSearch"> <h2>Search theatre</h2></label>
+            <input type="text" class="form-control" id="theatreSearch" style="text-align:center; margin:1px" placeholder="Enter name of the theatre">       
+            <button type="button" style="width:100%" class="btn btn-primary" (click)="searchTheatreClicked()"><span class="glyphicon glyphicon-search"></span>Search theatre</button>                
+    </div>
+</div>
+
+
+<div class="row" [hidden]="cinemaSelected">
+        <div class="col-md-12">
+            <div class="form-group">
+                    <label for="exampleFormControlSelect1"> <h2>Select cinema</h2></label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    </select>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <label for="cinemaSearch"> <h2>Search cinema</h2></label>
+            <input type="text" class="form-control" id="cinemaSearch" style="text-align:center; margin:1px" placeholder="Enter name of the cinema">       
+            <button type="button" style="width:100%" class="btn btn-primary" (click)="searchCinemaClicked()">Search cinema</button>                    
+        </div>
+</div>
+
+

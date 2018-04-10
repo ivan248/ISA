@@ -21,6 +21,7 @@ import { EditnewitemComponent } from "./components/fanzone-component/editnewitem
 import { AddProjectionComponent } from './components/addProjection-component/addProjection-component.component';
 import { NewitemprofileComponent } from "./components/fanzone-component/newitemprofile-component/newitemprofile-component.component";
 import { ItembidsComponent } from "./components/fanzone-component/itembids-component/itembids-component.component";
+import { ReservationComponent } from "./components/reservation-component/reservation-component.component";
 
 const appRoutes: Routes = 
 [
@@ -88,8 +89,10 @@ const appRoutes: Routes =
     {
         path: 'showbids',
         component: ItembidsComponent
-    }
-    
+    },
+    {
+        path: 'reservation',
+        component: ReservationComponent}
     
     // {
     //     path: '**',
