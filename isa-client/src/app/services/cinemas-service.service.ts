@@ -16,6 +16,11 @@ const httpOptions = {
     
      }),
 };
+
+const headers = new HttpHeaders({ 
+    'Content-Type': 'application/json',
+    'X-Auth-Token' : localStorage.getItem('token')
+ });
   
  
  @Injectable()
@@ -34,11 +39,6 @@ const httpOptions = {
 
     }
 
-
-  /*  getCinemas(){
-
-        return this.http.get("http://localhost:8080/api/home/getCinemas");
-    }*/
     getCinemas(){
         return this.http.get("http://localhost:8080/api/home/getCinemas",httpOptions).map(data => data)
         .catch((err:HttpErrorResponse) =>
@@ -101,6 +101,17 @@ const httpOptions = {
     .map((data:[any]) => data);
 
    }
+
+   sendEdditedProjection(projekcija : any, id: number){
+    projekcija.id=id;
+    const body = JSON.parse(JSON.stringify(projekcija));
+    
+    console.log("sendeditedprojection"+body.price);
+    return this.http.post('http://localhost:8080/api/home/editProjection',body,{
+        headers: headers
+    } );
+
+}
 
 
   

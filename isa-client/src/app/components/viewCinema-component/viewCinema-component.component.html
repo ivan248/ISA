@@ -58,7 +58,7 @@
                             <p><button class="btn" (click)="deleteProjection(m.id, p.id, currentCinema.id)"> Delete projection</button></p>
                             <p><button class="btn" [hidden]="!hiddenEditing[p.id]" (click)="changeProjection(m.id, p.id, currentCinema.id)"> Change projection</button></p>
                         </div>
-                            <form  [hidden]="hiddenEditing[p.id]" (ngSubmit)="onSubmit(f)" #f="ngForm" >
+                            <form  [hidden]="hiddenEditing[p.id]" (ngSubmit)="onSubmit(f, p.id)" #f="ngForm" >
                                     <input type="text" class="form-control" name="date"
                                     [(ngModel)] = "p.date" required>
                                     <input type="text" class="form-control" name="time"

@@ -123,12 +123,28 @@ public class CinemaServiceImpl implements CinemaService{
 		Cinema c = cinemaRepository.findOneById(cinemaid);
 		Projekcija p = projekcijaRepository.findOneById(projectionid);
 		System.out.println(c.getProjekcije());
-		c.getProjekcije().remove(p); // izbrisana iz liste ali ne iz baze
-		
-		System.out.println(c.getProjekcije());
+		c.getProjekcije().remove(p); 
+	
 		cinemaRepository.flush();
 		projekcijaRepository.flush();
 		
+		return true;
+	}
+
+
+	@Override
+	public Boolean editProjection(Projekcija projekcija) {
+		try {
+			projekcijaRepository.findOneById(projekcija.getId()).setDate(projekcija.getDate());
+			projekcijaRepository.findOneById(projekcija.getId()).setPlace(projekcija.getPlace());
+			projekcijaRepository.findOneById(projekcija.getId()).setPrice(projekcija.getPrice());
+			projekcijaRepository.findOneById(projekcija.getId()).setTime(projekcija.getTime());
+			
+			projekcijaRepository.flush();
+		} catch (Exception e) {
+			System.out.println("Error!");
+			return false;
+		}
 		return true;
 	}
 

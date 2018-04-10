@@ -90,7 +90,7 @@ export class CinemasComponent implements OnInit {
     }
 
     onClickOpenPage(Cinema:any): void{
-      this.selectedCinema=Cinema;
+      this.selectedCinema = Cinema;
       this.cinemasService.selectCinema(this.selectedCinema);
       this.router.navigateByUrl('/viewCinema');
       
@@ -98,9 +98,8 @@ export class CinemasComponent implements OnInit {
   }
 
   onClickEditPage(Cinema:any): void{
-    this.selectedCinema=Cinema;
+    this.selectedCinema = Cinema;
     this.cinemasService.selectCinema(this.selectedCinema);
-   // this.cinemasService.selectedList();
     this.router.navigateByUrl('/editCinema');
   
 }

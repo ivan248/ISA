@@ -47,8 +47,12 @@ export class ViewCinemaComponent implements OnInit {
   
       }
 
-      addProjection(id : number) {
-        console.log(id);
+      addProjection(movieid : number) {
+        console.log(movieid);
+
+        var cinemaid = this.currentCinema.id;
+
+        this.router.navigateByUrl('/addProjection');
         
         
   
@@ -78,11 +82,12 @@ export class ViewCinemaComponent implements OnInit {
         this.movies = data);
       }
 
-      onSubmit(form: NgForm){
+      onSubmit(form: NgForm, id: number){
 
-        console.log(form.value);
         this.hiddenEditing[this.projekcijaId] = true;
-        // promeniti u bazi
+        this.cinemasService.sendEdditedProjection(form.value, id)
+        .subscribe();
+
         
 
       }

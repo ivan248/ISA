@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.isa.project.bean.Cinema;
+import com.isa.project.bean.Projekcija;
 import com.isa.project.bean.Theatre;
 import com.isa.project.bean.User;
 import com.isa.project.security.jwt.TokenProvider;
@@ -143,5 +144,12 @@ public class HomeController {
 		
 		return new ResponseEntity(cinemaService.getMovies(c.getName()), HttpStatus.OK);
 
-}
+	}
+	
+	@RequestMapping(value="/editProjection", method = RequestMethod.POST) 
+	public ResponseEntity editProjection(@RequestBody Projekcija projekcija) {
+		System.out.println("Editovanje"+projekcija);
+		//cinemaService.editCinema(cinema)
+		return new ResponseEntity<>( HttpStatus.OK);
+	}
 }
