@@ -27,6 +27,11 @@ public class Friend {
 
 	@Column(name = "enabled")
 	private boolean enabled;
+	
+	// he sent the request so there isnt a need to show friend request in his 
+	// friend requests list
+	@Column(name = "sender")
+	private boolean sender;
 
 	public Friend() {
 
@@ -38,6 +43,7 @@ public class Friend {
 		this.friendFirstName = friendFirstName;
 		this.friendLastName = friendLastName;
 		this.enabled = false;
+		this.sender = false;
 	}
 
 	public boolean isEnabled() {
@@ -46,6 +52,14 @@ public class Friend {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public boolean isSender() {
+		return sender;
+	}
+
+	public void setSender(boolean sender) {
+		this.sender = sender;
 	}
 
 	public String getFriendFirstName() {

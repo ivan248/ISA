@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../../services/profile-service';
 import { User } from '../../model/dto/userDTO';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'profile-component',
@@ -103,7 +104,8 @@ export class ProfileComponent implements OnInit {
     private searchName : string;
     private searchLastName : string;
 
-    constructor(private profileService: ProfileService) {
+    constructor(private profileService: ProfileService,
+      private location: Location) {
 
     }
 
@@ -156,6 +158,8 @@ export class ProfileComponent implements OnInit {
     removeFriend(i : number) {
       this.profileService.removeFriend(i.toString()).subscribe(data =>
         this.userFriends = data);
+      window.location.reload(true);
+
 
     }
 

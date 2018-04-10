@@ -151,6 +151,7 @@ public class UserSeviceImpl implements UserService {
 		userRepository.save(friendUser);
 
 		// dodat prijatelj u current user-u
+		friendUserFriend.setSender(true);
 		curUser.getFriends().add(friendUserFriend);
 		userRepository.save(curUser);
 
@@ -203,13 +204,17 @@ public class UserSeviceImpl implements UserService {
 		friendRepository.delete(friend);
 
 		// delete kod njega mene, declione-ovao sam ga
-		for (Friend f : userRepository.findByUsername(friendRepository.findByFriendId(id).getFriendUsername()).get()
-				.getFriends()) {
-			if (f.getFriendUsername().equals(usernameFromToken)) {
-				friendRepository.delete(f);
-				break;
+		if(friendRepository.findByFriendId(id) != null) {
+			for (Friend f : userRepository.findByUsername(friendRepository.findByFriendId(id).getFriendUsername()).get()
+					.getFriends()) {
+				if (f.getFriendUsername().equals(usernameFromToken)) {
+					friendRepository.delete(f);
+					break;
+				}
 			}
 		}
+		else // ako je lista prijatelja prazna sad!
+			return new ArrayList<Friend>();
 
 		return getEnabledFriends(usernameFromToken);
 	}

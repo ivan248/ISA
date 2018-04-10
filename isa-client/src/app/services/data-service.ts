@@ -27,6 +27,9 @@ export class DataService {
   private preowned:  Subject<boolean> = new BehaviorSubject<boolean>(null);
   currentTypeOfItemForShow = this.preowned;
 
+  private loginJWT:  Subject<String> = new BehaviorSubject<String>(null);
+  currentloginJWT = this.loginJWT;
+
   
   
   constructor() { }
@@ -59,6 +62,10 @@ export class DataService {
   changeTypeOfItemForShow(preowned: boolean){
     this.preowned.next(preowned);
     
+  }
+
+  changeLoginJWT(jwt : String) {
+    this.loginJWT.next(jwt);
   }
   
   }

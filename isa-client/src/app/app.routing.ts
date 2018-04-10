@@ -19,6 +19,7 @@ import { MyfanzoneComponent } from "./components/fanzone-component/myfanzone-com
 import { AddnewitemComponent } from "./components/fanzone-component/addnewitem-component/addnewitem-component.component";
 import { EditnewitemComponent } from "./components/fanzone-component/editnewitem-component/editnewitem-component.component";
 import { AddProjectionComponent } from './components/addProjection-component/addProjection-component.component';
+import { ReservationComponent } from "./components/reservation-component/reservation-component.component";
 
 const appRoutes: Routes = 
 [
@@ -80,7 +81,9 @@ const appRoutes: Routes =
     {
         path: 'addProjection',
         component: AddProjectionComponent},    
-    
+    {
+        path: 'reservation',
+        component: ReservationComponent}
     
     // {
     //     path: '**',
