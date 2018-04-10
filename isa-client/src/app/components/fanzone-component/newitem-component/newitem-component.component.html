@@ -1,7 +1,7 @@
 <div *ngFor="let item of items" >
     <div class="card" >
         <div class="w-100">
-            <div class="card-body">
+            <div class="card-body" (click)="onClickSetSelectedNewItem(item.itemID)">
                 <div class="row">
                     <div class="col">
                         <img  src="https://www.w3schools.com/images/w3schools_green.jpg" alt="">

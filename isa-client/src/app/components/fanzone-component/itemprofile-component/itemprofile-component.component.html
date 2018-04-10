@@ -27,10 +27,10 @@
       
       <div class="justify-content-center align-items-center">
         <div class="form-area ">  
-          <form (ngSubmit)="onSubmit(f)" #f="ngForm" >
+          <form *ngIf="!item.sold" (ngSubmit)="onSubmit(f)" #f="ngForm" >
             <br style="clear:both">            
             <div class="form-group input-lg">
-              <label>How much money would you bid for {{item.name}}</label>
+              <label>How much money would you bid for {{item.name}}</label> <button class="btn btn-sm btn-dark" (click)="onClickShowAllBids(item.itemID)">Show bids</button>
               <input type="text" class="form-control" name="currentBid" placeholder="Place your bid here"
                 [(ngModel)]="value"
                 required

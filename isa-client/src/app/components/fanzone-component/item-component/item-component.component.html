@@ -7,17 +7,26 @@
                         <img  src="https://www.w3schools.com/images/w3schools_green.jpg" alt="">
                     </div>
                     <div class="col-8">
-                        <h4><b>{{item.name}}</b> <span class="badge badge-pill badge-primary float-right">PREOWNED</span></h4>
+                        <h4><b>{{item.name}}</b> 
+                            <span class="badge badge-pill badge-primary float-right">
+                                PREOWNED
+                            </span>
+                            <span *ngIf="item.sold" class="badge badge-pill badge-warning float-right">
+                                    SOLD
+                                </span></h4>
                         <hr>
                         <div class="row">
-                            <div class="col">
+                            <div *ngIf="!item.sold" class="col">
                                 Current bid: <b>{{item.currentBid}}$</b>
+                            </div>
+                            <div *ngIf="item.sold" class="col">
+                                    Sold for: <b>{{item.currentBid}}$</b>
                             </div>
                             
                             
                             
                         </div>
-                        <button class="btn btn-success">Bid</button>
+                        <button class="btn btn-success" *ngIf="!item.sold">Bid</button>
                         
                     </div>
                     <div class="col">
@@ -38,9 +47,9 @@
             <div class="card-footer">  
                 <div class="row">
                     <div class="text-left">
-                        <button class="btn btn-dark btn-sm" (click)="onClickDelete(item.itemID)">Delete</button>
-                        <button class="btn btn-dark btn-sm" (click)="onClickEdit(item.itemID)">Edit</button>
-                        <button *ngIf="!item.approved" class="btn btn-dark btn-sm" (click)="onClickApprove(item.itemID)">Approve</button>
+                        <button *ngIf="!item.sold" class="btn btn-dark btn-sm" (click)="onClickDelete(item.itemID)">Delete</button>
+                        <button *ngIf="!item.sold" class="btn btn-dark btn-sm" (click)="onClickEdit(item.itemID)">Edit</button>
+                        <button *ngIf="!item.approved && !item.sold" class="btn btn-dark btn-sm" (click)="onClickApprove(item.itemID)">Approve</button>
                     </div>
                 </div>
             </div>

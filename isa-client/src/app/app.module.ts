@@ -42,6 +42,9 @@ import { NewitemComponent } from './components/fanzone-component/newitem-compone
 import { NewItemService } from './services/newitem-service';
 import { EditnewitemComponent } from './components/fanzone-component/editnewitem-component/editnewitem-component.component';
 import { AddProjectionComponent } from './components/addProjection-component/addProjection-component.component';
+import { NewitemprofileComponent } from './components/fanzone-component/newitemprofile-component/newitemprofile-component.component';
+import { ItembidsComponent } from './components/fanzone-component/itembids-component/itembids-component.component';
+
 
 
 
@@ -70,7 +73,10 @@ import { AddProjectionComponent } from './components/addProjection-component/add
     MyfanzoneComponent,
     NewitemComponent,
     EditnewitemComponent,
-    AddProjectionComponent
+    AddProjectionComponent,
+    NewitemprofileComponent,
+    ItembidsComponent
+    
   ],
   imports: [
     routing,

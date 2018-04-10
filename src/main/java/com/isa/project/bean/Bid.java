@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 public class Bid implements Serializable {
 	
 	
+	
 	/**
 	 * 
 	 */
@@ -66,7 +67,15 @@ public class Bid implements Serializable {
 	public void setItem(Item item) {
 		this.item = item;
 	}
-	
+	public Integer getBidID() {
+		return bidID;
+	}
+
+
+	public void setBidID(Integer bidID) {
+		this.bidID = bidID;
+	}
+
 	
 }
  

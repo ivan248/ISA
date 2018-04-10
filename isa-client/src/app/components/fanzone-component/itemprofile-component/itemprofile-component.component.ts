@@ -16,7 +16,7 @@ export class ItemprofileComponent implements OnInit {
 
  
   item: any;
-  value : number = 0.0;
+  value : number;
   dobarUnos: boolean = false;
 
   constructor(private dataService: DataService,private itemService: ItemService,
@@ -24,7 +24,10 @@ export class ItemprofileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.dataService.currentSelectedItem.subscribe(data => this.item=data);
+    this.dataService.currentSelectedItem.subscribe(data => {
+      this.item=data;
+      this.value = this.item.currentBid;
+    });
     
   }
 
@@ -36,18 +39,16 @@ export class ItemprofileComponent implements OnInit {
       alert("Your bid must be higher than current");
     } else {
       let bid = new BidDTO(this.item, this.value );
-
-      console.log(bid);
-      //drugo dodaj BID
       this.bidService.sendNewBid(bid).subscribe(data => console.log(data));
       this.itemService.changeCurrentBid(this.value,this.item);
       this.item.currentBid = this.value;
-
-      //this.router.navigateByUrl('/itemprofile');
-
     }
+  }
 
-
+  onClickShowAllBids(id : number) {
+    console.log(id);
+    this.router.navigateByUrl("showbids");
+    
   }
 
 

@@ -48,5 +48,15 @@ export class NewitemComponent implements OnInit {
       this.newItemService.reserveItem(id).subscribe(data => console.log(data));
     }
 
+    onClickSetSelectedNewItem(id: number) {
+      this.newItemService.getItem(id).subscribe(data => {
+        let item :any;
+        item = data;
+        
+        this.dataService.changeSelectedNewItem(item);
+        this.router.navigateByUrl('/newitemprofile');
+      });
+    }
+
 
 }

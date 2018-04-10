@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+
+<div class="container">
+  <div class="jumbotron">
+      <h1>Item  {{item.name}}</h1>  <h5> <b> [#{{item.itemID}}]</b> </h5>
+    
+  </div>
+  <div class="row">
+    <div class="col-3">
+        <img   src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" alt="" class="img-fluid rounded w-100  h-100">
+    </div>
+    <div class="col-3 border-left border-right">
+      <h3>Description</h3>
+      <p>{{item.description}}</p>
+    </div>
+    <div class="col-6 text-center" >
+      <h3 >Reserve this item</h3> 
+      Price: <h4><b class="text-danger">{{item.price}}$</b></h4>
+      
+      <div class="justify-content-center align-items-center">
+        <div class="form-area ">  
+          <button type="submit"  class="btn btn-success btn-lg" >Reserve</button>
+        </div>
+      </div>
+    </div>
+  </div>
+            
+
+  <hr>
+  <h3>Other info about {{item.name}}</h3><br>
+  <div class="row">
+    <div class="col-md-3">
+      Posted:  <br>
+      
+      Owner:  <br>
+      Reserved:  <br>
+      
+    </div>
+    <div class="col-md-3">
+        <b>{{item.beginDate}}</b>  <br>
+        
+        <b>{{item.cinemaOwner?.name}}</b> 
+        
+        <b>{{item.theatreOwner?.name}}</b>  
+        ,  {{item.cinemaOwner?.address}}{{item.theatreOwner?.address}}
+        <br> 
+        
+       <b><label *ngIf="item.reserved">Yes</label>  </b>
+       <b><label *ngIf="!item.reserved">No</label>  </b> <br>
+       
+    </div>
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+</body>
+</html>

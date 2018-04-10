@@ -3,6 +3,7 @@ import { Http, Response } from '@angular/http';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http' ;
 import 'rxjs/Rx';
 import { BidDTO } from '../model/bidDTO';
+import { Item } from '../model/item';
 
 
 
@@ -23,6 +24,18 @@ import { BidDTO } from '../model/bidDTO';
 
         return this.http.post('http://localhost:8080/bid/add',body,{ headers: headers});
 
+    }
+
+    getAllByItem(item: Item){
+        const body = JSON.parse(JSON.stringify(item));
+
+        return this.http.post('http://localhost:8080/bid/getallbyitem',body,{ headers: headers});
+    }
+
+    acceptBid(bid : any){
+        const body = JSON.parse(JSON.stringify(bid));
+
+        return this.http.post('http://localhost:8080/bid/accept',body,{ headers: headers});
     }
 
  } 

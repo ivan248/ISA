@@ -19,6 +19,8 @@ import { MyfanzoneComponent } from "./components/fanzone-component/myfanzone-com
 import { AddnewitemComponent } from "./components/fanzone-component/addnewitem-component/addnewitem-component.component";
 import { EditnewitemComponent } from "./components/fanzone-component/editnewitem-component/editnewitem-component.component";
 import { AddProjectionComponent } from './components/addProjection-component/addProjection-component.component';
+import { NewitemprofileComponent } from "./components/fanzone-component/newitemprofile-component/newitemprofile-component.component";
+import { ItembidsComponent } from "./components/fanzone-component/itembids-component/itembids-component.component";
 
 const appRoutes: Routes = 
 [
@@ -80,6 +82,13 @@ const appRoutes: Routes =
     {
         path: 'addProjection',
         component: AddProjectionComponent},    
+    {
+        path: 'newitemprofile',
+        component: NewitemprofileComponent},    
+    {
+        path: 'showbids',
+        component: ItembidsComponent
+    }
     
     
     // {
