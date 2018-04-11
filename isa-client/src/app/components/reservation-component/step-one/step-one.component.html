@@ -33,12 +33,11 @@
     <div class="col-md-12">
         <div class="form-group">
                 <label for="exampleFormControlSelect1"> <h2>Select theatre</h2></label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+                <select class="form-control" id="exampleFormControlSelect1" (change)="onChangeTheatre($event.target.value)">
+                    <option hidden selected value="">
+                        -- select a theatre --
+                    </option>
+                    <option *ngFor="let t of theatresArray" [value]="t?.id">{{t?.name}}</option>
                 </select>
         </div>
     </div>
@@ -56,12 +55,11 @@
         <div class="col-md-12">
             <div class="form-group">
                     <label for="exampleFormControlSelect1"> <h2>Select cinema</h2></label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <select class="form-control" id="exampleFormControlSelect1" (change)="onChangeCinema($event.target.value)">
+                        <option hidden selected value="">
+                            -- select a cinema --
+                        </option>
+                        <option *ngFor="let c of cinemasArray" [value]="c?.id">{{c?.name}}</option>
                     </select>
             </div>
         </div>

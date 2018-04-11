@@ -44,9 +44,12 @@
         <div class="tab-content">
             <div class="tab-pane active text-center" role="tabpanel" id="step1">
                 
-                
+                <p *ngFor="let t of theatresArray">{{t?.name}} </p>
                   
-                <step-one-component *ngIf="step===1"></step-one-component>
+                <step-one-component *ngIf="step===1"
+                    (onTheatreChanged)="onChangeTheatre($event)" (onCinemaChanged)="onChangeCinema($event)"
+                    [cinemasArray]=cinemasArray [theatresArray]=theatresArray  >
+                </step-one-component>
                 <step-two-component *ngIf="step===2"></step-two-component>
                 <step-three-component *ngIf="step===3"></step-three-component>
                 <step-four-component *ngIf="step===4"></step-four-component>
@@ -57,7 +60,7 @@
                         
                         <h1 class="text-md-center">Finshed reservation!</h1>
                         
-                       
+                        <step-five-component></step-five-component>
                         
                         <br>
                         <br>

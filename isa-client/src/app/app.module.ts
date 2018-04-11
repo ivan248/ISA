@@ -50,6 +50,8 @@ import { StepOneComponent } from './components/reservation-component/step-one/st
 import { StepTwoComponent } from './components/reservation-component/step-two/step-two.component';
 import { StepThreeComponent } from './components/reservation-component/step-three/step-three.component';
 import { StepFourComponent } from './components/reservation-component/step-four/step-four.component';
+import { StepFiveComponent } from './components/reservation-component/step-five/step-five.component';
+import { SeatingChartComponent } from './components/seating-chart-component/seating-chart.component';
 
 
 
@@ -86,7 +88,9 @@ import { StepFourComponent } from './components/reservation-component/step-four/
     StepOneComponent,
     StepTwoComponent,
     StepThreeComponent,
-    StepFourComponent
+    StepFourComponent,
+    StepFiveComponent,
+    SeatingChartComponent
   ],
   imports: [
     routing,

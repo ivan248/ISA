@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,12 +11,27 @@ export class StepOneComponent implements OnInit {
 
     private cinemaSelected : boolean = false;
 
+    @Input() cinemasArray : any;
+    @Input() theatresArray : any;
+    @Output() onTheatreChanged = new EventEmitter<any>();
+    @Output() onCinemaChanged = new EventEmitter<any>();
+    voted = false;
+
     constructor(private router : Router) {
 
     }
 
     ngOnInit() {
+      
+      
+    }
 
+    onChangeTheatre(theatreValue) {
+      this.onTheatreChanged.emit(theatreValue);
+    }
+
+    onChangeCinema(cinemaValue) {
+      this.onCinemaChanged.emit(cinemaValue);
     }
 
     changeSelected() {

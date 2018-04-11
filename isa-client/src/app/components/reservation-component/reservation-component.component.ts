@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CinemasService } from '../../services/cinemas-service.service';
+import { TheatresService } from '../../services/theatres-service.service';
 
 @Component({
   selector: 'reservation-component',
@@ -163,13 +165,34 @@ export class ReservationComponent implements OnInit {
 
     private step : number = 1;
 
-    constructor(private router : Router) {
+    private cinemasArray : any;
+    private theatresArray : any;
+
+
+    constructor(private router : Router,
+    private cinemaService : CinemasService,
+    private theatreService : TheatresService) {
 
     }
 
     ngOnInit() {
 
+        this.cinemaService.getCinemas()
+        .subscribe(data => this.cinemasArray = data);
+
+        this.theatreService.getTheatres()
+        .subscribe(data => this.theatresArray = data);
+        
+
     }
+
+    onChangeTheatre(theatre: any) {
+        console.log(theatre);
+      }
+
+    onChangeCinema(cinema: any) {
+        console.log(cinema);
+      }
 
     nextStep() {
        
