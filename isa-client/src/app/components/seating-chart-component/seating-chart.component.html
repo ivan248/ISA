@@ -2,20 +2,20 @@
 <br>
 
 <div class="row">
-  <div class="col"> <button class="btn btn-success" style="width:100%; margin:1px"> 1 </button></div>
-  <div class="col"> <button class="btn btn-success" style="width:100%; margin:1px"> 2 </button></div>
-  <div class="col"> <button class="btn btn-success" style="width:100%; margin:1px"> 3 </button></div>
-  <div class="col"> <button class="btn btn-success" style="width:100%; margin:1px"> 4 </button></div>
+  <div class="col"> <button [class]="checkClass(1)" (click)="buttonClicked(1)" class="btn btn-success" style="width:100%; margin:1px"> 1 </button></div>
+  <div class="col"> <button [class]="checkClass(2)" (click)="buttonClicked(2)" class="btn btn-success" style="width:100%; margin:1px"> 2 </button></div>
+  <div class="col"> <button [class]="checkClass(3)" (click)="buttonClicked(3)" class="btn btn-success" style="width:100%; margin:1px"> 3 </button></div>
+  <div class="col"> <button [class]="checkClass(4)" (click)="buttonClicked(4)" class="btn btn-success" style="width:100%; margin:1px"> 4 </button></div>
   
-  <div class="col"> <button class="btn btn-success" style="width:100%; margin:1px"> 5 </button></div>
-  <div class="col"> <button class="btn btn-success" style="width:100%; margin:1px"> 6 </button></div>
-  <div class="col"> <button class="btn btn-success" style="width:100%; margin:1px"> 7 </button></div>
-  <div class="col"> <button class="btn btn-success" style="width:100%; margin:1px"> 8 </button></div>
+  <div class="col"> <button [class]="checkClass(5)" (click)="buttonClicked(5)" class="btn btn-success" style="width:100%; margin:1px"> 5 </button></div>
+  <div class="col"> <button [class]="checkClass(6)" (click)="buttonClicked(6)" class="btn btn-success" style="width:100%; margin:1px"> 6 </button></div>
+  <div class="col"> <button [class]="checkClass(7)" (click)="buttonClicked(7)" class="btn btn-success" style="width:100%; margin:1px"> 7 </button></div>
+  <div class="col"> <button [class]="checkClass(8)" (click)="buttonClicked(8)" class="btn btn-success" style="width:100%; margin:1px"> 8 </button></div>
   
-  <div class="col"> <button class="btn btn-success" style="width:100%; margin:1px"> 9 </button></div>
-  <div class="col"> <button class="btn btn-success" style="width:100%; margin:1px"> 10 </button></div>
-  <div class="col"> <button class="btn btn-success" style="width:100%; margin:1px"> 11 </button></div>
-  <div class="col"> <button class="btn btn-success" style="width:100%; margin:1px"> 12 </button></div>
+  <div class="col"> <button [class]="checkClass(9)" (click)="buttonClicked(9)" class="btn btn-success" style="width:100%; margin:1px"> 9 </button></div>
+  <div class="col"> <button [class]="checkClass(10)" (click)="buttonClicked(10)" class="btn btn-success" style="width:100%; margin:1px"> 10 </button></div>
+  <div class="col"> <button [class]="checkClass(11)" (click)="buttonClicked(11)" class="btn btn-success" style="width:100%; margin:1px"> 11 </button></div>
+  <div class="col"> <button [class]="checkClass(12)" (click)="buttonClicked(12)" class="btn btn-success" style="width:100%; margin:1px"> 12 </button></div>
 </div>
 
 <div class="row">
@@ -136,13 +136,21 @@
 <br>
 <h3 class="text-secondary" style="text-align: center"> Back </h3>
 <br>
-<div class="row">
+<div class="row" style="text-align: center">
   <div class="col-sm-4"> 
       <div class="form-group">
           <label for="buttonAvailable"> Available </label>
           <button id="buttonAvailable" class="btn btn-success rounded-circle"> </button>
         </div>
   </div>
+
+  <div class="col-sm-4"> 
+      <div class="form-group">
+          <label for="buttonAvailable"> Selected </label>
+          <button class="btn btn-primary rounded-circle"> </button>
+      </div>  
+  </div>
+
   <div class="col-sm-4"> 
           <div class="form-group">
               <label for="buttonAvailable"> Booked </label>
@@ -150,12 +158,6 @@
           </div>
   </div>
 
-  <div class="col-sm-4"> 
-          <div class="form-group">
-              <label for="buttonAvailable"> Selected </label>
-              <button class="btn btn-primary rounded-circle"> </button>
-          </div>
-  </div>
-
-
 </div>
+
+<button class="btn btn-lg btn-primary" (click)="nextStep()"> Next step </button>
