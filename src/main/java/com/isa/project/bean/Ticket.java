@@ -19,6 +19,9 @@ public class Ticket {
     
     @Column(name = "seatNumber", nullable = false, unique = true)
 	private int seatNumber;
+    
+    @Column(name = "fastRes", nullable = true)
+   	private boolean fastRes;
 
 	public Ticket() {
 		super();
