@@ -1,3 +1,6 @@
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
+<script src="/assets/gmap3.js?body=1" type="text/javascript"></script>
+
 <div class="container">
     <div class="jumbotron">
         <h1>{{currentCinema.name}}</h1>    
@@ -15,7 +18,25 @@
                 <p>{{currentCinema.address}}</p>
             </div>
         </div>
+    <div class="card-body">
+
+<!--script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap" async defer></script>
+<br />
+<div class="container">
+	<div class="row">
+		<input id="searchInput" class="controls" type="text" placeholder="Enter a location">
+            <div id="map"></div>
+            <ul id="geoData">
+                <li>Full Address: <span id="location"></span></li>
+                <li>Postal Code: <span id="postal_code"></span></li>
+                <li>Country: <span id="country"></span></li>
+                <li>Latitude: <span id="lat"></span></li>
+                <li>Longitude: <span id="lon"></span></li>
+            </ul>
+	</div>
+</div>
     </div>
+    </div-->
 
 <div class="card">
     <div class="card-body">
@@ -78,6 +99,47 @@
             </tr>
         </table>
          
+    </div>
+
+    <div class="card">
+            <div class="card-body">
+                    <div class="col-8">
+                        <h4><b>Projections for fast reservation: </b></h4>
+                    </div>
+                </div>
+            <div class="card-body">
+                        <div class="col-8">
+                            <div *ngFor="let p of currentCinema.projekcije">
+                            
+                           
+                            <div *ngFor="let t of p.tickets">
+                                    <div *ngIf="t.fastRes==true">
+                                            <p>{{p.id}}</p>
+                                            <p>Price: {{p.price}}</p>
+                                            <p>Place: {{p.place}}</p>
+                                            <p>Time: {{p.time}}</p>
+                                            <p>Seat number: {{t.seatNumber}}</p>
+
+                                            <div *ngFor="let m of movies">
+                                                    <div *ngFor="let p1 of m.projekcije">
+                                                        <div *ngIf="p1.id==p.id">
+                                                            <p>Movie: {{m.name}}</p>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+
+    <div class="card">
+        <div class="card-body">
+            <!-->seating chart<-->
+        </div>
     </div>
        
     </div>

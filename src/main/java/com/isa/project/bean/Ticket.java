@@ -43,6 +43,24 @@ public class Ticket {
 	public void setSeatNumber(int seatNumber) {
 		this.seatNumber = seatNumber;
 	}
+	
+	
+
+	public boolean isFastRes() {
+		return fastRes;
+	}
+	
+
+	public Ticket(Long id, int seatNumber, boolean fastRes) {
+		super();
+		this.id = id;
+		this.seatNumber = seatNumber;
+		this.fastRes = fastRes;
+	}
+
+	public void setFastRes(boolean fastRes) {
+		this.fastRes = fastRes;
+	}
 
 	public Ticket(Long id, int seatNumber) {
 		super();
@@ -52,8 +70,9 @@ public class Ticket {
 
 	@Override
 	public String toString() {
-		return "Ticket [id=" + id + ", seatNumber=" + seatNumber + "]";
+		return "Ticket [id=" + id + ", seatNumber=" + seatNumber + ", fastRes=" + fastRes + "]";
 	}
+
 	
 	
 	
