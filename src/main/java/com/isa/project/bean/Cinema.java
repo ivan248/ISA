@@ -55,35 +55,24 @@ public class Cinema {
 		this.description = description;
 	}
 	
- /*   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "cinema_movies", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
-    private List<Movie> movies;*/
-    
+
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "cinema_projekcije", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "projekcija_id"))
     private List<Projection> projekcije;
-
 	
-    
-    
-	
-public Cinema(Long id, String name, String address, String description, List<Projection> projekcije) {
-	super();
-	this.id = id;
-	this.name = name;
-	this.address = address;
-	this.description = description;
-	this.projekcije = projekcije;
-}
 
-/*	public List<Movie> getMovies() {
-		return movies;
+	public Cinema(Long id, String name, String address, String description,
+			List<Projection> projekcije) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.address = address;
+		this.description = description;
+		this.projekcije = projekcije;
 	}
 
-	public void setMovies(List<Movie> movies) {
-		this.movies = movies;
-	} */
+
 
 	public List<Projection> getProjekcije() {
 		return projekcije;

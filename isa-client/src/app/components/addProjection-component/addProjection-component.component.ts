@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CinemasService } from '../../services/cinemas-service.service';
 import { HomeService } from '../../services/home-service.service';
 import { NgForm } from '@angular/forms';
+import { ViewCinemaComponent } from '../viewCinema-component/viewCinema-component.component';
 
 @Component({
   selector: 'addProjection-component',
@@ -35,10 +36,10 @@ export class AddProjectionComponent implements OnInit {
 
 
       const body = JSON.parse(JSON.stringify(f.value));
-      this.cinemasService.addProjection(body, movie, cinema).subscribe();
-      this.cinemasService.currentc.subscribe(cinema => this.currentCinema = cinema);
-      this.router.navigateByUrl('/viewCinema');
-      this.cinemasService.getMovies(cinema);
+      this.cinemasService.addProjection(body, movie, cinema).subscribe(cinema => cinema = cinema);
+      this.cinemasService.currentc.subscribe(cinema => cinema = cinema);
+      this.router.navigateByUrl('/viewCinema'); //ne radi osvezavanje prikaza
+      
       
        
 

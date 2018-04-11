@@ -27,8 +27,9 @@ public class Movie {
     @Column(name = "producer", nullable = false)
     private String producer;
     
-    @Column(name = "actors", nullable = true)
-    private ArrayList<String> actors;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "actors_movie", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
+    private List<Actor> actors;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "projekcija_movie", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "projekcija_id"))
@@ -36,7 +37,7 @@ public class Movie {
     
     
     
-   public Movie(Long id, String name, String genre, String description, String producer, ArrayList<String> actors,
+   public Movie(Long id, String name, String genre, String description, String producer, List<Actor> actors,
 			List<Projection> projekcije) {
 		super();
 		this.id = id;
@@ -48,43 +49,9 @@ public class Movie {
 		this.projekcije = projekcije;
 	}
 
-
-
-
-
-
-
-
-
-/* @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "termini_movies", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "termin_id"))
-    private List<Termin> termini;
-	
-    
-    
-	public List<Termin> getTermini() {
-		return termini;
-	}
-
-
-
-	public void setTermini(List<Termin> termini) {
-		this.termini = termini;
-	}*/
-
-
-
 	public List<Projection> getProjekcije() {
 		return projekcije;
 	}
-
-
-
-
-
-
-
-
 
 	public void setProjekcije(List<Projection> projekcije) {
 		this.projekcije = projekcije;
@@ -92,36 +59,10 @@ public class Movie {
 
 
 
-
-
-
-
-
-
 	public Movie() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-
-
-	
-	
-	
-
-
-
-	public Movie(Long id, String name, String genre, String description, String producer, ArrayList<String> actors
-			) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.genre = genre;
-		this.description = description;
-		this.producer = producer;
-		this.actors = actors;
-	}
-
 
 
 	public Long getId() {
@@ -184,13 +125,13 @@ public class Movie {
 
 
 
-	public ArrayList<String> getActors() {
+	public List<Actor> getActors() {
 		return actors;
 	}
 
 
 
-	public void setActors(ArrayList<String> actors) {
+	public void setActors(List<Actor> actors) {
 		this.actors = actors;
 	}
 

@@ -120,7 +120,7 @@ sendEdditedProjection(projekcija : any, id: number){
     console.log("sendeditedprojection"+body.price);
     return this.http.post('http://localhost:8080/api/home/editProjection',body,{
         headers: headers
-    } );
+    } ).map((data:[any]) => data);
 
 }
 
@@ -134,6 +134,7 @@ addProjection(projekcija: any, movie: any, cinema: any){
         params:params,
         headers: headers
     } );
+    
 
 
 }

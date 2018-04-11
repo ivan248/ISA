@@ -154,7 +154,7 @@ public class CinemaServiceImpl implements CinemaService{
 
 
 	@Override
-	public Boolean addProjection(Projection projekcija, Long movieid, Long cinemaid) {
+	public Cinema addProjection(Projection projekcija, Long movieid, Long cinemaid) {
 		try {
 			List<Projection> projekcijeBioskop = cinemaRepository.findOneById(cinemaid).getProjekcije();
 			if (projekcijeBioskop==null) {
@@ -179,11 +179,11 @@ public class CinemaServiceImpl implements CinemaService{
 		catch(Exception e) {
 			System.out.println("Error occured while writing to database. Constraints were not satisfied.");
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 		
 		
-		return true;
+		return cinemaRepository.findOneById(cinemaid);
 	}
 
 
