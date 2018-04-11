@@ -1,40 +1,67 @@
 
-<div class="container">
-    <div class="jumbotron">
-     <h2>Cinemas</h2>
-    </div>
-    </div>
-  <br>
-  <br>
-  <div class="row">
-    <div class="col-sm">
-      <ul class="cinemasArray">
-        <li *ngFor="let c of cinemasArray"
-          [class.selected]="c === selectedCinema"
-          (click)="onSelect(c)">
-          <span class="badge">{{c.name}}</span> {{c.address}}
-        </li>
-      </ul>
-    </div>
-    <br>
-  
-    <div class="col-xl">
-      <div *ngIf="selectedCinema">
-   
-          <h2>{{ selectedCinema.name | uppercase }} Details</h2>
-          <br>
-          <div><span>address: </span>{{selectedCinema.address}}</div>
-          <br>
-          <div><span>description: </span>{{selectedCinema.description}}</div>
-          <br>
-          <button class="btn" (click)="onClickOpenPage(selectedCinema)" >Open page</button>
-          <button class="btn" (click)="onClickEditPage(selectedCinema)"  >Edit cinema</button>
-         
-        </div>
-      </div>
-      <div class="col-sm"></div>
-  
-  
-  
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <div class="container">
       
+          <a class="navbar-brand text-white"></a>
+          <!--div class="navbar-header"><a class="nav-link text-white">CINEMAS</a>
+            </div-->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+              <ul class="navbar-nav ml-auto">
+                  <li class="nav-item active">
+                      <a class="nav-link text-white" href="#">About Us</a>
+                  </li>
+                
+                
+                 
+              </ul>
+          </div>
+      </div>
+  </nav>
+  <!-- Navigation -->
+
+
+<div class="container">
+    <div class="jumbotron col-4" >
+     <h1>Cinemas</h1>
+    </div>
+    </div>
+
+ 
+
+  <ul class="cinemasArray">
+      <li *ngFor="let c of cinemasArray">
+<div class="item-listing small-padding-bg">
+
+    <div class="container">
+   
+      <div class="row">
+  
+        <div class="col-md-3"> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG7kDX4rN7pDaQcXMzzadNQ0PvMwqnXIKIC7JBpUoh-gK6WABw" alt=""> 
+        </div>
+        <div class="col-md-9 home-list-pop-desc inn-list-pop-desc"> <button type="button" class="btn btn-link" (click)="onClickOpenPage(c)"><h3>{{c.name}}</h3></button>
+          <h4></h4> 
+                        <p><b>Address: </b> {{c.address}}</p>
+                        <p> <b>Description: </b>{{c.description}}</p>
+            <div class="list-number ">
+                
+      </div>
+                  <div class="list-enquiry">
+                          <ul>
+                            <li class="btn btn-md btn-warning"><button type="button" class="btn btn-link" (click)="onClickEditPage(c)"><i class="fa fa-star-o" aria-hidden="true"></i> Edit cinema </button> </li>
+                           
+                            
+                          </ul>
+                        </div>
+    </div>
   </div>
+</div>
+</div>
+  </li>
+</ul>
+
+     
+   
+ 
