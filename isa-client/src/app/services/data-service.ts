@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Item } from '../model/item'
 import { NewItem } from '../model/newitem'
 import { Subject } from 'rxjs/Subject';
+import { MovieReservation } from '../model/movieReservation';
 
 export class DataService {
 
@@ -29,6 +30,9 @@ export class DataService {
 
   private loginJWT:  Subject<String> = new BehaviorSubject<String>(null);
   currentloginJWT = this.loginJWT;
+
+  private movieReservation:  Subject<MovieReservation> = new BehaviorSubject<MovieReservation>(null);
+  currentMovieReservation = this.movieReservation;
 
   
   
@@ -66,6 +70,11 @@ export class DataService {
 
   changeLoginJWT(jwt : String) {
     this.loginJWT.next(jwt);
+  }
+
+  
+  changeMovieReservation(movieRes : MovieReservation) {
+    this.movieReservation.next(movieRes);
   }
   
   }

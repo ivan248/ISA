@@ -138,6 +138,15 @@ addProjection(projekcija: any, movie: any, cinema: any){
 
 }
 
+getProjectionById(id:number) {
+    let params = new HttpParams().set('projectionId', id.toString());  
+
+    return this.http
+    .get("http://localhost:8080/api/home/getProjectionById", {params:params,headers:headers})
+    .map((data:[any]) => data);
+
+}
+
 
   
 

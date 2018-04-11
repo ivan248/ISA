@@ -15,7 +15,7 @@ export class StepOneComponent implements OnInit {
     @Input() theatresArray : any;
     @Output() onTheatreChanged = new EventEmitter<any>();
     @Output() onCinemaChanged = new EventEmitter<any>();
-    voted = false;
+    @Output() onCinemaSelectedChanged = new EventEmitter<any>();
 
     constructor(private router : Router) {
 
@@ -36,6 +36,7 @@ export class StepOneComponent implements OnInit {
 
     changeSelected() {
       this.cinemaSelected = !this.cinemaSelected;
+      this.onCinemaSelectedChanged.emit(this.cinemaSelected);
 
       if(!this.cinemaSelected)
         return "btn btn-primary";

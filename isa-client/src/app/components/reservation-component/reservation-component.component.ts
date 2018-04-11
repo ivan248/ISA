@@ -167,6 +167,11 @@ export class ReservationComponent implements OnInit {
 
     private cinemasArray : any;
     private theatresArray : any;
+    private moviesArray : any;
+
+    private cinemaSelected : boolean = false;
+    private cinemaId : number;
+    private theatreId : number;
 
 
     constructor(private router : Router,
@@ -192,16 +197,30 @@ export class ReservationComponent implements OnInit {
 
     onChangeCinema(cinema: any) {
         console.log(cinema);
+        this.cinemaId = cinema;
       }
+
+    onChangeCinemaSelected(cinemaSelected: any) {
+        this.cinemaSelected = cinemaSelected;
+        console.log(cinemaSelected);
+    }
 
     nextStep() {
        
-
         this.step++;
+
+        if(this.step==2) 
+        {
+            
+                this.cinemaService.getMovies(this.cinemaId)
+                .subscribe(data => this.moviesArray = data);
+            
+        }
+
+        
 
         if(this.step===6)
             this.step=1;
-        console.log(this.step);
     }
 
     makeOneActive() {

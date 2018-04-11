@@ -158,4 +158,17 @@ public class HomeController {
 		
 		return new ResponseEntity<>(cinemaService.addProjection(projekcija, Long.parseLong(movieid), Long.parseLong(cinemaid)), HttpStatus.OK);
 	}
+	
+	@GetMapping
+	@RequestMapping(value = "/getProjectionById")
+	public ResponseEntity getProjectionById(
+			@RequestParam("projectionId") int projectionId) {
+
+		System.out.println(projectionId);
+
+		return new ResponseEntity(HttpStatus.OK);
+
+	}
+	
+	
 }
