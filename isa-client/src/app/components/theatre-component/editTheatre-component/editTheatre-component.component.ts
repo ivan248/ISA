@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TheatresService } from '../../services/theatres-service.service';
-import { HomeService } from '../../services/home-service.service';
+import { TheatresService } from '../../../services/theatres-service.service';
+import { HomeService } from '../../../services/home-service.service';
 
 @Component({
   selector: 'editTheatre-component',

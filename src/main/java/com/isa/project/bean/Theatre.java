@@ -1,5 +1,7 @@
 package com.isa.project.bean;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,6 +21,16 @@ public class Theatre {
     
     @Column(name = "description", nullable = false)
     private String description;
+    
+    @Column(name = "rating", nullable = false)
+    private int rating;
+    
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "theatre_projection", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "projekcija_id"))
+    private List<Projection> projekcije;
+	
+	
+
 
 	public Long getId() {
 		return id;
@@ -52,6 +64,26 @@ public class Theatre {
 		this.description = description;
 	}
 	
+	
+	
+	
+	
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public List<Projection> getProjekcije() {
+		return projekcije;
+	}
+
+	public void setProjekcije(List<Projection> projekcije) {
+		this.projekcije = projekcije;
+	}
+
 	public Theatre() {
 		super();
 		// TODO Auto-generated constructor stub

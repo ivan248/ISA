@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CinemasService } from '../../services/cinemas-service.service';
-import { HomeService } from '../../services/home-service.service';
+import { CinemasService } from '../../../services/cinemas-service.service';
+import { HomeService } from '../../../services/home-service.service';
 
 @Component({
   selector: 'editCinema-component',
@@ -31,7 +31,7 @@ export class EditCinemaComponent implements OnInit {
         console.log(this.currentCinema);
 
          this.homeService.sendEdditedCinema(this.currentCinema)
-          .subscribe();
+          .subscribe(currentCinema => this.currentCinema = currentCinema);
          this.router.navigateByUrl('/cinemas');
     
       }

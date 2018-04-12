@@ -1,18 +1,16 @@
 package com.isa.project.bean;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "movie")
-public class Movie {
+@Table(name = "play")
+public class Play {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
-    @Column(name = "movie_id", nullable = false, updatable = false)
+    @Column(name = "play_id", nullable = false, updatable = false)
     private Long id;
 
     @Column(name = "name", nullable = false)
@@ -27,21 +25,20 @@ public class Movie {
     @Column(name = "producer", nullable = false)
     private String producer;
     
-    
     @Column(name = "rating", nullable = false)
  	private int rating;
     
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "actors_movie", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
+    @JoinTable(name = "actors_play", joinColumns = @JoinColumn(name = "play_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
     private List<Actor> actors;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "projection_movie", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "projekcija_id"))
+    @JoinTable(name = "projection_play", joinColumns = @JoinColumn(name = "play_id"), inverseJoinColumns = @JoinColumn(name = "projekcija_id"))
     private List<Projection> projekcije;
     
     
     
-   public Movie(Long id, String name, String genre, String description, String producer, List<Actor> actors,
+   public Play(Long id, String name, String genre, String description, String producer, List<Actor> actors,
 			List<Projection> projekcije) {
 		super();
 		this.id = id;
@@ -63,7 +60,7 @@ public class Movie {
 
 
 
-	public Movie() {
+	public Play() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -139,11 +136,18 @@ public class Movie {
 		this.actors = actors;
 	}
 
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
 	@Override
 	public String toString() {
-		return "Movie [id=" + id + ", name=" + name + ", genre=" + genre + ", description=" + description
-				+ ", producer=" + producer + ", rating=" + rating + ", actors=" + actors + ", projekcije=" + projekcije
-				+ "]";
+		return "Play [id=" + id + ", name=" + name + ", genre=" + genre + ", description=" + description + ", producer="
+				+ producer + ", rating=" + rating + ", actors=" + actors + ", projekcije=" + projekcije + "]";
 	}
 
 

@@ -35,9 +35,7 @@ public class Projection {
 	     
 	    @Column(name = "price", nullable = false)
 	 	private float price;
-	    
-	    @Column(name = "rate", nullable = false)
-	 	private int rate;
+
 
 		public Long getId() {
 			return id;
@@ -78,15 +76,6 @@ public class Projection {
 		public void setPrice(float price) {
 			this.price = price;
 		}
-		
-
-		public int getRate() {
-			return rate;
-		}
-
-		public void setRate(int rate) {
-			this.rate = rate;
-		}
 
 		public Projection() {
 			super();
@@ -97,14 +86,13 @@ public class Projection {
 	    @JoinTable(name = "ticket_projection", joinColumns = @JoinColumn(name = "projekcija_id"), inverseJoinColumns = @JoinColumn(name = "ticket_id"))
 	    private List<Ticket> tickets;
 
-		public Projection(Long id, Date date, String time, String place, float price, int rate, List<Ticket> tickets) {
+		public Projection(Long id, Date date, String time, String place, float price, List<Ticket> tickets) {
 			super();
 			this.id = id;
 			this.date = date;
 			this.time = time;
 			this.place = place;
 			this.price = price;
-			this.rate = rate;
 			this.tickets = tickets;
 		}
 
@@ -116,10 +104,5 @@ public class Projection {
 			this.tickets = tickets;
 		}
 
-		@Override
-		public String toString() {
-			return "Projection [id=" + id + ", date=" + date + ", time=" + time + ", place=" + place + ", price="
-					+ price + ", rate=" + rate + ", tickets=" + tickets + "]";
-		}
-	    
+	
 }

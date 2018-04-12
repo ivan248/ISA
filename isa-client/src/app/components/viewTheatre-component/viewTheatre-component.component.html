@@ -1,3 +1,6 @@
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
+<script src="/assets/gmap3.js?body=1" type="text/javascript"></script>
+
 <div class="container">
     <div class="jumbotron">
         <h1>{{currentTheatre.name}}</h1>    
@@ -15,7 +18,25 @@
                 <p>{{currentTheatre.address}}</p>
             </div>
         </div>
+    
+
+<!--script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap" async defer></script>
+<br />
+<div class="container">
+	<div class="row">
+		<input id="searchInput" class="controls" type="text" placeholder="Enter a location">
+            <div id="map"></div>
+            <ul id="geoData">
+                <li>Full Address: <span id="location"></span></li>
+                <li>Postal Code: <span id="postal_code"></span></li>
+                <li>Country: <span id="country"></span></li>
+                <li>Latitude: <span id="lat"></span></li>
+                <li>Longitude: <span id="lon"></span></li>
+            </ul>
+	</div>
+</div>
     </div>
+    </div-->
 
 <div class="card">
     <div class="card-body">
@@ -23,12 +44,116 @@
                 <h4><b>Description: </b></h4>
             </div>
         </div>
-        <div class="card-body">
+    <div class="card-body">
                 <div class="col-8">
                     <p>{{currentTheatre.description}}</p>
                 </div>
             </div>
+    </div>
+    <div class="card">
+    
+    <div class="card-body">
+        <div class="col-8">
+            <h4><b>Repertoar: </b></h4>
+        </div>
+        <table>
+            <tr *ngFor="let m of plays; let i = index;">
+                <th scope="row">{{i+1}}</th>
+                <td>{{m.name}}</td>
+                <td>{{m.genre}}</td>
+                <td *ngFor="let a of m.actors">{{a.name}} {{a.lastName}}</td>
+                <td><button class="btn" (click)="addProjection(m)"> Add projection</button></td>
+                <td><button class="btn" (click)="deleteMovie(m.id, currentCinema.id)"> Delete </button></td>
+                <td *ngFor=" let p1 of currentCinema.projekcije">
+                
+                    <div *ngFor=" let p of m.projekcije">
+                    
+                        <div *ngIf="p.id==p1.id">
+                        
+                        <div class="card" [hidden]="!hiddenEditing[p.id]">
+                                
+                            <p> {{p.date}}</p>
+                            <p> {{p.time}}</p>
+                            <p> {{p.place}}</p>
+                            <p> {{p.price}}</p>
+                            <p> {{p.rating}}</p>
+                            <p><button class="btn" (click)="deleteProjection(m.id, p.id, currentCinema.id)"> Delete projection</button></p>
+                            <p><button class="btn" [hidden]="!hiddenEditing[p.id]" (click)="changeProjection(m.id, p.id, currentCinema.id)"> Change projection</button></p>
+                        </div>
+                            <form  [hidden]="hiddenEditing[p.id]" (ngSubmit)="onSubmit(f, p.id)" #f="ngForm" >
+                                    <input type="text" class="form-control" name="date"
+                                    [(ngModel)] = "p.date" required>
+                                    <input type="text" class="form-control" name="time"
+                                        [(ngModel)] = "p.time" required> 
+                                    <input type="text" class="form-control" name="place"
+                                        [(ngModel)] = "p.place" required> 
+                                    <input type="text" class="form-control" name="price"
+                                        [(ngModel)] = "p.price" required> 
+                                            
+                            <button type="submit"  class="btn btn-dark btn-lg" [disabled] = "!f.valid">Save changes</button>
+                            </form>
+        
+                      
+                    </div>
+                    </div>
+                    
+                </td>                            
+            </tr>
+        </table>
+         
+    </div>
+
+    <div class="card">
+            <div class="card-body">
+                    <ul>
+                            <li *ngFor="let t of notFastReservations">
+                                
+                                   
+                                    <p> {{t.id}}</p><button (click)="addToFast(currentTheatre.id, t.id, t)">Add to fast</button>
+                                    </li>
+                    
+                                </ul>
+                                
+                    <div class="col-8">
+                        <h4><b>Tickets for fast reservation: </b></h4>
+                    </div>
+                </div>
+            <div class="card-body">
+                        <div class="col-8">
+                            <div *ngFor="let p of currentTheatre.projekcije">
+                            
+                           
+                            <div *ngFor="let t of p.tickets">
+                                    <div *ngIf="t.fastRes==true">
+                                            <p>{{p.id}}</p>
+                                            <p>Price: {{p.price}}</p>
+                                            <p>Place: {{p.place}}</p>
+                                            <p>Time: {{p.time}}</p>
+                                            <p>Seat number: {{t.seatNumber}}</p>
+
+                                            <div *ngFor="let m of movies">
+                                                    <div *ngFor="let p1 of m.projekcije">
+                                                        <div *ngIf="p1.id==p.id">
+                                                            <p>Movie: {{m.name}}</p>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+
+    <div class="card">
+        <div class="card-body">
+            <!-->seating chart<-->
+        </div>
+    </div>
        
     </div>
-  </div>
+ 
+
  
