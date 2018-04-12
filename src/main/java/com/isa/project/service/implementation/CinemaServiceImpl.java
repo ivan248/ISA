@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import com.isa.project.bean.Cinema;
@@ -15,6 +16,7 @@ import com.isa.project.repository.MovieRepository;
 import com.isa.project.repository.ProjectionRepository;
 import com.isa.project.repository.TicketRepository;
 import com.isa.project.service.CinemaService;
+import com.isa.project.web.dto.MovieReservationDTO;
 
 @Service
 public class CinemaServiceImpl implements CinemaService{
@@ -29,10 +31,12 @@ public class CinemaServiceImpl implements CinemaService{
 	
 	@Autowired
 	private ProjectionRepository projekcijaRepository;
-	
+
 	@Autowired
 	private TicketRepository ticketRepository;
 
+	@Autowired
+	private EmailService emailService;
 
 	@Override
 	public ArrayList<Cinema> getAllCinemas() {
@@ -218,9 +222,43 @@ public class CinemaServiceImpl implements CinemaService{
 			//projekcijaRepository.flush();
 			//cinemaRepository.flush();
 		}catch(Exception e) {
-			System.out.println("542615621");
+			
+		}
+		return true;
+	}
+
+	public Projection getProjection(Long projectionId) {
+		
+		return projekcijaRepository.findOneById(projectionId);
+	}
+
+
+	@Override
+	public boolean makeReservation(MovieReservationDTO movieReservationDTO, String username) {
+		
+		Projection projection = projekcijaRepository.findOneById(movieReservationDTO.getProjectionId());
+		
+		for(int i=0; i<movieReservationDTO.getSeatsTaken().size(); i++)
+		{
+			projection.getTickets().add(new Ticket(movieReservationDTO.getSeatsTaken().get(i), false));
 		}
 		
+		projekcijaRepository.save(projection);
+		
+		SimpleMailMessage registrationEmail = new SimpleMailMessage();
+		registrationEmail.setTo(username);
+		registrationEmail.setSubject("Ticket reservation confirmation");
+		registrationEmail.setText("You have reserved ticked for the following projection:\n"
+		+ "Title: " + movieReservationDTO.getMovieName() + " \n"
+		+ "Date: " + movieReservationDTO.getDate() + " \n"
+		+ "Time: " + movieReservationDTO.getTime() + " \n"
+		+ "Place: " + movieReservationDTO.getPlace() + " \n"
+		+ "Seats reserved: " + movieReservationDTO.getSeatsTaken() + " \n");
+		registrationEmail.setFrom("noreply@domain.com");
+
+		emailService.sendEmail(registrationEmail);
+		
+
 		
 		return true;
 	}
