@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Input, Output, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,34 +7,65 @@ import { Router } from '@angular/router';
   styles : [``]
  
 })
-export class SeatingChartComponent implements OnInit {
+export class SeatingChartComponent implements OnInit, OnChanges {
 
 
     private buttonClickedId : number = -1;
     private buttonsArray : number[] = [];
 
+    @Input() currentProjection : any;
+    @Output() selectedSeats = new EventEmitter<any>();
+
     constructor(private router : Router) {
+
+
+    }
+
+    ngOnInit() {
 
       for(var i : number = 0; i<13; i++)
       {
         this.buttonsArray[i] = 2;
       }
 
-      this.buttonsArray[3] = -1;
-      this.buttonsArray[6] = -1;
+      
+     
+
     }
 
-    ngOnInit() {
-
+    ngOnChanges() {
+      if(this.currentProjection !== undefined)
+      {
+        for(var i : number =0; i<this.currentProjection.tickets.length; i++)
+        {
+          this.buttonsArray[this.currentProjection.tickets[i].seatNumber] = -1;
+        }
+      }
     }
 
     buttonClicked(id : number) {
       this.buttonClickedId = id;
+      let seatsSelected : any[] = [];
       console.log(id + " buttonClicked");
 
       console.log("pre ifa " + this.buttonsArray[id]);
       if(this.buttonsArray[id] != -1)
         this.buttonsArray[id]++;
+
+
+        for(var i:number=0; i<this.buttonsArray.length; i++)
+        {
+          if(this.buttonsArray[i]%2 === 1)
+          {
+            seatsSelected.push(i);
+            console.log(i);
+          }
+        }
+  
+      console.log(seatsSelected);
+      this.selectedSeats.emit(seatsSelected);
+      
+      
       console.log("posle ifa " + this.buttonsArray[id]);
     }
 
@@ -54,13 +85,21 @@ export class SeatingChartComponent implements OnInit {
     }
 
     nextStep() {
+
+      let seatsSelected : any[] = [];
+
       for(var i:number=0; i<this.buttonsArray.length; i++)
       {
         if(this.buttonsArray[i]%2 === 1)
         {
+          seatsSelected.push(i);
           console.log(i);
         }
       }
+
+      console.log(seatsSelected);
+      this.selectedSeats.emit(seatsSelected);
+      
     }
 
 }

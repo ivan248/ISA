@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CinemasService } from '../../services/cinemas-service.service';
 import { TheatresService } from '../../services/theatres-service.service';
+import { MovieReservation } from '../../model/movieReservation';
 
 @Component({
   selector: 'reservation-component',
@@ -168,15 +169,18 @@ export class ReservationComponent implements OnInit {
     private cinemasArray : any;
     private theatresArray : any;
     private moviesArray : any;
+    private movieReservation : MovieReservation;
 
     private cinemaSelected : boolean = false;
     private cinemaId : number;
     private theatreId : number;
 
+    private selectedSeats : any[] = [];
+
 
     constructor(private router : Router,
     private cinemaService : CinemasService,
-    private theatreService : TheatresService) {
+    private theatreService : TheatresService,) {
 
     }
 
@@ -205,6 +209,15 @@ export class ReservationComponent implements OnInit {
         console.log(cinemaSelected);
     }
 
+    onChangeSelectedSeats(selectedSeats : any) {
+        this.selectedSeats = selectedSeats;
+        console.log("Iz reservationa : " + selectedSeats);
+    }
+
+    onMovieReservationChanged(movieReservation: MovieReservation) {
+        this.movieReservation = movieReservation;
+    }
+
     nextStep() {
        
         this.step++;
@@ -218,9 +231,13 @@ export class ReservationComponent implements OnInit {
         }
 
         
+    }
 
-        if(this.step===6)
-            this.step=1;
+    finishReservation() {
+        this.cinemaService.makeCinemaReservation(this.movieReservation)
+            .subscribe(data => console.log(data));
+
+        this.step = 1;
     }
 
     makeOneActive() {

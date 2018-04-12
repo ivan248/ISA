@@ -32,7 +32,7 @@ export class DataService {
   currentloginJWT = this.loginJWT;
 
   private movieReservation:  Subject<MovieReservation> = new BehaviorSubject<MovieReservation>(null);
-  currentMovieReservation = this.movieReservation;
+  currentMovieReservation = this.movieReservation.asObservable();
 
   
   

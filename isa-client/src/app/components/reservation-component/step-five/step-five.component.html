@@ -1,33 +1,47 @@
-<div class="row justify-content-start">
-    <div class="col"> <button class="btn btn-success" style="width:100%"> 1 </button></div>
-    <div class="col"> <button class="btn btn-success" style="width:100%"> 2 </button></div>
-    <div class="col"> <button class="btn btn-success" style="width:100%"> 3 </button></div>
-    <div class="col"> <button class="btn btn-success" style="width:100%"> 4 </button></div>
-    
-    <div class="col"> <button class="btn btn-success" style="width:100%"> 5 </button></div>
-    <div class="col"> <button class="btn btn-success" style="width:100%"> 6 </button></div>
-    <div class="col"> <button class="btn btn-success" style="width:100%"> 7 </button></div>
-    <div class="col"> <button class="btn btn-success" style="width:100%"> 8 </button></div>
-    
-    <div class="col"> <button class="btn btn-success" style="width:100%"> 9 </button></div>
-    <div class="col"> <button class="btn btn-success" style="width:100%"> 10 </button></div>
-    <div class="col"> <button class="btn btn-success" style="width:100%"> 11 </button></div>
-    <div class="col"> <button class="btn btn-success" style="width:100%"> 12 </button></div>
-  </div>
+<div class="progress">
+    <div class="progress-bar" style="width:100%"></div>
+</div>
 
-  <div class="row">
-    <div class="col"> <button class="btn btn-success"> </button></div>
-    <div class="col"> <button class="btn btn-success"> </button></div>
-    <div class="col"> <button class="btn btn-success"> </button></div>
-    <div class="col"> <button class="btn btn-success"> </button></div>
-    
-    <div class="col"> <button class="btn btn-success"> </button></div>
-    <div class="col"> <button class="btn btn-success"> </button></div>
-    <div class="col"> <button class="btn btn-success"> </button></div>
-    <div class="col"> <button class="btn btn-success"> </button></div>
-    
-    <div class="col"> <button class="btn btn-success"> </button></div>
-    <div class="col"> <button class="btn btn-success"> </button></div>
-    <div class="col"> <button class="btn btn-success"> </button></div>
-    <div class="col"> <button class="btn btn-success"> </button></div>
-  </div>
+<br>
+
+<div class="row">
+<div class="col-md-12">
+  <blockquote class="blockquote text-center">
+      <p class="mb-0">Cinema at its best can express something of the pure irreducible fact of things.</p>
+      <footer class="blockquote-footer"> <cite title="Source Title">Lenny Abrahamson</cite></footer>
+  </blockquote>
+</div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-block">
+          <h2 class="card-title"  style="color:#009688; padding-top:15px; padding-left: 10px; text-align:left;" ><i class="fa fa-trophy fa-fw"></i> Reservation </h2>
+          <div style="height: 15px"></div>
+          <table class="table table-bordered table-hover">
+            <thead class="thead-default">
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Date</th>
+              <th scope="col">time</th>
+              <th scope="col">Place</th>
+              <th scope="col">Tickets reserved</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> {{movieReservation?.movieName}} </td>
+                <td> {{movieReservation?.date}} </td>
+                <td> {{movieReservation?.time}} </td>
+                <td> {{movieReservation?.place}} </td>
+                <td> {{selectedSeatsString}}   </td>
+                
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+    </div>
+</div>

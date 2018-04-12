@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../../../services/data-service';
 import { CinemasService } from '../../../services/cinemas-service.service';
+import { MovieReservation } from '../../../model/movieReservation';
 
 @Component({
   selector: 'step-three-component',
@@ -12,7 +13,10 @@ import { CinemasService } from '../../../services/cinemas-service.service';
 export class StepThreeComponent implements OnInit {
 
 
-    private currentMovie : any;
+    private currentMovie : MovieReservation;
+    private currentProjection : any;
+
+    @Output() selectedSeats = new EventEmitter<any>();;
 
     constructor(private dataService: DataService,
     private cinemaService: CinemasService) {
@@ -20,9 +24,19 @@ export class StepThreeComponent implements OnInit {
     }
 
     ngOnInit() {
-      this.currentMovie = this.dataService.currentMovieReservation;
-      this.cinemaService.getProjectionById(this.currentMovie.id)
-      .subscribe(data => console.log(data));
+      this.dataService.currentMovieReservation
+      .subscribe(data => this.currentMovie = data);
+
+      this.cinemaService.getProjectionById(this.currentMovie.projectionId)
+      .subscribe(data => this.currentProjection = data);
     }
+
+    onChangeSelectedSeats( array : any) {
+      console.log(array);
+      this.selectedSeats.emit(array);
+
+    }
+
+
 
 }

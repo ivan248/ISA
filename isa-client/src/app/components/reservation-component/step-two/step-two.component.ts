@@ -66,6 +66,7 @@ export class StepTwoComponent implements OnInit {
 
       for(var i:number=0; i<this.projectionsArray.length; i++)
       {
+
         if(this.projectionsArray[i].date === this.projectionDate
         && this.projectionsArray[i].time === this.projectionTime
         && this.projectionsArray[i].place === this.projectionPlace)

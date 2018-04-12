@@ -93,6 +93,14 @@ public class Ticket {
 	public void setSalePrice(int salePrice) {
 		this.salePrice = salePrice;
 	}
+	
+	
+
+	public Ticket(int seatNumber, boolean fastRes) {
+		super();
+		this.seatNumber = seatNumber;
+		this.fastRes = fastRes;
+	}
 
 	@Override
 	public String toString() {
