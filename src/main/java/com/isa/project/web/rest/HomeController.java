@@ -1,6 +1,7 @@
 package com.isa.project.web.rest;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Projection;
 import com.isa.project.bean.Theatre;
+import com.isa.project.bean.Ticket;
 import com.isa.project.bean.User;
+import com.isa.project.repository.CinemaRepository;
 import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.CinemaService;
 import com.isa.project.service.TheatreService;
+
 
 
 @Controller // This means that this class is a Controller
@@ -169,6 +173,35 @@ public class HomeController {
 		return new ResponseEntity(HttpStatus.OK);
 
 	}
+	
+	@GetMapping
+	@RequestMapping(value = "/getFastProjectionTickets")
+	public ResponseEntity getFastProjectionsByCinemaId(
+			@RequestParam("cinemaid") String cinemaid) {
+
+		System.out.println(cinemaid);
+		Cinema c  = cinemaService.getCinemaById(Long.parseLong(cinemaid));
+		List<Ticket> ResTickets = new ArrayList<>();
+		for (Projection p: c.getProjekcije()) {
+			System.out.println(p);
+			for (Ticket t: p.getTickets()) {
+				if (!t.isFastRes()){
+					ResTickets.add(t);
+				}
+
+			}
+		}
+		
+		System.out.println(ResTickets);
+		return new ResponseEntity(ResTickets, HttpStatus.OK);
+
+	}
+	
+	@RequestMapping(value="/addProjectionToFast", method = RequestMethod.POST) 
+	public ResponseEntity addTicketToFast(@RequestBody Ticket ticket, @RequestParam("cinemaid") String cinemaid) {
+		return new ResponseEntity<>(cinemaService.changeTicket(ticket, Long.parseLong(cinemaid)) ,HttpStatus.OK);
+	}
+	
 	
 	
 }

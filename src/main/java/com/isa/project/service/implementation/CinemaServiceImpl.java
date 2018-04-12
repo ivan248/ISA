@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Movie;
 import com.isa.project.bean.Projection;
+import com.isa.project.bean.Ticket;
 import com.isa.project.repository.CinemaRepository;
 import com.isa.project.repository.MovieRepository;
 import com.isa.project.repository.ProjectionRepository;
+import com.isa.project.repository.TicketRepository;
 import com.isa.project.service.CinemaService;
 
 @Service
@@ -27,6 +29,9 @@ public class CinemaServiceImpl implements CinemaService{
 	
 	@Autowired
 	private ProjectionRepository projekcijaRepository;
+	
+	@Autowired
+	private TicketRepository ticketRepository;
 
 
 	@Override
@@ -184,6 +189,40 @@ public class CinemaServiceImpl implements CinemaService{
 		
 		
 		return cinemaRepository.findOneById(cinemaid);
+	}
+
+
+	@Override
+	public Boolean changeTicket(Ticket ticket, Long cinemaid) {
+		
+		Cinema c = cinemaRepository.findOneById(cinemaid);
+		List<Ticket> listaKarata = new ArrayList<>();
+		//for (Projection p: c.getProjekcije()) {
+		//	for (Ticket tt: p.getTickets()) {
+		//		if (tt.getId()==ticket.getId()) {
+					//tt.setSalePrice(100);
+					//tt.setFastRes(true);
+				//	listaKarata=p.getTickets();
+				//	p.setTickets(listaKarata);
+				//	List<Projection> listaProjekcija = new ArrayList<>();
+				//	c.setProjekcije(listaProjekcija);
+			//	}
+			//}
+		//}
+		Ticket t = ticketRepository.findOneById(ticket.getId());
+		t.setSalePrice(100);
+		t.setFastRes(true);
+		
+		try {
+			ticketRepository.flush();
+			//projekcijaRepository.flush();
+			//cinemaRepository.flush();
+		}catch(Exception e) {
+			System.out.println("542615621");
+		}
+		
+		
+		return true;
 	}
 
 

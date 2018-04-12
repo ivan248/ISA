@@ -22,6 +22,9 @@ public class Cinema {
     
     @Column(name = "description", nullable = false)
     private String description;
+    
+    @Column(name = "rating", nullable = false)
+    private int rating;
 
 	public Long getId() {
 		return id;
@@ -54,25 +57,22 @@ public class Cinema {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+  
+    public int getRating() {
+		return rating;
+	}
 
-    
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "cinema_projekcije", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "projekcija_id"))
-    private List<Projection> projekcije;
-	
-
-	public Cinema(Long id, String name, String address, String description,
-			List<Projection> projekcije) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.address = address;
-		this.description = description;
-		this.projekcije = projekcije;
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 
 
+
+
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "cinema_projection", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "projekcija_id"))
+    private List<Projection> projekcije;
 
 	public List<Projection> getProjekcije() {
 		return projekcije;
@@ -87,19 +87,21 @@ public class Cinema {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Cinema(Long id, String name, String address, String description, int rating, List<Projection> projekcije) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.address = address;
+		this.description = description;
+		this.rating = rating;
+		this.projekcije = projekcije;
+	}
 
-
-	
-		
-	
-
-
-	
-	
-
-
-    
-    
+	@Override
+	public String toString() {
+		return "Cinema [id=" + id + ", name=" + name + ", address=" + address + ", description=" + description
+				+ ", rating=" + rating + ", projekcije=" + projekcije + "]";
+	}
 	
 	
 }

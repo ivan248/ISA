@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "projekcija")
+@Table(name = "projection")
 public class Projection {
 	
 	 	@Id
@@ -35,6 +35,9 @@ public class Projection {
 	     
 	    @Column(name = "price", nullable = false)
 	 	private float price;
+	    
+	    @Column(name = "rate", nullable = false)
+	 	private int rate;
 
 		public Long getId() {
 			return id;
@@ -75,6 +78,15 @@ public class Projection {
 		public void setPrice(float price) {
 			this.price = price;
 		}
+		
+
+		public int getRate() {
+			return rate;
+		}
+
+		public void setRate(int rate) {
+			this.rate = rate;
+		}
 
 		public Projection() {
 			super();
@@ -85,16 +97,16 @@ public class Projection {
 	    @JoinTable(name = "ticket_projection", joinColumns = @JoinColumn(name = "projekcija_id"), inverseJoinColumns = @JoinColumn(name = "ticket_id"))
 	    private List<Ticket> tickets;
 
-		public Projection(Long id, Date date, String time, String place, float price) {
+		public Projection(Long id, Date date, String time, String place, float price, int rate, List<Ticket> tickets) {
 			super();
 			this.id = id;
 			this.date = date;
 			this.time = time;
 			this.place = place;
 			this.price = price;
+			this.rate = rate;
+			this.tickets = tickets;
 		}
-		
-		
 
 		public List<Ticket> getTickets() {
 			return tickets;
@@ -106,10 +118,8 @@ public class Projection {
 
 		@Override
 		public String toString() {
-			return "Projekcija [id=" + id + ", date=" + date + ", time=" + time + ", place=" + place + ", price="
-					+ price + "]";
+			return "Projection [id=" + id + ", date=" + date + ", time=" + time + ", place=" + place + ", price="
+					+ price + ", rate=" + rate + ", tickets=" + tickets + "]";
 		}
-	    
-	    
 	    
 }

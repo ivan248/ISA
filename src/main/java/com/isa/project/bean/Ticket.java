@@ -22,6 +22,12 @@ public class Ticket {
     
     @Column(name = "fastRes", nullable = true)
    	private boolean fastRes;
+    
+    @Column(name = "sold", nullable = true)
+   	private boolean sold;
+    
+    @Column(name = "salePrice", nullable = true)
+   	private int salePrice;
 
 	public Ticket() {
 		super();
@@ -61,17 +67,40 @@ public class Ticket {
 	public void setFastRes(boolean fastRes) {
 		this.fastRes = fastRes;
 	}
+	
+	
 
-	public Ticket(Long id, int seatNumber) {
+	public boolean isSold() {
+		return sold;
+	}
+
+	public void setSold(boolean sold) {
+		this.sold = sold;
+	}
+
+	public Ticket(Long id, int seatNumber, boolean fastRes, int salePrice) {
 		super();
 		this.id = id;
 		this.seatNumber = seatNumber;
+		this.fastRes = fastRes;
+		this.salePrice = salePrice;
+	}
+
+	public int getSalePrice() {
+		return salePrice;
+	}
+
+	public void setSalePrice(int salePrice) {
+		this.salePrice = salePrice;
 	}
 
 	@Override
 	public String toString() {
-		return "Ticket [id=" + id + ", seatNumber=" + seatNumber + ", fastRes=" + fastRes + "]";
+		return "Ticket [id=" + id + ", seatNumber=" + seatNumber + ", fastRes=" + fastRes + ", sold=" + sold
+				+ ", salePrice=" + salePrice + "]";
 	}
+	
+	
 
 	
 	

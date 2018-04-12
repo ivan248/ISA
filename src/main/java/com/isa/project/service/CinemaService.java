@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Movie;
 import com.isa.project.bean.Projection;
+import com.isa.project.bean.Ticket;
 
 @Service
 public interface CinemaService {
@@ -20,6 +21,7 @@ public interface CinemaService {
 	public Boolean deleteProjection(Long movieid, Long projectionid, Long cinemaid);
 	Boolean editProjection(Projection projekcija);
 	Cinema addProjection(Projection projekcija, Long movieid, Long cinemaid);
+	Boolean changeTicket(Ticket ticket, Long cinemaid);
 
 	
 

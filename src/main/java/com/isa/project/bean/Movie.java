@@ -32,7 +32,7 @@ public class Movie {
     private List<Actor> actors;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "projekcija_movie", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "projekcija_id"))
+    @JoinTable(name = "projection_movie", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "projekcija_id"))
     private List<Projection> projekcije;
     
     
