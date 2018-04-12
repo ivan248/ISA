@@ -36,8 +36,11 @@ export class AddProjectionComponent implements OnInit {
 
 
       const body = JSON.parse(JSON.stringify(f.value));
-      this.cinemasService.addProjection(body, movie, cinema).subscribe(cinema => cinema = cinema);
-      this.cinemasService.currentc.subscribe(cinema => cinema = cinema);
+      this.cinemasService.addProjection(body, movie, cinema).subscribe(data =>
+        this.currentCinema = data);
+  
+      console.log(this.currentCinema);
+
       this.router.navigateByUrl('/viewCinema'); //ne radi osvezavanje prikaza
       
       

@@ -134,7 +134,7 @@ addProjection(projekcija: any, movie: any, cinema: any){
         params:params,
         headers: headers
     } );
-    
+
 
 
 }
@@ -147,6 +147,30 @@ getProjectionById(id:number) {
     .map((data:[any]) => data);
 
 }
+
+getNotFastProjectionsByCinemaId(cinemaid: any){
+    let params = new HttpParams().set('cinemaid', cinemaid);  
+
+    return this.http
+    .get("http://localhost:8080/api/home/getFastProjectionTickets", {params:params,headers:headers})
+    .map((data:[any]) => data);
+}
+
+addToFast(cinemaid: any, ticketid:any, ticket: any){
+    ticket.fastRes = true;
+    const body = JSON.parse(JSON.stringify(ticket));
+    let params = new HttpParams().set('cinemaid',cinemaid);  
+    params = params.set('ticketid',ticketid); 
+    return this.http.post('http://localhost:8080/api/home/addProjectionToFast',body,{
+        params:params,
+        headers: headers
+    } );
+
+
+
+}
+    
+
 
 
   

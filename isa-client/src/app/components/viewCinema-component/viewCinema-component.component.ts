@@ -20,6 +20,7 @@ export class ViewCinemaComponent implements OnInit {
     private hiddenEditing: boolean[] = [];
     private projekcijaId: any;
     private numberProjections: any = 20;
+    private notFastReservations: any[];
 
       
 
@@ -34,8 +35,10 @@ export class ViewCinemaComponent implements OnInit {
         this.cinemasService.currentc.subscribe(currentCinema => this.currentCinema = currentCinema);
         this.cinemasService.getMovies(this.currentCinema.id).subscribe(data =>
         this.movies = data);
+        this.cinemasService.getNotFastProjectionsByCinemaId(this.currentCinema.id).subscribe(data =>
+            this.notFastReservations = data);
         this.cinemasService.initBroj.subscribe(numberProjections => this.numberProjections = numberProjections );
-      
+            
         var data = this.currentCinema.projekcije;
         data.forEach(p => {
             this.hiddenEditing[p.id] = true;
@@ -94,9 +97,13 @@ export class ViewCinemaComponent implements OnInit {
         this.cinemasService.sendEdditedProjection(form.value, id)
         .subscribe();
 
-        
-
       }
+      addToFast(cinemaid: any, ticketid: any, ticket: any){
+        console.log(ticketid);
+        this.cinemasService.addToFast(cinemaid, ticketid, ticket).subscribe(data =>
+            this.notFastReservations = [data]);
+        
+    }
 
   /*    initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {

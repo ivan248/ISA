@@ -25,7 +25,7 @@ export class EditCinemaComponent implements OnInit {
 
     ngOnInit() {
         this.cinemasService.currentc.subscribe(currentCinema => this.currentCinema = currentCinema);
-      
+
       }
     onSubmit(){
         console.log(this.currentCinema);
@@ -35,6 +35,7 @@ export class EditCinemaComponent implements OnInit {
          this.router.navigateByUrl('/cinemas');
     
       }
+
     
 
   

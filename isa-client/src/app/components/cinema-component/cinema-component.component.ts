@@ -35,6 +35,7 @@ img{width:80%;}
   border: 1px;
   }
 
+
 `]
   
  
@@ -88,4 +89,7 @@ export class CinemasComponent implements OnInit {
 }
 
 
+
 }
+
+

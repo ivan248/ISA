@@ -18,7 +18,7 @@
                 <p>{{currentCinema.address}}</p>
             </div>
         </div>
-    <div class="card-body">
+    
 
 <!--script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap" async defer></script>
 <br />
@@ -76,6 +76,7 @@
                             <p> {{p.time}}</p>
                             <p> {{p.place}}</p>
                             <p> {{p.price}}</p>
+                            <p> {{p.rating}}</p>
                             <p><button class="btn" (click)="deleteProjection(m.id, p.id, currentCinema.id)"> Delete projection</button></p>
                             <p><button class="btn" [hidden]="!hiddenEditing[p.id]" (click)="changeProjection(m.id, p.id, currentCinema.id)"> Change projection</button></p>
                         </div>
@@ -104,8 +105,17 @@
 
     <div class="card">
             <div class="card-body">
+                    <ul>
+                            <li *ngFor="let t of notFastReservations">
+                                
+                                   
+                                    <p> {{t.id}}</p><button (click)="addToFast(currentCinema.id, t.id, t)">Add to fast</button>
+                                    </li>
+                    
+                                </ul>
+                                
                     <div class="col-8">
-                        <h4><b>Projections for fast reservation: </b></h4>
+                        <h4><b>Tickets for fast reservation: </b></h4>
                     </div>
                 </div>
             <div class="card-body">
