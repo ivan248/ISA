@@ -161,12 +161,12 @@ public class HomeController {
 	
 	@GetMapping
 	@RequestMapping(value = "/getProjectionById")
-	public ResponseEntity getProjectionById(
-			@RequestParam("projectionId") int projectionId) {
+	public ResponseEntity<Projection> getProjectionById(
+			@RequestParam("projectionId") Long projectionId) {
 
 		System.out.println(projectionId);
 
-		return new ResponseEntity(HttpStatus.OK);
+		return new ResponseEntity<Projection>(cinemaService.getProjection(projectionId),HttpStatus.OK);
 
 	}
 	

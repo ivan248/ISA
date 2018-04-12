@@ -20,6 +20,7 @@ public interface CinemaService {
 	public Boolean deleteProjection(Long movieid, Long projectionid, Long cinemaid);
 	Boolean editProjection(Projection projekcija);
 	Cinema addProjection(Projection projekcija, Long movieid, Long cinemaid);
+	Projection getProjection(Long projectionId);
 
 	
 

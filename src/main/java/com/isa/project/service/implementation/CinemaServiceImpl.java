@@ -187,6 +187,13 @@ public class CinemaServiceImpl implements CinemaService{
 	}
 
 
+	@Override
+	public Projection getProjection(Long projectionId) {
+		
+		return projekcijaRepository.findOneById(projectionId);
+	}
+
+
 	
 
 	

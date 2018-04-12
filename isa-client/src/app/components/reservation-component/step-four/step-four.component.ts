@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProfileService } from '../../../services/profile-service';
 
 @Component({
   selector: 'step-four-component',
@@ -9,13 +10,15 @@ import { Router } from '@angular/router';
 })
 export class StepFourComponent implements OnInit {
 
+    private userFriends : any[] = [];
 
-    constructor(private router : Router) {
+    constructor(private profileService : ProfileService) {
 
     }
 
     ngOnInit() {
-
+      this.profileService.getFriends().subscribe(data =>
+        this.userFriends = data);
     }
 
 }

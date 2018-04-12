@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,25 +7,39 @@ import { Router } from '@angular/router';
   styles : [``]
  
 })
-export class SeatingChartComponent implements OnInit {
+export class SeatingChartComponent implements OnInit, OnChanges {
 
 
     private buttonClickedId : number = -1;
     private buttonsArray : number[] = [];
 
+    @Input() currentProjection : any;
+
     constructor(private router : Router) {
+
+
+    }
+
+    ngOnInit() {
 
       for(var i : number = 0; i<13; i++)
       {
         this.buttonsArray[i] = 2;
       }
 
-      this.buttonsArray[3] = -1;
-      this.buttonsArray[6] = -1;
+      
+     
+
     }
 
-    ngOnInit() {
-
+    ngOnChanges() {
+      if(this.currentProjection !== undefined)
+      {
+        for(var i : number =0; i<this.currentProjection.tickets.length; i++)
+        {
+          this.buttonsArray[this.currentProjection.tickets[i].seatNumber] = -1;
+        }
+      }
     }
 
     buttonClicked(id : number) {

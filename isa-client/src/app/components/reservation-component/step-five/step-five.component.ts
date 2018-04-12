@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { DataService } from '../../../services/data-service';
 
 
 @Component({
@@ -11,13 +11,16 @@ import { Router } from '@angular/router';
 
 export class StepFiveComponent implements OnInit {
 
+    private movieReservation : any;
 
-
-    constructor(private router : Router) {
+    constructor(private dataService : DataService) {
 
     }
 
     ngOnInit() {
+
+      this.dataService.currentMovieReservation
+      .subscribe(data => this.movieReservation = data);
 
     }
 

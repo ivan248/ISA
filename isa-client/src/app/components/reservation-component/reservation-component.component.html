@@ -59,24 +59,20 @@
                 </step-two-component>
                 <step-three-component *ngIf="step===3"></step-three-component>
                 <step-four-component *ngIf="step===4"></step-four-component>
-                <div *ngIf="step===5">
-                        <div class="progress">
-                                <div class="progress-bar" style="width:100%"></div>
-                        </div>
-                        
-                        <h1 class="text-md-center">Finshed reservation!</h1>
-                        
-                        <step-five-component></step-five-component>
-                        
-                        <br>
-                        <br>
+                <step-five-component *ngIf="step===5"></step-five-component>
+                
+                <br>
+                <br>
 
-                </div>
+                
                 <br>
                 <br>
                 
                 <ul class="list-inline text-md-center">
-                    <li><button type="button" class="btn btn-lg btn-primary next-step next-button" (click)="nextStep()">Next step</button></li>
+                    <li>
+                        <button [hidden]="step===5" type="button" class="btn btn-lg btn-primary next-step next-button" (click)="nextStep()"> Next step </button>  
+                        <button [hidden]="!(step===5)" type="button" class="btn btn-lg btn-primary next-step next-button" (click)="finishReservation()"> Finish </button>                    
+                    </li>
                 </ul>
             </div>
             <div class="tab-pane" role="tabpanel" id="step2">
