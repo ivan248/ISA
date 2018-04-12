@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Movie;
 import com.isa.project.bean.Projection;
+import com.isa.project.web.dto.MovieReservationDTO;
 
 @Service
 public interface CinemaService {
@@ -21,6 +22,7 @@ public interface CinemaService {
 	Boolean editProjection(Projection projekcija);
 	Cinema addProjection(Projection projekcija, Long movieid, Long cinemaid);
 	Projection getProjection(Long projectionId);
+	boolean makeReservation(MovieReservationDTO movieReservationDTO, String string);
 
 	
 

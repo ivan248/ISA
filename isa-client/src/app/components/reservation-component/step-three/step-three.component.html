@@ -2,7 +2,7 @@
         <div class="progress-bar" style="width:60%"></div>
 </div>
 
-<h1 class="text-md-center">Step 3</h1>
+<br>
 
 <div class="row">
     <div class="col-md-12">
@@ -17,7 +17,8 @@
 
 
 <seating-chart
-[currentProjection]=currentProjection>
+[currentProjection]=currentProjection
+(selectedSeats)="onChangeSelectedSeats($event)">
 
 </seating-chart>
 

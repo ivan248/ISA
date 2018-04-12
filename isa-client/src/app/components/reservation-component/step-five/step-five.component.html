@@ -1,8 +1,8 @@
 <div class="progress">
-  <div class="progress-bar" style="width:100%"></div>
+    <div class="progress-bar" style="width:100%"></div>
 </div>
 
-<h1 class="text-md-center">Step 5</h1>
+<br>
 
 <div class="row">
 <div class="col-md-12">
@@ -14,17 +14,34 @@
 </div>
 
 <br>
-<br>
 
-
-<br>
-
-<h2> Current reservation </h2>
-
-<br>
-<br>
-
-<h4> {{movieReservation?.movieName}} </h4>
-<h4> {{movieReservation?.date}} </h4>
-<h4> {{movieReservation?.time}} </h4>
-<h4> {{movieReservation?.place}} </h4>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-block">
+          <h2 class="card-title"  style="color:#009688; padding-top:15px; padding-left: 10px; text-align:left;" ><i class="fa fa-trophy fa-fw"></i> Reservation </h2>
+          <div style="height: 15px"></div>
+          <table class="table table-bordered table-hover">
+            <thead class="thead-default">
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Date</th>
+              <th scope="col">time</th>
+              <th scope="col">Place</th>
+              <th scope="col">Tickets reserved</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> {{movieReservation?.movieName}} </td>
+                <td> {{movieReservation?.date}} </td>
+                <td> {{movieReservation?.time}} </td>
+                <td> {{movieReservation?.place}} </td>
+                <td> {{selectedSeatsString}}   </td>
+                
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+    </div>
+</div>

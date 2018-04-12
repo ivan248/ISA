@@ -6,35 +6,36 @@
                 <li role="presentation" class="nav-item">
                     <a data-toggle="tab" aria-controls="step1" role="tab" title="Step 1" [class]="makeOneInactive()" class="nav-link active">
                 <span class="round-tab">
-                    <i class="fa fa-building"></i>
+                    1
                 </span>
             </a>
                 </li>
                 <li role="presentation" class="nav-item">
                     <a data-toggle="tab" aria-controls="step2" role="tab" title="Step 2" [class]="makeTwoActive()" class="nav-link disabled">
                 <span class="round-tab">
-                    <i class="fa fa-info"></i>
+                    2
                 </span>
             </a>
                 </li>
                 <li role="presentation" class="nav-item">
                     <a data-toggle="tab" aria-controls="step3" role="tab" title="Step 3" [class]="makeThreeActive()" class="nav-link disabled">
                 <span class="round-tab">
-                    <i class="fa fa-money"></i>
+                    3
                 </span>
             </a>
                 </li>
                 <li role="presentation" class="nav-item">
                     <a data-toggle="tab" aria-controls="step4" role="tab" title="Step 4" [class]="makeFourActive()" class="nav-link disabled">
                 <span class="round-tab">
-                    <i class="fa fa-phone"></i>
+                        4
                 </span>
+                
             </a>
                 </li>
                 <li role="presentation" class="nav-item">
                     <a data-toggle="tab" aria-controls="step5" role="tab" title="Step 5" [class]="makeFiveActive()" class="nav-link disabled">
                 <span class="round-tab">
-                    <i class="fa fa-check"></i>
+                    5
                 </span>
             </a>
                 </li>
@@ -57,9 +58,14 @@
                 [moviesArray]=moviesArray>
 
                 </step-two-component>
-                <step-three-component *ngIf="step===3"></step-three-component>
+                <step-three-component *ngIf="step===3"
+                (selectedSeats)="onChangeSelectedSeats($event)"
+                ></step-three-component>
                 <step-four-component *ngIf="step===4"></step-four-component>
-                <step-five-component *ngIf="step===5"></step-five-component>
+                <step-five-component *ngIf="step===5"
+                    [selectedSeats]=selectedSeats
+                    (movieReservationOutput)="onMovieReservationChanged($event)"
+                ></step-five-component>
                 
                 <br>
                 <br>

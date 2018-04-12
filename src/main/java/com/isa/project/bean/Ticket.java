@@ -67,6 +67,14 @@ public class Ticket {
 		this.id = id;
 		this.seatNumber = seatNumber;
 	}
+	
+	
+
+	public Ticket(int seatNumber, boolean fastRes) {
+		super();
+		this.seatNumber = seatNumber;
+		this.fastRes = fastRes;
+	}
 
 	@Override
 	public String toString() {

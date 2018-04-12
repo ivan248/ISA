@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
 import { HttpHeaders, HttpClient, HttpErrorResponse, HttpParams  } from '@angular/common/http';
+import { MovieReservation } from '../model/movieReservation';
 
 const httpOptions = {
     headers: new HttpHeaders({ 
@@ -146,6 +147,14 @@ getProjectionById(id:number) {
     .get("http://localhost:8080/api/home/getProjectionById", {params:params,headers:headers})
     .map((data:[any]) => data);
 
+}
+
+makeCinemaReservation(movieReservation : MovieReservation) {
+
+
+    return this.http.post('http://localhost:8080/api/home/makeCinemaReservation', movieReservation,
+        httpOptions
+     );
 }
 
 

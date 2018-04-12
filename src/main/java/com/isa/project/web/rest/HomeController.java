@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,8 @@ import com.isa.project.bean.User;
 import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.CinemaService;
 import com.isa.project.service.TheatreService;
+import com.isa.project.web.dto.MovieReservationDTO;
+import com.isa.project.web.dto.RegistrationUserDto;
 
 
 @Controller // This means that this class is a Controller
@@ -164,11 +167,23 @@ public class HomeController {
 	public ResponseEntity<Projection> getProjectionById(
 			@RequestParam("projectionId") Long projectionId) {
 
-		System.out.println(projectionId);
+		
 
 		return new ResponseEntity<Projection>(cinemaService.getProjection(projectionId),HttpStatus.OK);
 
 	}
 	
+	@PostMapping
+	@RequestMapping(value = "/makeCinemaReservation", consumes = "application/json")
+	public ResponseEntity makeCinemaReservation(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestBody MovieReservationDTO movieReservationDTO) {
+
+		TokenProvider p = new TokenProvider();
+
+		if(cinemaService.makeReservation(movieReservationDTO, p.getUsernameFromToken(token)))
+			return new ResponseEntity<>(HttpStatus.OK);
+
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
 	
 }
