@@ -165,6 +165,7 @@ public class CinemaServiceImpl implements CinemaService{
 	@Override
 	public Cinema addProjection(Projection projekcija, Long movieid, Long cinemaid) {
 		try {
+			
 			List<Projection> projekcijeBioskop = cinemaRepository.findOneById(cinemaid).getProjekcije();
 			if (projekcijeBioskop==null) {
 				projekcijeBioskop = new ArrayList<>();
@@ -264,6 +265,21 @@ public class CinemaServiceImpl implements CinemaService{
 		
 
 		
+		return true;
+	}
+
+
+	@Override
+	public boolean setTicketToSold(Long ticketid) {
+		Ticket t = ticketRepository.findOneById(ticketid);
+		t.setSold(true);
+		
+		try {
+			ticketRepository.flush();
+
+		}catch(Exception e) {
+			
+		}
 		return true;
 	}
 

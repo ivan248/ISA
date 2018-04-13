@@ -9,20 +9,6 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
 import { HttpHeaders, HttpClient, HttpErrorResponse, HttpParams  } from '@angular/common/http';
 import { MovieReservation } from '../model/movieReservation';
-
-const httpOptions = {
-    headers: new HttpHeaders({ 
-        'Content-Type': 'application/json',
-        'X-Auth-Token' : localStorage.getItem('token')
-    
-     }),
-};
-
-const headers = new HttpHeaders({ 
-    'Content-Type': 'application/json',
-    'X-Auth-Token' : localStorage.getItem('token')
- });
-  
  
  @Injectable()
  export class CinemasService {  
@@ -47,7 +33,7 @@ const headers = new HttpHeaders({
     }
 
     getCinemas(){
-        return this.http.get("http://localhost:8080/api/home/getCinemas",httpOptions).map(data => data)
+        return this.http.get("http://localhost:8080/api/home/getCinemas").map(data => data)
         .catch((err:HttpErrorResponse) =>
         {
             alert(err.status + " " + err.error.error + " \n" + err.error.message);
@@ -119,6 +105,11 @@ sendEdditedProjection(projekcija : any, id: number){
     const body = JSON.parse(JSON.stringify(projekcija));
     
     console.log("sendeditedprojection"+body.price);
+
+    let headers = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     });
     return this.http.post('http://localhost:8080/api/home/editProjection',body,{
         headers: headers
     } ).map((data:[any]) => data);
@@ -131,6 +122,11 @@ addProjection(projekcija: any, movie: any, cinema: any){
     var cinemaid = cinema.id;
     let params = new HttpParams().set('movieid',movieid);  
     params = params.set('cinemaid',cinemaid); 
+
+    let headers = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     });
     return this.http.post('http://localhost:8080/api/home/addProjection',body,{
         params:params,
         headers: headers
@@ -143,6 +139,10 @@ addProjection(projekcija: any, movie: any, cinema: any){
 getProjectionById(id:number) {
     let params = new HttpParams().set('projectionId', id.toString());  
 
+    let headers = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     });
     return this.http
     .get("http://localhost:8080/api/home/getProjectionById", {params:params,headers:headers})
     .map((data:[any]) => data);
@@ -152,6 +152,10 @@ getProjectionById(id:number) {
 getNotFastProjectionsByCinemaId(cinemaid: any){
     let params = new HttpParams().set('cinemaid', cinemaid);  
 
+    let headers = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     });
     return this.http
     .get("http://localhost:8080/api/home/getFastProjectionTickets", {params:params,headers:headers})
     .map((data:[any]) => data);
@@ -162,6 +166,11 @@ addToFast(cinemaid: any, ticketid:any, ticket: any){
     const body = JSON.parse(JSON.stringify(ticket));
     let params = new HttpParams().set('cinemaid',cinemaid);  
     params = params.set('ticketid',ticketid); 
+
+    let headers = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     });
     return this.http.post('http://localhost:8080/api/home/addProjectionToFast',body,{
         params:params,
         headers: headers
@@ -176,8 +185,26 @@ makeCinemaReservation(movieReservation : MovieReservation) {
 
 
     return this.http.post('http://localhost:8080/api/home/makeCinemaReservation', movieReservation,
-        httpOptions
+        
      );
+}
+
+reserveFast(ticket:any, ticketid: any){
+    
+    ticket.sold=true;
+    const body = JSON.parse(JSON.stringify(ticket));
+    let params = new HttpParams().set('ticketid',ticketid); 
+     
+
+    let headers = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     });
+    return this.http.post('http://localhost:8080/api/home/reserveFast',body,{
+        params:params,
+        headers: headers
+    } );
+
 }
 
 

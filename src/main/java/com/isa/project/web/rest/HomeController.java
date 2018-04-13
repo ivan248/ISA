@@ -23,6 +23,7 @@ import com.isa.project.bean.Theatre;
 import com.isa.project.bean.Ticket;
 import com.isa.project.bean.User;
 import com.isa.project.repository.CinemaRepository;
+import com.isa.project.repository.TicketRepository;
 import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.CinemaService;
 import com.isa.project.service.TheatreService;
@@ -171,8 +172,6 @@ public class HomeController {
 	public ResponseEntity<Projection> getProjectionById(
 			@RequestParam("projectionId") Long projectionId) {
 
-		
-
 		return new ResponseEntity<Projection>(cinemaService.getProjection(projectionId),HttpStatus.OK);
 
 	}
@@ -219,6 +218,19 @@ public class HomeController {
 			return new ResponseEntity<>(HttpStatus.OK);
 
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+	
+	@PostMapping
+	@RequestMapping(value = "/reserveFast0", consumes = "application/json")
+	public ResponseEntity reserveFas9t( @RequestParam("ticketid") String ticketid, @RequestParam("cinemaid") String cinemaid) {
+		cinemaService.setTicketToSold(Long.parseLong(ticketid));
+		Cinema c = cinemaService.getCinemaById(Long.parseLong(cinemaid));
+		return new ResponseEntity(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/reserveFast", method = RequestMethod.POST) 
+	public ResponseEntity reserveFast(@RequestParam("ticketid") String ticketid) {
+		return new ResponseEntity<>(cinemaService.setTicketToSold(Long.parseLong(ticketid)) ,HttpStatus.OK);
 	}
 
 	

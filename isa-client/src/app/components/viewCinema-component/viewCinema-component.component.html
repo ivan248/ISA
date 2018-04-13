@@ -125,8 +125,10 @@
                            
                             <div *ngFor="let t of p.tickets">
                                     <div *ngIf="t.fastRes==true">
+                                            <div *ngIf="t.sold==false">
                                             <p>{{p.id}}</p>
-                                            <p>Price: {{p.price}}</p>
+                                            <p>Original price: {{p.price}}</p>
+                                            <p><b>New price: {{t.salePrice}}</b> (you will save: {{p.price-t.salePrice}})</p>
                                             <p>Place: {{p.place}}</p>
                                             <p>Time: {{p.time}}</p>
                                             <p>Seat number: {{t.seatNumber}}</p>
@@ -137,7 +139,10 @@
                                                             <p>Movie: {{m.name}}</p>
                                                         </div>
                                                     </div>
+                                                <button class="btn" (click)="reserve(t, t.id, currentCinema.id)">Reserve</button>
                                             </div>
+                                            
+                                        </div>
                                         </div>
                                     </div>
                                     <br>

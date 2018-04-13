@@ -31,8 +31,9 @@ export class ViewCinemaComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.cinemasService.currentc.subscribe(data => this.currentCinema = data);   
+      
 
-        this.cinemasService.currentc.subscribe(currentCinema => this.currentCinema = currentCinema);
         this.cinemasService.getMovies(this.currentCinema.id).subscribe(data =>
         this.movies = data);
         this.cinemasService.getNotFastProjectionsByCinemaId(this.currentCinema.id).subscribe(data =>
@@ -103,6 +104,15 @@ export class ViewCinemaComponent implements OnInit {
         this.cinemasService.addToFast(cinemaid, ticketid, ticket).subscribe(data =>
             this.notFastReservations = [data]);
         
+    }
+
+    reserve(ticket:any, ticketid: any, cinemaid: any){
+ 
+        console.log(cinemaid);
+        this.cinemasService.reserveFast(ticket, ticketid).subscribe();
+        console.log(this.currentCinema);
+        this.router.navigateByUrl('/viewCinema');
+
     }
 
   /*    initMap() {

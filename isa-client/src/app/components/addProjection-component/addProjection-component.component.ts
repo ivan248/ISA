@@ -18,6 +18,8 @@ export class AddProjectionComponent implements OnInit {
     private currentCinema: any;
     private currentMovie: any;
     private projekcija: any;
+    
+    private movies:  any[] = [];    
 
 
     constructor(private cinemasService: CinemasService,
@@ -27,23 +29,23 @@ export class AddProjectionComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.cinemasService.currentc.subscribe(currentCinema => this.currentCinema = currentCinema);
-        this.cinemasService.currentm.subscribe(currentMovie => this.currentMovie = currentMovie);
-      
+          this.cinemasService.currentc.subscribe(currentCinema => this.currentCinema = currentCinema);
+          this.cinemasService.currentm.subscribe(currentMovie => this.currentMovie = currentMovie);
+          this.cinemasService.getMovies(this.currentCinema.id).subscribe(data =>
+            this.movies = data);
       }
 
     onSubmit(f: NgForm, movie: any, cinema: any){
 
 
       const body = JSON.parse(JSON.stringify(f.value));
+     
+      // kako ovaj poslati na view cinema current
+      this.router.navigateByUrl('/viewCinema'); //ne radi osvezavanje prikaza
       this.cinemasService.addProjection(body, movie, cinema).subscribe(data =>
         this.currentCinema = data);
-  
-      console.log(this.currentCinema);
-
-      this.router.navigateByUrl('/viewCinema'); //ne radi osvezavanje prikaza
-      
-      
+        this.cinemasService.currentm.subscribe(movie => this.currentMovie = movie)
+    
        
 
         

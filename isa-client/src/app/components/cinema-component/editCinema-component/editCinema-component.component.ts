@@ -36,9 +36,4 @@ export class EditCinemaComponent implements OnInit {
     
       }
 
-    
-
-  
-
-
 }
