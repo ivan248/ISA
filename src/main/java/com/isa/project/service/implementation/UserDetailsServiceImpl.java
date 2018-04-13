@@ -35,7 +35,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 						.collect(Collectors.toList());
 		// ovde dodajem role koje ima i da li je enablovan
 		
-		System.out.println(grantedAuthorities);
 		
 		return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
 	}

@@ -72,9 +72,11 @@ public class Item implements Serializable {
 	private float currentBid;
 	
 	@NotNull
-	@ManyToOne 
+	@ManyToOne
 	@JoinColumn(name="ownerID")
 	private User owner;
+	
+	
 	
 	
 	

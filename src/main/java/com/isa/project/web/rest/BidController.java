@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.Bid;
 import com.isa.project.bean.Item;
+import com.isa.project.bean.Notification;
 import com.isa.project.bean.User;
+import com.isa.project.repository.NotificationRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.BidService;
@@ -26,23 +28,34 @@ import com.isa.project.web.dto.BidDTO;
 @RequestMapping(value = "/bid")
 public class BidController {
 	
+	
+	
 	@Autowired
 	private BidService bidService;
 	
 	@Autowired 
 	private UserRepository userRepository;
 	
+	@Autowired 
+	private NotificationRepository notificationRepository;
+	
+	
 	@PostMapping("/add")
 	public ResponseEntity<Boolean> addBid(@RequestBody BidDTO bid , @RequestHeader(value="X-Auth-Token") String token){
+		TokenProvider p = new TokenProvider();
+		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
 		if( bid.getBid() <= bid.getItem().getCurrentBid()) {
 			System.out.println("Ponuda nije veca od trenutne ponude");
 			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
-		} else {
+		} else if( currentUser.getUsername().equals(bid.getItem().getOwner().getUsername())) {
+			System.out.println("NE moze bidovati vlasnik itema");
+			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+		}else {
 			System.out.println("usao u addbid, parametri: " + bid.getBid());
 			
 			Bid b = new Bid();
-			TokenProvider p = new TokenProvider();
-			User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+			
 			
 			b.setBuyer(currentUser);
 			b.setItem(bid.getItem());
@@ -71,26 +84,53 @@ public class BidController {
 	
 	@PostMapping("/accept")
 	public ResponseEntity<Boolean> acceptBid(@RequestBody Bid bid, @RequestHeader(value="X-Auth-Token") String token){
-		//TODO: Samo autor oglasa moze da prihvati ponudu
+		
 		TokenProvider p = new TokenProvider();
 		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
-		System.out.println("USAO U ACCEPT");
-		if(currentUser.getUsername().equals(bid.getItem().getOwner().getUsername())) { //ako je ulogovani 
-																					//korisnik vlasnik  itema
+		
+		ArrayList<User> list = new ArrayList<User>( userRepository.findDistinctUsersThatBidOnItem(bid.getItem().getItemID()));
+		
+		
+		
+		if(currentUser.getUsername().equals(bid.getItem().getOwner().getUsername())) { 
+																				
+			
 			Boolean b = bidService.acceptBid(bid);
 			if (b) {
+				
 				return new ResponseEntity<Boolean>(b,HttpStatus.OK);
 			} else {
 				return new ResponseEntity<Boolean>(b,HttpStatus.BAD_REQUEST);
 			}
 			
 		} else {
+			System.out.println("Ne moze korisnik koji nije vlasnik itema da prihvati ponudu");	
 			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
 		}
 		
 		
 		
 	}
+	
+	public Boolean sendNotifications(ArrayList<User> list, User buyer, String itemName ) {
+		
+		for(User u : list) {
+			if (!u.getUsername().equals(buyer.getUsername())) {
+				Notification n = new Notification("Your bid on item: " + itemName + " has not been accepted. Congratulations!", u);
+				notificationRepository.saveAndFlush(n);
+			} else {
+				Notification n = new Notification("Your bid on item: " + itemName + " has been accepted. Congratulations!", buyer);
+				notificationRepository.saveAndFlush(n);
+			}
+		}
+		
+		
+		
+		return null;
+	}
+	
+	
+	
 	
 	
 	

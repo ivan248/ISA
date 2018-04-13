@@ -25,7 +25,6 @@ public class TokenProvider {
         String username;
         try {
             Claims claims = this.getClaimsFromToken(token);
-            System.out.println(claims.get("user"));
             username = (String) claims.get("user");
         } catch (Exception e) {
             username = null;
@@ -38,7 +37,6 @@ public class TokenProvider {
         try {
             claims = Jwts.parser().setSigningKey("SecretKeyToGenJWTs")
                     .parseClaimsJws(token).getBody();
-            System.out.println(claims);
         } catch (Exception e) {
             claims = null;
             e.printStackTrace();
