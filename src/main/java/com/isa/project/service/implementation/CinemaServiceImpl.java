@@ -240,10 +240,14 @@ public class CinemaServiceImpl implements CinemaService{
 		
 		for(int i=0; i<movieReservationDTO.getSeatsTaken().size(); i++)
 		{
-			projection.getTickets().add(new Ticket(movieReservationDTO.getSeatsTaken().get(i), false));
+			projection.getTickets().add(
+					new Ticket(
+							movieReservationDTO.getSeatsTaken().get(i), false, (int)projection.getPrice(), true));
 		}
 		
 		projekcijaRepository.save(projection);
+		
+		//TODO : obelezi ko je kupio kartu !!!
 		
 		SimpleMailMessage registrationEmail = new SimpleMailMessage();
 		registrationEmail.setTo(username);

@@ -6,83 +6,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'profile-component',
   templateUrl: './profile-component.component.html',
-  styles: [`body {
-    padding: 0px;
-    }
-    .container {
-      width: auto;
-      margin-left: 200px;
-      margin-right: 200px;
-    }​
-    .center {
-      margin-left: auto;
-      margin-right: auto;
-      }
-      .center.navbar .nav,
-      .center.navbar .nav > li {
-      float:none;
-      display:inline-block;
-      *display:inline; /* ie7 fix */
-      *zoom:1; /* hasLayout ie7 trigger */
-      vertical-align: top;
-      }
-      .center.navbar-inner {
-      text-align:center;
-      }
-      .center .dropdown-menu {
-      text-align: left;
-      }
-      .navbar-inner {
-      margin: 0 auto;
-      }
-      
-      
-      body{
-        background: #DAE3E7;
-      }
-      
-      .row{
-        margin-top: 40px;
-      }
-      
-      
-      html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
-      div.card {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.1);
-      }
-      
-      .header {
-        padding: 10px 0;
-        background: #f5f5f5;
-        border-top: 3px solid #3AAA64;
-      }
-      
-      .list-group {
-          list-style: disc inside;
-      
-      }
-      
-      .list-group-item {
-          display: list-item;
-      }
-      
-       .find-more{
-         text-align: right;
-       }
-      
-      
-      .label-theme{
-        background: #3AAA64;
-        font-size: 14px;
-        padding: .3em .7em .3em;
-        color: #fff;
-        border-radius: .25em;
-      }
-      
-      .label a{
-        color: inherit;
-      }
-      `]
+  styleUrls: [`profile-component.component.css`]
 })
 export class ProfileComponent implements OnInit {
  
@@ -120,7 +44,7 @@ export class ProfileComponent implements OnInit {
         this.username = data.username;
         this.phoneNumber = data.phoneNumber;
         this.city = data.city;
-        console.log("logged user : " + data.firstName);
+        
       } );
 
       this.profileService.getFriends().subscribe(data =>
@@ -131,7 +55,7 @@ export class ProfileComponent implements OnInit {
 
       this.profileService.getFriendRequests().subscribe(data =>
         {this.userFriendRequests = data;
-          console.log(data);
+         
         });
       
     }
@@ -146,7 +70,6 @@ export class ProfileComponent implements OnInit {
     }
 
     confirmEdit() {
-      console.log();
       this.editClicked = !this.editClicked;
 
       let user = new User(
@@ -162,7 +85,6 @@ export class ProfileComponent implements OnInit {
     removeFriend(i : number) {
       this.profileService.removeFriend(i.toString()).subscribe(data =>
         this.userFriends = data);
-      window.location.reload(true);
 
 
     }
@@ -231,15 +153,40 @@ export class ProfileComponent implements OnInit {
     addFriend(friendUsername : string) {
       this.profileService.sendFriendRequest(friendUsername)
       .subscribe(data => console.log(data));
+
+      alert("Friend request sent!");
     }
 
     acceptFriend(friendId : number) {
       this.profileService.acceptFriend(friendId.toString())
-      .subscribe(data => console.log(data));
+      .subscribe(data =>{
+         this.userFriends = data;
+         this.userFriendRequests = [];
+
+         this.profileService.getFriendRequests().subscribe(data =>
+           {this.userFriendRequests = data;
+             console.log(data);
+           });
+          
+        });
+
+
+
+      alert("Friend request accepted!");
     }
 
     declineFriend(friendId : number) {
       this.profileService.declineFriend(friendId.toString())
       .subscribe(data => console.log(data));
+
+      this.userFriendRequests = [];
+
+      this.profileService.getFriendRequests().subscribe(data =>
+        {this.userFriendRequests = data;
+          console.log(data);
+         
+        });
+
+      alert("Friend request denied!");
     }
  }

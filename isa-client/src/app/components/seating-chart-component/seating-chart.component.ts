@@ -23,7 +23,7 @@ export class SeatingChartComponent implements OnInit, OnChanges {
 
     ngOnInit() {
 
-      for(var i : number = 0; i<13; i++)
+      for(var i : number = 0; i<85; i++)
       {
         this.buttonsArray[i] = 2;
       }

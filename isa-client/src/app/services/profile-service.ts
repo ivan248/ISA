@@ -118,7 +118,7 @@ var httpOptions = {
          });
 
         return this.http
-        .get(this.url + "acceptFriend", {params:params,headers:headers});
+        .get(this.url + "acceptFriend", {params:params,headers:headers}).map((data:[any]) => data);
     }
 
     declineFriend(friendId : any) {
