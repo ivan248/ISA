@@ -52,6 +52,7 @@ import { StepThreeComponent } from './components/reservation-component/step-thre
 import { StepFourComponent } from './components/reservation-component/step-four/step-four.component';
 import { StepFiveComponent } from './components/reservation-component/step-five/step-five.component';
 import { SeatingChartComponent } from './components/seating-chart-component/seating-chart.component';
+import { NotificationService } from './services/notification-service';
 
 
 
@@ -109,7 +110,8 @@ import { SeatingChartComponent } from './components/seating-chart-component/seat
         CinemasService,
         ProfileService,
       BidService,
-      NewItemService
+      NewItemService,
+      NotificationService
                ],
   bootstrap: [AppComponent]
 })

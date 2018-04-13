@@ -47,7 +47,7 @@
             <div class="card-footer">  
                 <div class="row">
                     <div class="text-left">
-                        <button *ngIf="!item.sold" class="btn btn-dark btn-sm" (click)="onClickDelete(item.itemID)">Delete</button>
+                        <button  class="btn btn-dark btn-sm" (click)="onClickDelete(item.itemID)">Delete</button>
                         <button *ngIf="!item.sold" class="btn btn-dark btn-sm" (click)="onClickEdit(item.itemID)">Edit</button>
                         <button *ngIf="!item.approved && !item.sold" class="btn btn-dark btn-sm" (click)="onClickApprove(item.itemID)">Approve</button>
                     </div>

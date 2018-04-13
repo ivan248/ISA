@@ -68,7 +68,7 @@ public class FanZoneController {
 		return fanZoneService.getAllUnApprovedItems();
 	}
 	
-	@RequestMapping(value="/additem", method=RequestMethod.POST, consumes="application/json")
+	@RequestMapping(value="/additem", method=RequestMethod.POST)
 	public  ResponseEntity<Item> addItem( @RequestBody AddNewItemDto newItemDTO, @RequestHeader(value="X-Auth-Token") String token) {
 		
 		TokenProvider p = new TokenProvider();

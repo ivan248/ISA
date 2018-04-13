@@ -45,6 +45,7 @@ public class BidServiceImpl implements BidService {
 		//Ovbavestiti korisnike da je item prodat
 		//obrisati ponude
 		
+		
 	}
 
 	@Override

@@ -51,6 +51,7 @@ public class FanZoneServiceImpl implements FanZoneService{
 		try {
 			//obavesti autora da mu je ponuda odbijena.. nema brisanja radi evidencije
 			itemRepository.delete(id);
+			itemRepository.flush();
 		}
 		catch(Exception e) {
 			System.out.println("Error occured while deleting item from database.");

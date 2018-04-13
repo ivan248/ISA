@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../../services/profile-service';
 import { User } from '../../model/dto/userDTO';
 import { Location } from '@angular/common';
+import { NotificationService } from '../../services/notification-service';
 
 @Component({
   selector: 'profile-component',
@@ -104,12 +105,16 @@ export class ProfileComponent implements OnInit {
     private searchName : string;
     private searchLastName : string;
 
+    private notifications: any;
+
     constructor(private profileService: ProfileService,
-      private location: Location) {
+      private location: Location, private notificationService : NotificationService) {
 
     }
 
     ngOnInit() {
+
+      //TODO: Uzmi sve notifikacije sa servera
 
       
 
@@ -133,6 +138,10 @@ export class ProfileComponent implements OnInit {
         {this.userFriendRequests = data;
           console.log(data);
         });
+
+      this.notificationService.getAllNotifications().subscribe(data =>{
+        this.notifications = data;
+      });
       
     }
 
@@ -241,5 +250,11 @@ export class ProfileComponent implements OnInit {
     declineFriend(friendId : number) {
       this.profileService.declineFriend(friendId.toString())
       .subscribe(data => console.log(data));
+    }
+
+    onClickRead(id : number){
+      this.notificationService.readNotification(id).subscribe(data => {
+        console.log(data);
+      })
     }
  }
