@@ -96,10 +96,12 @@ public class Ticket {
 	
 	
 
-	public Ticket(int seatNumber, boolean fastRes) {
+	public Ticket(int seatNumber, boolean fastRes, int price, boolean sold) {
 		super();
 		this.seatNumber = seatNumber;
 		this.fastRes = fastRes;
+		this.salePrice = price;
+		this.sold = sold;
 	}
 
 	@Override

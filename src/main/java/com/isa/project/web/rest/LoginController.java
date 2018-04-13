@@ -82,6 +82,10 @@ public class LoginController {
 		
 		try {
 		UserDetails details = userDetailsService.loadUserByUsername(loginDTO.getUsername());
+		
+		if(details == null)
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		
 		UsernamePasswordAuthenticationToken authenticationToken =
 				new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
 		

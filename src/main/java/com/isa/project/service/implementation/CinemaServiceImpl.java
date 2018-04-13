@@ -165,6 +165,7 @@ public class CinemaServiceImpl implements CinemaService{
 	@Override
 	public Cinema addProjection(Projection projekcija, Long movieid, Long cinemaid) {
 		try {
+			
 			List<Projection> projekcijeBioskop = cinemaRepository.findOneById(cinemaid).getProjekcije();
 			if (projekcijeBioskop==null) {
 				projekcijeBioskop = new ArrayList<>();
@@ -240,10 +241,14 @@ public class CinemaServiceImpl implements CinemaService{
 		
 		for(int i=0; i<movieReservationDTO.getSeatsTaken().size(); i++)
 		{
-			projection.getTickets().add(new Ticket(movieReservationDTO.getSeatsTaken().get(i), false));
+			projection.getTickets().add(
+					new Ticket(
+							movieReservationDTO.getSeatsTaken().get(i), false, (int)projection.getPrice(), true));
 		}
 		
 		projekcijaRepository.save(projection);
+		
+		//TODO : obelezi ko je kupio kartu !!!
 		
 		SimpleMailMessage registrationEmail = new SimpleMailMessage();
 		registrationEmail.setTo(username);
@@ -260,6 +265,21 @@ public class CinemaServiceImpl implements CinemaService{
 		
 
 		
+		return true;
+	}
+
+
+	@Override
+	public boolean setTicketToSold(Long ticketid) {
+		Ticket t = ticketRepository.findOneById(ticketid);
+		t.setSold(true);
+		
+		try {
+			ticketRepository.flush();
+
+		}catch(Exception e) {
+			
+		}
 		return true;
 	}
 

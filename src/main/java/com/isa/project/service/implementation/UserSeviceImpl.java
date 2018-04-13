@@ -106,6 +106,25 @@ public class UserSeviceImpl implements UserService {
 	public List<Friend> removeFriend(int id, String username) {
 
 		userRepository.findByUsername(username).get().getFriends().remove(friendRepository.findOne(id));
+		userRepository.findByUsername(friendRepository.findOne(id).getFriendUsername()).get().getFriends();
+		
+		System.out.println("ULAZAK U FOR REMOVEFRIEND ");
+		
+		for(int i=0; i<userRepository.findByUsername(
+				friendRepository.findOne(id).getFriendUsername()).get().getFriends().size(); i++)
+		{
+			if(userRepository.findByUsername(friendRepository.findOne(id).getFriendUsername()).get().getFriends()
+					.get(i).getFriendUsername().equals(username))
+			{
+				System.out.println("Pronadjen: " + username + " jednako : ");
+				System.out.println(userRepository.findByUsername(friendRepository.findOne(id).getFriendUsername()).get().getFriends()
+					.get(i).getFriendUsername());
+				userRepository.findByUsername(friendRepository.findOne(id).getFriendUsername()).get().getFriends().remove(i);
+				break;
+			}
+		}
+		
+		
 		friendRepository.delete(id);
 		return userRepository.findByUsername(username).get().getFriends();
 	}
@@ -114,21 +133,39 @@ public class UserSeviceImpl implements UserService {
 	public List<User> getAllUsers(String usernameFromToken) {
 
 		List<User> allUsers = userRepository.findAll();
+		List<User> returnUsers = new ArrayList<User>();
 		int index = 0;
 
+		
+		// remove currently logged user from all users
 		for (User u : allUsers) {
 			if (u.getUsername().equals(usernameFromToken)) {
-				System.out.println("Pronadjen ulogovani! index: " + index);
 				break;
 			}
 
 			index++;
 		}
 
-		System.out.println("Index posle break-a: " + index);
 		allUsers.remove(index);
+		
+		
+		// remove friends from all users
+		for(int i=0; i<userRepository.findByUsername(usernameFromToken).get().getFriends().size(); i++)
+		{
+			for(int j=0; j<allUsers.size(); j++)
+			{
+				if(!userRepository.findByUsername(usernameFromToken)
+						.get().getFriends().get(i).getFriendUsername()
+						.equals(allUsers.get(j).getUsername()))
+				{
+					returnUsers.add(allUsers.get(j));
+					break;
+				}
+			}
+			
+		}
 
-		return allUsers;
+		return returnUsers;
 	}
 
 	@Override
