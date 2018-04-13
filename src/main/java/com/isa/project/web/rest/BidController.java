@@ -94,17 +94,21 @@ public class BidController {
 		
 		if(currentUser.getUsername().equals(bid.getItem().getOwner().getUsername())) { 
 																				
-			
-			Boolean b = bidService.acceptBid(bid);
-			if (b) {
-				
-				return new ResponseEntity<Boolean>(b,HttpStatus.OK);
-			} else {
-				return new ResponseEntity<Boolean>(b,HttpStatus.BAD_REQUEST);
+			if (sendNotifications(list,bid.getBuyer(),bid.getItem().getName())) {
+				Boolean b = bidService.acceptBid(bid);
+				if (b) {
+					
+					return new ResponseEntity<Boolean>(b,HttpStatus.OK);
+				} else {
+					return new ResponseEntity<Boolean>(b,HttpStatus.BAD_REQUEST);
+				}
+			} 
+			else {
+				System.out.println("Notifications were not sent correctly");
+				return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);	
 			}
-			
 		} else {
-			System.out.println("Ne moze korisnik koji nije vlasnik itema da prihvati ponudu");	
+			System.out.println("Only the owner of the item can accept bids");	
 			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
 		}
 		
@@ -116,7 +120,7 @@ public class BidController {
 		
 		for(User u : list) {
 			if (!u.getUsername().equals(buyer.getUsername())) {
-				Notification n = new Notification("Your bid on item: " + itemName + " has not been accepted. Congratulations!", u);
+				Notification n = new Notification("Your bid on item: " + itemName + " has not been accepted. ", u);
 				notificationRepository.saveAndFlush(n);
 			} else {
 				Notification n = new Notification("Your bid on item: " + itemName + " has been accepted. Congratulations!", buyer);
@@ -125,8 +129,8 @@ public class BidController {
 		}
 		
 		
+		return true;
 		
-		return null;
 	}
 	
 	
