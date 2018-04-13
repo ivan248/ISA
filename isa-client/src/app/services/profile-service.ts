@@ -9,7 +9,7 @@ import 'rxjs/add/operator/toPromise';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { User } from '../model/dto/userDTO';
 
-const httpOptions = {
+var httpOptions = {
     headers: new HttpHeaders({ 
         'Content-Type': 'application/json',
         'X-Auth-Token' : localStorage.getItem('token')
@@ -26,18 +26,38 @@ const httpOptions = {
     }
 
     getLoggedUser(): Observable<any> {
-        return this.http.get(this.url, httpOptions).map((data:Observable<any>) => data); 
+
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http.get(this.url, {headers:headers}).map((data:Observable<any>) => data); 
     }
 
     editUser(user : User) {
         console.log("ispis iz profile servisa token : \n" + localStorage.getItem('token'));
         console.log(httpOptions);
-        return this.http.post(this.url + "editUser", user, httpOptions);
+
+        
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http.post(this.url + "editUser", user, {headers:headers});
     }
 
     getFriends() {
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
         return this.http
-        .get(this.url+"getFriends", httpOptions)
+        .get(this.url+"getFriends", {headers:headers})
         .map((data:[any]) => data);
     }
 
@@ -55,19 +75,37 @@ const httpOptions = {
     }
 
     getAllUsers() {
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
         return this.http
-        .get(this.url + "getAllUsers", httpOptions)
+        .get(this.url + "getAllUsers", {headers:headers})
         .map((data:[any]) => data);       
     }
 
     sendFriendRequest(username : string) {
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
         return this.http
-        .post(this.url + "friendRequest", username, httpOptions);
+        .post(this.url + "friendRequest", username, {headers:headers});
     }
 
     getFriendRequests() {
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
         return this.http
-        .get(this.url + "getFriendRequests", httpOptions)
+        .get(this.url + "getFriendRequests", {headers:headers})
         .map((data:[any])=> data);
     }
 

@@ -110,13 +110,17 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-      this.profileService.getLoggedUser().subscribe(data =>{
+
+      
+
+      this.profileService.getLoggedUser().subscribe( data =>{
         this.loggedUser = data;
         this.firstName = data.firstName;
         this.lastName = data.lastName;
         this.username = data.username;
         this.phoneNumber = data.phoneNumber;
         this.city = data.city;
+        console.log("logged user : " + data.firstName);
       } );
 
       this.profileService.getFriends().subscribe(data =>

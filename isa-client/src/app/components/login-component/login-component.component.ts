@@ -45,22 +45,17 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-      localStorage.setItem('token', 'ovde bi token trebao da bude');
-
+     
+     
     }
 
     onSubmit() {
 
-      console.log(localStorage.getItem('token') + " usao u login");
-      console.log(this.password +  this.email);
       this.loginService.getLogin(this.password, this.email)
       .subscribe( data=>{
         if(data.token != null)
         {
           localStorage.setItem('token', data.token);
-          console.log(localStorage.getItem('token') + " usao u servis i pokupio token n");
-          alert("Succesfull login!");
-          this.dataService.changeLoginJWT(data.token);
           this.moveOn();
           
         }
@@ -69,12 +64,10 @@ export class LoginComponent implements OnInit {
         
     } );
 
-    console.log(localStorage.getItem('token') + " zavrio sa loginom");
     
     }
 
     moveOn() {
-      console.log("Pre slanja token je: " + localStorage.getItem('token'));
       this.router.navigateByUrl("profile");
     }
 }
