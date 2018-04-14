@@ -43,6 +43,11 @@
     </div>
     <br>
     <br>
+    <seating-chart
+[currentProjection]=currentProjection
+(selectedSeats)="onChangeSelectedSeats($event)">
+
+</seating-chart>
     <button type="submit"  class="btn btn-dark btn-lg" [disabled] = "!f.valid">Save changes</button>
     </form>
   </div>

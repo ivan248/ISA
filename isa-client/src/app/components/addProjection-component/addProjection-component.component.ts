@@ -41,12 +41,21 @@ export class AddProjectionComponent implements OnInit {
       const body = JSON.parse(JSON.stringify(f.value));
      
       // kako ovaj poslati na view cinema current
-      this.router.navigateByUrl('/viewCinema'); //ne radi osvezavanje prikaza
-      this.cinemasService.addProjection(body, movie, cinema).subscribe(data =>
-        this.currentCinema = data);
-        this.cinemasService.currentm.subscribe(movie => this.currentMovie = movie)
+     
+      this.cinemasService.addProjection(body, movie, cinema)
+      .subscribe(data => {
+        this.currentCinema = data;
+        this.cinemasService.selectCinema(this.currentCinema);
+        console.log(this.currentCinema +  " iz addorojetion");
+        this.router.navigateByUrl('/viewCinema'); //ne radi osvezavanje prikaza
+      }
+       );
+//mozda ne bi trebalo da se zakomentarise? :D
+        //this.cinemasService.currentm.subscribe(movie => this.currentMovie = movie)
     
-       
+      
+     
+      
 
         
 

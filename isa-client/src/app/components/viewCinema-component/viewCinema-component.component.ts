@@ -3,17 +3,19 @@ import { Router } from '@angular/router';
 import { CinemasService } from '../../services/cinemas-service.service';
 import { NgForm } from '@angular/forms';
 
+
 @Component({
   selector: 'viewCinema-component',
   templateUrl: './viewCinema-component.component.html',
   
-  
- 
+
 })
+
 
 export class ViewCinemaComponent implements OnInit {
  
 
+    private changeSeatingChartHidden : boolean = false;
 
     private currentCinema: any;
     private movies:  any[] = [];
@@ -21,17 +23,22 @@ export class ViewCinemaComponent implements OnInit {
     private projekcijaId: any;
     private numberProjections: any = 20;
     private notFastReservations: any[];
-
-      
-
-   
+    lat: number = -32.9477132;
+    lng: number = -60.630465800000025;
 
     constructor(private cinemasService: CinemasService,
-            private router : Router) {         
+            private router : Router) { 
+         
     }
 
     ngOnInit() {
-        this.cinemasService.currentc.subscribe(data => this.currentCinema = data);   
+
+        this.cinemasService.currentc.subscribe(data => {
+            this.currentCinema = data; 
+            console.log(this.currentCinema);
+            console.log("ispis iz cinema ngoniit viewcinema ");
+        
+        });   
       
 
         this.cinemasService.getMovies(this.currentCinema.id).subscribe(data =>
@@ -114,6 +121,26 @@ export class ViewCinemaComponent implements OnInit {
         this.router.navigateByUrl('/viewCinema');
 
     }
+
+    
+    private currentProjection : any;
+
+    changeSeatingChart(projectionId: any) {
+        this.changeSeatingChartHidden = true;
+        console.log(this.changeSeatingChartHidden);
+        this.cinemasService.getProjectionById(projectionId)
+        .subscribe(data => this.currentProjection = data);
+    }
+
+
+    onChangeSelectedSeats( array : any) {
+        console.log(array);
+  
+      }
+
+      finishChangingSeats() {
+          this.changeSeatingChartHidden = !this.changeSeatingChartHidden;
+      }
 
   /*    initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
