@@ -141,6 +141,31 @@
   </div>
 <!-- End:Awards -->
 
+<!-- Section:Notifications -->
+<div class="row" >
+  <div class="col-md-12">
+      <div class="card card-block">
+        <h2 class="card-title"  style="color:#009688; padding-top:15px; padding-left: 10px;" ><i class="fa fa-trophy fa-fw"></i> Notifications </h2>
+        <div style="height: 15px"></div>
+        <table class="table table-bordered table-hover" *ngIf="notifications?.length>0" >
+          <thead class="thead-default">
+          
+          </thead>
+          <tbody *ngFor="let n of notifications">
+            <tr >
+              
+              <td>{{n.text}}</td>
+              <td><button  *ngIf="n.seen" class="btn btn-success" (click)="onClickRead(n.notificationID)"> Mark as read </button>
+                  </td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>
+<!-- End:Notifications -->
+
 <!-- Section:Friend requests -->
 <div class="row" >
   <div class="col-md-12">
@@ -173,6 +198,8 @@
   </div>
 </div>
 <!-- End:Friend requests -->
+
+
 
 
 <div class="row">

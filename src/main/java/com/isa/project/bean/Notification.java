@@ -16,9 +16,6 @@ import javax.validation.constraints.NotNull;
 @Table(name="notification")
 public class Notification implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	public Notification() {}
@@ -26,6 +23,7 @@ public class Notification implements Serializable{
 	public Notification(String text, User user) {
 		this.text = text;
 		this.user = user;
+		this.seen = false;
 	}
 
 	
@@ -42,6 +40,18 @@ public class Notification implements Serializable{
 	@NotNull
 	private User user;
 	
+	@Column(name="seen")
+	private Boolean seen;
+	
+	
+	public Boolean getRead() {
+		return seen;
+	}
+
+	public void setRead(Boolean read) {
+		this.seen = read;
+	}
+
 	public Integer getNotificationID() {
 		return notificationID;
 	}

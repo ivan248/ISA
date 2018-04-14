@@ -1,11 +1,11 @@
 package com.isa.project.web.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.Friend;
+import com.isa.project.bean.Notification;
 import com.isa.project.bean.User;
+import com.isa.project.repository.NotificationRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.UserService;
@@ -32,6 +34,9 @@ public class ProfileController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired 
+	private NotificationRepository notificationRepository;
 
 	@GetMapping
 	@RequestMapping(value = "/")
@@ -132,6 +137,40 @@ public class ProfileController {
 		return new ResponseEntity<List<Friend>>(userService.declineFriend(p.getUsernameFromToken(token), Integer.parseInt(id)),HttpStatus.OK);
 
 
+	}
+	
+	@GetMapping(value= "/getnotifications")
+	public ResponseEntity<List<Notification>> getAllNotifications(@RequestHeader(value = "X-Auth-Token") String token) {
+		TokenProvider p = new TokenProvider();
+		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		try {
+			ArrayList<Notification> list = new ArrayList<Notification>(notificationRepository.findAllByUser(currentUser));
+			return new ResponseEntity<List<Notification>>(list,HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Error while reading from database");
+			return null;
+		}
+	}
+	
+	@PostMapping(value = "/readnotification")
+	public ResponseEntity<Boolean> readNotification(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestParam("id") int id){
+		
+		try {
+			Notification n = notificationRepository.findOneByNotificationID(id);
+			n.setRead(true);
+			notificationRepository.flush();
+			
+			return new ResponseEntity<Boolean>(true,HttpStatus.OK);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Error while writing to database");
+			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+		}
+		
 	}
 
 }

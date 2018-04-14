@@ -5,10 +5,7 @@ import 'rxjs/Rx';
 import { BidDTO } from '../model/bidDTO';
 
 
-const headers = new HttpHeaders({ 
-        'Content-Type': 'application/json',
-        'X-Auth-Token' : localStorage.getItem('token')
-     });
+
 
  @Injectable()
  export class ItemService {  
@@ -19,7 +16,10 @@ const headers = new HttpHeaders({
 
     deleteItem(id: any){ //posto je GET ne treba headers jer ne saljem nista, dovoljni su param
         let params = new HttpParams().append('id',id);
-        
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
         
         return this.http.get('http://localhost:8080/fanzone/deleteitem',{
             params: params,  headers: headers
@@ -29,7 +29,10 @@ const headers = new HttpHeaders({
 
     approveItem(id: any){ //posto je GET ne treba headers jer ne saljem nista, dovoljni su param
         let params = new HttpParams().append('id',id);
-
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
         
 
         return this.http.get('http://localhost:8080/item/approve',{
@@ -40,7 +43,10 @@ const headers = new HttpHeaders({
 
     getItem(id: any){
         let params = new HttpParams().append('id',id);
-        
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
         
         return this.http.get('http://localhost:8080/fanzone/getitem',{
             params: params, headers: headers
@@ -50,7 +56,10 @@ const headers = new HttpHeaders({
 
     sendEdditedItem(item : any){
         const body = JSON.parse(JSON.stringify(item));
-        
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
         
 
         return this.http.post('http://localhost:8080/item/edit',body,{
@@ -61,7 +70,10 @@ const headers = new HttpHeaders({
 
     changeCurrentBid(bid: any,id: any){
         const body = JSON.stringify(new BidDTO(id,bid));
-        
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
 
         return this.http.post('http://localhost:8080/item/bid',body,{headers: headers}).subscribe();
     }

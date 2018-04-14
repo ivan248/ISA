@@ -7,10 +7,7 @@ import { Item } from '../model/item';
 
 
 
-    const headers = new HttpHeaders({ 
-        'Content-Type': 'application/json',
-        'X-Auth-Token' : localStorage.getItem('token')
-     });
+    
 
  @Injectable()
  export class BidService {  
@@ -21,6 +18,10 @@ import { Item } from '../model/item';
 
     sendNewBid(bid : BidDTO){
         const body = JSON.parse(JSON.stringify(bid));
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
 
         return this.http.post('http://localhost:8080/bid/add',body,{ headers: headers});
 
@@ -28,12 +29,20 @@ import { Item } from '../model/item';
 
     getAllByItem(item: Item){
         const body = JSON.parse(JSON.stringify(item));
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
 
         return this.http.post('http://localhost:8080/bid/getallbyitem',body,{ headers: headers});
     }
 
     acceptBid(bid : any){
         const body = JSON.parse(JSON.stringify(bid));
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
 
         return this.http.post('http://localhost:8080/bid/accept',body,{ headers: headers});
     }
