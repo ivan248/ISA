@@ -7,7 +7,7 @@
 
 </head>
 <body>
-
+  <a [routerLink]="['/login']">Login </a>
 <div class="container">
   <div class="jumbotron">
       <h1>Item  {{item.name}}</h1>  <h5> <b> [#{{item.itemID}}]</b> </h5>
@@ -27,7 +27,7 @@
       
       <div class="justify-content-center align-items-center">
         <div class="form-area ">  
-          <button type="submit"  class="btn btn-success btn-lg" >Reserve</button>
+          <button type="submit" [disabled]="item.reserved" (click)="onClickReserve(item.itemID)"  class="btn btn-success btn-lg" >Reserve</button>
         </div>
       </div>
     </div>

@@ -17,6 +17,7 @@ import com.isa.project.bean.OfficialItem;
 import com.isa.project.bean.Theatre;
 import com.isa.project.bean.User;
 import com.isa.project.repository.CinemaRepository;
+import com.isa.project.repository.OfficialItemRepository;
 import com.isa.project.repository.TheatreRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.security.jwt.TokenProvider;
@@ -37,7 +38,7 @@ public class OfficialItemController {
 	private TheatreRepository theatreRepository;
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	
 	@RequestMapping(value="/edit", method = RequestMethod.POST) //ovaj drugi korak edita zapravo menja item u BP
 	public ResponseEntity<Boolean> editItemStep(@RequestBody OfficialItemDTO i) {
@@ -68,7 +69,9 @@ public class OfficialItemController {
 	
 	
 	@RequestMapping(value="/sell", method = RequestMethod.POST) //ovaj drugi korak edita zapravo menja item u BP
-	public Boolean sellItem(@RequestParam("id")int id) {
+	public Boolean sellItem(@RequestParam("id")int id, @RequestHeader(value="X-Auth-Token") String token) {
+		
+		
 		System.out.println("Rezervisao!");
 		return officialItemService.setSold(id);
 	}

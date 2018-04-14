@@ -1,0 +1,10 @@
+
+<div class="container">
+  <p>To see the location of the object click on the red field below, and choose the suggested address. If nothing is suggested, there is no such address.</p>
+  <div class="form-group" id="inputDiv">
+    <input #locationInput [(ngModel)]="address" placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control " #search [formControl]="searchControl">
+  </div>
+  <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="true" [zoom]="zoom">
+    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+  </agm-map>
+</div>

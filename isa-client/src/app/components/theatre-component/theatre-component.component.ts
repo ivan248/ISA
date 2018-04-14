@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TheatresService } from '../../services/theatres-service.service';
 import { HomeService } from '../../services/home-service.service';
+import { DataService } from '../../services/data-service';
 
 @Component({
   selector: 'theatres-component',
@@ -50,7 +51,7 @@ export class TheatresComponent implements OnInit {
 
    
 
-    constructor(private theatresService: TheatresService,
+    constructor(private theatresService: TheatresService, private dataService: DataService,
             private router : Router) {
               this.theatresService.getTheatres().subscribe(data=>{this.theatresArray=data;console.log(data);});
     }
@@ -82,6 +83,11 @@ export class TheatresComponent implements OnInit {
       this.theatresService.selectTheatre(this.selectedTheatre);
       this.router.navigateByUrl('/editTheatre');
         
+    }
+    onClickShowLocation(address: string){
+      this.dataService.changeAddress(address);
+      
+      this.router.navigateByUrl('location');
     }
 
 }

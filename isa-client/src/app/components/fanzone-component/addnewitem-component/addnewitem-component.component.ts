@@ -39,11 +39,13 @@ export class AddnewitemComponent implements OnInit {
   ngOnInit() {
     this.cinemaService.getCinemas().subscribe(data => {
       this.cinemas = data;
+      console.log("CINEME")
       console.log(this.cinemas);
     });
 
     this.theatresService.getTheatres().subscribe(data =>{
       this.theatres = data;
+      console.log("TEATREVI")
       console.log(this.theatres);
     })
     
