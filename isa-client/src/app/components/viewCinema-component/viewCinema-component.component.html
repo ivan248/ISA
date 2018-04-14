@@ -1,7 +1,5 @@
-<script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
-<script src="/assets/gmap3.js?body=1" type="text/javascript"></script>
 
-<div class="container">
+<div class="container" [hidden]="changeSeatingChartHidden">
     <div class="jumbotron">
         <h1>{{currentCinema.name}}</h1>    
     </div>
@@ -18,8 +16,7 @@
                 <p>{{currentCinema.address}}</p>
             </div>
         </div>
-    
-
+     
 <!--script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap" async defer></script>
 <br />
 <div class="container">
@@ -77,6 +74,7 @@
                             <p> {{p.place}}</p>
                             <p> {{p.price}}</p>
                             <p> {{p.rating}}</p>
+                            <p><button class="btn" (click)="changeSeatingChart(p.id)"> Change seating chart </button></p>
                             <p><button class="btn" (click)="deleteProjection(m.id, p.id, currentCinema.id)"> Delete projection</button></p>
                             <p><button class="btn" [hidden]="!hiddenEditing[p.id]" (click)="changeProjection(m.id, p.id, currentCinema.id)"> Change projection</button></p>
                         </div>
@@ -159,6 +157,17 @@
     </div>
        
     </div>
- 
 
+</div>
+
+</div>
+<div [hidden]="!changeSeatingChartHidden">
+    <seating-chart 
+    [currentProjection]=currentProjection
+    (selectedSeats)="onChangeSelectedSeats($event)"
+    >
+
+    </seating-chart>
+    <button class="btn btn-primary" (click)="finishChangingSeats()">Finish changing seats</button>
+</div>
  

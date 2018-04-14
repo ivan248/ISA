@@ -8,17 +8,6 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-const httpOptions = {
-    headers: new HttpHeaders({ 
-        'Content-Type': 'application/json',
-        'X-Auth-Token' : localStorage.getItem('token')
-     }),
-};
-
-const headers = new HttpHeaders({ 
-    'Content-Type': 'application/json',
-    'X-Auth-Token' : localStorage.getItem('token')
- });
   
  
  @Injectable()
@@ -30,17 +19,6 @@ const headers = new HttpHeaders({
 
     }
 
-   
-    submitTest(user : any) : Observable<any> {
-
-        const user2 = {
-            "username" : user,
-            "password" : "test"
-        }
-
-        let json = JSON.parse(JSON.stringify(user2));
-        return this.http.post(this.url, json, httpOptions);
-    }
 
   //  getTheatres(){
   //      return this.http.get("http://localhost:8080/api/home/getTheatres");
@@ -48,8 +26,13 @@ const headers = new HttpHeaders({
 
     getCinemas(){
         
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
         return this.http
-        .get("http://localhost:8080/api/home/getCinemas", httpOptions)
+        .get("http://localhost:8080/api/home/getCinemas", {headers:headers})
         .map(data => data)
         .catch((err:HttpErrorResponse) =>
         {
@@ -61,6 +44,11 @@ const headers = new HttpHeaders({
 
     sendEdditedCinema(cinema : any){
         const body = JSON.parse(JSON.stringify(cinema));
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         })
         
         console.log("sendeditedcinema"+body.name);
         return this.http.post('http://localhost:8080/api/home/editC',body,{
@@ -72,6 +60,11 @@ const headers = new HttpHeaders({
     sendEdditedTheatre(theatre : any){
         const body = JSON.parse(JSON.stringify(theatre));
         
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         })
+
         console.log("sendeditedtheatre"+body.name);
         return this.http.post('http://localhost:8080/api/home/editTh',body,{
             headers: headers
