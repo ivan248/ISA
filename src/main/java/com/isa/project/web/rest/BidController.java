@@ -45,6 +45,7 @@ public class BidController {
 		TokenProvider p = new TokenProvider();
 		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
 		
+		currentUser.setActivity(currentUser.getActivity()+5);
 		
 		if( bid.getBid() <= bid.getItem().getCurrentBid()) {
 			System.out.println("Ponuda nije veca od trenutne ponude");

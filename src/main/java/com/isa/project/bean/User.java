@@ -41,6 +41,12 @@ public class User {
     @Column(name = "city")
     private String city;
     
+    @Column
+    private Long activity;
+    
+    @Column 
+    private String userType; //Da li je bronzani, srebrni ili zlatni clan 
+    
     @Column(name = "phoneNumber")
     private int phoneNumber;
     
@@ -61,6 +67,7 @@ public class User {
     
     public User() {
     	this.enabled = false;
+    	this.activity = 0L;
     }
 
     public Long getId() {
@@ -69,7 +76,24 @@ public class User {
     
     
 
-    public List<Friend> getFriends() {
+    public Long getActivity() {
+		return activity;
+	}
+
+	public void setActivity(Long activity) {
+		this.activity = activity;
+	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+	
+	public List<Friend> getFriends() {
 		return friends;
 	}
 

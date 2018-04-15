@@ -3,6 +3,7 @@ package com.isa.project.web.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,6 @@ import com.isa.project.bean.OfficialItem;
 import com.isa.project.bean.Theatre;
 import com.isa.project.bean.User;
 import com.isa.project.repository.CinemaRepository;
-import com.isa.project.repository.OfficialItemRepository;
 import com.isa.project.repository.TheatreRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.security.jwt.TokenProvider;
@@ -76,6 +76,7 @@ public class OfficialItemController {
 		return officialItemService.setSold(id);
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping(value="/reserve")
 	public ResponseEntity<Boolean> reserveItem(@RequestParam("id") int id, @RequestHeader(value="X-Auth-Token") String token) {
 		
