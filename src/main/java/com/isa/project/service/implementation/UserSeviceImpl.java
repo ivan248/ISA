@@ -149,23 +149,23 @@ public class UserSeviceImpl implements UserService {
 		allUsers.remove(index);
 		
 		
-		// remove friends from all users
-		for(int i=0; i<userRepository.findByUsername(usernameFromToken).get().getFriends().size(); i++)
-		{
-			for(int j=0; j<allUsers.size(); j++)
-			{
-				if(!userRepository.findByUsername(usernameFromToken)
-						.get().getFriends().get(i).getFriendUsername()
-						.equals(allUsers.get(j).getUsername()))
-				{
-					returnUsers.add(allUsers.get(j));
-					break;
-				}
-			}
-			
-		}
+//		// remove friends from all users
+//		for(int i=0; i<userRepository.findByUsername(usernameFromToken).get().getFriends().size(); i++)
+//		{
+//			for(int j=0; j<allUsers.size(); j++)
+//			{
+//				if(!userRepository.findByUsername(usernameFromToken)
+//						.get().getFriends().get(i).getFriendUsername()
+//						.equals(allUsers.get(j).getUsername()))
+//				{
+//					returnUsers.add(allUsers.get(j));
+//					break;
+//				}
+//			}
+//			
+//		}
 
-		return returnUsers;
+		return allUsers;
 	}
 
 	@Override
@@ -238,20 +238,35 @@ public class UserSeviceImpl implements UserService {
 
 		// delete usera kojeg sam decline-ovao kod mene
 		Friend friend = friendRepository.findByFriendId(id);
-		friendRepository.delete(friend);
-
-		// delete kod njega mene, declione-ovao sam ga
-		if(friendRepository.findByFriendId(id) != null) {
-			for (Friend f : userRepository.findByUsername(friendRepository.findByFriendId(id).getFriendUsername()).get()
-					.getFriends()) {
-				if (f.getFriendUsername().equals(usernameFromToken)) {
-					friendRepository.delete(f);
-					break;
-				}
+		Friend friendDelete = null;
+		String username = friendRepository.findByFriendId(id).getFriendUsername();
+		
+		User user = userRepository.findByUsername(username).get();
+		
+		for(Friend f:user.getFriends())
+		{
+			if(f.getFriendUsername().equals(usernameFromToken))
+			{
+				System.out.println("Pronasao kod njega mene " + f.getFriendId() + usernameFromToken + " \n");
+				System.out.println(f);
+				friendDelete = friendRepository.findByFriendId(f.getFriendId());
+				
+				break;
 			}
 		}
-		else // ako je lista prijatelja prazna sad!
-			return new ArrayList<Friend>();
+		
+		
+		System.out.println("Izbrisao kod mene njega : " + friend + " \n");
+		
+		System.out.println("Izbrisao kod njega mene : " + friendDelete);
+		friendRepository.delete(friendDelete);
+		friendRepository.flush();
+		System.out.println("Posle prvog brisanja " + friendRepository.findAll());
+		friendRepository.delete(friend);
+		
+		friendRepository.flush();
+		
+		System.out.println(friendRepository.findAll());
 
 		return getEnabledFriends(usernameFromToken);
 	}

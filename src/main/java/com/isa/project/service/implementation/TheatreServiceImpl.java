@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.isa.project.bean.Play;
 import com.isa.project.bean.Theatre;
 import com.isa.project.repository.TheatreRepository;
 import com.isa.project.service.TheatreService;
@@ -44,6 +45,22 @@ public class TheatreServiceImpl implements TheatreService{
 		
 		
 		return true;
+	}
+
+	@Override
+	public ArrayList<Theatre> findByNameContaining(String theatre) {
+
+		
+	
+		return theatreRepository.findByNameContaining(theatre);
+	}
+
+	@Override
+	public ArrayList<Play> getPlays(int theatreId) {
+		
+		
+		
+		return null;
 	}
 
 

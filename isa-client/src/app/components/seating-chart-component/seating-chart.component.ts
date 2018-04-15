@@ -81,7 +81,7 @@ export class SeatingChartComponent implements OnInit, OnChanges {
         return "btn btn-secondary disabled";
       }
       
-      return "btn btn-primary";
+      return "btn btn-primary invisible";
     }
 
     nextStep() {

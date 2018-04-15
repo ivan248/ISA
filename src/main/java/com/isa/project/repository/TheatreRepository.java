@@ -15,6 +15,7 @@ public interface TheatreRepository extends JpaRepository<Theatre, Long> {
 
 	ArrayList<Theatre> findAll();
 	Theatre findOneById(Long theatreID);
+	ArrayList<Theatre> findByNameContaining(String theatre);
 	
 
 }

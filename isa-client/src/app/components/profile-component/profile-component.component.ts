@@ -186,15 +186,18 @@ export class ProfileComponent implements OnInit {
 
     declineFriend(friendId : number) {
       this.profileService.declineFriend(friendId.toString())
-      .subscribe(data => console.log(data));
+      .subscribe(data => {
+        console.log(data) ;
+        this.userFriends = data;
+        this.userFriendRequests = [];
 
-      this.userFriendRequests = [];
-
-      this.profileService.getFriendRequests().subscribe(data =>
-        {this.userFriendRequests = data;
-          console.log(data);
-         
-        });
+        this.profileService.getFriendRequests().subscribe(data =>
+          {this.userFriendRequests = data;
+            console.log(data);
+           
+          });
+      
+      });
 
       alert("Friend request denied!");
     }

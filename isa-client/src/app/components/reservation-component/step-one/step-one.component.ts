@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { CinemasService } from '../../../services/cinemas-service.service';
+import { TheatresService } from '../../../services/theatres-service.service';
 
 @Component({
   selector: 'step-one-component',
@@ -10,6 +12,11 @@ import { Router } from '@angular/router';
 export class StepOneComponent implements OnInit {
 
     private cinemaSelected : boolean = false;
+    private searchTheatreClicked : boolean = true;
+
+    private theatresSearchArray : any;
+    private searchTheatreInput : String = ""
+    
 
     @Input() cinemasArray : any;
     @Input() theatresArray : any;
@@ -17,7 +24,8 @@ export class StepOneComponent implements OnInit {
     @Output() onCinemaChanged = new EventEmitter<any>();
     @Output() onCinemaSelectedChanged = new EventEmitter<any>();
 
-    constructor(private router : Router) {
+    constructor(private cinemaService: CinemasService,
+    private theatreService: TheatresService) {
 
     }
 
@@ -57,6 +65,14 @@ export class StepOneComponent implements OnInit {
       return "btn btn-common";
     
     return "btn btn-primary";
+
+    }
+
+    searchTheatre() {
+      this.searchTheatreClicked = false;
+
+      this.theatreService.searchTheatres(this.searchTheatreInput)
+      .subscribe(data => this.theatresSearchArray = data);
 
     }
 
