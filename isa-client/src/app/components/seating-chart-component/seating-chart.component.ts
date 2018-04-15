@@ -39,6 +39,7 @@ export class SeatingChartComponent implements OnInit, OnChanges {
         for(var i : number =0; i<this.currentProjection.tickets.length; i++)
         {
           this.buttonsArray[this.currentProjection.tickets[i].seatNumber] = -1;
+ 
         }
       }
     }
@@ -80,7 +81,6 @@ export class SeatingChartComponent implements OnInit, OnChanges {
       {
         return "btn btn-secondary disabled";
       }
-      
       return "btn btn-primary";
     }
 
