@@ -26,7 +26,7 @@ public interface CinemaService {
 	Projection getProjection(Long projectionId);
 	boolean makeReservation(MovieReservationDTO movieReservationDTO, String string);
 	boolean setTicketToSold(Long ticketid);
-
+	boolean setTicketToDeleted(Projection projection, String seat);
 
 	
 

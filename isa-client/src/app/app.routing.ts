@@ -23,6 +23,7 @@ import { NewitemprofileComponent } from "./components/fanzone-component/newitemp
 import { ItembidsComponent } from "./components/fanzone-component/itembids-component/itembids-component.component";
 import { ReservationComponent } from "./components/reservation-component/reservation-component.component";
 import { SeatingChartComponent } from "./components/seating-chart-component/seating-chart.component";
+import { LocationComponent } from "./components/location-component/location-component.component";
 
 const appRoutes: Routes = 
 [
@@ -94,9 +95,12 @@ const appRoutes: Routes =
     {
         path: 'reservation',
         component: ReservationComponent},
-        {
-            path: 'seatings',
-            component: SeatingChartComponent}
+    {
+        path: 'seatings',
+        component: SeatingChartComponent},
+    {
+        path: 'location',
+        component: LocationComponent},  
     
     // {
     //     path: '**',

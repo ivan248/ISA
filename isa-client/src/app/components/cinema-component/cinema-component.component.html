@@ -43,7 +43,7 @@
         </div>
         <div class="col-md-9 home-list-pop-desc inn-list-pop-desc"> <button type="button" class="btn btn-link" (click)="onClickOpenPage(c)"><h3>{{c.name}}</h3></button>
           <h4></h4> 
-                        <p><b>Address: </b> {{c.address}}</p>
+                        <p><b>Address: </b> {{c.address}} <button class="btn btn-dark btn-sm" (click)="onClickShowLocation(c.address)" >Show on map</button></p> 
                         <p> <b>Description: </b>{{c.description}}</p>
             <div class="list-number ">
                 
@@ -67,5 +67,5 @@
 </ul>
 
      
-   
+
  

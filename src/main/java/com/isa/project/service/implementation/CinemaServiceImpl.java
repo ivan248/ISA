@@ -47,8 +47,6 @@ public class CinemaServiceImpl implements CinemaService{
 
 	@Override
 	public Boolean editCinema(Cinema cinema) {
-		System.out.println("Editovanje bioskopa.");
-		System.out.println("cinema: "+cinema.getName());
 		try {
 			Cinema c = cinemaRepository.findOne(cinema.getId());
 			c.setName(cinema.getName());
@@ -56,16 +54,14 @@ public class CinemaServiceImpl implements CinemaService{
 			c.setAddress(cinema.getAddress());
 			c.setId(cinema.getId());
 			
-			
 			cinemaRepository.flush();
 		}
 		catch(Exception e) {
-			System.out.println("Error occured while writing to database. Constraints were not satisfied.********");
+			System.out.println("Error occured while writing to database. Constraints were not satisfied.");
 			e.printStackTrace();
 			return false;
 		}
-		
-		
+				
 		return true;
 	}
 
@@ -77,7 +73,6 @@ public class CinemaServiceImpl implements CinemaService{
 		List<Movie> filmovi = movieRepository.findAll();
 		List<Movie> filmoviUBioskopu = new ArrayList<>();
 		
-		
 		for (Movie m: filmovi) {
 			for (Projection p: m.getProjekcije()) {
 				if (!filmoviUBioskopu.contains(m)) {
@@ -85,8 +80,7 @@ public class CinemaServiceImpl implements CinemaService{
 						if (projekcije.get(i).getId().equals(p.getId())) {
 							filmoviUBioskopu.add(m);
 						}
-					}
-				
+					}		
 					
 				}
 			}
@@ -98,21 +92,18 @@ public class CinemaServiceImpl implements CinemaService{
 
 	@Override
 	public Cinema getCinemaById(Long id) {
-		// TODO Auto-generated method stub
 		return cinemaRepository.findOneById(id);
 	}
 
 
 	@Override
 	public Boolean deleteMovie(Long movieid, Long cinemaid) {
-		// TODO Auto-generated method stub
 		Movie m = new Movie();
 		m =  movieRepository.findOneById(movieid);
 		Cinema c = new Cinema();
 		c = cinemaRepository.findOneById(cinemaid);
 		
 		try {
-			//c.getMovies().remove(m); 
 			cinemaRepository.flush();
 			movieRepository.delete(m);
 			movieRepository.flush();
@@ -202,26 +193,13 @@ public class CinemaServiceImpl implements CinemaService{
 		
 		Cinema c = cinemaRepository.findOneById(cinemaid);
 		List<Ticket> listaKarata = new ArrayList<>();
-		//for (Projection p: c.getProjekcije()) {
-		//	for (Ticket tt: p.getTickets()) {
-		//		if (tt.getId()==ticket.getId()) {
-					//tt.setSalePrice(100);
-					//tt.setFastRes(true);
-				//	listaKarata=p.getTickets();
-				//	p.setTickets(listaKarata);
-				//	List<Projection> listaProjekcija = new ArrayList<>();
-				//	c.setProjekcije(listaProjekcija);
-			//	}
-			//}
-		//}
+
 		Ticket t = ticketRepository.findOneById(ticket.getId());
-		t.setSalePrice(100);
+		t.setSalePrice(100); // make parameter
 		t.setFastRes(true);
 		
 		try {
 			ticketRepository.flush();
-			//projekcijaRepository.flush();
-			//cinemaRepository.flush();
 		}catch(Exception e) {
 			
 		}
@@ -243,7 +221,7 @@ public class CinemaServiceImpl implements CinemaService{
 		{
 			projection.getTickets().add(
 					new Ticket(
-							movieReservationDTO.getSeatsTaken().get(i), false, (int)projection.getPrice(), true));
+							movieReservationDTO.getSeatsTaken().get(i), false, (int)projection.getPrice(), true, false));
 		}
 		
 		projekcijaRepository.save(projection);
@@ -281,6 +259,25 @@ public class CinemaServiceImpl implements CinemaService{
 			
 		}
 		return true;
+	}
+
+
+	@Override
+	public boolean setTicketToDeleted(Projection projection, String seat) {
+		Ticket t = new Ticket(Integer.parseInt(seat), false, 0, false, true);
+		ticketRepository.save(t);
+		Projection p = projekcijaRepository.findOne(projection.getId());
+		List<Ticket> listaKarata;
+		if (p.getTickets() == null) {
+			listaKarata = new ArrayList<>();
+		}else {
+			listaKarata  = p.getTickets();
+		}
+		listaKarata.add(t);
+			
+		p.setTickets(listaKarata);
+		projekcijaRepository.saveAndFlush(p);
+		return false;
 	}
 
 

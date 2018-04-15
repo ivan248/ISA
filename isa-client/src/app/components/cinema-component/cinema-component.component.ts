@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CinemasService } from '../../services/cinemas-service.service';
 import { HomeService } from '../../services/home-service.service';
+import { DataService } from '../../services/data-service';
 
 @Component({
   selector: 'cinemas-component',
@@ -50,7 +51,7 @@ export class CinemasComponent implements OnInit {
 
     private editButtonHidden: boolean = true;
 
-    constructor(private cinemasService: CinemasService,
+    constructor(private cinemasService: CinemasService, private dataService: DataService,
             private router : Router) {
               this.cinemasService.getCinemas().subscribe(data=>{this.cinemasArray=data;console.log(data);});
     }
@@ -86,6 +87,12 @@ export class CinemasComponent implements OnInit {
     this.cinemasService.selectCinema(this.selectedCinema);
     this.router.navigateByUrl('/editCinema');
   
+}
+
+onClickShowLocation(address: string){
+  this.dataService.changeAddress(address);
+  
+  this.router.navigateByUrl('location');
 }
 
 

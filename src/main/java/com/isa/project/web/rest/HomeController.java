@@ -185,7 +185,7 @@ public class HomeController {
 		for (Projection p: c.getProjekcije()) {
 			System.out.println(p);
 			for (Ticket t: p.getTickets()) {
-				if (!t.isFastRes()){
+				if (!t.isFastRes() && !t.isSold() && !t.isDeleted()){
 					ResTickets.add(t);
 				}
 
@@ -216,20 +216,14 @@ public class HomeController {
 
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
-	
-	@PostMapping
-	@RequestMapping(value = "/reserveFast0", consumes = "application/json")
-	public ResponseEntity reserveFas9t( @RequestParam("ticketid") String ticketid, @RequestParam("cinemaid") String cinemaid) {
-		cinemaService.setTicketToSold(Long.parseLong(ticketid));
-		Cinema c = cinemaService.getCinemaById(Long.parseLong(cinemaid));
-		return new ResponseEntity(HttpStatus.OK);
-	}
+
 	
 	@RequestMapping(value="/reserveFast", method = RequestMethod.POST) 
 	public ResponseEntity reserveFast(@RequestParam("ticketid") String ticketid) {
 		return new ResponseEntity<>(cinemaService.setTicketToSold(Long.parseLong(ticketid)) ,HttpStatus.OK);
 	}
 	
+
 
 	@GetMapping
 	@RequestMapping(value = "/searchTheatres")
@@ -259,5 +253,16 @@ public class HomeController {
 		return new ResponseEntity<>(theatreService.getPlays(Integer.parseInt(theatreId)),HttpStatus.OK);
 	}
 	
+
+	
+	@RequestMapping(value="/deleteSeats", method = RequestMethod.POST) 
+	public ResponseEntity deleteSeats(@RequestBody Projection projection, @RequestParam("seat") String seat) {
+		System.out.println(projection.getId());
+		System.out.println(seat);
+		cinemaService.setTicketToDeleted(projection, seat);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+
 	
 }

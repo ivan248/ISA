@@ -53,6 +53,8 @@ import { StepFourComponent } from './components/reservation-component/step-four/
 import { StepFiveComponent } from './components/reservation-component/step-five/step-five.component';
 import { SeatingChartComponent } from './components/seating-chart-component/seating-chart.component';
 import { NotificationService } from './services/notification-service';
+import { LocationComponent } from './components/location-component/location-component.component'
+import { AgmCoreModule } from '@agm/core';
 
 
 
@@ -84,16 +86,21 @@ import { NotificationService } from './services/notification-service';
     AddProjectionComponent,
     NewitemprofileComponent,
     ItembidsComponent,
-    
     ReservationComponent,
     StepOneComponent,
     StepTwoComponent,
     StepThreeComponent,
     StepFourComponent,
     StepFiveComponent,
-    SeatingChartComponent
+    SeatingChartComponent,
+    LocationComponent
+    
   ],
   imports: [
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyDZNuPzGBPw4CbzPCowjIt_j3vXpnr-M7k",
+      libraries: ["places"]
+    }),
     routing,
     BrowserModule,
     ReactiveFormsModule,

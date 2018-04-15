@@ -1,10 +1,11 @@
 package com.isa.project.web.dto;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class OfficialItemDTO {
 	private String name;
 	private String description;
+	@JsonIgnore
 	private int itemID;
 	
 

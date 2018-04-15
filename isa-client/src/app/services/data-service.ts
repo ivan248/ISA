@@ -28,6 +28,9 @@ export class DataService {
   private preowned:  Subject<boolean> = new BehaviorSubject<boolean>(null);
   currentTypeOfItemForShow = this.preowned;
 
+  private address: Subject<string> = new BehaviorSubject<string>(null);
+  currentAddress = this.address;
+
   private loginJWT:  Subject<String> = new BehaviorSubject<String>(null);
   currentloginJWT = this.loginJWT;
 
@@ -67,6 +70,11 @@ export class DataService {
     this.preowned.next(preowned);
     
   }
+
+  changeAddress(address:string){
+    this.address.next(address);
+  }
+
 
   changeLoginJWT(jwt : String) {
     this.loginJWT.next(jwt);
