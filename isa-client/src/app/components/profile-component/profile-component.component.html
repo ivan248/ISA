@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" [hidden]="adminLoggedFirstTime">
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light" 
       style="text-align: center;">
@@ -246,3 +246,7 @@
 
 </div> <!--End of Container-->
 
+<change-password-component [hidden]="!adminLoggedFirstTime"
+(onPasswordChanged)="onPasswordChanged($event)"
+>
+</change-password-component>

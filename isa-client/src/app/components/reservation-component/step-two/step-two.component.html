@@ -18,14 +18,71 @@
 
 
 <br>
+          <!-- *********************************** THEATRE ****************************************** -->
 
-<div class="row">
+<div class="row" [hidden]="!cinemaSelected">
+                <div class="col-md-12">
+                    <div class="form-group">
+                            <label for="projection"> <h2>Select projection</h2></label>
+                            <select class="form-control" id="projection" (change)="onChangeProjection($event.target.value)">
+                                    <option hidden selected value="">
+                                            -- select a play --
+                                        </option>
+                            <option *ngFor="let m of moviesArray"> {{m?.name}}</option>
+                            </select>
+                    </div>
+                </div>
+                <hr>
+                
+                <div class="col-md-12">
+                        <label for="projectionDate"> <h2>Projection date</h2></label>
+                        <select class="form-control" id="projection" (change)="onChangeDate($event.target.value)">
+                                <option hidden selected value="">
+                                        -- select a date --
+                                    </option>
+                        <option *ngFor="let p of projectionsArray"> {{p?.date}}</option>
+                        </select>
+                </div>
+            
+                <div class="col-md-12">
+                        <label for="projectionDate"> <h2>Projection place</h2></label>
+                        <select class="form-control" id="projection" (change)="onChangePlace($event.target.value)">
+                                <option hidden selected value="">
+                                        -- select a place --
+                                    </option>
+                        <option *ngFor="let p of projectionsArray"> {{p?.place}}</option>
+                        </select>
+                </div>
+            
+                <div class="col-md-12">
+                        <label for="projectionDate"> <h2>Projection time</h2></label>
+                        <select class="form-control" id="projection" (change)="onChangeTime($event.target.value)">
+                                <option hidden selected value="">
+                                        -- select a time --
+                                    </option>
+                        <option *ngFor="let p of projectionsArray"> {{p?.time}}</option>
+                        </select>
+                </div>
+            </div>
+
+
+        <!-- *********************************** THEATRE ****************************************** -->
+
+
+
+
+
+
+
+        <!-- *********************************** CINEMA ****************************************** -->
+
+<div class="row" [hidden]="cinemaSelected">
     <div class="col-md-12">
         <div class="form-group">
                 <label for="projection"> <h2>Select projection</h2></label>
                 <select class="form-control" id="projection" (change)="onChangeProjection($event.target.value)">
                         <option hidden selected value="">
-                                -- select a cinema --
+                                -- select a movie --
                             </option>
                 <option *ngFor="let m of moviesArray"> {{m?.name}}</option>
                 </select>
@@ -64,3 +121,4 @@
     </div>
 </div>
 
+      <!-- *********************************** CINEMA ****************************************** -->

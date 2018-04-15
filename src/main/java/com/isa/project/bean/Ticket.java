@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 @Entity
 @Table(name = "ticket")
 public class Ticket {
@@ -17,7 +20,7 @@ public class Ticket {
     @Column(name = "ticket_id", nullable = false, updatable = false)
     private Long id;
     
-    @Column(name = "seatNumber", nullable = false, unique = true)
+    @Column(name = "seatNumber", nullable = false)
 	private int seatNumber;
     
     @Column(name = "fastRes", nullable = true)
@@ -28,6 +31,9 @@ public class Ticket {
     
     @Column(name = "salePrice", nullable = true)
    	private int salePrice;
+    
+    @Column(name = "deleted", nullable = true)
+   	private boolean deleted;
 
 	public Ticket() {
 		super();
@@ -57,11 +63,14 @@ public class Ticket {
 	}
 	
 
-	public Ticket(Long id, int seatNumber, boolean fastRes) {
-		super();
-		this.id = id;
-		this.seatNumber = seatNumber;
-		this.fastRes = fastRes;
+	
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public void setFastRes(boolean fastRes) {
@@ -96,12 +105,13 @@ public class Ticket {
 	
 	
 
-	public Ticket(int seatNumber, boolean fastRes, int price, boolean sold) {
+	public Ticket(int seatNumber, boolean fastRes, int price, boolean sold, boolean deleted) {
 		super();
 		this.seatNumber = seatNumber;
 		this.fastRes = fastRes;
 		this.salePrice = price;
 		this.sold = sold;
+		this.deleted = deleted;
 	}
 
 	@Override

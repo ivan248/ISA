@@ -13,6 +13,9 @@ export class StepTwoComponent implements OnInit {
 
 
     @Input() moviesArray : any;
+    @Input() playsArray : any;
+
+    @Input() cinemaSelected : any;
      
     private projectionsArray : any[] = [];
     private projectionName : String;
@@ -28,7 +31,7 @@ export class StepTwoComponent implements OnInit {
 
     ngOnInit() {
 
-      
+  
     }
 
     onChangeProjection(projectionValue) {

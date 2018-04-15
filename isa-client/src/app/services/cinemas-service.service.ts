@@ -207,6 +207,21 @@ reserveFast(ticket:any, ticketid: any){
 
 }
 
+deleteSeats(projection: any, projectionid: any, seat: any) {
+    let params = new HttpParams().set('seat', seat);  
+    console.log(seat);
+    const body = JSON.parse(JSON.stringify(projection));
+
+    let headers = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     });
+    return this.http
+    .post("http://localhost:8080/api/home/deleteSeats", body, {params:params,headers:headers});
+
+}
+
+
 
   
 

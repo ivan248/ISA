@@ -45,8 +45,18 @@
     
     <div class="col-md-12">
             <label for="theatreSearch"> <h2>Search theatre</h2></label>
-            <input type="text" class="form-control" id="theatreSearch" style="text-align:center; margin:1px" placeholder="Enter name of the theatre">       
-            <button type="button" style="width:100%" class="btn btn-primary" (click)="searchTheatreClicked()"><span class="glyphicon glyphicon-search"></span>Search theatre</button>                
+            <input [(ngModel)]="searchTheatreInput" type="text" class="form-control" id="theatreSearch" style="text-align:center; margin:1px" placeholder="Enter name of the theatre">   
+            <button type="button" style="width:100%" class="btn btn-primary" (click)="searchTheatre()"><span class="glyphicon glyphicon-search"></span>Search theatre</button>
+            
+            <br>
+            <br>
+            <label [hidden]="searchTheatreClicked" for="searchTheatreResult"> <h2>Search results</h2></label>
+            <select [hidden]="searchTheatreClicked" class="form-control" id="searchTheatreResult" (change)="onChangeTheatre($event.target.value)">
+                    <option hidden selected value="">
+                        -- select a theatre --
+                    </option>
+                    <option *ngFor="let t of theatresSearchArray" [value]="t?.id">{{t?.name}}</option>
+            </select>
     </div>
 </div>
 
@@ -66,7 +76,8 @@
 
         <div class="col-md-12">
             <label for="cinemaSearch"> <h2>Search cinema</h2></label>
-            <input type="text" class="form-control" id="cinemaSearch" style="text-align:center; margin:1px" placeholder="Enter name of the cinema">       
+            <input type="text" class="form-control" id="cinemaSearch" style="text-align:center; margin:1px" placeholder="Enter name of the cinema">   
+
             <button type="button" style="width:100%" class="btn btn-primary" (click)="searchCinemaClicked()">Search cinema</button>                    
         </div>
 </div>

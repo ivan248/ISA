@@ -130,7 +130,20 @@ var httpOptions = {
          });
 
         return this.http
-        .get(this.url + "declineFriend", {params:params,headers:headers});
+        .get(this.url + "declineFriend", {params:params,headers:headers}).map((data:[any]) => data);
+    }
+
+    changePassword(password : any) {
+
+        let params = new HttpParams().append('password', password);
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http
+        .get(this.url + "changePassword", {params:params,headers:headers});
+
     }
 
     

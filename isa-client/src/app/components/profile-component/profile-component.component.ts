@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
 
     private editClicked : boolean = true;
     private searchButtonClicked : boolean = true;
+    private adminLoggedFirstTime : boolean = false;
 
     private firstName : string;
     private lastName : string;
@@ -49,6 +50,17 @@ export class ProfileComponent implements OnInit {
         this.username = data.username;
         this.phoneNumber = data.phoneNumber;
         this.city = data.city;
+        
+        for(var i:number=0; i<data.roles.length; i++)
+        {
+          console.log(data.roles[i].role);
+          console.log(data.firstTimeLogged);
+          if(data.roles[i].role === "ADMIN" && data.firstTimeLogged)
+          {
+            this.adminLoggedFirstTime = true;
+          }
+
+        }
         
       } );
 
@@ -186,15 +198,18 @@ export class ProfileComponent implements OnInit {
 
     declineFriend(friendId : number) {
       this.profileService.declineFriend(friendId.toString())
-      .subscribe(data => console.log(data));
+      .subscribe(data => {
+        console.log(data) ;
+        this.userFriends = data;
+        this.userFriendRequests = [];
 
-      this.userFriendRequests = [];
-
-      this.profileService.getFriendRequests().subscribe(data =>
-        {this.userFriendRequests = data;
-          console.log(data);
-         
-        });
+        this.profileService.getFriendRequests().subscribe(data =>
+          {this.userFriendRequests = data;
+            console.log(data);
+           
+          });
+      
+      });
 
       alert("Friend request denied!");
     }
@@ -203,5 +218,10 @@ export class ProfileComponent implements OnInit {
       this.notificationService.readNotification(id).subscribe(data => {
         console.log(data);
       })
+    }
+
+    onPasswordChanged(passwordChanged : boolean) {
+      if(passwordChanged)
+        this.adminLoggedFirstTime = false;
     }
  }

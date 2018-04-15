@@ -24,4 +24,5 @@ public interface UserService {
 	public List<Friend> getFriendRequests(String usernameFromToken);
 	public List<Friend> acceptFriend(String usernameFromToken, int id);
 	public List<Friend> declineFriend(String usernameFromToken, int id);
+	public boolean changePassword(String usernameFromToken, String password);
 }

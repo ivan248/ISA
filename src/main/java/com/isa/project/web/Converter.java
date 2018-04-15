@@ -45,6 +45,7 @@ public class Converter {
 		user.setCity(userDto.getCity());
 		user.setPhoneNumber(userDto.getPhoneNumber());
 		user.setRoles(s);
+		user.setFirstTimeLogged(false);
 		
 		
 		return user;

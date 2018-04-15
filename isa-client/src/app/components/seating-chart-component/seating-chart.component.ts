@@ -38,7 +38,11 @@ export class SeatingChartComponent implements OnInit, OnChanges {
       {
         for(var i : number =0; i<this.currentProjection.tickets.length; i++)
         {
-          this.buttonsArray[this.currentProjection.tickets[i].seatNumber] = -1;
+          if(this.currentProjection.tickets[i].deleted)
+            this.buttonsArray[this.currentProjection.tickets[i].seatNumber] = -2;
+          else
+            this.buttonsArray[this.currentProjection.tickets[i].seatNumber] = -1;
+ 
         }
       }
     }
@@ -71,17 +75,29 @@ export class SeatingChartComponent implements OnInit, OnChanges {
 
     checkClass(idButton : number) {
 
+      if(this.buttonsArray[idButton] === -2)
+      {
+        return "invisible";
+      }
+
+      if(this.buttonsArray[idButton] === -1)
+      {
+        return "btn btn-secondary disabled";
+      }
+
       if(this.buttonsArray[idButton]%2 === 0)
       {
         return "btn btn-success";
       }
 
-      if(this.buttonsArray[idButton]%2 === -1)
-      {
-        return "btn btn-secondary disabled";
-      }
-      
+
+
+ 
+
+
+
       return "btn btn-primary";
+
     }
 
     nextStep() {

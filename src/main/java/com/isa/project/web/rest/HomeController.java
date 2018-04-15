@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +21,11 @@ import com.isa.project.bean.Projection;
 import com.isa.project.bean.Theatre;
 import com.isa.project.bean.Ticket;
 import com.isa.project.bean.User;
-import com.isa.project.repository.CinemaRepository;
-import com.isa.project.repository.TicketRepository;
+import com.isa.project.repository.PlayRepository;
 import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.CinemaService;
 import com.isa.project.service.TheatreService;
 import com.isa.project.web.dto.MovieReservationDTO;
-import com.isa.project.web.dto.RegistrationUserDto;
 
 
 
@@ -188,7 +185,7 @@ public class HomeController {
 		for (Projection p: c.getProjekcije()) {
 			System.out.println(p);
 			for (Ticket t: p.getTickets()) {
-				if (!t.isFastRes()){
+				if (!t.isFastRes() && !t.isSold() && !t.isDeleted()){
 					ResTickets.add(t);
 				}
 
@@ -219,19 +216,53 @@ public class HomeController {
 
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
-	
-	@PostMapping
-	@RequestMapping(value = "/reserveFast0", consumes = "application/json")
-	public ResponseEntity reserveFas9t( @RequestParam("ticketid") String ticketid, @RequestParam("cinemaid") String cinemaid) {
-		cinemaService.setTicketToSold(Long.parseLong(ticketid));
-		Cinema c = cinemaService.getCinemaById(Long.parseLong(cinemaid));
-		return new ResponseEntity(HttpStatus.OK);
-	}
+
 	
 	@RequestMapping(value="/reserveFast", method = RequestMethod.POST) 
 	public ResponseEntity reserveFast(@RequestParam("ticketid") String ticketid) {
 		return new ResponseEntity<>(cinemaService.setTicketToSold(Long.parseLong(ticketid)) ,HttpStatus.OK);
 	}
+	
+
+
+	@GetMapping
+	@RequestMapping(value = "/searchTheatres")
+	public ResponseEntity searchTheatres(
+			@RequestParam("theatre") String theatre) {
+		
+		System.out.println(theatreService.findByNameContaining("S"));
+		
+		return new ResponseEntity<>(theatreService.findByNameContaining(theatre),HttpStatus.OK);
+	}
+	
+	@Autowired
+	private PlayRepository playRepository;
+	
+	@GetMapping
+	@RequestMapping(value = "/getPlays")
+	public ResponseEntity getPlays(
+			@RequestParam("theatreId") String theatreId) {
+		
+		
+		
+		System.out.println("pogodio get plays " + theatreId);
+		System.out.println(playRepository.findPlaysByTheatreId((long)2));
+		
+		
+		
+		return new ResponseEntity<>(theatreService.getPlays(Integer.parseInt(theatreId)),HttpStatus.OK);
+	}
+	
+
+	
+	@RequestMapping(value="/deleteSeats", method = RequestMethod.POST) 
+	public ResponseEntity deleteSeats(@RequestBody Projection projection, @RequestParam("seat") String seat) {
+		System.out.println(projection.getId());
+		System.out.println(seat);
+		cinemaService.setTicketToDeleted(projection, seat);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 
 	
 }

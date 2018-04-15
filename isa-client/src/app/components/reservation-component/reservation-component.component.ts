@@ -196,17 +196,22 @@ export class ReservationComponent implements OnInit {
     }
 
     onChangeTheatre(theatre: any) {
-        console.log(theatre);
+        this.theatreId = theatre;
       }
 
     onChangeCinema(cinema: any) {
-        console.log(cinema);
         this.cinemaId = cinema;
       }
 
     onChangeCinemaSelected(cinemaSelected: any) {
+        console.log("Trenutni cinemasel: " + this.cinemaSelected);
+        console.log("dosao cinemasel: " + cinemaSelected);
+
         this.cinemaSelected = cinemaSelected;
-        console.log(cinemaSelected);
+
+
+        //cinema je true, theatre je false
+        console.log("Posle : " + this.cinemaSelected);
     }
 
     onChangeSelectedSeats(selectedSeats : any) {
@@ -224,13 +229,25 @@ export class ReservationComponent implements OnInit {
 
         if(this.step==2) 
         {
-            
+            if(!this.cinemaSelected)
+            {
+                console.log("usao u nadji movies ");
                 this.cinemaService.getMovies(this.cinemaId)
                 .subscribe(data => this.moviesArray = data);
-            
+            }
+            else
+            {
+                console.log("usao u nadji plays ");
+                this.theatreService.getPlays(this.theatreId)
+                .subscribe(data => this.moviesArray = data);
+            }
         }
 
         
+    }
+
+    previousStep() {
+        this.step--;
     }
 
     finishReservation() {

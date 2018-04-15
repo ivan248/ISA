@@ -36,6 +36,26 @@ public class Projection {
 	    @Column(name = "price", nullable = false)
 	 	private float price;
 
+	    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	    @JoinTable(name = "ticket_projection", joinColumns = @JoinColumn(name = "projekcija_id"), inverseJoinColumns = @JoinColumn(name = "ticket_id"))
+	    private List<Ticket> tickets;
+
+		public Projection() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+		
+	 
+		public Projection(Long id, Date date, String time, String place, float price, List<Ticket> tickets) {
+			super();
+			this.id = id;
+			this.date = date;
+			this.time = time;
+			this.place = place;
+			this.price = price;
+			this.tickets = tickets;
+		}
+
 
 		public Long getId() {
 			return id;
@@ -77,25 +97,7 @@ public class Projection {
 			this.price = price;
 		}
 
-		public Projection() {
-			super();
-			// TODO Auto-generated constructor stub
-		}
-		
-	    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	    @JoinTable(name = "ticket_projection", joinColumns = @JoinColumn(name = "projekcija_id"), inverseJoinColumns = @JoinColumn(name = "ticket_id"))
-	    private List<Ticket> tickets;
-
-		public Projection(Long id, Date date, String time, String place, float price, List<Ticket> tickets) {
-			super();
-			this.id = id;
-			this.date = date;
-			this.time = time;
-			this.place = place;
-			this.price = price;
-			this.tickets = tickets;
-		}
-
+	
 		public List<Ticket> getTickets() {
 			return tickets;
 		}

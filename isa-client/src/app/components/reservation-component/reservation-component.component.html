@@ -55,7 +55,8 @@
                 </step-one-component>
 
                 <step-two-component *ngIf="step===2"
-                [moviesArray]=moviesArray>
+                [moviesArray]=moviesArray
+                [cinemaSelected]=cinemaSelected>
 
                 </step-two-component>
                 <step-three-component *ngIf="step===3"
@@ -75,8 +76,9 @@
                 <br>
                 
                 <ul class="list-inline text-md-center">
-                    <li>
-                        <button [hidden]="step===5" type="button" class="btn btn-lg btn-primary next-step next-button" (click)="nextStep()"> Next step </button>  
+                    <li>   
+                        <button type="button" class="btn btn-lg btn-primary next-step next-button" (click)="previousStep()"> Back </button> 
+                        <button [hidden]="step===5" type="button" class="btn btn-lg btn-primary next-step next-button" (click)="nextStep()"> Next step </button> 
                         <button [hidden]="!(step===5)" type="button" class="btn btn-lg btn-primary next-step next-button" (click)="finishReservation()"> Finish </button>                    
                     </li>
                 </ul>
