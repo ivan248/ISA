@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.isa.project.bean.Friend;
@@ -29,6 +30,9 @@ public class UserSeviceImpl implements UserService {
 
 	@Autowired
 	private FriendRepository friendRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	public boolean registerUser(RegistrationUserDto userDto, HttpServletRequest request) {
@@ -105,28 +109,29 @@ public class UserSeviceImpl implements UserService {
 	@Override
 	public List<Friend> removeFriend(int id, String username) {
 
-		userRepository.findByUsername(username).get().getFriends().remove(friendRepository.findOne(id));
-		userRepository.findByUsername(friendRepository.findOne(id).getFriendUsername()).get().getFriends();
+		User otherUser = userRepository.findByUsername(friendRepository.findByFriendId(id).getFriendUsername()).get();
+		int friendId = 0;
 		
-		System.out.println("ULAZAK U FOR REMOVEFRIEND ");
-		
-		for(int i=0; i<userRepository.findByUsername(
-				friendRepository.findOne(id).getFriendUsername()).get().getFriends().size(); i++)
+		for(Friend f:otherUser.getFriends())
 		{
-			if(userRepository.findByUsername(friendRepository.findOne(id).getFriendUsername()).get().getFriends()
-					.get(i).getFriendUsername().equals(username))
+			if(f.getFriendUsername().equals(username))
 			{
-				System.out.println("Pronadjen: " + username + " jednako : ");
-				System.out.println(userRepository.findByUsername(friendRepository.findOne(id).getFriendUsername()).get().getFriends()
-					.get(i).getFriendUsername());
-				userRepository.findByUsername(friendRepository.findOne(id).getFriendUsername()).get().getFriends().remove(i);
+				System.out.println(f.getFriendUsername() + " == " + username);
+				System.out.println("Stanje pre brisanja : " + f.getFriendId() + " ");
+				friendId = f.getFriendId();
+				System.out.println("Stanje posle brisanja : " + friendId);
 				break;
 			}
 		}
 		
 		
+		friendRepository.delete(friendId);
+		System.out.println("Stanje pre brisanja 2: " + friendRepository.findAll());
 		friendRepository.delete(id);
-		return userRepository.findByUsername(username).get().getFriends();
+		System.out.println("Stanje posle brisanja 2: " + friendRepository.findAll());
+		
+		
+		return getEnabledFriends(username);
 	}
 
 	@Override
@@ -281,4 +286,16 @@ public class UserSeviceImpl implements UserService {
 
 		return friends;
 	}
+
+	@Override
+	public boolean changePassword(String usernameFromToken, String password) {
+
+		userRepository.findByUsername(usernameFromToken).get().setPassword(passwordEncoder.encode(password));
+		userRepository.findByUsername(usernameFromToken).get().setFirstTimeLogged(false);
+		userRepository.flush();
+		
+		return true;
+	}
+	
+	
 }

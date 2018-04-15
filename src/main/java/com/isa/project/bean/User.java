@@ -49,6 +49,9 @@ public class User {
     
 	@Column(name = "confirmation_token")
 	private String confirmationToken;
+    
+    @Column(name = "firstTimeLogged")
+    private boolean firstTimeLogged;
 	
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -69,7 +72,15 @@ public class User {
     
     
 
-    public List<Friend> getFriends() {
+    public boolean isFirstTimeLogged() {
+		return firstTimeLogged;
+	}
+
+	public void setFirstTimeLogged(boolean firstTimeLogged) {
+		this.firstTimeLogged = firstTimeLogged;
+	}
+
+	public List<Friend> getFriends() {
 		return friends;
 	}
 

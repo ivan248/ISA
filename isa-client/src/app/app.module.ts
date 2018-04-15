@@ -55,6 +55,7 @@ import { SeatingChartComponent } from './components/seating-chart-component/seat
 import { NotificationService } from './services/notification-service';
 import { LocationComponent } from './components/location-component/location-component.component'
 import { AgmCoreModule } from '@agm/core';
+import { ChangePasswordComponent } from './components/profile-component/change-password/change-password.component';
 
 
 
@@ -93,7 +94,8 @@ import { AgmCoreModule } from '@agm/core';
     StepFourComponent,
     StepFiveComponent,
     SeatingChartComponent,
-    LocationComponent
+    LocationComponent,
+    ChangePasswordComponent
     
   ],
   imports: [

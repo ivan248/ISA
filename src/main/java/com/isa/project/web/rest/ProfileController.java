@@ -172,5 +172,21 @@ public class ProfileController {
 		}
 		
 	}
+	
+	@GetMapping
+	@RequestMapping(value = "/changePassword")
+	public ResponseEntity changePassword(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestParam("password") String password) {
+
+		TokenProvider p = new TokenProvider();
+		
+		if(userService.changePassword(p.getUsernameFromToken(token), password))
+			return new ResponseEntity(HttpStatus.OK);
+		
+		return new ResponseEntity(HttpStatus.BAD_REQUEST); 
+
+
+	}
+
 
 }
