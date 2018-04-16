@@ -19,6 +19,7 @@ var httpOptions = {
  @Injectable()
  export class ProfileService {  
 
+
     private url : string = "http://localhost:8080/api/profile/";
 
     constructor(private http:HttpClient) {
@@ -94,7 +95,8 @@ var httpOptions = {
          });
 
         return this.http
-        .post(this.url + "friendRequest", username, {headers:headers});
+        .post(this.url + "friendRequest", username, {headers:headers})
+        .map((data:[any])=> data);;
     }
 
     getFriendRequests() {
@@ -145,6 +147,23 @@ var httpOptions = {
         .get(this.url + "changePassword", {params:params,headers:headers});
 
     }
+
+    searchUsers(searchName: any, searchLastName: any) {
+        
+        console.log(searchLastName, searchName);
+
+        var params = new HttpParams().set('searchName', searchName);
+        params = params.set('searchLastName', searchLastName);
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http
+        .get(this.url + "searchUsers", {params:params,headers:headers})
+        .map((data:[any]) => data);
+
+      }
 
     
 

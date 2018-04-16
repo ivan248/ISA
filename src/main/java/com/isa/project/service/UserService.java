@@ -20,10 +20,14 @@ public interface UserService {
 	public List<Friend> getFriends(String username);
 	public List<Friend> removeFriend(int id, String usernameFromToken);
 	public List<User> getAllUsers(String usernameFromToken);
-	public boolean handleFriendRequest(String currentUser, String friendUsername);
+	public List<User> handleFriendRequest(String currentUser, String friendUsername);
 	public List<Friend> getFriendRequests(String usernameFromToken);
 	public List<Friend> acceptFriend(String usernameFromToken, int id);
 	public List<Friend> declineFriend(String usernameFromToken, int id);
 	public boolean changePassword(String usernameFromToken, String password);
+
 	public void addActivityPoints(Long points,String username);
+
+	public List<User> searchUsers(String usernameFromToken, String searchName, String searchLastName);
+
 }

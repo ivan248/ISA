@@ -246,7 +246,9 @@ public class HomeController {
 		
 		
 		System.out.println("pogodio get plays " + theatreId);
-		System.out.println(playRepository.findPlaysByTheatreId((long)2));
+		
+		for(String s : playRepository.findPlaysByTheatreId((long)1))
+			System.out.println(s);
 		
 		
 		
