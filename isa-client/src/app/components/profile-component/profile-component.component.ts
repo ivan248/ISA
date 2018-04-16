@@ -3,6 +3,7 @@ import { ProfileService } from '../../services/profile-service';
 import { User } from '../../model/dto/userDTO';
 import { Location } from '@angular/common';
 import { NotificationService } from '../../services/notification-service';
+import * as jwt_decode from "jwt-decode";
 
 @Component({
   selector: 'profile-component',
@@ -78,7 +79,19 @@ export class ProfileComponent implements OnInit {
       this.notificationService.getAllNotifications().subscribe(data =>{
         this.notifications = data;
       });
+
+      var token = this.getDecodedAccessToken(localStorage.getItem('token'));
+      console.log(token);
       
+    }
+
+    getDecodedAccessToken(token: string): any {
+      try{
+          return jwt_decode(token);
+      }
+      catch(Error){
+          return null;
+      }
     }
 
     editButtonClicked() {

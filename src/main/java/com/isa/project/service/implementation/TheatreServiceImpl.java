@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.isa.project.bean.Play;
+import com.isa.project.bean.Projection;
 import com.isa.project.bean.Theatre;
+import com.isa.project.repository.PlayRepository;
 import com.isa.project.repository.TheatreRepository;
 import com.isa.project.service.TheatreService;
 
@@ -16,6 +18,10 @@ public class TheatreServiceImpl implements TheatreService{
 	
 	@Autowired
 	private TheatreRepository theatreRepository;
+	
+
+	@Autowired
+	private PlayRepository playRepository;
 
 
 	@Override
@@ -59,8 +65,32 @@ public class TheatreServiceImpl implements TheatreService{
 	public ArrayList<Play> getPlays(int theatreId) {
 		
 		
+		ArrayList<Play> playsList = new ArrayList();
 		
-		return null;
+		for(Projection pt : theatreRepository.findOneById((long)theatreId).getProjekcije())
+		{
+			for(Play p : playRepository.findAll())
+			{
+				for(Projection pp : p.getProjekcije())
+				{
+					if(pp.getId().equals(pt.getId()))
+					{
+						if(!playsList.contains(p))
+							playsList.add(p);
+					}
+				}
+			}
+		}
+		
+		return playsList;
+	}
+
+	@Override
+	public ArrayList<Projection> getPlayDates(int parseInt) {
+
+		System.out.println(playRepository.findProjectionsByPlayId((long)parseInt));
+		
+		return playRepository.findProjectionsByPlayId((long)parseInt);
 	}
 
 

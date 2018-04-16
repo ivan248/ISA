@@ -28,6 +28,7 @@ export class SeatingChartComponent implements OnInit, OnChanges {
         this.buttonsArray[i] = 2;
       }
 
+
       
      
 
@@ -38,6 +39,7 @@ export class SeatingChartComponent implements OnInit, OnChanges {
       {
         for(var i : number =0; i<this.currentProjection.tickets.length; i++)
         {
+          console.log(this.currentProjection.tickets + " " + i);
           if(this.currentProjection.tickets[i].deleted)
             this.buttonsArray[this.currentProjection.tickets[i].seatNumber] = -2;
           else
