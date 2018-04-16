@@ -44,12 +44,14 @@ public class Notification implements Serializable{
 	private Boolean seen;
 	
 	
-	public Boolean getRead() {
+	
+
+	public Boolean getSeen() {
 		return seen;
 	}
 
-	public void setRead(Boolean read) {
-		this.seen = read;
+	public void setSeen(Boolean seen) {
+		this.seen = seen;
 	}
 
 	public Integer getNotificationID() {

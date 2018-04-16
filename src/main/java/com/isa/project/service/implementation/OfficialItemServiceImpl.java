@@ -2,11 +2,15 @@ package com.isa.project.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.isa.project.bean.OfficialItem;
 import com.isa.project.bean.User;
 import com.isa.project.repository.OfficialItemRepository;
 import com.isa.project.service.OfficialItemService;
+
+
 
 @Service
 public class OfficialItemServiceImpl implements OfficialItemService {
@@ -71,6 +75,7 @@ public class OfficialItemServiceImpl implements OfficialItemService {
 	}
 
 	@Override
+	@Transactional(readOnly=false, propagation = Propagation.REQUIRES_NEW)
 	public Boolean reserve(int id, User u) {
 		try {
 		

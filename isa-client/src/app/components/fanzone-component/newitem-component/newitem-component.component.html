@@ -16,6 +16,9 @@
                         <div class="row">
                             <div class="col">
                                Item price: <b>{{item.price}}$</b> 
+                               <p *ngIf="userType == 1" > Price with discount for bronze user: <font color="brown"><b>{{item.price*0.95}}$</b> </font></p>
+                               <p *ngIf="userType == 2" > Price with discount for silver user: <font color="gray"><b>{{item.price*0.90}}$</b> </font></p>
+                               <p *ngIf="userType == 3" > Price with discount for gold user: <font color="gold"><b>{{item.price*0.85}}$</b> </font></p>
                             </div>
                             
                             

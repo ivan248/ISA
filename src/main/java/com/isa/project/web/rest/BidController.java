@@ -52,10 +52,7 @@ public class BidController {
 		userService.addActivityPoints(10L, currentUser.getUsername());
 		
 		
-		if( bid.getBid() <= bid.getItem().getCurrentBid()) {
-			System.out.println("Ponuda nije veca od trenutne ponude");
-			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
-		} else if( currentUser.getUsername().equals(bid.getItem().getOwner().getUsername())) {
+		if( currentUser.getUsername().equals(bid.getItem().getOwner().getUsername())) {
 			System.out.println("NE moze bidovati vlasnik itema");
 			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
 		}else {

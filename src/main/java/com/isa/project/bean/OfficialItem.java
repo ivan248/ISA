@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -37,18 +38,6 @@ public class OfficialItem implements Serializable  {
 		this.sold = false;
 	}
 	
-	
-	
-	public Boolean getSold() {
-		return sold;
-	}
-
-	public void setSold(Boolean sold) {
-		this.sold = sold;
-	}
-
-
-
 	private static final long serialVersionUID = 1L;
 	
 	
@@ -59,7 +48,18 @@ public class OfficialItem implements Serializable  {
 	@Column
 	private String image;
 	
+	@Version
+	private int version;
 	
+	
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
 	@Size(min = 3, max = 100)
 	@Column(length = 100)
 	@NotNull
@@ -174,7 +174,13 @@ public class OfficialItem implements Serializable  {
 		this.buyer = buyer;
 	}
 
-	
+	public Boolean getSold() {
+		return sold;
+	}
+
+	public void setSold(Boolean sold) {
+		this.sold = sold;
+	}
 	
 	
 	

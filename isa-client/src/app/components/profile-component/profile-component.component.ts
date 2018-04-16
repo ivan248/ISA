@@ -78,6 +78,7 @@ export class ProfileComponent implements OnInit {
 
       this.notificationService.getAllNotifications().subscribe(data =>{
         this.notifications = data;
+        console.log(data);
       });
 
       var token = this.getDecodedAccessToken(localStorage.getItem('token'));

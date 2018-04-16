@@ -28,6 +28,8 @@ export class ItemprofileComponent implements OnInit {
       this.item=data;
       this.value = this.item.currentBid;
       console.log("VERZIJA: " + data.version);
+      var token = this.dataService.getDecodedAccessToken(localStorage.getItem('token'));
+     console.log(token);
     });
     
   }
@@ -39,9 +41,16 @@ export class ItemprofileComponent implements OnInit {
     if (this.value <= this.item.currentBid){
       alert("Your bid must be higher than current");
     } else {
-      let bid = new BidDTO(this.item, this.value );
-      this.bidService.sendNewBid(bid).subscribe(data => console.log(data));
-      this.itemService.changeCurrentBid(this.value,this.item,this.item.version);
+      
+      //this.bidService.sendNewBid(bid).subscribe(data => console.log(data));
+      this.itemService.changeCurrentBid(this.value,this.item,this.item.version).subscribe(data =>{
+        let bid = new BidDTO(this.item, this.value );
+        
+        if(data != false) {
+          console.log("Usao u ne false")
+          this.bidService.sendNewBid(bid).subscribe(data2 => console.log(data2));
+        }
+      })
       this.item.currentBid = this.value;
     }
   }

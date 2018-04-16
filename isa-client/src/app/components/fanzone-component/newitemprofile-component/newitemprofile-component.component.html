@@ -24,7 +24,9 @@
     <div class="col-6 text-center" >
       <h3 >Reserve this item</h3> 
       Price: <h4><b class="text-danger">{{item.price}}$</b></h4>
-      
+      <p *ngIf="userType == 1" > Price with discount for bronze user: <font color="brown"><b>{{item.price*0.95}}$</b> </font></p>
+      <p *ngIf="userType == 2" > Price with discount for silver user: <font color="gray"><b>{{item.price*0.90}}$</b> </font></p>
+      <p *ngIf="userType == 3" > Price with discount for gold user: <font color="gold"><b>{{item.price*0.85}}$</b> </font></p>
       <div class="justify-content-center align-items-center">
         <div class="form-area ">  
           <button type="submit" [disabled]="item.reserved" (click)="onClickReserve(item.itemID)"  class="btn btn-success btn-lg" >Reserve</button>

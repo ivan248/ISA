@@ -158,7 +158,7 @@ public class ProfileController {
 		
 		try {
 			Notification n = notificationRepository.findOneByNotificationID(id);
-			n.setRead(true);
+			n.setSeen(true);
 			notificationRepository.flush();
 			
 			return new ResponseEntity<Boolean>(true,HttpStatus.OK);
@@ -182,8 +182,6 @@ public class ProfileController {
 			return new ResponseEntity(HttpStatus.OK);
 		
 		return new ResponseEntity(HttpStatus.BAD_REQUEST); 
-
-
 	}
 	
 	@GetMapping
