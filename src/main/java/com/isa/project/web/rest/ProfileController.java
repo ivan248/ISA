@@ -97,10 +97,8 @@ public class ProfileController {
 
 		TokenProvider p = new TokenProvider();
 
-		if (userService.handleFriendRequest(p.getUsernameFromToken(token), username))
-			return new ResponseEntity(HttpStatus.OK);
-
-		return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity(userService.handleFriendRequest(p.getUsernameFromToken(token), username),HttpStatus.OK);
+		
 
 	}
 
@@ -184,6 +182,23 @@ public class ProfileController {
 			return new ResponseEntity(HttpStatus.OK);
 		
 		return new ResponseEntity(HttpStatus.BAD_REQUEST); 
+
+
+	}
+	
+	@GetMapping
+	@RequestMapping(value = "/searchUsers")
+	public ResponseEntity searchUsers(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestParam("searchName") String searchName,
+			@RequestParam("searchLastName") String searchLastName) {
+
+		TokenProvider p = new TokenProvider();
+		
+		String name = "%" + searchName + "%";
+		String lastName = "%" + searchLastName + "%";
+		
+		return new ResponseEntity
+		(userService.searchUsers(p.getUsernameFromToken(token),name,lastName), HttpStatus.OK);
 
 
 	}

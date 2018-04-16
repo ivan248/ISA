@@ -27,8 +27,8 @@ export class ProfileComponent implements OnInit {
     private phoneNumber : number;
     private city : string;
 
-    private searchName : string;
-    private searchLastName : string;
+    private searchName : string = "";
+    private searchLastName : string = "";
 
     private notifications: any;
 
@@ -120,60 +120,71 @@ export class ProfileComponent implements OnInit {
 
     searchClicked() {
 
-     this.filteredArray = [];
+      this.filteredArray = [];
+
+      this.profileService.searchUsers(this.searchName, this.searchLastName)
+      .subscribe(data => this.filteredArray = data);
+
+    //   if(this.searchLastName !== "" && this.searchName !== "")
+    //   {
+    //     this.allUsers.forEach((user,index) => {
+    //         if(user.firstName == this.searchName && user.lastName == this.searchLastName)
+    //         {
+    //           if(this.filteredArray
+    //             .find(x => (x.username == user.username))
+    //              === undefined) {
+
+    //               this.filteredArray.push(user);
+    //             }
+    //         }
+    //     });
+    //   }
       
-      if(this.searchLastName !== "" && this.searchName !== "")
-      {
-        this.allUsers.forEach((user,index) => {
-            if(user.firstName == this.searchName && user.lastName == this.searchLastName)
-            {
-              if(this.filteredArray
-                .find(x => (x.username == user.username))
-                 === undefined) {
+    //   if((this.searchLastName === undefined || this.searchLastName === "") && this.searchName !== "")
+    //   {
+    //     this.allUsers.forEach((user,index) => {
+    //       if(user.firstName == this.searchName)
+    //       {
+    //         if(this.filteredArray
+    //           .find(x => (x.username == user.username))
+    //            === undefined) {
 
-                  this.filteredArray.push(user);
-                }
-            }
-        });
-      }
+    //             this.filteredArray.push(user);
+    //           }       
+    //       }
+    //   });
+    //   }
+
+    //   if(this.searchLastName !== "" && (this.searchName === undefined || this.searchName === ""))
+    //   {
+    //     this.allUsers.forEach((user,index) => {
+    //       if(user.lastName == this.searchLastName)
+    //       {
+    //         if(this.filteredArray
+    //           .find(x => (x.username == user.username))
+    //            === undefined) {
+
+    //             this.filteredArray.push(user);
+    //           } 
+    //       }
+    //   });
+    //   }
       
-      if((this.searchLastName === undefined || this.searchLastName === "") && this.searchName !== "")
-      {
-        this.allUsers.forEach((user,index) => {
-          if(user.firstName == this.searchName)
-          {
-            if(this.filteredArray
-              .find(x => (x.username == user.username))
-               === undefined) {
 
-                this.filteredArray.push(user);
-              }       
-          }
-      });
-      }
 
-      if(this.searchLastName !== "" && (this.searchName === undefined || this.searchName === ""))
-      {
-        this.allUsers.forEach((user,index) => {
-          if(user.lastName == this.searchLastName)
-          {
-            if(this.filteredArray
-              .find(x => (x.username == user.username))
-               === undefined) {
-
-                this.filteredArray.push(user);
-              } 
-          }
-      });
-      }
-      
       this.searchButtonClicked = true;
 
     }
 
     addFriend(friendUsername : string) {
+
+      this.filteredArray = [];
+
       this.profileService.sendFriendRequest(friendUsername)
-      .subscribe(data => console.log(data));
+      .subscribe(data => {
+        this.allUsers = data;
+      console.log(data);
+    });
 
       alert("Friend request sent!");
     }
