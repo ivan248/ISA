@@ -28,6 +28,7 @@ import com.isa.project.repository.TheatreRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.FanZoneService;
+import com.isa.project.service.UserService;
 import com.isa.project.web.Converter;
 import com.isa.project.web.dto.AddNewItemDto;
 import com.isa.project.web.dto.OfficialItemDTO;
@@ -50,6 +51,8 @@ public class FanZoneController {
 	private TheatreRepository theatreRepository;
 	@Autowired
 	private OfficialItemRepository officialItemRepository;
+	@Autowired
+	private UserService userService;
 
 	
 	@RequestMapping(value="/", method= RequestMethod.GET)
@@ -73,6 +76,7 @@ public class FanZoneController {
 		
 		TokenProvider p = new TokenProvider();
 		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		userService.addActivityPoints(20L, logged.getUsername());
 		
 		Item i = Converter.convertAddNewItemToItem(newItemDTO);
 		int status = i.getEndDate().compareTo(i.getBeginDate());  //provera da li je unesen krajnji datum stariji ili mladji od danasnjeg
@@ -90,7 +94,10 @@ public class FanZoneController {
 	}
 	
 	@RequestMapping(value = "/deleteitem", method= RequestMethod.GET)
-	public ResponseEntity<Boolean> deleteItem(@RequestParam("id") int id) {
+	public ResponseEntity<Boolean> deleteItem(@RequestParam("id") int id,@RequestHeader("X-Auth-Token") String token) {
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		userService.addActivityPoints(3L, logged.getUsername());
 		System.out.println("Usao u delete");
 		return new ResponseEntity<Boolean>(fanZoneService.deleteItem(id),HttpStatus.OK);
 		
@@ -98,13 +105,21 @@ public class FanZoneController {
 	}
 	
 	@GetMapping("/getitem")
-	public ResponseEntity<Item> getItem(@RequestParam("id") int id) {
+	public ResponseEntity<Item> getItem(@RequestParam("id") int id,@RequestHeader("X-Auth-Token") String token) {
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		userService.addActivityPoints(1L, logged.getUsername());
+		System.out.println("Usao u delete");
 		System.out.println("Usao u getitem");
 		return new ResponseEntity<Item>(itemRepository.findOneByItemID(id),HttpStatus.OK);	
 	}
 	
 	@GetMapping("/getofficialitem")
-	public ResponseEntity<OfficialItem> getOfficialItem(@RequestParam("id") int id) {
+	public ResponseEntity<OfficialItem> getOfficialItem(@RequestParam("id") int id,@RequestHeader("X-Auth-Token") String token) {
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		userService.addActivityPoints(3L, logged.getUsername());
+		System.out.println("Usao u delete");
 		System.out.println("Usao u getoffitem");
 		OfficialItem k = officialItemRepository.findOneByItemID(id);
 		System.out.println(k);

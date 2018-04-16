@@ -2,6 +2,7 @@ package com.isa.project.service.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -138,7 +139,7 @@ public class UserSeviceImpl implements UserService {
 	public List<User> getAllUsers(String usernameFromToken) {
 
 		List<User> allUsers = userRepository.findAll();
-		List<User> returnUsers = new ArrayList<User>();
+		//List<User> returnUsers = new ArrayList<User>();
 		int index = 0;
 
 		
@@ -295,6 +296,13 @@ public class UserSeviceImpl implements UserService {
 		userRepository.flush();
 		
 		return true;
+	}
+
+	@Override
+	public void addActivityPoints(Long points,String username) {
+		User u = userRepository.findByUsername(username).get();
+		u.setActivity(u.getActivity() + points);
+		
 	}
 	
 	

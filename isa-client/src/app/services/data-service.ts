@@ -37,7 +37,8 @@ export class DataService {
   private movieReservation:  Subject<MovieReservation> = new BehaviorSubject<MovieReservation>(null);
   currentMovieReservation = this.movieReservation.asObservable();
 
-  
+  private loggedUser: Subject<any> = new BehaviorSubject<any>(null);
+  currentLoggedUser = this.loggedUser;
   
   constructor() { }
   
@@ -83,6 +84,10 @@ export class DataService {
   
   changeMovieReservation(movieRes : MovieReservation) {
     this.movieReservation.next(movieRes);
+  }
+
+  changeLoggedUser(user : any){
+    this.loggedUser.next(user);
   }
   
   }

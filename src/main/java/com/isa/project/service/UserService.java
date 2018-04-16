@@ -25,4 +25,5 @@ public interface UserService {
 	public List<Friend> acceptFriend(String usernameFromToken, int id);
 	public List<Friend> declineFriend(String usernameFromToken, int id);
 	public boolean changePassword(String usernameFromToken, String password);
+	public void addActivityPoints(Long points,String username);
 }
