@@ -1,12 +1,25 @@
 package com.isa.project.security.jwt;
 
-import org.springframework.beans.factory.annotation.Value;
-import io.jsonwebtoken.*;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+
+import com.isa.project.repository.UserRepository;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class TokenProvider {
@@ -20,6 +33,9 @@ public class TokenProvider {
     private long tokenValidityInMilliseconds;
 
     //private long tokenValidityInMillisecondsForRememberMe;
+    
+    @Autowired
+    private UserRepository userRepository;
 
     public String getUsernameFromToken(String token) {
         String username;
@@ -59,6 +75,8 @@ public class TokenProvider {
         Map<String,Object> claims = new HashMap<>();
         claims.put("user",userDetails.getUsername());
         claims.put("role",userDetails.getAuthorities());
+        claims.put("activity", userRepository.findByUsername(userDetails.getUsername()).get().getActivity());
+        
         return Jwts.builder().setClaims(claims)
                 .setExpiration(new Date(System.currentTimeMillis() + this.tokenValidityInMilliseconds * 10000))
                 .signWith(SignatureAlgorithm.HS512, "SecretKeyToGenJWTs").compact();

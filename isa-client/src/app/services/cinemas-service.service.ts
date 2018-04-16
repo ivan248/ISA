@@ -33,7 +33,13 @@ import { MovieReservation } from '../model/movieReservation';
     }
 
     getCinemas(){
-        return this.http.get("http://localhost:8080/api/home/getCinemas").map(data => data)
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http.get("http://localhost:8080/api/home/getCinemas", {headers:headers}).map(data => data)
         .catch((err:HttpErrorResponse) =>
         {
             alert(err.status + " " + err.error.error + " \n" + err.error.message);
