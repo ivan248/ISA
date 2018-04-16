@@ -267,5 +267,21 @@ public class HomeController {
 	}
 	
 
+	@RequestMapping(value="/addFastTicket", method = RequestMethod.POST) 
+	public ResponseEntity addFastTicket(@RequestBody Projection projection, @RequestParam("seat") String seat, 
+			@RequestParam("price") String price, @RequestParam("cid") String cid, @RequestParam("mid") String mid) {
+		System.out.println("PROJEKCIJA ID"+projection.getId());
+		System.out.println("SEAT "+seat);
+		System.out.println(price);
+		cinemaService.addTicketToFast(price, seat, Long.parseLong(cid), Long.parseLong(mid), projection.getId());
+	return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/deleteFast", method = RequestMethod.POST) 
+	public ResponseEntity deleteFast(@RequestParam("ticketid") String ticketid) {
+		return new ResponseEntity<>(cinemaService.deleteTicket(Long.parseLong(ticketid)) ,HttpStatus.OK);
+	}
+	
+
 	
 }

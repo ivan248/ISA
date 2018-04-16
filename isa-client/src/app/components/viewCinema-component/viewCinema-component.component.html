@@ -16,24 +16,6 @@
                 <p>{{currentCinema.address}}</p>
             </div>
         </div>
-     
-<!--script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap" async defer></script>
-<br />
-<div class="container">
-	<div class="row">
-		<input id="searchInput" class="controls" type="text" placeholder="Enter a location">
-            <div id="map"></div>
-            <ul id="geoData">
-                <li>Full Address: <span id="location"></span></li>
-                <li>Postal Code: <span id="postal_code"></span></li>
-                <li>Country: <span id="country"></span></li>
-                <li>Latitude: <span id="lat"></span></li>
-                <li>Longitude: <span id="lon"></span></li>
-            </ul>
-	</div>
-</div>
-    </div>
-    </div-->
 
 <div class="card">
     <div class="card-body">
@@ -75,8 +57,18 @@
                             <p> {{p.price}}</p>
                             <p> {{p.rating}}</p>
                             <p><button class="btn" (click)="changeSeatingChart(p.id)"> Change seating chart </button></p>
-                            <p><button class="btn" (click)="deleteProjection(m.id, p.id, currentCinema.id)"> Delete projection</button></p>
                             <p><button class="btn" [hidden]="!hiddenEditing[p.id]" (click)="changeProjection(m.id, p.id, currentCinema.id)"> Change projection</button></p>
+                            <p><button class="btn" (click)="deleteProjection(m.id, p.id, currentCinema.id)"> Delete projection</button></p>
+                            <p><button class="btn" (click)="openAdding(p.id)"> Add fast reservation ticket</button></p>
+                            <form [hidden]="hiddenFastRes[p.id]" (ngSubmit)="onSubmit1(price, seat, m.id, p, currentCinema.id)" #f1="ngForm">
+                                <p>New price</p><input type="text" class="form-control" name="price"
+                                    id="price" #price required>
+                                <p>Seat number</p><input type="text" class="form-control" name="seat"
+                                    id="seat" #seat required> 
+
+                                  <button type="submit"  class="btn btn-dark btn-lg" [disabled] = "!f.valid">Add</button>
+                            </form>
+                            
                         </div>
                             <form  [hidden]="hiddenEditing[p.id]" (ngSubmit)="onSubmit(f, p.id)" #f="ngForm" >
                                     <input type="text" class="form-control" name="date"
@@ -103,14 +95,14 @@
 
     <div class="card">
             <div class="card-body">
-                    <ul>
+                    <!--ul>
                             <li *ngFor="let t of notFastReservations">
                                 
                                    
                                     <p> {{t.id}}</p><button (click)="addToFast(currentCinema.id, t.id, t)">Add to fast</button>
                                     </li>
                     
-                                </ul>
+                                </ul-->
                                 
                     <div class="col-8">
                         <h4><b>Tickets for fast reservation: </b></h4>
@@ -138,6 +130,7 @@
                                                         </div>
                                                     </div>
                                                 <button class="btn" (click)="reserve(t, t.id, currentCinema.id)">Reserve</button>
+                                                <button class="btn" (click)="delete(t, t.id, currentCinema.id)">Delete</button>
                                             </div>
                                             
                                         </div>
