@@ -70,6 +70,22 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 
     }
 
+    getProjectionDate(playId : any) {
+
+        let params = new HttpParams().set('playId', playId.toString());
+     
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+
+        return this.http
+        .get("http://localhost:8080/api/home/getPlayDates",
+         {params:params, headers:headers})
+         .map((data:[any]) => data);;
+    }
+
   
 
  } 

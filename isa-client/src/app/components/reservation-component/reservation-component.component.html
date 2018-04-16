@@ -59,10 +59,21 @@
                 [cinemaSelected]=cinemaSelected>
 
                 </step-two-component>
+
+
                 <step-three-component *ngIf="step===3"
                 (selectedSeats)="onChangeSelectedSeats($event)"
                 ></step-three-component>
-                <step-four-component *ngIf="step===4"></step-four-component>
+
+
+                <step-four-component *ngIf="step===4"
+                [selectedSeats]=selectedSeats
+                >
+
+
+                </step-four-component>
+
+
                 <step-five-component *ngIf="step===5"
                     [selectedSeats]=selectedSeats
                     (movieReservationOutput)="onMovieReservationChanged($event)"
