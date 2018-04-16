@@ -227,6 +227,41 @@ deleteSeats(projection: any, projectionid: any, seat: any) {
 
 }
 
+addFastTicket(price: any, seat: any, mid: any, p: any, cid: any ){
+
+    let params = new HttpParams().set('seat', seat); 
+    params = params.set('cid',cid);
+    params = params.set('mid',mid);
+    params = params.set('price',price);
+    const body = JSON.parse(JSON.stringify(p));
+
+    let headers = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     });
+    return this.http
+    .post("http://localhost:8080/api/home/addFastTicket", body, {params:params,headers:headers});
+
+}
+
+deleteFast(ticket:any, ticketid: any){
+    
+    ticket.sold=true;
+    const body = JSON.parse(JSON.stringify(ticket));
+    let params = new HttpParams().set('ticketid',ticketid); 
+     
+
+    let headers = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     });
+    return this.http.post('http://localhost:8080/api/home/deleteFast',body,{
+        params:params,
+        headers: headers
+    } );
+
+}
+
 
 
   

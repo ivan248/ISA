@@ -20,6 +20,7 @@ export class ViewCinemaComponent implements OnInit {
     private currentCinema: any;
     private movies:  any[] = [];
     private hiddenEditing: boolean[] = [];
+    private hiddenFastRes: boolean[] = [];
     private projekcijaId: any;
     private numberProjections: any = 20;
     private notFastReservations: any[];
@@ -50,6 +51,7 @@ export class ViewCinemaComponent implements OnInit {
         var data = this.currentCinema.projekcije;
         data.forEach(p => {
             this.hiddenEditing[p.id] = true;
+            this.hiddenFastRes[p.id] = true;
         });
          
         
@@ -93,6 +95,10 @@ export class ViewCinemaComponent implements OnInit {
 
       
       }
+
+      openAdding(projekcijaid: number){
+        this.hiddenFastRes[projekcijaid] = false
+      }
       deleteMovie(idMovie : number, idCinema: number) {
         this.cinemasService.deleteMovie(idMovie, idCinema).subscribe(data =>
         this.movies = data);
@@ -108,8 +114,7 @@ export class ViewCinemaComponent implements OnInit {
       }
       addToFast(cinemaid: any, ticketid: any, ticket: any){
         console.log(ticketid);
-        this.cinemasService.addToFast(cinemaid, ticketid, ticket).subscribe(data =>
-            this.notFastReservations = [data]);
+        this.cinemasService.addToFast(cinemaid, ticketid, ticket).subscribe();
         
     }
 
@@ -145,6 +150,19 @@ export class ViewCinemaComponent implements OnInit {
       finishChangingSeats() {
           this.changeSeatingChartHidden = !this.changeSeatingChartHidden;
       }
+
+      onSubmit1(price: any, seat: any, mid: any, p: any, cid: any){
+        console.log(price.value);
+        console.log(seat.value);
+        this.cinemasService.addFastTicket(price.value, seat.value, mid, p, cid).subscribe();
+      }
+
+      delete(ticket:any, ticketid: any, cinemaid: any){
+ 
+        this.cinemasService.deleteFast(ticket, ticketid).subscribe();
+        this.router.navigateByUrl('/viewCinema');
+
+    }
 
   
 

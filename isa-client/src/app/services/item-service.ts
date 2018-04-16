@@ -3,6 +3,7 @@ import { Http, Response } from '@angular/http';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http' ;
 import 'rxjs/Rx';
 import { BidDTO } from '../model/bidDTO';
+import { Item } from '../model/item';
 
 
 
@@ -68,14 +69,18 @@ import { BidDTO } from '../model/bidDTO';
 
     }
 
-    changeCurrentBid(bid: any,id: any){
+    changeCurrentBid(bid: any,id: any,version: any){
+        console.log("KAD udje u chnge bid: ")
+        console.log(version);
         const body = JSON.stringify(new BidDTO(id,bid));
         var headers = new HttpHeaders({ 
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
          });
+        let params = new HttpParams().append('version',version);
 
-        return this.http.post('http://localhost:8080/item/bid',body,{headers: headers}).subscribe();
+
+        return this.http.post('http://localhost:8080/item/bid',body,{params:params,headers: headers}).subscribe();
     }
     
 

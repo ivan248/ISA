@@ -281,6 +281,62 @@ public class CinemaServiceImpl implements CinemaService{
 	}
 
 
+	@Override
+	public boolean addTicketToFast(String price, String seat, Long cinemaid, Long movieid, Long projectionid) {
+		
+
+		Projection p = projekcijaRepository.findOneById(projectionid);
+		List<Ticket> listaKarata;
+		if (p.getTickets()==null) {
+			listaKarata = new ArrayList<>();
+			Ticket t = new Ticket(Integer.parseInt(seat), true, Integer.parseInt(price), false, false );
+			try{
+				ticketRepository.save(t);
+			} catch (Exception e) {
+				System.out.println("Constraints violated!");
+			}
+			
+			listaKarata.add(t);
+		}else {
+			listaKarata = p.getTickets();
+			for (Ticket t1: listaKarata) {
+				if (t1.getSeatNumber()==Integer.parseInt(seat)) {
+					System.out.println("Forbidden!");
+					return false;
+				}
+			}
+			
+			Ticket t = new Ticket(Integer.parseInt(seat), true, Integer.parseInt(price), false, false );
+			try{
+				ticketRepository.save(t);
+			} catch (Exception e) {
+				System.out.println("Constraints violated!");
+			}
+			
+			listaKarata.add(t);
+			
+		}
+		projekcijaRepository.save(p);
+		return true;
+	}
+
+
+	@Override
+	public boolean deleteTicket(Long ticketid) {
+		Ticket t = ticketRepository.findOneById(ticketid);
+		t.setFastRes(false);
+		try {
+			ticketRepository.save(t);
+			return true;
+			
+		}catch(Exception e) {
+			System.out.println("Exception occured while deleting from fast res");
+			return false;
+		}
+
+	}
+
+
 	
 
 	

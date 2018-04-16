@@ -1,5 +1,8 @@
 package com.isa.project.service.implementation;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,7 @@ public class ItemServiceImpl implements ItemService {
 	private ItemRepository itemRepository;
 
 	@Override
+	@Transactional(readOnly = false)
 	public Boolean editItem(Item item) {
 		try {
 			Item i = itemRepository.findOneByItemID(item.getItemID());
@@ -55,6 +59,7 @@ public class ItemServiceImpl implements ItemService {
 		
 
 	@Override
+	@Transactional(readOnly = false)
 	public Boolean approveItem(int id) { 
 		try {
 			Item i = itemRepository.findOneByItemID(id);
@@ -72,14 +77,22 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public Boolean bid(int id,float bid) {
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	public Boolean bid(int id,float bid, int version) {
 		try {
 			Item i = itemRepository.findOneByItemID(id);
 			if(i.getApproved()) {
 				if (bid > i.getCurrentBid()) {
+					System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+					System.out.println("Verzija itema pre update: " + i.getVersion());
+					System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 					i.setCurrentBid(bid);
 					i.setSomeoneBid(true);
-					itemRepository.flush();
+					i.setVersion(version);
+					System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+					System.out.println("Verzija itema za update: " + version);
+					System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+					itemRepository.save(i);
 					return true;
 				} else { //nema smisla ostavljati ponudu manju od trenutne
 					System.out.println("Ponuda je manja od trenutne");
@@ -100,6 +113,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public Boolean acceptBid(int id) { //kada prodavac odluci da prihvati ponudu
 		try {
 			Item i = itemRepository.findOneByItemID(id);

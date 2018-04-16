@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 export class ItemprofileComponent implements OnInit {
 
  
-  item: any;
+  item: Item;
   value : number;
   dobarUnos: boolean = false;
 
@@ -27,6 +27,7 @@ export class ItemprofileComponent implements OnInit {
     this.dataService.currentSelectedItem.subscribe(data => {
       this.item=data;
       this.value = this.item.currentBid;
+      console.log("VERZIJA: " + data.version);
     });
     
   }
@@ -40,7 +41,7 @@ export class ItemprofileComponent implements OnInit {
     } else {
       let bid = new BidDTO(this.item, this.value );
       this.bidService.sendNewBid(bid).subscribe(data => console.log(data));
-      this.itemService.changeCurrentBid(this.value,this.item);
+      this.itemService.changeCurrentBid(this.value,this.item,this.item.version);
       this.item.currentBid = this.value;
     }
   }

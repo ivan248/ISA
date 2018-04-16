@@ -11,7 +11,7 @@ export class Item
     public approved : boolean;
     public sold: boolean;
     public someoneBid : boolean;
-
+    public version: number;
 
 
     constructor(obj: any) {
@@ -26,6 +26,7 @@ export class Item
         this.approved = obj.approved;
         this.sold= obj.sold
         this.someoneBid = obj.someoneBid;
+        this.version = obj.version;
 
     }
 
