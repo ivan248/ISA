@@ -35,9 +35,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', data.token);
           this.profileService.getLoggedUser().subscribe( data =>{
             this.user = data;
-            this.dataService.changeLoggedUser(this.user);
-            console.log("promeni usera");
-            console.log(this.user);
+            
           } );
           this.moveOn();
           

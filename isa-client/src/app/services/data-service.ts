@@ -5,6 +5,8 @@ import { NewItem } from '../model/newitem'
 import { Subject } from 'rxjs/Subject';
 import { MovieReservation } from '../model/movieReservation';
 
+import * as jwt_decode from "jwt-decode";
+
 export class DataService {
 
   private edditedItem = new BehaviorSubject<Item>(new Item(new Object()));
@@ -37,8 +39,16 @@ export class DataService {
   private movieReservation:  Subject<MovieReservation> = new BehaviorSubject<MovieReservation>(null);
   currentMovieReservation = this.movieReservation.asObservable();
 
-  private loggedUser: Subject<any> = new BehaviorSubject<any>(null);
-  currentLoggedUser = this.loggedUser;
+  
+
+  getDecodedAccessToken(token: string): any {
+    try{
+        return jwt_decode(token);
+    }
+    catch(Error){
+        return null;
+    }
+  }
   
   constructor() { }
   
@@ -86,8 +96,6 @@ export class DataService {
     this.movieReservation.next(movieRes);
   }
 
-  changeLoggedUser(user : any){
-    this.loggedUser.next(user);
-  }
+ 
   
   }
