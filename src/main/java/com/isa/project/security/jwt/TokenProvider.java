@@ -60,7 +60,7 @@ public class TokenProvider {
         claims.put("user",userDetails.getUsername());
         claims.put("role",userDetails.getAuthorities());
         return Jwts.builder().setClaims(claims)
-                .setExpiration(new Date(System.currentTimeMillis() + this.tokenValidityInMilliseconds * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + this.tokenValidityInMilliseconds * 10000))
                 .signWith(SignatureAlgorithm.HS512, "SecretKeyToGenJWTs").compact();
     }
 

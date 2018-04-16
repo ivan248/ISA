@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -75,9 +76,12 @@ public class Item implements Serializable {
 	@JoinColumn(name="ownerID")
 	private User owner;
 	
+	
 	@OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
 	private List<Bid> bids;
 	
+	@Version
+	private int version;
 	
 	
 	@Column
@@ -90,6 +94,10 @@ public class Item implements Serializable {
 	private Boolean someoneBid;
 
 	
+	
+
+	
+
 	public Integer getItemID() {
 		return itemID;
 	}
@@ -100,6 +108,14 @@ public class Item implements Serializable {
 
 	public String getName() {
 		return name;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 	public void setName(String name) {

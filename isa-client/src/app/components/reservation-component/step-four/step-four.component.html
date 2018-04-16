@@ -39,7 +39,7 @@
                 <th scope="row">{{i+1}}</th>
                 <td>{{f.friendUsername}}</td>
                 <td>{{f.friendFirstName}}</td>
-                <td>{{f.friendLastName}} <button class="btn btn-success" style="float:right" (click)="inviteFriend(f.friendId)"> Invite </button> </td>
+                <td>{{f.friendLastName}} <button [class]="inviteButtonClass(f.friendId)" [disabled]="disableInvites" class="btn btn-success" style="float:right" (click)="inviteFriend(f.friendId)"> Invite </button> </td>
                 
               </tr>
               

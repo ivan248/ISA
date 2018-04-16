@@ -21,6 +21,7 @@ import com.isa.project.repository.NotificationRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.BidService;
+import com.isa.project.service.UserService;
 import com.isa.project.web.dto.BidDTO;
 
 @RestController
@@ -39,13 +40,17 @@ public class BidController {
 	@Autowired 
 	private NotificationRepository notificationRepository;
 	
+	@Autowired
+	private UserService userService;
+	
 	
 	@PostMapping("/add")
 	public ResponseEntity<Boolean> addBid(@RequestBody BidDTO bid , @RequestHeader(value="X-Auth-Token") String token){
+		
 		TokenProvider p = new TokenProvider();
 		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		userService.addActivityPoints(10L, currentUser.getUsername());
 		
-		currentUser.setActivity(currentUser.getActivity()+5);
 		
 		if( bid.getBid() <= bid.getItem().getCurrentBid()) {
 			System.out.println("Ponuda nije veca od trenutne ponude");
@@ -89,6 +94,7 @@ public class BidController {
 		
 		TokenProvider p = new TokenProvider();
 		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		userService.addActivityPoints(10L, currentUser.getUsername());
 		
 		ArrayList<User> list = new ArrayList<User>( userRepository.findDistinctUsersThatBidOnItem(bid.getItem().getItemID()));
 		

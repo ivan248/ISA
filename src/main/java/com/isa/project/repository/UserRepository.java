@@ -3,7 +3,7 @@ package com.isa.project.repository;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 User findByConfirmationToken(String token);
 	 @Query("select distinct b.buyer from Bid b where b.item.itemID = :itemID")
 		List<User> findDistinctUsersThatBidOnItem(@Param("itemID") Integer itemID);
+	 
+	 @Query("from User where firstName like :firstName AND lastName like :lastName")
+	 List<User> findByFirstNameAndLastName(@Param("firstName")String firstName,@Param("lastName") String lastName);
 }

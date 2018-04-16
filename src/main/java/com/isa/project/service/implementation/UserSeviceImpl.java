@@ -2,6 +2,7 @@ package com.isa.project.service.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,7 @@ public class UserSeviceImpl implements UserService {
 
 	@Autowired
 	private FriendRepository friendRepository;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -111,26 +112,19 @@ public class UserSeviceImpl implements UserService {
 
 		User otherUser = userRepository.findByUsername(friendRepository.findByFriendId(id).getFriendUsername()).get();
 		int friendId = 0;
-		
-		for(Friend f:otherUser.getFriends())
-		{
-			if(f.getFriendUsername().equals(username))
-			{
-				System.out.println(f.getFriendUsername() + " == " + username);
-				System.out.println("Stanje pre brisanja : " + f.getFriendId() + " ");
+
+		for (Friend f : otherUser.getFriends()) {
+			if (f.getFriendUsername().equals(username)) {
 				friendId = f.getFriendId();
-				System.out.println("Stanje posle brisanja : " + friendId);
+				otherUser.getFriends().remove(f);
 				break;
 			}
 		}
-		
-		
+
+		userRepository.save(otherUser);
 		friendRepository.delete(friendId);
-		System.out.println("Stanje pre brisanja 2: " + friendRepository.findAll());
 		friendRepository.delete(id);
-		System.out.println("Stanje posle brisanja 2: " + friendRepository.findAll());
-		
-		
+
 		return getEnabledFriends(username);
 	}
 
@@ -138,10 +132,9 @@ public class UserSeviceImpl implements UserService {
 	public List<User> getAllUsers(String usernameFromToken) {
 
 		List<User> allUsers = userRepository.findAll();
-		List<User> returnUsers = new ArrayList<User>();
+		//List<User> returnUsers = new ArrayList<User>();
 		int index = 0;
 
-		
 		// remove currently logged user from all users
 		for (User u : allUsers) {
 			if (u.getUsername().equals(usernameFromToken)) {
@@ -152,34 +145,25 @@ public class UserSeviceImpl implements UserService {
 		}
 
 		allUsers.remove(index);
-		
-		
-//		// remove friends from all users
-//		for(int i=0; i<userRepository.findByUsername(usernameFromToken).get().getFriends().size(); i++)
-//		{
-//			for(int j=0; j<allUsers.size(); j++)
-//			{
-//				if(!userRepository.findByUsername(usernameFromToken)
-//						.get().getFriends().get(i).getFriendUsername()
-//						.equals(allUsers.get(j).getUsername()))
-//				{
-//					returnUsers.add(allUsers.get(j));
-//					break;
-//				}
-//			}
-//			
-//		}
+
+		for (Friend f : userRepository.findByUsername(usernameFromToken).get().getFriends()) {
+			for (int i = 0; i < allUsers.size(); i++) {
+				if (allUsers.get(i).getUsername().equals(f.getFriendUsername())) {
+					allUsers.remove(i);
+				}
+			}
+		}
 
 		return allUsers;
 	}
 
 	@Override
-	public boolean handleFriendRequest(String currentUser, String friendUsername) {
+	public List<User> handleFriendRequest(String currentUser, String friendUsername) {
 
 		// provera da li vec ima njega u listi prijatelja da ne moze opet da ga doda
 		for (Friend f : userRepository.findByUsername(currentUser).get().getFriends()) {
 			if (f.getFriendUsername().equals(friendUsername))
-				return false;
+				return null;
 		}
 
 		User curUser = userRepository.findByUsername(currentUser).get();
@@ -200,7 +184,10 @@ public class UserSeviceImpl implements UserService {
 		// ako se potvrdi kod friend-a onda ide enabled na 1 kod oba
 		// ako se odbije onda se brise na oba mesta
 		// dok se nesto od ova 2 ne desi stoji na 0
-		return true;
+		
+		System.out.println(getAllUsers(currentUser));
+		
+		return getAllUsers(currentUser);
 	}
 
 	@Override
@@ -245,33 +232,20 @@ public class UserSeviceImpl implements UserService {
 		Friend friend = friendRepository.findByFriendId(id);
 		Friend friendDelete = null;
 		String username = friendRepository.findByFriendId(id).getFriendUsername();
-		
+
 		User user = userRepository.findByUsername(username).get();
-		
-		for(Friend f:user.getFriends())
-		{
-			if(f.getFriendUsername().equals(usernameFromToken))
-			{
-				System.out.println("Pronasao kod njega mene " + f.getFriendId() + usernameFromToken + " \n");
-				System.out.println(f);
+
+		for (Friend f : user.getFriends()) {
+			if (f.getFriendUsername().equals(usernameFromToken)) {
+
 				friendDelete = friendRepository.findByFriendId(f.getFriendId());
-				
+				user.getFriends().remove(f);
 				break;
 			}
 		}
-		
-		
-		System.out.println("Izbrisao kod mene njega : " + friend + " \n");
-		
-		System.out.println("Izbrisao kod njega mene : " + friendDelete);
+
 		friendRepository.delete(friendDelete);
-		friendRepository.flush();
-		System.out.println("Posle prvog brisanja " + friendRepository.findAll());
 		friendRepository.delete(friend);
-		
-		friendRepository.flush();
-		
-		System.out.println(friendRepository.findAll());
 
 		return getEnabledFriends(usernameFromToken);
 	}
@@ -293,9 +267,22 @@ public class UserSeviceImpl implements UserService {
 		userRepository.findByUsername(usernameFromToken).get().setPassword(passwordEncoder.encode(password));
 		userRepository.findByUsername(usernameFromToken).get().setFirstTimeLogged(false);
 		userRepository.flush();
-		
+
 		return true;
+	}
+
+	@Override
+	public void addActivityPoints(Long points,String username) {
+		User u = userRepository.findByUsername(username).get();
+		u.setActivity(u.getActivity() + points);
+		
 	}
 	
 	
+
+	public List<User> searchUsers(String usernameFromToken, String searchName, String searchLastName) {
+		return userRepository.findByFirstNameAndLastName(searchName, searchLastName);
+	}
+
+
 }

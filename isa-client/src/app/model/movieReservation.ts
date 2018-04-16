@@ -16,13 +16,15 @@ export class MovieReservation
         movieName : String,
         date : Date,
         time : String,
-        place : String ) {
+        place : String,
+        price : number ) {
 
         this.projectionId = projectionId;
         this.movieName = movieName;
         this.date = date;
         this.time = time;
         this.place = place;
+        this.price = price;
     }
 
 

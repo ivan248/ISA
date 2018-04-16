@@ -242,16 +242,19 @@ public class HomeController {
 	@RequestMapping(value = "/getPlays")
 	public ResponseEntity getPlays(
 			@RequestParam("theatreId") String theatreId) {
-		
-		
-		
-		System.out.println("pogodio get plays " + theatreId);
-		System.out.println(playRepository.findPlaysByTheatreId((long)2));
-		
-		
-		
+			
 		return new ResponseEntity<>(theatreService.getPlays(Integer.parseInt(theatreId)),HttpStatus.OK);
 	}
+	
+	
+	@GetMapping
+	@RequestMapping(value = "/getPlayDates")
+	public ResponseEntity getPlayDates(
+			@RequestParam("playId") String playId) {
+			
+		return new ResponseEntity<>(theatreService.getPlayDates(Integer.parseInt(playId)),HttpStatus.OK);
+	}
+	
 	
 
 	
