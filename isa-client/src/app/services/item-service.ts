@@ -70,17 +70,16 @@ import { Item } from '../model/item';
     }
 
     changeCurrentBid(bid: any,id: any,version: any){
-        console.log("KAD udje u chnge bid: ")
-        console.log(version);
+        
         const body = JSON.stringify(new BidDTO(id,bid));
         var headers = new HttpHeaders({ 
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
          });
-        let params = new HttpParams().append('version',version);
+        
 
 
-        return this.http.post('http://localhost:8080/item/bid',body,{params:params,headers: headers}).subscribe();
+        return this.http.post('http://localhost:8080/item/bid',body,{headers: headers});
     }
     
 

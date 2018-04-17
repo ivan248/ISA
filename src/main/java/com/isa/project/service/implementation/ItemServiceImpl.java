@@ -78,21 +78,22 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-	public Boolean bid(int id,float bid, int version) {
+	public Boolean bid(Item i, float value) {
 		try {
-			Item i = itemRepository.findOneByItemID(id);
+			
 			if(i.getApproved()) {
-				if (bid > i.getCurrentBid()) {
+				if (value > i.getCurrentBid()) {
 					System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 					System.out.println("Verzija itema pre update: " + i.getVersion());
 					System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-					i.setCurrentBid(bid);
+					i.setCurrentBid(value);
 					i.setSomeoneBid(true);
-					i.setVersion(version);
+					
 					System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-					System.out.println("Verzija itema za update: " + version);
+					System.out.println("Verzija itema za update: " + i.getVersion());
 					System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 					itemRepository.save(i);
+					//ovde treba rollback (runtimeexception)
 					return true;
 				} else { //nema smisla ostavljati ponudu manju od trenutne
 					System.out.println("Ponuda je manja od trenutne");
@@ -105,8 +106,8 @@ public class ItemServiceImpl implements ItemService {
 			
 		}
 		catch(Exception e) {
-			System.out.println("Error occured while reading from  database. Constraints were not satisfied.");
-			e.printStackTrace();
+			System.out.println("Error occured while writing to database. Updated item was changed before your request.");
+			
 			return false;
 		}
 		

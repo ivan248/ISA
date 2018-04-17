@@ -3,6 +3,7 @@ import { ItemService } from '../../../services/item-service';
 import { Item } from '../../../model/item';
 import { DataService } from '../../../services/data-service';
 import { Router } from '@angular/router';
+import { UserType } from '../../../model/userType'
 
 
 @Component({
@@ -14,6 +15,7 @@ export class ItemComponent implements OnInit {
     @Input() items : any[];
     
     item : any;
+    
     constructor(private itemService: ItemService, private dataService: DataService,
                 private router: Router){
 
@@ -21,6 +23,7 @@ export class ItemComponent implements OnInit {
 
    ngOnInit(){
      this.dataService.changePreownedItemListForShow(this.items);
+     
    }
 
     onClickDelete(id: number){

@@ -4,6 +4,7 @@ import { Item } from '../../../model/item';
 import { DataService } from '../../../services/data-service';
 import { Router } from '@angular/router';
 import { NewItemService } from '../../../services/newitem-service';
+import { UserType } from '../../../model/userType';
 
 @Component({
   selector: 'newitem-component',
@@ -12,7 +13,9 @@ import { NewItemService } from '../../../services/newitem-service';
 export class NewitemComponent implements OnInit {
 
   @Input() items : any[];
-    
+  
+  userType : UserType = UserType.regular;
+
     item : any;
     constructor(private newItemService: NewItemService, private dataService: DataService,
                 private router: Router){
@@ -20,7 +23,18 @@ export class NewitemComponent implements OnInit {
     }
 
    ngOnInit(){
-     
+    var token = this.dataService.getDecodedAccessToken(localStorage.getItem('token'));
+    if (token.activity < 2000  ){
+      this.userType = 0;
+    } else if (token.activity >= 2000 && token.activity < 5000 ){
+      this.userType = 1;
+    } else if (token.activity >= 5000 && token.activity < 10000) {
+      this.userType = 2;
+    } else {
+      this.userType = 3;
+    }
+    
+    console.log(UserType[this.userType])
    }
 
     onClickDelete(id: number){

@@ -45,9 +45,9 @@ public class ItemController {
 	}
 	
 	@RequestMapping(value="/bid", method = RequestMethod.POST) //promena ponude
-	public Boolean bid(@RequestBody BidDTO bid,@RequestParam("version") int version,  @RequestHeader(value="X-Auth-Token") String token) {
+	public Boolean bid(@RequestBody BidDTO bid,  @RequestHeader(value="X-Auth-Token") String token) {
 		
-		System.out.println("Item version: " + version);
+		
 		if( bid.getBid() <= bid.getItem().getCurrentBid()) {
 			return false;
 		} else {
@@ -62,7 +62,7 @@ public class ItemController {
 			b.setValue(bid.getBid());
 			
 			try {
-				return itemService.bid(bid.getItem().getItemID(), bid.getBid(),version);
+				return itemService.bid(bid.getItem(),bid.getBid());
 			} catch(Exception e) {
 				e.printStackTrace();
 				System.out.println("Exception happened");
