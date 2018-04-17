@@ -208,6 +208,7 @@ public class ProfileController {
 		User user = userRepository.findByUsername(u.getUsername()).get();
 		
 		Role r = new Role();
+//		r.setRole("REGISTERED_USER");
 		r.setRole(role);
 		for(Role ro : user.getRoles()) {
 			if (ro.getRole().equals(role)) {
@@ -221,11 +222,11 @@ public class ProfileController {
 		
 		user.getRoles().add(r);
 		
-//		u.getRoles().clear();
-//		u.getRoles().add(r);
+//		user.getRoles().clear();
+//		user.getRoles().add(r);
 		
 		userRepository.saveAndFlush(user);
 		
-		return u;
+		return user;
 	}
 }
