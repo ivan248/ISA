@@ -57,6 +57,7 @@ import { LocationComponent } from './components/location-component/location-comp
 import { AgmCoreModule } from '@agm/core';
 import { ChangePasswordComponent } from './components/profile-component/change-password/change-password.component';
 import { AcceptDeclineComponent } from './components/reservation-component/accept-decline/accept-decline-component.component';
+import { AllusersComponent } from './components/allusers-component/allusers-component.component';
 
 
 
@@ -97,7 +98,8 @@ import { AcceptDeclineComponent } from './components/reservation-component/accep
     SeatingChartComponent,
     LocationComponent,
     ChangePasswordComponent,
-    AcceptDeclineComponent
+    AcceptDeclineComponent,
+    AllusersComponent
     
   ],
   imports: [

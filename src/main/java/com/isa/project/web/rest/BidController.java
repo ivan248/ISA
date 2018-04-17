@@ -44,9 +44,7 @@ public class BidController {
 	@Autowired
 	private UserService userService;
 	
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 	
 	@PostMapping("/add")
 	public ResponseEntity<Boolean> addBid(@RequestBody BidDTO bid , @RequestHeader(value="X-Auth-Token") String token){
@@ -75,11 +73,8 @@ public class BidController {
 		}
 	
 	}
-=======
-=======
->>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
-=======
->>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
+
+
 	@Autowired 
 	private BidRepository bidRepository;
 	
@@ -120,14 +115,7 @@ public class BidController {
 //	
 //	}
 */	
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
-=======
->>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
-=======
->>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
-	
+
 	@PostMapping("/getallbyitem")
 	public ResponseEntity<List<Bid>> getAllByItem(@RequestBody Item item, @RequestHeader(value="X-Auth-Token") String token){
 		

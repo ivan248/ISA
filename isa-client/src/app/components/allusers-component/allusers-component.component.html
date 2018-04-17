@@ -34,6 +34,24 @@
               <option value="pder">adsdas</option>
             </select>
           <td> <button class="btn btn-success btn-sm" (click)="onClickAcceptBid(bid)"> Add promotion </button></td>
+         
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of users; let userIndex = index">
+          
+          <td>{{u.username}}</td>
+          <td>{{u.name}} {{u.lastName}}</td>
+          <td class="text-danger">
+            <p *ngFor="let r of u.roles"><b>{{r.role}}<br></b></p>
+          </td>
+          <td>
+            <ul>
+              <li  *ngFor="let r of roles; let i = index" [value]="i"  >
+                  {{r}}<button  class="btn btn-success btn-sm float-right" (click)="onClickPromote(u.username,i)"> Add  role</button><hr>
+              </li>
+            </ul>
+           
         </tr>
         
       </tbody>
