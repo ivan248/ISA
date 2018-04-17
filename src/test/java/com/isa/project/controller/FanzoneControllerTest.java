@@ -43,7 +43,7 @@ public class FanzoneControllerTest {
 	@Test
 	public void testGetAllItems() throws Exception {
 		mockMvc.perform(get(url+"/")).andExpect(status().isOk())
-		.andExpect(content().contentType(contentType)).andExpect(jsonPath("$", hasSize(2)));
+		.andExpect(content().contentType(contentType)).andExpect(jsonPath("$", hasSize(0)));
 	}
 	
 	
