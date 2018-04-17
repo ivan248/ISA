@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.isa.project.bean.Play;
 import com.isa.project.bean.Projection;
 import com.isa.project.bean.Theatre;
+import com.isa.project.web.dto.MovieReservationDTO;
 
 @Service
 public interface TheatreService {
@@ -20,6 +21,8 @@ public interface TheatreService {
 	ArrayList<Play> getPlays(int theatreId);
 
 	ArrayList<Projection> getPlayDates(int parseInt);
+
+	boolean makeReservation(MovieReservationDTO movieReservationDTO, String usernameFromToken);
 
 
 	

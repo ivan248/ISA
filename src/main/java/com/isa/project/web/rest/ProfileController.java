@@ -202,6 +202,20 @@ public class ProfileController {
 
 
 	}
+	
+	
+	@GetMapping
+	@RequestMapping(value = "/getReservations")
+	public ResponseEntity getReservations(@RequestHeader(value = "X-Auth-Token") String token) {
+
+		TokenProvider p = new TokenProvider();
+		
+		return new ResponseEntity
+		(userService.getReservations(p.getUsernameFromToken(token)), HttpStatus.OK);
+
+
+	}
+	
 
 
 }

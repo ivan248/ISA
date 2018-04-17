@@ -56,6 +56,7 @@ import { NotificationService } from './services/notification-service';
 import { LocationComponent } from './components/location-component/location-component.component'
 import { AgmCoreModule } from '@agm/core';
 import { ChangePasswordComponent } from './components/profile-component/change-password/change-password.component';
+import { AcceptDeclineComponent } from './components/reservation-component/accept-decline/accept-decline-component.component';
 
 
 
@@ -95,7 +96,8 @@ import { ChangePasswordComponent } from './components/profile-component/change-p
     StepFiveComponent,
     SeatingChartComponent,
     LocationComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    AcceptDeclineComponent
     
   ],
   imports: [

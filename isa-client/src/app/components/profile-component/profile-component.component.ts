@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
     private allUsers : any [] = [];
     private userFriendRequests : any [] = [];
     private filteredArray : any[] = [];
+    private projectionsReserved : any[] = [];
 
     private editClicked : boolean = true;
     private searchButtonClicked : boolean = true;
@@ -80,18 +81,9 @@ export class ProfileComponent implements OnInit {
         this.notifications = data;
       });
 
-      var token = this.getDecodedAccessToken(localStorage.getItem('token'));
-      console.log(token);
+      this.profileService.getReservations().subscribe(data =>
+        this.projectionsReserved = data);
       
-    }
-
-    getDecodedAccessToken(token: string): any {
-      try{
-          return jwt_decode(token);
-      }
-      catch(Error){
-          return null;
-      }
     }
 
     editButtonClicked() {
@@ -247,5 +239,9 @@ export class ProfileComponent implements OnInit {
     onPasswordChanged(passwordChanged : boolean) {
       if(passwordChanged)
         this.adminLoggedFirstTime = false;
+    }
+
+    cancelReservation(id : any) {
+
     }
  }

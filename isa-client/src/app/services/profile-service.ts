@@ -20,6 +20,7 @@ var httpOptions = {
  export class ProfileService {  
 
 
+
     private url : string = "http://localhost:8080/api/profile/";
 
     constructor(private http:HttpClient) {
@@ -166,6 +167,16 @@ var httpOptions = {
       }
 
     
+      getReservations(): any {
+        
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
 
+        return this.http
+        .get(this.url + "getReservations", {headers:headers})
+        .map((data:[any]) => data);
+      }
 
  } 
