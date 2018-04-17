@@ -79,6 +79,7 @@ export class ProfileComponent implements OnInit {
 
       this.notificationService.getAllNotifications().subscribe(data =>{
         this.notifications = data;
+        console.log(data);
       });
 
       this.profileService.getReservations().subscribe(data =>

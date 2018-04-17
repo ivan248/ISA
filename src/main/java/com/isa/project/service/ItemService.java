@@ -10,7 +10,11 @@ public interface ItemService {
 	Boolean editItem(Item item);
 	Boolean approveItem(int id);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	Boolean bid(Item i, float value) throws Exception;
+=======
+	//Boolean bid(Item i, float value) throws Exception;
+>>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
 =======
 	//Boolean bid(Item i, float value) throws Exception;
 >>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
