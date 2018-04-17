@@ -52,7 +52,7 @@ public class Converter {
 	}
 	
 	public static Item convertAddNewItemToItem(AddNewItemDto newItemDTO) {
-		Item newItem = new Item(newItemDTO.getName(), newItemDTO.getDescription(),newItemDTO.getCurrentBid(),newItemDTO.getEndDate(),newItemDTO.getImage());
+		Item newItem = new Item(newItemDTO.getName(), newItemDTO.getDescription(),newItemDTO.getEndDate(),newItemDTO.getImage());
 		return newItem;
 	}
 	

@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
     private allUsers : any [] = [];
     private userFriendRequests : any [] = [];
     private filteredArray : any[] = [];
+    private projectionsReserved : any[] = [];
 
     private editClicked : boolean = true;
     private searchButtonClicked : boolean = true;
@@ -54,8 +55,7 @@ export class ProfileComponent implements OnInit {
         
         for(var i:number=0; i<data.roles.length; i++)
         {
-          console.log(data.roles[i].role);
-          console.log(data.firstTimeLogged);
+          
           if(data.roles[i].role === "ADMIN" && data.firstTimeLogged)
           {
             this.adminLoggedFirstTime = true;
@@ -78,21 +78,12 @@ export class ProfileComponent implements OnInit {
 
       this.notificationService.getAllNotifications().subscribe(data =>{
         this.notifications = data;
-        console.log(data);
       });
 
-      var token = this.getDecodedAccessToken(localStorage.getItem('token'));
-      console.log(token);
+      this.profileService.getReservations().subscribe(data =>
+        {this.projectionsReserved = data;
+        console.log(this.projectionsReserved);});
       
-    }
-
-    getDecodedAccessToken(token: string): any {
-      try{
-          return jwt_decode(token);
-      }
-      catch(Error){
-          return null;
-      }
     }
 
     editButtonClicked() {
@@ -197,7 +188,6 @@ export class ProfileComponent implements OnInit {
       this.profileService.sendFriendRequest(friendUsername)
       .subscribe(data => {
         this.allUsers = data;
-      console.log(data);
     });
 
       alert("Friend request sent!");
@@ -211,7 +201,6 @@ export class ProfileComponent implements OnInit {
 
          this.profileService.getFriendRequests().subscribe(data =>
            {this.userFriendRequests = data;
-             console.log(data);
            });
           
         });
@@ -224,13 +213,12 @@ export class ProfileComponent implements OnInit {
     declineFriend(friendId : number) {
       this.profileService.declineFriend(friendId.toString())
       .subscribe(data => {
-        console.log(data) ;
+       
         this.userFriends = data;
         this.userFriendRequests = [];
 
         this.profileService.getFriendRequests().subscribe(data =>
           {this.userFriendRequests = data;
-            console.log(data);
            
           });
       
@@ -241,12 +229,16 @@ export class ProfileComponent implements OnInit {
 
     onClickRead(id : number){
       this.notificationService.readNotification(id).subscribe(data => {
-        console.log(data);
+       
       })
     }
 
     onPasswordChanged(passwordChanged : boolean) {
       if(passwordChanged)
         this.adminLoggedFirstTime = false;
+    }
+
+    cancelReservation(id : any) {
+
     }
  }

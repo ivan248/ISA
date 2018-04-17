@@ -24,9 +24,9 @@ public class Item implements Serializable {
 	
 	public Item() {}
 	
-	public Item(String name,String description, float currentBid,Date endDate,String image ) {
+	public Item(String name,String description,Date endDate,String image ) {
 		this.name = name;
-		this.currentBid = currentBid;
+		
 		this.approved = false;
 		this.description = description;
 		this.sold = false;
@@ -68,8 +68,7 @@ public class Item implements Serializable {
 	@Column
 	private Date endDate;
 	
-	@Column(name = "currentBid")
-	private float currentBid;
+	
 	
 	@NotNull
 	@ManyToOne
@@ -146,14 +145,7 @@ public class Item implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public float getCurrentBid() {
-		return currentBid;
-	}
-
-	public void setCurrentBid(float currentBid) {
-		this.currentBid = currentBid;
-	}
-
+	
 	public User getOwner() {
 		return owner;
 	}

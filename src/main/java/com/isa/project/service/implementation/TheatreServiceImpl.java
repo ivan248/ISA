@@ -3,33 +3,55 @@ package com.isa.project.service.implementation;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import com.isa.project.bean.Play;
 import com.isa.project.bean.Projection;
+import com.isa.project.bean.ProjectionUserTicket;
+import com.isa.project.bean.ProjectionUserTicketId;
 import com.isa.project.bean.Theatre;
+import com.isa.project.bean.Ticket;
+import com.isa.project.bean.User;
+import com.isa.project.repository.FriendRepository;
 import com.isa.project.repository.PlayRepository;
+import com.isa.project.repository.ProjectionRepository;
+import com.isa.project.repository.ProjectionUserTicketRepository;
 import com.isa.project.repository.TheatreRepository;
+import com.isa.project.repository.UserRepository;
 import com.isa.project.service.TheatreService;
+import com.isa.project.web.dto.MovieReservationDTO;
 
 @Service
-public class TheatreServiceImpl implements TheatreService{
-	
-	
+public class TheatreServiceImpl implements TheatreService {
+
 	@Autowired
 	private TheatreRepository theatreRepository;
-	
 
 	@Autowired
 	private PlayRepository playRepository;
-
+	
+	@Autowired
+	private ProjectionRepository projectionRepository;
+	
+	@Autowired
+	private EmailService emailService;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private ProjectionUserTicketRepository movieUserTicketRepository;
+	
+	@Autowired
+	private FriendRepository friendRepository;
 
 	@Override
 	public ArrayList<Theatre> getAllTheatres() {
 		// TODO Auto-generated method stub
 		return theatreRepository.findAll();
 	}
-	
+
 	@Override
 	public Boolean editTheatre(Theatre theatre) {
 
@@ -39,63 +61,159 @@ public class TheatreServiceImpl implements TheatreService{
 			t.setDescription(theatre.getDescription());
 			t.setAddress(theatre.getAddress());
 			t.setId(theatre.getId());
-			
-			
+
 			theatreRepository.flush();
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("Error occured while writing to database. Constraints were not satisfied.********");
 			e.printStackTrace();
 			return false;
 		}
-		
-		
+
 		return true;
 	}
 
 	@Override
 	public ArrayList<Theatre> findByNameContaining(String theatre) {
 
-		
-	
 		return theatreRepository.findByNameContaining(theatre);
 	}
 
 	@Override
 	public ArrayList<Play> getPlays(int theatreId) {
-		
-		
+
 		ArrayList<Play> playsList = new ArrayList();
-		
-		for(Projection pt : theatreRepository.findOneById((long)theatreId).getProjekcije())
-		{
-			for(Play p : playRepository.findAll())
-			{
-				for(Projection pp : p.getProjekcije())
-				{
-					if(pp.getId().equals(pt.getId()))
-					{
-						if(!playsList.contains(p))
+
+		for (Projection pt : theatreRepository.findOneById((long) theatreId).getProjekcije()) {
+			for (Play p : playRepository.findAll()) {
+				for (Projection pp : p.getProjekcije()) {
+					if (pp.getId().equals(pt.getId())) {
+						if (!playsList.contains(p))
 							playsList.add(p);
 					}
 				}
 			}
 		}
-		
+
 		return playsList;
 	}
 
 	@Override
 	public ArrayList<Projection> getPlayDates(int parseInt) {
 
-		System.out.println(playRepository.findProjectionsByPlayId((long)parseInt));
-		
-		return playRepository.findProjectionsByPlayId((long)parseInt);
+		System.out.println(playRepository.findProjectionsByPlayId((long) parseInt));
+
+		return playRepository.findProjectionsByPlayId((long) parseInt);
 	}
 
+	@Override
+	public boolean makeReservation(MovieReservationDTO movieReservationDTO, String usernameFromToken) {
 
-	
-	
+		Projection projection = projectionRepository.findOneById(movieReservationDTO.getProjectionId());
+		User u = userRepository.findByUsername(usernameFromToken).get();
+		
+		System.out.println(movieReservationDTO + "    iz makeReservation");
+
+
+		for (int i = 0; i < movieReservationDTO.getSeatsTaken().size(); i++) {
+			projection.getTickets().add(new Ticket(movieReservationDTO.getSeatsTaken().get(i), false,
+					(int) projection.getPrice(), true, false));
+			
+		}
+		
+		projectionRepository.save(projection);
+
+		// recimo da imamo ukupno 2 karte, a ja sam rez 3, to je jednako 5
+		// razlika je 5-3-1 = 1
+		// znaci 0 i 1 su stare karte, 2 3 4 su nove
+		// razlika ++ => razlika = 2
+		// ubacim mene na tu kartu
+		// razlika ++
+		// ubacim usera iz niza usera na ostale kartu
+		int razlika = projection.getTickets().size()-1-movieReservationDTO.getSeatsTaken().size();
+		razlika++;
+		ProjectionUserTicket projectionUserTicket1 =
+				new ProjectionUserTicket(
+						new ProjectionUserTicketId(projection.getId(), u.getId(), projection.getTickets().get(razlika).getId()));
+		System.out.println(projectionUserTicket1);
+		razlika++;
+		
+		projectionUserTicket1.setMovie(false);
+		projectionUserTicket1.setEnabled(true);
+		
+		movieUserTicketRepository.save(projectionUserTicket1);
+		
+		int invitedIndex = 0;
+		
+		for(int i = razlika; i < projection.getTickets().size(); i++)	
+		{
+			if(movieReservationDTO.getInvitedFriends().size()!=0)
+			{
+				
+				User newUser = userRepository.findByUsername((
+						friendRepository.findByFriendId(
+								Integer.parseInt(
+										movieReservationDTO.getInvitedFriends().get(invitedIndex))).getFriendUsername())).get();
+
+				ProjectionUserTicket projectionUserTicket =
+						new ProjectionUserTicket(
+								new ProjectionUserTicketId(projection.getId(), newUser.getId(), projection.getTickets().get(i).getId()));
+				System.out.println(projectionUserTicket);
+				
+				projectionUserTicket.setMovie(false);
+				projectionUserTicket.setEnabled(false);
+				
+				invitedIndex++;
+				
+				movieUserTicketRepository.save(projectionUserTicket);
+				
+//				SimpleMailMessage registrationEmail = new SimpleMailMessage();
+//				registrationEmail.setTo(friendRepository.findByFriendId(friendId).getFriendUsername());
+//				registrationEmail.setSubject("Invitation");
+//				registrationEmail.setText("You have been invited for the following projection:\n" + "Title: "
+//						+ movieReservationDTO.getMovieName() + " \n" + "Date: " + movieReservationDTO.getDate() + " \n"
+//						+ "Time: " + movieReservationDTO.getTime() + " \n" + "Place: " + movieReservationDTO.getPlace() + " \n"
+//						+ "Seats reserved: " + movieReservationDTO.getSeatsTaken().get(0) + " \n"
+//						+"To confirm your reservation, please follow the link below:\n"
+//						+ "localhost:4200/invitation/" + "123123");
+//				registrationEmail.setFrom("noreply@domain.com");
+//
+//				emailService.sendEmail(registrationEmail);
+				
+			}
+			else
+			{
+				ProjectionUserTicket projectionUserTicket =
+						new ProjectionUserTicket(
+								new ProjectionUserTicketId(projection.getId(), u.getId(), projection.getTickets().get(i).getId()));
+				System.out.println(projectionUserTicket);
+				
+				projectionUserTicket.setMovie(false);
+				projectionUserTicket.setEnabled(true);
+				
+				invitedIndex++;
+				
+				movieUserTicketRepository.save(projectionUserTicket);
+
+				
+			}
+			
+		}
+		
+		
+
+		SimpleMailMessage registrationEmail = new SimpleMailMessage();
+		registrationEmail.setTo(usernameFromToken);
+		registrationEmail.setSubject("Ticket reservation confirmation");
+		registrationEmail.setText("You have reserved ticked for the following projection:\n" + "Title: "
+				+ movieReservationDTO.getMovieName() + " \n" + "Date: " + movieReservationDTO.getDate() + " \n"
+				+ "Time: " + movieReservationDTO.getTime() + " \n" + "Place: " + movieReservationDTO.getPlace() + " \n"
+				+ "Seats reserved: " + movieReservationDTO.getSeatsTaken() + " \n");
+		registrationEmail.setFrom("noreply@domain.com");
+
+		emailService.sendEmail(registrationEmail);
+
+		return true;
+	}
 
 
 

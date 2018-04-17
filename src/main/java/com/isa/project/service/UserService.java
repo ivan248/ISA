@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import com.isa.project.bean.Friend;
+import com.isa.project.bean.Projection;
 import com.isa.project.bean.User;
 import com.isa.project.web.dto.RegistrationUserDto;
+import com.isa.project.web.dto.ReservationDTO;
 
 @Service
 public interface UserService {
@@ -29,5 +31,6 @@ public interface UserService {
 	public void addActivityPoints(Long points,String username);
 
 	public List<User> searchUsers(String usernameFromToken, String searchName, String searchLastName);
+	public List<ReservationDTO> getReservations(String usernameFromToken);
 
 }

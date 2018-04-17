@@ -20,6 +20,7 @@ var httpOptions = {
  export class ProfileService {  
 
 
+
     private url : string = "http://localhost:8080/api/profile/";
 
     constructor(private http:HttpClient) {
@@ -165,7 +166,29 @@ var httpOptions = {
 
       }
 
-    
+      addRole(user : any,role : string){
+        let body = JSON.stringify(user);
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+         
+         let params = new HttpParams().append('role',role);
+         return this.http.post('http://localhost:8080//api/profile/addrole',body,{params:params, headers: headers});
+        
+      }
 
+    
+      getReservations(): any {
+        
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http
+        .get(this.url + "getReservations", {headers:headers})
+        .map((data:[any]) => data);
+      }
 
  } 

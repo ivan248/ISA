@@ -8,11 +8,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
 import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { MovieReservation } from '../model/movieReservation';
 
   
  
  @Injectable()
  export class TheatresService {  
+
 
     private url : string = "http://localhost:8080/api/theatres/test";
     private selectedTheatre: any;
@@ -96,7 +98,7 @@ import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular
         return this.http
         .get("http://localhost:8080/api/home/getPlayDates",
          {params:params, headers:headers})
-         .map((data:[any]) => data);;
+         .map((data:[any]) => data);
     }
 
     getNotFastProjectionsByTheatreId(theatreid: any){
@@ -116,5 +118,36 @@ import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular
       }
 
   
+    makeTheatreReservation(movieReservation: any) {
+        
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http
+        .post('http://localhost:8080/api/home/makeTheatreReservation',
+        movieReservation,
+        {headers:headers}
+    );
+
+
+    }
+
+    sendFriendTheatreInvitation(movieReservation : MovieReservation, friendId : any) {
+
+        let params = new HttpParams().set('friendId', friendId.toString());
+
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http
+        .post('http://localhost:8080/api/home/sendFriendTheatreInvitation',
+        movieReservation,
+        {headers:headers, params:params}
+    );
+    }
 
  } 

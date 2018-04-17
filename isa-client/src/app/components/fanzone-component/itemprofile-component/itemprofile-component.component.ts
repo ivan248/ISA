@@ -18,6 +18,8 @@ export class ItemprofileComponent implements OnInit {
   item: Item;
   value : number;
   dobarUnos: boolean = false;
+  username : any;
+  bid : any;
 
   constructor(private dataService: DataService,private itemService: ItemService,
               private bidService: BidService, private router: Router
@@ -26,10 +28,20 @@ export class ItemprofileComponent implements OnInit {
   ngOnInit() {
     this.dataService.currentSelectedItem.subscribe(data => {
       this.item=data;
-      this.value = this.item.currentBid;
+      
       console.log("VERZIJA: " + data.version);
       var token = this.dataService.getDecodedAccessToken(localStorage.getItem('token'));
      console.log(token);
+    });
+
+    let user = this.dataService.getDecodedAccessToken(localStorage.getItem('token'));
+    console.log(user);
+    this.username = user.user;
+      
+    this.bidService.getBid(this.item).subscribe(data => {
+      console.log(data);
+      this.bid = data;
+      this.value = this.bid.value
     });
     
   }
@@ -38,21 +50,19 @@ export class ItemprofileComponent implements OnInit {
 
   onSubmit() {
     
-    if (this.value <= this.item.currentBid){
-      alert("Your bid must be higher than current");
-    } else {
-      
-      //this.bidService.sendNewBid(bid).subscribe(data => console.log(data));
-      this.itemService.changeCurrentBid(this.value,this.item,this.item.version).subscribe(data =>{
-        let bid = new BidDTO(this.item, this.value );
-        
-        if(data != false) {
-          console.log("Usao u ne false")
-          this.bidService.sendNewBid(bid).subscribe(data2 => console.log(data2));
+    
+      this.bid.value = this.value;
+      console.log(this.bid);
+      console.log(this.value)
+      this.bidService.changeBidValue(this.bid).subscribe(data2 => {
+        console.log(data2)
+        if(data2 == false){
+          alert("Error ocurred");
         }
-      })
-      this.item.currentBid = this.value;
-    }
+      });
+        
+    
+    
   }
 
   onClickShowAllBids(id : number) {

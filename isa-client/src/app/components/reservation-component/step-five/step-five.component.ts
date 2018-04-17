@@ -39,12 +39,8 @@ export class StepFiveComponent implements OnInit {
       }
 
       this.movieReservation.seatsTaken = this.selectedSeats;
-
       this.movieReservationOutput.emit(this.movieReservation);
-
-
       
-
     }
 
 }

@@ -224,6 +224,37 @@ public class HomeController {
 
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
+	
+//	@RequestMapping(value = "/sendFriendTheatreInvitation", consumes = "application/json")
+//	public ResponseEntity sendFriendTheatreInvitation(@RequestHeader(value = "X-Auth-Token") String token,
+//			@RequestBody MovieReservationDTO movieReservationDTO,
+//			@RequestParam("friendId") String friendId) {
+//
+//		TokenProvider p = new TokenProvider();
+//
+//		if(theatreService.sendFriendTheatreInvitation(movieReservationDTO, Integer.parseInt(friendId)))
+//			return new ResponseEntity<>(HttpStatus.OK);
+//
+//		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//	}
+	
+	
+	
+	
+	@PostMapping
+	@RequestMapping(value = "/makeTheatreReservation", consumes = "application/json")
+	public ResponseEntity makeTheatreReservation(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestBody MovieReservationDTO movieReservationDTO) {
+
+		TokenProvider p = new TokenProvider();
+
+		System.out.println("pogodio maketheartre");
+		
+		if(theatreService.makeReservation(movieReservationDTO, p.getUsernameFromToken(token)))
+			return new ResponseEntity<>(HttpStatus.OK);
+
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
 
 	
 	@RequestMapping(value="/reserveFast", method = RequestMethod.POST) 

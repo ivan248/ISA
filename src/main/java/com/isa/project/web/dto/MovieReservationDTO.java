@@ -11,6 +11,7 @@ public class MovieReservationDTO {
 	private String time;
 	private String place;
 	private ArrayList<Integer> seatsTaken;
+	private ArrayList<String> invitedFriends;
 	
 	public MovieReservationDTO() {
 		
@@ -22,6 +23,14 @@ public class MovieReservationDTO {
 
 	public void setProjectionId(Long projectionId) {
 		this.projectionId = projectionId;
+	}
+
+	public ArrayList<String> getInvitedFriends() {
+		return invitedFriends;
+	}
+
+	public void setInvitedFriends(ArrayList<String> invitedFriends) {
+		this.invitedFriends = invitedFriends;
 	}
 
 	public String getMovieName() {
@@ -69,8 +78,11 @@ public class MovieReservationDTO {
 	@Override
 	public String toString() {
 		return "MovieReservationDTO [projectionId=" + projectionId + ", movieName=" + movieName + ", date=" + date
-				+ ", time=" + time + ", place=" + place + ", seatsTaken=" + seatsTaken + "]";
+				+ ", time=" + time + ", place=" + place + ", seatsTaken=" + seatsTaken + ", invitedFriends="
+				+ invitedFriends + "]";
 	}
+
 	
+
 	
 }

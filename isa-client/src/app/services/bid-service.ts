@@ -47,4 +47,25 @@ import { Item } from '../model/item';
         return this.http.post('http://localhost:8080/bid/accept',body,{ headers: headers});
     }
 
+    getBid(item: Item){
+        const body = JSON.parse(JSON.stringify(item));
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+        return this.http.post('http://localhost:8080/bid/getbid',body,{ headers: headers});
+    }
+
+    changeBidValue(value: any){
+        const body = JSON.parse(JSON.stringify(value));
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+        let params = new HttpParams().append('value',value);
+        return this.http.post('http://localhost:8080/bid/changevalue',body,{ params:params,headers: headers});
+
+
+    }
+
  } 
