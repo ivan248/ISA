@@ -17,11 +17,14 @@ public class ReservationDTO {
     
     private int seatNumber;
     
+    private boolean enabled;
+    
     public ReservationDTO() {
     	
     }
-   
-	public ReservationDTO(String name, Date date, String time, String place, float price, int seatNumber) {
+    
+	public ReservationDTO(String name, Date date, String time, String place, float price, int seatNumber,
+			boolean enabled) {
 		super();
 		this.name = name;
 		this.date = date;
@@ -29,6 +32,17 @@ public class ReservationDTO {
 		this.place = place;
 		this.price = price;
 		this.seatNumber = seatNumber;
+		this.enabled = enabled;
+	}
+
+
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public String getName() {
@@ -82,11 +96,7 @@ public class ReservationDTO {
 	@Override
 	public String toString() {
 		return "ReservationDTO [name=" + name + ", date=" + date + ", time=" + time + ", place=" + place + ", price="
-				+ price + ", seatNumber=" + seatNumber + "]";
+				+ price + ", seatNumber=" + seatNumber + ", enabled=" + enabled + "]";
 	}
-    
-    
-    
-
 
 }

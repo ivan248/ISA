@@ -297,8 +297,6 @@ public class UserSeviceImpl implements UserService {
 		
 	}
 	
-	
-
 	public List<User> searchUsers(String usernameFromToken, String searchName, String searchLastName) {
 		return userRepository.findByFirstNameAndLastName(searchName, searchLastName);
 	}
@@ -330,7 +328,8 @@ public class UserSeviceImpl implements UserService {
 									proj.getTime(), 
 									proj.getPlace(), 
 									proj.getPrice(), 
-									ticketRepository.findOneById(put.getMovieUserTicketID().getTicketId()).getSeatNumber()));
+									ticketRepository.findOneById(put.getMovieUserTicketID().getTicketId()).getSeatNumber(),
+									put.isEnabled()));
 						}
 					}
 				}
