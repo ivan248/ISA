@@ -108,7 +108,7 @@
   </header>
     <!--End of Header-->
 
-<!-- Main container -->
+<!-- Main container r -->
 
 <!-- Section:Friends -->
   <div class="row">
@@ -155,7 +155,7 @@
             <tr >
               
               <td>{{n.text}}</td>
-              <td><button  *ngIf="n.seen" class="btn btn-success" (click)="onClickRead(n.notificationID)"> Mark as read </button>
+              <td><button  *ngIf="!n.read" class="btn btn-success" (click)="onClickRead(n.notificationID)"> Mark as read </button>
                   </td>
             </tr>
             

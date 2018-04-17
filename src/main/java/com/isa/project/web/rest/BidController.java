@@ -46,6 +46,7 @@ public class BidController {
 	
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	@PostMapping("/add")
 	public ResponseEntity<Boolean> addBid(@RequestBody BidDTO bid , @RequestHeader(value="X-Auth-Token") String token){
@@ -75,6 +76,8 @@ public class BidController {
 	
 	}
 =======
+=======
+>>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
 =======
 >>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
 	@Autowired 
@@ -118,6 +121,9 @@ public class BidController {
 //	}
 */	
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
+=======
 >>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
 =======
 >>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd

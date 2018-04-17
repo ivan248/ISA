@@ -46,6 +46,7 @@ public class ItemController {
 	
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	@RequestMapping(value="/bid", method = RequestMethod.POST) //promena ponude
 	public Boolean bid(@RequestBody BidDTO bid,  @RequestHeader(value="X-Auth-Token") String token) {
 		
@@ -75,6 +76,9 @@ public class ItemController {
 		}
 		
 	}
+=======
+	
+>>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
 =======
 	
 >>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd

@@ -204,6 +204,7 @@ public class ProfileController {
 	
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	@GetMapping
 	@RequestMapping(value = "/getReservations")
@@ -220,6 +221,8 @@ public class ProfileController {
 
 
 =======
+=======
+>>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
 =======
 >>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
 	@PostMapping("/addrole")
@@ -249,6 +252,9 @@ public class ProfileController {
 		return u;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
+=======
 >>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
 =======
 >>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
