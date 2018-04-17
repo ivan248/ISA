@@ -12,4 +12,5 @@ public interface BidService {
 	public Boolean acceptBid(Bid bid);
 	public Boolean addBid(Bid bid);
 	public List<Bid> getAllItemBids(Item item);
+	public Boolean changeBidValue(Bid bid);
 }

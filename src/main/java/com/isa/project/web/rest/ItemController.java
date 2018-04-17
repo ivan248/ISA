@@ -44,6 +44,7 @@ public class ItemController {
 		return itemService.approveItem(id);
 	}
 	
+<<<<<<< HEAD
 	@RequestMapping(value="/bid", method = RequestMethod.POST) //promena ponude
 	public Boolean bid(@RequestBody BidDTO bid,  @RequestHeader(value="X-Auth-Token") String token) {
 		
@@ -73,6 +74,9 @@ public class ItemController {
 		}
 		
 	}
+=======
+	
+>>>>>>> 702bf42071cb3a497b78007bdaa08761088d94bd
 	
 	@RequestMapping(value="/acceptbid/{id}", method = RequestMethod.POST) //promena ponude
 	public Boolean acceptBid(@PathVariable("id") int id) {

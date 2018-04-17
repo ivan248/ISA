@@ -21,7 +21,7 @@ public class ItemServiceImpl implements ItemService {
 	public Boolean editItem(Item item) {
 		try {
 			Item i = itemRepository.findOneByItemID(item.getItemID());
-			i.setCurrentBid(item.getCurrentBid());
+			
 			i.setDescription(item.getDescription());
 			i.setEndDate(item.getEndDate());
 			i.setName(item.getName());
@@ -76,7 +76,7 @@ public class ItemServiceImpl implements ItemService {
 		
 	}
 
-	@Override
+	/*@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	public Boolean bid(Item i, float value) {
 		try {
@@ -111,7 +111,7 @@ public class ItemServiceImpl implements ItemService {
 			return false;
 		}
 		
-	}
+	}*/
 
 	@Override
 	@Transactional(readOnly = false)

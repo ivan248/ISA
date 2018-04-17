@@ -166,6 +166,18 @@ var httpOptions = {
 
       }
 
+      addRole(user : any,role : string){
+        let body = JSON.stringify(user);
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+         
+         let params = new HttpParams().append('role',role);
+         return this.http.post('http://localhost:8080//api/profile/addrole',body,{params:params, headers: headers});
+        
+      }
+
     
       getReservations(): any {
         
