@@ -2,7 +2,6 @@ package com.isa.project.service.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,12 +12,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.isa.project.bean.Friend;
+import com.isa.project.bean.Play;
+import com.isa.project.bean.Projection;
+import com.isa.project.bean.ProjectionUserTicket;
 import com.isa.project.bean.User;
 import com.isa.project.repository.FriendRepository;
+import com.isa.project.repository.PlayRepository;
+import com.isa.project.repository.ProjectionRepository;
+import com.isa.project.repository.ProjectionUserTicketRepository;
+import com.isa.project.repository.TicketRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.service.UserService;
 import com.isa.project.web.Converter;
 import com.isa.project.web.dto.RegistrationUserDto;
+import com.isa.project.web.dto.ReservationDTO;
 
 @Service
 public class UserSeviceImpl implements UserService {
@@ -34,7 +41,19 @@ public class UserSeviceImpl implements UserService {
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-
+	
+	@Autowired
+	private ProjectionUserTicketRepository projectionUserTicketRepository;
+	
+	@Autowired
+	private ProjectionRepository projectionRepository;
+	
+	@Autowired
+	private PlayRepository playRepository;
+	
+	@Autowired
+	private TicketRepository ticketRepository;
+	
 	@Override
 	public boolean registerUser(RegistrationUserDto userDto, HttpServletRequest request) {
 
@@ -282,6 +301,51 @@ public class UserSeviceImpl implements UserService {
 
 	public List<User> searchUsers(String usernameFromToken, String searchName, String searchLastName) {
 		return userRepository.findByFirstNameAndLastName(searchName, searchLastName);
+	}
+
+	@Override
+	public List<ReservationDTO> getReservations(String usernameFromToken) {
+		
+		User u = userRepository.findByUsername(usernameFromToken).get();
+		List<ReservationDTO> lista = new ArrayList<ReservationDTO>();
+	
+		for(ProjectionUserTicket put : projectionUserTicketRepository.findByMovieUserTicketIdUserId(u.getId()))
+		{
+			
+			if(put.isMovie())
+			{
+				
+			}
+			else
+			{
+				for(Play p : playRepository.findAll())
+				{
+					for(Projection proj : p.getProjekcije())
+					{
+						if(proj.getId().equals(put.getMovieUserTicketId().getProjectionId()))
+						{
+							lista.add(new ReservationDTO(
+									p.getName(), 
+									proj.getDate(), 
+									proj.getTime(), 
+									proj.getPlace(), 
+									proj.getPrice(), 
+									ticketRepository.findOneById(put.getMovieUserTicketID().getTicketId()).getSeatNumber()));
+						}
+					}
+				}
+			}
+			
+		}
+		
+		
+		
+		
+		System.out.println("Nadjeno je sledece: \n");
+		System.out.println(lista);
+		System.out.println("\n");
+		
+		return lista;
 	}
 
 

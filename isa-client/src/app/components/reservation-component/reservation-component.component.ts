@@ -18,6 +18,7 @@ export class ReservationComponent implements OnInit {
     private theatresArray : any;
     private moviesArray : any;
     private movieReservation : MovieReservation;
+    private friendsInvited : any[] = [];
 
     private cinemaSelected : boolean = false;
     private cinemaId : number;
@@ -71,6 +72,12 @@ export class ReservationComponent implements OnInit {
         this.movieReservation = movieReservation;
     }
 
+    onFriendsInvitedChanged(friendsInvited : any) {
+        console.log("onFriendsInvitedChanged : ispis ");
+        console.log(friendsInvited);
+        this.friendsInvited = friendsInvited;
+    }
+
     nextStep() {
        
         this.step++;
@@ -99,8 +106,26 @@ export class ReservationComponent implements OnInit {
     }
 
     finishReservation() {
-        this.cinemaService.makeCinemaReservation(this.movieReservation)
+
+        this.movieReservation.invitedFriends = this.friendsInvited;
+        console.log("finishReservation : ispis ");
+        console.log(this.movieReservation.invitedFriends);
+
+        if(!this.cinemaSelected)
+        {
+            console.log("Saljem iz cinema!");
+            this.cinemaService.makeCinemaReservation(this.movieReservation)
             .subscribe(data => console.log(data));
+        }
+        else
+        {
+            console.log("Saljem iz theatre!");
+            this.theatreService.makeTheatreReservation(this.movieReservation)
+            .subscribe(data => console.log(data));
+        }
+      
+
+        
 
         this.step = 1;
     }

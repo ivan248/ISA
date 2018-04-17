@@ -188,11 +188,17 @@ addToFast(cinemaid: any, ticketid:any, ticket: any){
     
 
 makeCinemaReservation(movieReservation : MovieReservation) {
+    
+    let headers = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     });
 
-
-    return this.http.post('http://localhost:8080/api/home/makeCinemaReservation', movieReservation,
-        
-     );
+    return this.http
+    .post('http://localhost:8080/api/home/makeCinemaReservation',
+     movieReservation,
+      {headers:headers}
+       );
 }
 
 reserveFast(ticket:any, ticketid: any){

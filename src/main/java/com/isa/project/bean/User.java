@@ -1,5 +1,6 @@
 package com.isa.project.bean;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,10 +64,9 @@ public class User {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "friend_id"))
     private List<Friend> friends;
- 
     
     public User() {
     	this.enabled = false;
@@ -76,11 +76,8 @@ public class User {
     public Long getId() {
         return id;
     }
-    
-    
 
-
-    public Long getActivity() {
+	public Long getActivity() {
 		return activity;
 	}
 

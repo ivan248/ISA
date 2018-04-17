@@ -20,6 +20,20 @@
           <th scope="col-md-4">Full name</th>
           <th scope="col-md-4">Role</th>
           <th scope="col-md-2">Add new role</th>
+          <th scope="col-md-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of users">
+          
+          <td>{{u.username}}</td>
+          <td>{{u.name}} {{u.lastName}}</td>
+          <td class="text-danger"><b>{{u.roles[0].role}}</b></td>
+          <td>
+            <select>
+              <option value="pder">adsdas</option>
+            </select>
+          <td> <button class="btn btn-success btn-sm" (click)="onClickAcceptBid(bid)"> Add promotion </button></td>
          
         </tr>
       </thead>

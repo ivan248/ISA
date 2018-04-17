@@ -8,6 +8,7 @@ export class MovieReservation
     public price: number;
     public seatsTaken : any[];
     public projectionId : number;
+    public invitedFriends : any[];
 
 
 

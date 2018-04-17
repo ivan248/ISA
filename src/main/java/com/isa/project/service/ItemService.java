@@ -10,6 +10,10 @@ public interface ItemService {
 	Boolean editItem(Item item);
 	Boolean approveItem(int id);
 	//Boolean bid(Item i, float value) throws Exception;
+	//Boolean bid(Item i, float value) throws Exception;
+	//Boolean bid(Item i, float value) throws Exception;
+	//Boolean bid(Item i, float value) throws Exception;
+	//Boolean bid(Item i, float value) throws Exception;
 	Boolean acceptBid(int id); //korisnik koji je okacio oglas prihvata ponudu(prodaje)
 	Boolean checkApproved(int id); //provera da li je rekvizit odobren pre nego sto se izmeni
 	

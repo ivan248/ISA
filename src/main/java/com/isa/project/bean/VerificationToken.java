@@ -1,8 +1,9 @@
 package com.isa.project.bean;
 
 
-import java.util.Date;
+import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
-public class VerificationToken {
+public class VerificationToken implements Serializable {
     private static final int EXPIRATION = 60 * 24;
  
     @Id

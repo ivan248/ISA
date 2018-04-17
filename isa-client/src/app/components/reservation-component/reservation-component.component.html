@@ -68,6 +68,8 @@
 
                 <step-four-component *ngIf="step===4"
                 [selectedSeats]=selectedSeats
+                [cinemaSelected]=cinemaSelected
+                (invitedFriendsArray)="onFriendsInvitedChanged($event)"
                 >
 
 

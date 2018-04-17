@@ -24,6 +24,9 @@ import { ItembidsComponent } from "./components/fanzone-component/itembids-compo
 import { ReservationComponent } from "./components/reservation-component/reservation-component.component";
 import { SeatingChartComponent } from "./components/seating-chart-component/seating-chart.component";
 import { LocationComponent } from "./components/location-component/location-component.component";
+
+import { AcceptDeclineComponent } from "./components/reservation-component/accept-decline/accept-decline-component.component";
+
 import { AllusersComponent } from "./components/allusers-component/allusers-component.component";
 
 const appRoutes: Routes = 
@@ -99,6 +102,9 @@ const appRoutes: Routes =
     {
         path: 'seatings',
         component: SeatingChartComponent},
+    {
+        path: 'invitation/:id',
+        component: AcceptDeclineComponent},
     {
         path: 'location',
         component: LocationComponent},  

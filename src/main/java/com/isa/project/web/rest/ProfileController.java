@@ -202,6 +202,18 @@ public class ProfileController {
 
 	}
 	
+	@GetMapping
+	@RequestMapping(value = "/getReservations")
+	public ResponseEntity getReservations(@RequestHeader(value = "X-Auth-Token") String token) {
+
+		TokenProvider p = new TokenProvider();
+		
+		return new ResponseEntity
+		(userService.getReservations(p.getUsernameFromToken(token)), HttpStatus.OK);
+
+
+	}
+	
 	@PostMapping("/addrole")
 	public User addRole(@RequestHeader(value = "X-Auth-Token") String token,@RequestBody User u, @RequestParam("role") String role) {
 		

@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { UserType } from '../../../model/userType'
 
 
-
 @Component({
   selector: 'item-component',
   templateUrl: './item-component.component.html'
