@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { CinemasService } from '../../services/cinemas-service.service';
 import { HomeService } from '../../services/home-service.service';
 import { NgForm } from '@angular/forms';
-import { ViewCinemaComponent } from '../viewCinema-component/viewCinema-component.component';
 
 @Component({
   selector: 'addProjection-component',
@@ -39,9 +38,7 @@ export class AddProjectionComponent implements OnInit {
 
 
       const body = JSON.parse(JSON.stringify(f.value));
-     
-      // kako ovaj poslati na view cinema current
-     
+    
       this.cinemasService.addProjection(body, movie, cinema)
       .subscribe(data => {
         this.currentCinema = data;

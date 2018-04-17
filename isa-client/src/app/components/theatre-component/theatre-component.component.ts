@@ -49,11 +49,11 @@ export class TheatresComponent implements OnInit {
 
     private selectedTheatre: any;
 
-   
+    private editButtonHidden: boolean = true;
 
     constructor(private theatresService: TheatresService, private dataService: DataService,
             private router : Router) {
-              this.theatresService.getTheatres().subscribe(data=>{this.theatresArray=data;console.log(data);});
+              this.theatresService.getTheatres().subscribe(data=>{this.theatresArray=data;});
     }
 
     ngOnInit() {
@@ -61,8 +61,7 @@ export class TheatresComponent implements OnInit {
       .subscribe(
         data=> 
         {this.theatresArray = data;
-          
-          console.log(data);
+
         }
       );
       
@@ -70,24 +69,32 @@ export class TheatresComponent implements OnInit {
 
     onSelect(theatre: any): void {
       this.selectedTheatre = theatre;
-    }
-    onClickOpenPage(Theatre:any): void{
-        this.selectedTheatre=Theatre;
-        this.theatresService.selectTheatre(this.selectedTheatre);
-        this.router.navigateByUrl('/viewTheatre');
       
     }
 
-    onClickEditPage(Theatre:any): void{
-      this.selectedTheatre=Theatre;
+    onClickOpenPage(theatre:any): void{
+      this.selectedTheatre = theatre;
       this.theatresService.selectTheatre(this.selectedTheatre);
-      this.router.navigateByUrl('/editTheatre');
-        
-    }
-    onClickShowLocation(address: string){
-      this.dataService.changeAddress(address);
+      this.router.navigateByUrl('/viewTheatre');
       
-      this.router.navigateByUrl('location');
-    }
+    
+  }
+
+  onClickEditPage(theatre:any): void{
+    this.selectedTheatre = theatre;
+    this.theatresService.selectTheatre(this.selectedTheatre);
+    this.router.navigateByUrl('/editTheatre');
+  
+}
+
+onClickShowLocation(address: string){
+  this.dataService.changeAddress(address);
+  
+  this.router.navigateByUrl('location');
+}
+
+
 
 }
+
+

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CinemasService } from '../../services/cinemas-service.service';
+import { CinemasService } from '../../../services/cinemas-service.service';
 import { NgForm } from '@angular/forms';
 
 
@@ -24,8 +24,7 @@ export class ViewCinemaComponent implements OnInit {
     private projekcijaId: any;
     private numberProjections: any = 20;
     private notFastReservations: any[];
-    lat: number = -32.9477132;
-    lng: number = -60.630465800000025;
+
 
     constructor(private cinemasService: CinemasService,
             private router : Router) { 

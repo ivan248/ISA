@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 
   
  
@@ -20,6 +20,12 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
     private th = new BehaviorSubject<any>(new Object(new Object()));
     currentth = this.th.asObservable();
 
+    private p = new BehaviorSubject<any>(new Object(new Object()));
+    currentp = this.p.asObservable();
+
+    private initBrojprivate = new BehaviorSubject<any>(new Object(new Object()));
+    initBroj: any = this.initBrojprivate.asObservable()
+
     constructor(private http:HttpClient) {
 
     }
@@ -31,11 +37,17 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
             'X-Auth-Token' : localStorage.getItem('token')
          });
 
-        return this.http.get("http://localhost:8080/api/home/getTheatres", {headers:headers});
+        return this.http.get("http://localhost:8080/api/home/getTheatres", {headers:headers}).map(data => data)
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " " + err.error.error + " \n" + err.error.message);
+            return Observable.throw(err);
+        });;
     }
 
     selectTheatre(theatre: any) {
         this.th.next(theatre);
+        this.initBrojprivate.next(theatre.projekcije.length);
       }
 
     searchTheatres(theatre : String) {
@@ -66,9 +78,10 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 
         return this.http
         .get("http://localhost:8080/api/home/getPlays",
-         {params:params, headers:headers});
+         {params:params, headers:headers}).map((data:[any]) => data);
 
     }
+
 
     getProjectionDate(playId : any) {
 
@@ -85,6 +98,22 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
          {params:params, headers:headers})
          .map((data:[any]) => data);;
     }
+
+    getNotFastProjectionsByTheatreId(theatreid: any){
+        let params = new HttpParams().set('theatreid', theatreid);  
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http
+        .get("http://localhost:8080/api/home/getFastProjectionTicketsTheatre", {params:params,headers:headers})
+        .map((data:[any]) => data);
+    }
+
+    selectPlay(play: any) {
+        this.p.next(play);
+      }
 
   
 

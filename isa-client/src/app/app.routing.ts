@@ -11,8 +11,8 @@ import { AdditemComponent } from "./components/fanzone-component/additem-compone
 import { EditItemComponent } from "./components/fanzone-component/edititem-component/edititem-component.component";
 import { PendingComponent } from "./components/fanzone-component/pending-component/pending-component.component";
 import { ItemprofileComponent } from "./components/fanzone-component/itemprofile-component/itemprofile-component.component";
-import { ViewTheatreComponent } from "./components/viewTheatre-component/viewTheatre-component.component";
-import { ViewCinemaComponent } from "./components/viewCinema-component/viewCinema-component.component";
+import { ViewTheatreComponent } from "./components/theatre-component/viewTheatre-component/viewTheatre-component.component";
+import { ViewCinemaComponent } from "./components/cinema-component/viewCinema-component/viewCinema-component.component";
 import { EditCinemaComponent } from "./components/cinema-component/editCinema-component/editCinema-component.component";
 import { EditTheatreComponent } from "./components/theatre-component/editTheatre-component/editTheatre-component.component";
 import { MyfanzoneComponent } from "./components/fanzone-component/myfanzone-component/myfanzone-component.component";

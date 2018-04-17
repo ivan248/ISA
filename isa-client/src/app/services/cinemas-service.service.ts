@@ -106,161 +106,161 @@ import { MovieReservation } from '../model/movieReservation';
 
    }
 
-sendEdditedProjection(projekcija : any, id: number){
-    projekcija.id=id;
-    const body = JSON.parse(JSON.stringify(projekcija));
-    
-    console.log("sendeditedprojection"+body.price);
-
-    let headers = new HttpHeaders({ 
-        'Content-Type': 'application/json',
-        'X-Auth-Token' : localStorage.getItem('token')
-     });
-    return this.http.post('http://localhost:8080/api/home/editProjection',body,{
-        headers: headers
-    } ).map((data:[any]) => data);
-
-}
-
-addProjection(projekcija: any, movie: any, cinema: any){
-    const body = JSON.parse(JSON.stringify(projekcija));
-    var movieid = movie.id;
-    var cinemaid = cinema.id;
-    let params = new HttpParams().set('movieid',movieid);  
-    params = params.set('cinemaid',cinemaid); 
-
-    let headers = new HttpHeaders({ 
-        'Content-Type': 'application/json',
-        'X-Auth-Token' : localStorage.getItem('token')
-     });
-    return this.http.post('http://localhost:8080/api/home/addProjection',body,{
-        params:params,
-        headers: headers
-    } );
-
-
-
-}
-
-getProjectionById(id:number) {
-    let params = new HttpParams().set('projectionId', id.toString());  
-
-    let headers = new HttpHeaders({ 
-        'Content-Type': 'application/json',
-        'X-Auth-Token' : localStorage.getItem('token')
-     });
-    return this.http
-    .get("http://localhost:8080/api/home/getProjectionById", {params:params,headers:headers})
-    .map((data:[any]) => data);
-
-}
-
-getNotFastProjectionsByCinemaId(cinemaid: any){
-    let params = new HttpParams().set('cinemaid', cinemaid);  
-
-    let headers = new HttpHeaders({ 
-        'Content-Type': 'application/json',
-        'X-Auth-Token' : localStorage.getItem('token')
-     });
-    return this.http
-    .get("http://localhost:8080/api/home/getFastProjectionTickets", {params:params,headers:headers})
-    .map((data:[any]) => data);
-}
-
-addToFast(cinemaid: any, ticketid:any, ticket: any){
-    ticket.fastRes = true;
-    const body = JSON.parse(JSON.stringify(ticket));
-    let params = new HttpParams().set('cinemaid',cinemaid);  
-    params = params.set('ticketid',ticketid); 
-
-    let headers = new HttpHeaders({ 
-        'Content-Type': 'application/json',
-        'X-Auth-Token' : localStorage.getItem('token')
-     });
-    return this.http.post('http://localhost:8080/api/home/addProjectionToFast',body,{
-        params:params,
-        headers: headers
-    } );
-
-
-
-}
-    
-
-makeCinemaReservation(movieReservation : MovieReservation) {
-
-
-    return this.http.post('http://localhost:8080/api/home/makeCinemaReservation', movieReservation,
+    sendEdditedProjection(projekcija : any, id: number){
+        projekcija.id=id;
+        const body = JSON.parse(JSON.stringify(projekcija));
         
-     );
-}
+        console.log("sendeditedprojection"+body.price);
 
-reserveFast(ticket:any, ticketid: any){
-    
-    ticket.sold=true;
-    const body = JSON.parse(JSON.stringify(ticket));
-    let params = new HttpParams().set('ticketid',ticketid); 
-     
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http.post('http://localhost:8080/api/home/editProjection',body,{
+            headers: headers
+        } ).map((data:[any]) => data);
 
-    let headers = new HttpHeaders({ 
-        'Content-Type': 'application/json',
-        'X-Auth-Token' : localStorage.getItem('token')
-     });
-    return this.http.post('http://localhost:8080/api/home/reserveFast',body,{
-        params:params,
-        headers: headers
-    } );
+    }
 
-}
+    addProjection(projekcija: any, movie: any, cinema: any){
+        const body = JSON.parse(JSON.stringify(projekcija));
+        var movieid = movie.id;
+        var cinemaid = cinema.id;
+        let params = new HttpParams().set('movieid',movieid);  
+        params = params.set('cinemaid',cinemaid); 
 
-deleteSeats(projection: any, projectionid: any, seat: any) {
-    let params = new HttpParams().set('seat', seat);  
-    console.log(seat);
-    const body = JSON.parse(JSON.stringify(projection));
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http.post('http://localhost:8080/api/home/addProjection',body,{
+            params:params,
+            headers: headers
+        } );
 
-    let headers = new HttpHeaders({ 
-        'Content-Type': 'application/json',
-        'X-Auth-Token' : localStorage.getItem('token')
-     });
-    return this.http
-    .post("http://localhost:8080/api/home/deleteSeats", body, {params:params,headers:headers});
 
-}
 
-addFastTicket(price: any, seat: any, mid: any, p: any, cid: any ){
+    }
 
-    let params = new HttpParams().set('seat', seat); 
-    params = params.set('cid',cid);
-    params = params.set('mid',mid);
-    params = params.set('price',price);
-    const body = JSON.parse(JSON.stringify(p));
+    getProjectionById(id:number) {
+        let params = new HttpParams().set('projectionId', id.toString());  
 
-    let headers = new HttpHeaders({ 
-        'Content-Type': 'application/json',
-        'X-Auth-Token' : localStorage.getItem('token')
-     });
-    return this.http
-    .post("http://localhost:8080/api/home/addFastTicket", body, {params:params,headers:headers});
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http
+        .get("http://localhost:8080/api/home/getProjectionById", {params:params,headers:headers})
+        .map((data:[any]) => data);
 
-}
+    }
 
-deleteFast(ticket:any, ticketid: any){
-    
-    ticket.sold=true;
-    const body = JSON.parse(JSON.stringify(ticket));
-    let params = new HttpParams().set('ticketid',ticketid); 
-     
+    getNotFastProjectionsByCinemaId(cinemaid: any){
+        let params = new HttpParams().set('cinemaid', cinemaid);  
 
-    let headers = new HttpHeaders({ 
-        'Content-Type': 'application/json',
-        'X-Auth-Token' : localStorage.getItem('token')
-     });
-    return this.http.post('http://localhost:8080/api/home/deleteFast',body,{
-        params:params,
-        headers: headers
-    } );
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http
+        .get("http://localhost:8080/api/home/getFastProjectionTicketsCinema", {params:params,headers:headers})
+        .map((data:[any]) => data);
+    }
 
-}
+    addToFast(cinemaid: any, ticketid:any, ticket: any){
+        ticket.fastRes = true;
+        const body = JSON.parse(JSON.stringify(ticket));
+        let params = new HttpParams().set('cinemaid',cinemaid);  
+        params = params.set('ticketid',ticketid); 
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http.post('http://localhost:8080/api/home/addProjectionToFast',body,{
+            params:params,
+            headers: headers
+        } );
+
+
+
+    }
+        
+
+    makeCinemaReservation(movieReservation : MovieReservation) {
+
+
+        return this.http.post('http://localhost:8080/api/home/makeCinemaReservation', movieReservation,
+            
+        );
+    }
+
+    reserveFast(ticket:any, ticketid: any){
+        
+        ticket.sold=true;
+        const body = JSON.parse(JSON.stringify(ticket));
+        let params = new HttpParams().set('ticketid',ticketid); 
+        
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http.post('http://localhost:8080/api/home/reserveFast',body,{
+            params:params,
+            headers: headers
+        } );
+
+    }
+
+    deleteSeats(projection: any, projectionid: any, seat: any) {
+        let params = new HttpParams().set('seat', seat);  
+        console.log(seat);
+        const body = JSON.parse(JSON.stringify(projection));
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http
+        .post("http://localhost:8080/api/home/deleteSeats", body, {params:params,headers:headers});
+
+    }
+
+    addFastTicket(price: any, seat: any, mid: any, p: any, cid: any ){
+
+        let params = new HttpParams().set('seat', seat); 
+        params = params.set('cid',cid);
+        params = params.set('mid',mid);
+        params = params.set('price',price);
+        const body = JSON.parse(JSON.stringify(p));
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http
+        .post("http://localhost:8080/api/home/addFastTicket", body, {params:params,headers:headers});
+
+    }
+
+    deleteFast(ticket:any, ticketid: any){
+        
+        ticket.sold=true;
+        const body = JSON.parse(JSON.stringify(ticket));
+        let params = new HttpParams().set('ticketid',ticketid); 
+        
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http.post('http://localhost:8080/api/home/deleteFast',body,{
+            params:params,
+            headers: headers
+        } );
+
+    }
 
 
 
