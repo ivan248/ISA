@@ -67,4 +67,10 @@ public class BidServiceImpl implements BidService {
 		return bidRepository.findAllByItemOrderByValueDesc(item);
 	}
 
+	@Override
+	public Boolean changeBidValue(Bid bid) {
+		bidRepository.save(bid);
+		return true;
+	}
+
 }

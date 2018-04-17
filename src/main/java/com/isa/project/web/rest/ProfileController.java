@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.Friend;
 import com.isa.project.bean.Notification;
+import com.isa.project.bean.Role;
 import com.isa.project.bean.User;
 import com.isa.project.repository.NotificationRepository;
 import com.isa.project.repository.UserRepository;
@@ -200,6 +201,31 @@ public class ProfileController {
 
 
 	}
-
-
+	
+	@PostMapping("/addrole")
+	public User addRole(@RequestHeader(value = "X-Auth-Token") String token,@RequestBody User u, @RequestParam("role") String role) {
+		
+		User user = userRepository.findByUsername(u.getUsername()).get();
+		
+		Role r = new Role();
+		r.setRole(role);
+		for(Role ro : user.getRoles()) {
+			if (ro.getRole().equals(role)) {
+				
+				System.out.println("User already has that role");
+				return null;
+			}
+		}
+		
+		
+		
+		user.getRoles().add(r);
+		
+//		u.getRoles().clear();
+//		u.getRoles().add(r);
+		
+		userRepository.saveAndFlush(user);
+		
+		return u;
+	}
 }

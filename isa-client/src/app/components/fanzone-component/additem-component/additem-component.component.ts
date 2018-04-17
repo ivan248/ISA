@@ -15,7 +15,7 @@ export class AdditemComponent implements OnInit {
   item = {
     name : "",
     description : "",
-    currentBid : 0,
+    
     endDate : "",
     image : ""
   };

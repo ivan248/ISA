@@ -25,7 +25,12 @@ export class ItembidsComponent implements OnInit {
 
   onClickAcceptBid(bid: any){
     console.log("Usao");
-    this.bidService.acceptBid(bid).subscribe(data=> console.log(data));
+    this.bidService.acceptBid(bid).subscribe(data=> {
+      console.log(data)
+      if (data == false){
+        alert("Error ocurred")
+      }
+    });
     this.router.navigateByUrl("/itemprofile");
   }
   

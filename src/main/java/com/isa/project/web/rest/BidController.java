@@ -17,6 +17,7 @@ import com.isa.project.bean.Bid;
 import com.isa.project.bean.Item;
 import com.isa.project.bean.Notification;
 import com.isa.project.bean.User;
+import com.isa.project.repository.BidRepository;
 import com.isa.project.repository.NotificationRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.security.jwt.TokenProvider;
@@ -43,34 +44,46 @@ public class BidController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired 
+	private BidRepository bidRepository;
 	
-	@PostMapping("/add")
-	public ResponseEntity<Boolean> addBid(@RequestBody BidDTO bid , @RequestHeader(value="X-Auth-Token") String token){
-		
-		TokenProvider p = new TokenProvider();
-		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
-		userService.addActivityPoints(10L, currentUser.getUsername());
-		
-		
-		if( currentUser.getUsername().equals(bid.getItem().getOwner().getUsername())) {
-			System.out.println("NE moze bidovati vlasnik itema");
-			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
-		}else {
-			System.out.println("usao u addbid, parametri: " + bid.getBid());
-			
-			Bid b = new Bid();
-			
-			
-			b.setBuyer(currentUser);
-			b.setItem(bid.getItem());
-			b.setValue(bid.getBid());
-			
-			bidService.addBid(b);
-			
-			return new ResponseEntity<Boolean>(bidService.addBid(b), HttpStatus.OK);
-		}
 	
-	}
+/*//	@PostMapping("/add")
+//	public ResponseEntity<Boolean> addBid(@RequestBody Bid bid , @RequestHeader(value="X-Auth-Token") String token){
+//		
+//		TokenProvider p = new TokenProvider();
+//		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+//		userService.addActivityPoints(20L, currentUser.getUsername());
+//		
+//		
+//		if( currentUser.getUsername().equals(bid.getItem().getOwner().getUsername())) {
+//			System.out.println("Owner of the item can't bid on it");
+//			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+//		}else {
+//			ArrayList<User> users = new ArrayList<User> (userRepository.findDistinctUsersThatBidOnItem(bid.getItem().getItemID()));
+//			if ( !users.contains(currentUser)) {
+//				System.out.println("usao u addbid, parametri: " + bid.getBid());
+//				
+//				Bid b = new Bid();
+//				
+//				
+//				b.setBuyer(currentUser);
+//				b.setItem(bid.getItem());
+//				b.setValue(bid.getBid());
+//				
+//				bidService.addBid(b);
+//				
+//				return new ResponseEntity<Boolean>(bidService.addBid(b), HttpStatus.OK);
+//			}
+//			else {
+//				System.out.println("This user already gave his bid for this item");
+//				return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+//			}
+//			
+//		}
+//	
+//	}
+*/	
 	
 	@PostMapping("/getallbyitem")
 	public ResponseEntity<List<Bid>> getAllByItem(@RequestBody Item item, @RequestHeader(value="X-Auth-Token") String token){
@@ -138,7 +151,42 @@ public class BidController {
 		
 	}
 	
+	@PostMapping("/getbid")
+	public Bid getBid(@RequestHeader(value="X-Auth-Token") String token, @RequestBody Item item) {
+		TokenProvider p = new TokenProvider();
+		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		System.out.println("ZNaci usau u get value. User: " + currentUser.getUsername() + " Item = " + item.getName() );
+		Bid bid = bidRepository.findBidValue(item.getItemID(), currentUser.getUsername());
+		if (bid == null) {
+			Bid b = new Bid();
+			b.setBuyer(currentUser);
+			b.setItem(item);
+			b.setValue(0);
+			System.out.println("PRAVIMO NOVI BID!");
+			
+			return b;
+			
+		} else 
+			return bid;
+		
+	}
 	
+	@PostMapping("/changevalue")
+	public Boolean changeBidValue(@RequestHeader(value="X-Auth-Token") String token, @RequestBody Bid bid) {
+		TokenProvider p = new TokenProvider();
+		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		System.out.println(currentUser.getUsername());
+		System.out.println(bid.getItem().getOwner().getUsername());
+		if (currentUser.getUsername().equals(bid.getItem().getOwner().getUsername())) {
+			return false;
+		} else {
+			return bidService.changeBidValue(bid); 
+		}
+		
+		
+		
+		
+	}
 	
 	
 	

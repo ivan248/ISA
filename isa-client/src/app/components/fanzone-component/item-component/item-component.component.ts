@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { UserType } from '../../../model/userType'
 
 
+
 @Component({
   selector: 'item-component',
   templateUrl: './item-component.component.html'
@@ -15,14 +16,18 @@ export class ItemComponent implements OnInit {
     @Input() items : any[];
     
     item : any;
+    username : any;
+
     
-    constructor(private itemService: ItemService, private dataService: DataService,
+  constructor(private itemService: ItemService, private dataService: DataService,
                 private router: Router){
 
-    }
+  }
 
-   ngOnInit(){
-     this.dataService.changePreownedItemListForShow(this.items);
+  ngOnInit(){
+    this.dataService.changePreownedItemListForShow(this.items);
+    
+  
      
    }
 
@@ -35,7 +40,7 @@ export class ItemComponent implements OnInit {
       } 
       this.items.splice(index,1);
       console.log(this.items);
-      //this.itemService.deleteItem(id);
+      this.itemService.deleteItem(id);
     }
 
     onClickEdit(id: number){

@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 Optional<User> findByUsername(String username);
 	 User findByConfirmationToken(String token);
 	 @Query("select distinct b.buyer from Bid b where b.item.itemID = :itemID")
-		List<User> findDistinctUsersThatBidOnItem(@Param("itemID") Integer itemID);
+	 List<User> findDistinctUsersThatBidOnItem(@Param("itemID") Integer itemID);
 	 
 	 @Query("from User where firstName like :firstName AND lastName like :lastName")
 	 List<User> findByFirstNameAndLastName(@Param("firstName")String firstName,@Param("lastName") String lastName);
