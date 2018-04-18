@@ -54,7 +54,7 @@ export class ViewTheatreComponent implements OnInit {
         var theatreid = this.currentTheatre.id;
         this.theatresService.selectPlay(play);
 
-        this.router.navigateByUrl('/addProjectionTheatre');
+        this.router.navigateByUrl('/addProjection');
   
         
         

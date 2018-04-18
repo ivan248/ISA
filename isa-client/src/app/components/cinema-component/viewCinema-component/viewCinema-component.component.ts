@@ -68,7 +68,7 @@ export class ViewCinemaComponent implements OnInit {
         var cinemaid = this.currentCinema.id;
         this.cinemasService.selectMovie(movie);
 
-        this.router.navigateByUrl('/addProjectionCinema');
+        this.router.navigateByUrl('/addProjection');
   
         
         

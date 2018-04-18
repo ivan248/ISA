@@ -162,12 +162,6 @@ public class TheatreController {
 
 	}
 	
-	@RequestMapping(value="/editProjection", method = RequestMethod.POST) 
-	public ResponseEntity editProjection(@RequestBody Projection projekcija) {
-		System.out.println("Editovanje"+projekcija);
-		
-		return new ResponseEntity<>(cinemaService.editProjection(projekcija), HttpStatus.OK);
-	}
 	
 	@RequestMapping(value="/addProjectionCinema", method = RequestMethod.POST) 
 	public ResponseEntity addProjection(@RequestBody Projection projekcija, @RequestParam("movieid") String movieid, @RequestParam("cinemaid") String cinemaid) {
