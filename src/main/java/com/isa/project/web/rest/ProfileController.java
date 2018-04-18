@@ -276,7 +276,7 @@ public class ProfileController {
 		
 		Long playid = reservation.getIdPlay();
 		Play p = playRepository.findOne(playid);
-		System.out.println(p.getDescription());
+		
 		
 		TokenProvider prov = new TokenProvider();
 		User logged = userRepository.findByUsername(prov.getUsernameFromToken(token)).get() ;
@@ -284,6 +284,7 @@ public class ProfileController {
 		ProjectionUserTicketId putid = new ProjectionUserTicketId(reservation.getId(), logged.getId(), reservation.getIdTicket());
 		ProjectionUserTicket put = projectionUserTicketRepository.findOne(putid); 
 		put.setGradeMov(Integer.parseInt(ratevalue));
+		projectionUserTicketRepository.save(put);
 		int brojOcena;
 
 		brojOcena = p.getNumberOfGrades()+1;
@@ -305,13 +306,38 @@ public class ProfileController {
 			@RequestParam("ratevalue") String ratevalue){
 		
 		System.out.println(ratevalue);
-		// to do: proci kroz listu pozorista i pronaci ovu projekciju i oceniti pozoriste u kome je ona
-		for (Theatre t: theatreRepository.findAll()) {
-			for (Projection p: t.getProjekcije()) {
-				
+		
+		Theatre t=null;
+		for (Theatre te: theatreRepository.findAll()) {
+			for (Projection p: te.getProjekcije()) {
+				if (p.getId()==reservation.getId()) {
+					t = te;
+					System.out.println(t.getName());
+					int brojOcena;
+
+					brojOcena = t.getNumberOfGrades()+1;
+					t.setNumberOfGrades(brojOcena);
+					if (t.getSum()==0) {
+						t.setRating(Integer.parseInt(ratevalue));
+						t.setSum(Integer.parseInt(ratevalue));
+					}else {
+						t.setSum(t.getSum()+Integer.parseInt(ratevalue));
+						t.setRating(t.getSum()/brojOcena);
+					}
+					theatreRepository.save(t);
+					
+				}
 			}
 		}
+		TokenProvider prov = new TokenProvider();
+		User logged = userRepository.findByUsername(prov.getUsernameFromToken(token)).get() ;
 		
+		ProjectionUserTicketId putid = new ProjectionUserTicketId(reservation.getId(), logged.getId(), reservation.getIdTicket());
+		ProjectionUserTicket put = projectionUserTicketRepository.findOne(putid); 
+		
+		put.setGradeAmb(Integer.parseInt(ratevalue));
+		projectionUserTicketRepository.save(put);
+		System.out.println("grade: "+put.getGradeAmb());
 		
 		return new ResponseEntity(HttpStatus.OK);
 	}

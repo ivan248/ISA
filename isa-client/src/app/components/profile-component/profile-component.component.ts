@@ -253,8 +253,9 @@ export class ProfileComponent implements OnInit {
       
     }
 
-    onChangeRateAmb(ratevalue){
+    onChangeRateAmb(ratevalue, id: any, p: any){
       console.log(ratevalue);
+      this.profileService.rateAmb(id, ratevalue, p).subscribe();
       this.selectedRateAmb.emit(ratevalue);
     }
  }

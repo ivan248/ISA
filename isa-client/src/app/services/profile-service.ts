@@ -212,7 +212,6 @@ var httpOptions = {
       ratePlay(id: any, ratevalue: any, p: any){
         let body = JSON.stringify(p);
 
-        console.log("usli"+ratevalue);
         let headers = new HttpHeaders({ 
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
@@ -222,5 +221,20 @@ var httpOptions = {
          return this.http.post('http://localhost:8080//api/profile/ratePlay',body,{params:params, headers: headers});
         
       }
+
+      rateAmb(id: any, ratevalue: any, p: any){
+        let body = JSON.stringify(p);
+
+        console.log("usli"+ratevalue);
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+         
+         let params = new HttpParams().set('ratevalue',ratevalue);
+         return this.http.post('http://localhost:8080//api/profile/rateAmb',body,{params:params, headers: headers});
+        
+      }
+
 
  } 
