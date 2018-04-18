@@ -13,9 +13,12 @@ export class StepOneComponent implements OnInit {
 
     private cinemaSelected : boolean = false;
     private searchTheatreClicked : boolean = true;
+    private searchCinemaClicked : boolean = true;
 
     private theatresSearchArray : any;
-    private searchTheatreInput : String = ""
+    private cinemasSearchArray : any;
+    private searchTheatreInput : string = "";
+    private searchCinemaInput : string = "";
     
 
     @Input() cinemasArray : any;
@@ -56,7 +59,7 @@ export class StepOneComponent implements OnInit {
       if(this.cinemaSelected)
       return "btn btn-common";
     
-    return "btn btn-primary";
+    return "btn btn-dark";
 
     }
 
@@ -64,7 +67,7 @@ export class StepOneComponent implements OnInit {
       if(!this.cinemaSelected)
       return "btn btn-common";
     
-    return "btn btn-primary";
+    return "btn btn-dark";
 
     }
 
@@ -74,6 +77,14 @@ export class StepOneComponent implements OnInit {
       this.theatreService.searchTheatres(this.searchTheatreInput)
       .subscribe(data => this.theatresSearchArray = data);
 
+    }
+
+    searchCinema() {
+
+      this.searchCinemaClicked = false;
+
+      this.cinemaService.searchCinemas(this.searchCinemaInput)
+      .subscribe(data => this.cinemasSearchArray = data);
     }
 
 }

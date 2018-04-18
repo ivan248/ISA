@@ -29,6 +29,8 @@ public interface CinemaService {
 	boolean setTicketToDeleted(Projection projection, String seat);
 	boolean addTicketToFast(String price, String seat, Long cinemaid, Long movieid, Long projectionid);
 	boolean deleteTicket(Long ticketid);
+	ArrayList<Cinema> findByNameContaining(String cinema);
+	ArrayList<Projection> getPlayDates(int parseInt);
 
 	
 

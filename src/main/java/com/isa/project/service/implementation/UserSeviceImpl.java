@@ -352,9 +352,11 @@ public class UserSeviceImpl implements UserService {
 	@Override
 	public boolean acceptORdeclineInvitation(ProjectionUserTicketId projectionUserTicketId, String accept) {
 		
+		ProjectionUserTicket put = projectionUserTicketRepository.findOne(projectionUserTicketId);
+		
 		if(accept.equals("accept"))
 		{
-			ProjectionUserTicket put = projectionUserTicketRepository.findOne(projectionUserTicketId);
+			
 			put.setApproved(true);
 			System.out.println("Ispis iz servisa accept: " + put);
 			projectionUserTicketRepository.save(put);
@@ -362,10 +364,15 @@ public class UserSeviceImpl implements UserService {
 			return true;
 		}
 		
-		ProjectionUserTicket put = projectionUserTicketRepository.findOne(projectionUserTicketId);
 		put.setApproved(false);
 		System.out.println("Ispis iz servisa decline: " + put);
-		projectionUserTicketRepository.save(put);
+		
+		Projection proj = projectionRepository.findOneById(projectionUserTicketId.getProjectionId());
+		proj.getTickets().remove(ticketRepository.findOneById(projectionUserTicketId.getTicketId()));
+		projectionRepository.save(proj);
+		
+		projectionUserTicketRepository.delete(projectionUserTicketId);
+		ticketRepository.delete(projectionUserTicketId.getTicketId());
 		
 		return true;
 	}

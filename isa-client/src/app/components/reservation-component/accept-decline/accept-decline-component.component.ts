@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectionUserTicketId } from '../../../model/ProjectionUserTicketId';
 import { HomeService } from '../../../services/home-service.service';
 import { ProfileService } from '../../../services/profile-service';
@@ -21,6 +21,7 @@ export class AcceptDeclineComponent implements OnInit {
     private projectionUserTicketId : ProjectionUserTicketId;
 
     constructor(private activatedRoute: ActivatedRoute,
+                private router: Router,
                 private profileService: ProfileService) {
 
       this.activatedRoute.queryParams.subscribe(params => {
@@ -45,7 +46,8 @@ export class AcceptDeclineComponent implements OnInit {
       this.profileService.acceptORdeclineInvitation(this.projectionUserTicketId, "accept").subscribe(data =>
       console.log(data));
 
-
+      this.router.navigateByUrl('/profile');
+      
     }
 
     declineInvitation() {
@@ -55,6 +57,8 @@ export class AcceptDeclineComponent implements OnInit {
 
       this.profileService.acceptORdeclineInvitation(this.projectionUserTicketId, "decline").subscribe(data =>
         console.log(data));
+
+      this.router.navigateByUrl('/profile');
 
     }
 

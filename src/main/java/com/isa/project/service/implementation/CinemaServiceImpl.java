@@ -337,6 +337,22 @@ public class CinemaServiceImpl implements CinemaService{
 	}
 
 
+	@Override
+	public ArrayList<Cinema> findByNameContaining(String cinema) {
+	
+		
+		
+		return cinemaRepository.findByNameContaining(cinema);
+	}
+
+
+	@Override
+	public ArrayList<Projection> getPlayDates(int movieId) {
+		// TODO Auto-generated method stub
+		return movieRepository.findProjectionsByMovieId((long) movieId);
+	}
+
+
 	
 
 	
