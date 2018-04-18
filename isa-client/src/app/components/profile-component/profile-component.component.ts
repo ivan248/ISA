@@ -34,6 +34,9 @@ export class ProfileComponent implements OnInit {
 
     private notifications: any;
 
+    private selectedRateAmb: any;
+    private selectedRateMov: any;
+
     constructor(private profileService: ProfileService,
       private location: Location, private notificationService : NotificationService) {
 
@@ -240,5 +243,18 @@ export class ProfileComponent implements OnInit {
 
     cancelReservation(id : any) {
 
+    }
+
+    onChangeRatePlay(ratevalue, id: any, p: any ){
+      console.log(ratevalue);
+      console.log("idprojekcije"+id);
+      this.profileService.ratePlay(id, ratevalue, p).subscribe();
+      this.selectedRateMov.emit(ratevalue);
+      
+    }
+
+    onChangeRateAmb(ratevalue){
+      console.log(ratevalue);
+      this.selectedRateAmb.emit(ratevalue);
     }
  }

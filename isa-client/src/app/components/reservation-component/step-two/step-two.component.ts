@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DataService } from '../../../services/data-service';
 import { MovieReservation } from '../../../model/movieReservation';
 import { TheatresService } from '../../../services/theatres-service.service';
+import { CinemasService } from '../../../services/cinemas-service.service';
 
 @Component({
   selector: 'step-two-component',
@@ -32,7 +33,8 @@ export class StepTwoComponent implements OnInit {
 
 
     constructor(private dataService : DataService,
-      private theatreService : TheatresService) {
+      private theatreService : TheatresService,
+      private cinemaService: CinemasService) {
 
     }
 
@@ -41,28 +43,38 @@ export class StepTwoComponent implements OnInit {
   
     }
 
-    onChangeProjection(projectionValue) {
+    onChangeMovie(movieSelected) {
 
-      this.projectionName = projectionValue;
+      this.placesAvailable = [];
+      this.datesAvailable = [];
+      this.timesAvailable = [];
+      this.projectionPrice = 0;
 
+
+      this.cinemaService.getProjectionDate(movieSelected)
+      .subscribe(data => {
+        this.projectionsArray = data;
+        this.datesAvailable = [];
+
+        for(var i:number=0; i<this.projectionsArray.length; i++)
+        {
+          if(!this.datesAvailable.includes(this.projectionsArray[i].date))
+          {
+              this.datesAvailable.push(this.projectionsArray[i].date);
+          }
+        }
+      });
+      
       for(var i:number=0; i<this.moviesArray.length; i++)
       {
-        if(this.moviesArray[i].name === projectionValue)
+        console.log(this.moviesArray[i].id);
+        if(this.moviesArray[i].id == movieSelected)
         {
-
-          this.projectionsArray = this.moviesArray[i].projekcije;
-          
-
-          // for(var j:number=0; j<this.moviesArray[i].projekcije.length; j++)
-          // {
-          //   this.datesArray.push(this.moviesArray[i].projekcije[j].date);
-          // }
-
-          break;
+          console.log(this.moviesArray[i].name);
+          this.projectionName = this.moviesArray[i].name;
+          console.log(this.projectionName);
         }
       }
-
-      
 
     }
 

@@ -16,6 +16,7 @@ public interface CinemaRepository extends JpaRepository<Cinema, Long> {
 	ArrayList<Cinema> findAll();
 	Cinema findOneByName(String name); 
 	Cinema findOneById(Long id);
+	ArrayList<Cinema> findByNameContaining(String cinema);
 	
 	
 

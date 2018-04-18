@@ -2,6 +2,8 @@ package com.isa.project.web.dto;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
+
 
 public class ReservationDTO {
 	
@@ -17,14 +19,58 @@ public class ReservationDTO {
     
     private int seatNumber;
     
+    // da li je rezervacija postala projekcija
     private boolean enabled;
     
-    public ReservationDTO() {
+    // da li je rezervacija approvovana
+    private boolean approved;
+    
+    private int gradeAmb;
+
+    private int gradeMov;
+    
+    // id projekcie
+    private Long id;
+    
+    private Long idPlay;
+    
+    
+    
+    
+    
+ 
+    public Long getIdPlay() {
+		return idPlay;
+	}
+
+
+
+	public void setIdPlay(Long idPlay) {
+		this.idPlay = idPlay;
+	}
+
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+
+	public ReservationDTO() {
     	
     }
     
-	public ReservationDTO(String name, Date date, String time, String place, float price, int seatNumber,
-			boolean enabled) {
+	
+
+	public ReservationDTO(String name, Long idPlay, Long id, Date date, String time, String place, float price, int seatNumber,
+			boolean enabled, boolean approved, int gradeAmb, int gradeMov) {
 		super();
 		this.name = name;
 		this.date = date;
@@ -33,9 +79,47 @@ public class ReservationDTO {
 		this.price = price;
 		this.seatNumber = seatNumber;
 		this.enabled = enabled;
+		this.approved = approved;
+		this.gradeAmb = gradeAmb;
+		this.gradeMov = gradeMov;
+		this.id = id;
+		this.idPlay = idPlay;
+	
 	}
 
 
+
+	public int getGradeAmb() {
+		return gradeAmb;
+	}
+
+
+
+	public void setGradeAmb(int gradeAmb) {
+		this.gradeAmb = gradeAmb;
+	}
+
+
+
+	public int getGradeMov() {
+		return gradeMov;
+	}
+
+
+
+	public void setGradeMov(int gradeMov) {
+		this.gradeMov = gradeMov;
+	}
+
+
+
+	public boolean isApproved() {
+		return approved;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
+	}
 
 	public boolean isEnabled() {
 		return enabled;

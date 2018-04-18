@@ -15,15 +15,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Friend;
 import com.isa.project.bean.Notification;
+
+import com.isa.project.bean.Play;
+import com.isa.project.bean.ProjectionUserTicket;
+
+import com.isa.project.bean.ProjectionUserTicketId;
 import com.isa.project.bean.Role;
+import com.isa.project.bean.Theatre;
 import com.isa.project.bean.User;
+import com.isa.project.repository.CinemaRepository;
 import com.isa.project.repository.NotificationRepository;
+import com.isa.project.repository.PlayRepository;
+import com.isa.project.repository.ProjectionUserTicketRepository;
+import com.isa.project.repository.TheatreRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.security.jwt.TokenProvider;
+import com.isa.project.service.CinemaService;
+import com.isa.project.service.TheatreService;
 import com.isa.project.service.UserService;
 import com.isa.project.web.dto.RegistrationUserDto;
+import com.isa.project.web.dto.ReservationDTO;
 
 @RestController
 @CrossOrigin
@@ -32,9 +46,21 @@ public class ProfileController {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private TheatreRepository theatreRepository;
+	
+	@Autowired
+	private PlayRepository playRepository;
+	
+	@Autowired
+	private ProjectionUserTicketRepository projectionUserTicketRepository;
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private TheatreService theatreService;
 	
 	@Autowired 
 	private NotificationRepository notificationRepository;
@@ -240,5 +266,58 @@ public class ProfileController {
 		userRepository.saveAndFlush(user);
 		
 		return user;
+	}
+	
+
+	@PostMapping(value = "/ratePlay")
+	public ResponseEntity ratePlay(@RequestHeader(value = "X-Auth-Token") String token, @RequestBody ReservationDTO reservation,
+			@RequestParam("ratevalue") String ratevalue){
+		
+		System.out.println(reservation+" "+ratevalue);
+		
+		System.out.println(reservation.getId());
+		Long playid = reservation.getIdPlay();
+		Play p = playRepository.findOne(playid);
+		System.out.println(p.getName());
+		
+		
+		//ProjectionUserTicketId putid = new ProjectionUserTicketId(reservation.getId(), );
+	//	projectionUserTicketRepository.findOne(putid); dodavanje u projection ocenu
+		
+		
+		p.setRating(Integer.parseInt(ratevalue));
+		playRepository.save(p);
+		return new ResponseEntity(HttpStatus.OK);
+		
+	}
+	
+	@PostMapping(value = "/rateAmb")
+	public ResponseEntity rateAmb(@RequestHeader(value = "X-Auth-Token") String token, @RequestBody ReservationDTO reservation,
+			@RequestParam("ratevalue") String ratevalue){
+		
+		// to do: proci kroz listu pozorista i pronaci ovu projekciju i oceniti pozoriste u kome je ona
+		
+		
+		return new ResponseEntity(HttpStatus.OK);
+	}
+	
+
+	@PostMapping
+	@RequestMapping(value = "/acceptORdeclineInvitation", consumes = "application/json")
+	public ResponseEntity acceptORdeclineInvitation(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestBody ProjectionUserTicketId projectionUserTicketId,
+			@RequestParam("accept") String accept) {
+
+		TokenProvider p = new TokenProvider();
+
+		System.out.println("pogodio acceptORdeclineInvitation");
+		System.out.println(projectionUserTicketId);
+		System.out.println(accept);
+		
+		if(userService.acceptORdeclineInvitation(projectionUserTicketId, accept))
+			return new ResponseEntity<>(HttpStatus.OK);
+
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
 	}
 }

@@ -103,7 +103,7 @@ const appRoutes: Routes =
         path: 'seatings',
         component: SeatingChartComponent},
     {
-        path: 'invitation/:id',
+        path: 'invitation',
         component: AcceptDeclineComponent},
     {
         path: 'location',

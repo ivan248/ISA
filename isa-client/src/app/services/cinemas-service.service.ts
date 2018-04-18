@@ -13,6 +13,7 @@ import { MovieReservation } from '../model/movieReservation';
  @Injectable()
  export class CinemasService {  
 
+
     private url : string = "http://localhost:8080/api/cinemas/test";
     private selectedCinema: any;
 
@@ -270,14 +271,44 @@ makeCinemaReservation(movieReservation : MovieReservation) {
 
     getCinema(id : any){
         let params = new HttpParams().append('id',id)
-
+    }
+    searchCinemas(cinema : string) {
+        
+        let params = new HttpParams().set('cinema', cinema.toString());
+     
         var headers = new HttpHeaders({ 
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
          });
 
+
+        return this.http
+        .get("http://localhost:8080/api/home/searchCinemas",
+         {params:params, headers:headers});
+
+      }
+
+      getProjectionDate(movieId : any) {
+
+        let params = new HttpParams().set('movieId', movieId.toString());
+     
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+<<<<<<< HEAD
         return this.http.get('http://localhost:8080/api/home/getcinema',{headers:headers, params:params});
     }
+=======
+
+        return this.http
+        .get("http://localhost:8080/api/home/getMovieDates",
+         {params:params, headers:headers})
+         .map((data:[any]) => data);
+
+      }
+>>>>>>> eeaef9dfd713cfb2d308251a4c081d9526002e03
 
 
 

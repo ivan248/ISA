@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProjectionUserTicketId } from '../../../model/ProjectionUserTicketId';
+import { HomeService } from '../../../services/home-service.service';
+import { ProfileService } from '../../../services/profile-service';
 
 
 @Component({
@@ -11,16 +14,52 @@ import { Router } from '@angular/router';
 
 export class AcceptDeclineComponent implements OnInit {
 
-  
+    private projectionId : number = 0;
+    private userId : number = 0;
+    private ticketId : number = 0;
 
-    constructor(private router: Router) {
+    private projectionUserTicketId : ProjectionUserTicketId;
+
+    constructor(private activatedRoute: ActivatedRoute,
+                private router: Router,
+                private profileService: ProfileService) {
+
+      this.activatedRoute.queryParams.subscribe(params => {
+        this.projectionId = params['projection_id'];
+        this.userId = params['user_id'];
+        this.ticketId = params['ticket_id'];
+    });
 
     }
 
     ngOnInit() {
 
     
-    console.log(this.router.url.substring(12, this.router.url.length));
+    
+    }
+
+    acceptInvitation() {
+
+      this.projectionUserTicketId =
+       new ProjectionUserTicketId(this.projectionId, this.userId, this.ticketId);
+
+      this.profileService.acceptORdeclineInvitation(this.projectionUserTicketId, "accept").subscribe(data =>
+      console.log(data));
+
+      this.router.navigateByUrl('/profile');
+      
+    }
+
+    declineInvitation() {
+
+      this.projectionUserTicketId =
+      new ProjectionUserTicketId(this.projectionId, this.userId, this.ticketId);
+
+      this.profileService.acceptORdeclineInvitation(this.projectionUserTicketId, "decline").subscribe(data =>
+        console.log(data));
+
+      this.router.navigateByUrl('/profile');
+
     }
 
 }

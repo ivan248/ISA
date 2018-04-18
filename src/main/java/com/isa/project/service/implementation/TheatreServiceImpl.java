@@ -139,6 +139,7 @@ public class TheatreServiceImpl implements TheatreService {
 		
 		projectionUserTicket1.setMovie(false);
 		projectionUserTicket1.setEnabled(true);
+		projectionUserTicket1.setApproved(true);
 		
 		movieUserTicketRepository.save(projectionUserTicket1);
 		
@@ -146,6 +147,7 @@ public class TheatreServiceImpl implements TheatreService {
 		
 		for(int i = razlika; i < projection.getTickets().size(); i++)	
 		{
+			// prijatelj je u pitanju
 			if(movieReservationDTO.getInvitedFriends().size()!=0)
 			{
 				
@@ -161,25 +163,29 @@ public class TheatreServiceImpl implements TheatreService {
 				
 				projectionUserTicket.setMovie(false);
 				projectionUserTicket.setEnabled(false);
+				projectionUserTicket.setApproved(false);
 				
 				invitedIndex++;
 				
 				movieUserTicketRepository.save(projectionUserTicket);
 				
-//				SimpleMailMessage registrationEmail = new SimpleMailMessage();
-//				registrationEmail.setTo(friendRepository.findByFriendId(friendId).getFriendUsername());
-//				registrationEmail.setSubject("Invitation");
-//				registrationEmail.setText("You have been invited for the following projection:\n" + "Title: "
-//						+ movieReservationDTO.getMovieName() + " \n" + "Date: " + movieReservationDTO.getDate() + " \n"
-//						+ "Time: " + movieReservationDTO.getTime() + " \n" + "Place: " + movieReservationDTO.getPlace() + " \n"
-//						+ "Seats reserved: " + movieReservationDTO.getSeatsTaken().get(0) + " \n"
-//						+"To confirm your reservation, please follow the link below:\n"
-//						+ "localhost:4200/invitation/" + "123123");
-//				registrationEmail.setFrom("noreply@domain.com");
-//
-//				emailService.sendEmail(registrationEmail);
+				SimpleMailMessage registrationEmail = new SimpleMailMessage();
+				registrationEmail.setTo(newUser.getUsername());
+				registrationEmail.setSubject("Invitation");
+				registrationEmail.setText("You have been invited for the following projection:\n" + "Title: "
+						+ movieReservationDTO.getMovieName() + " \n" + "Date: " + movieReservationDTO.getDate() + " \n"
+						+ "Time: " + movieReservationDTO.getTime() + " \n" + "Place: " + movieReservationDTO.getPlace() + " \n"
+						+ "Seats reserved: " +  projection.getTickets().get(i).getSeatNumber() + " \n"
+						+"To confirm your reservation, please follow the link below:\n"
+						+ "http://localhost:4200/invitation?"
+						+ "projection_id=" +  projection.getId()
+						+ "&user_id=" + newUser.getId()
+						+ "&ticket_id=" + projection.getTickets().get(i).getId());
+				registrationEmail.setFrom("noreply@domain.com");
+
+				emailService.sendEmail(registrationEmail);
 				
-			}
+			} // rezervisao je 3 karte ali nije pozvao ni 1 prijatelja
 			else
 			{
 				ProjectionUserTicket projectionUserTicket =
@@ -189,6 +195,7 @@ public class TheatreServiceImpl implements TheatreService {
 				
 				projectionUserTicket.setMovie(false);
 				projectionUserTicket.setEnabled(true);
+				projectionUserTicket.setApproved(true);
 				
 				invitedIndex++;
 				
