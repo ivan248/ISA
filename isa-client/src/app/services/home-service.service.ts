@@ -6,7 +6,8 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
-import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { ProjectionUserTicketId } from '../model/ProjectionUserTicketId';
 
   
  
@@ -48,7 +49,7 @@ import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http
         let headers = new HttpHeaders({ 
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
-         })
+         });
         
         console.log("sendeditedcinema"+body.name);
         return this.http.post('http://localhost:8080/api/home/editC',body,{
@@ -63,7 +64,7 @@ import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http
         let headers = new HttpHeaders({ 
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
-         })
+         });
 
         console.log("sendeditedtheatre"+body.name);
         return this.http.post('http://localhost:8080/api/home/editTh',body,{
@@ -71,6 +72,8 @@ import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http
         } );
 
     }
+
+
 
 
   

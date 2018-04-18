@@ -17,13 +17,13 @@
 <br>
 
 <div class="row">
-
+    
         <div class="col-lg-6">
-            <button type="button" [class]="changeClassTheatre()" [disabled]="cinemaSelected" style="width:100%" class="btn btn-common" (click)="changeSelected()">Select Theatre</button>               
+                <button type="button" [class]="changeClassCinema()" [disabled]="!cinemaSelected" style="width:100%" class="btn btn-primary" (click)="changeSelected()">Select Cinema</button>                
         </div>
 
         <div class="col-lg-6">
-            <button type="button" [class]="changeClassCinema()" [disabled]="!cinemaSelected" style="width:100%" class="btn btn-primary" (click)="changeSelected()">Select Cinema</button>                
+            <button type="button" [class]="changeClassTheatre()" [disabled]="cinemaSelected" style="width:100%" class="btn btn-common" (click)="changeSelected()">Select Theatre</button>               
         </div>
 </div>
 
@@ -76,9 +76,20 @@
 
         <div class="col-md-12">
             <label for="cinemaSearch"> <h2>Search cinema</h2></label>
-            <input type="text" class="form-control" id="cinemaSearch" style="text-align:center; margin:1px" placeholder="Enter name of the cinema">   
+            <input [(ngModel)]="searchCinemaInput" type="text" class="form-control" id="cinemaSearch" style="text-align:center; margin:1px" placeholder="Enter name of the cinema">   
 
-            <button type="button" style="width:100%" class="btn btn-primary" (click)="searchCinemaClicked()">Search cinema</button>                    
+            <button type="button" style="width:100%" class="btn btn-primary" (click)="searchCinema()">Search cinema</button>                    
+        
+            <br>
+            <br>
+            <label [hidden]="searchCinemaClicked" for="searchCinemaResult"> <h2>Search results</h2></label>
+            <select [hidden]="searchCinemaClicked" class="form-control" id="searchCinemaResult" (change)="onChangeCinema($event.target.value)">
+                    <option hidden selected value="">
+                        -- select a cinema --
+                    </option>
+                    <option *ngFor="let c of cinemasSearchArray" [value]="c?.id">{{c?.name}}</option>
+            </select>
+
         </div>
 </div>
 

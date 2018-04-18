@@ -175,7 +175,7 @@ public class TheatreServiceImpl implements TheatreService {
 				registrationEmail.setText("You have been invited for the following projection:\n" + "Title: "
 						+ movieReservationDTO.getMovieName() + " \n" + "Date: " + movieReservationDTO.getDate() + " \n"
 						+ "Time: " + movieReservationDTO.getTime() + " \n" + "Place: " + movieReservationDTO.getPlace() + " \n"
-						+ "Seats reserved: " +  projection.getTickets().get(i).getId() + " \n"
+						+ "Seats reserved: " +  projection.getTickets().get(i).getSeatNumber() + " \n"
 						+"To confirm your reservation, please follow the link below:\n"
 						+ "http://localhost:4200/invitation?"
 						+ "projection_id=" +  projection.getId()

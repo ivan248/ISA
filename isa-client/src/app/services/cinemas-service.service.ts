@@ -13,6 +13,7 @@ import { MovieReservation } from '../model/movieReservation';
  @Injectable()
  export class CinemasService {  
 
+
     private url : string = "http://localhost:8080/api/cinemas/test";
     private selectedCinema: any;
 
@@ -267,6 +268,39 @@ makeCinemaReservation(movieReservation : MovieReservation) {
         } );
 
     }
+
+    searchCinemas(cinema : string) {
+        
+        let params = new HttpParams().set('cinema', cinema.toString());
+     
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+
+        return this.http
+        .get("http://localhost:8080/api/home/searchCinemas",
+         {params:params, headers:headers});
+
+      }
+
+      getProjectionDate(movieId : any) {
+
+        let params = new HttpParams().set('movieId', movieId.toString());
+     
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+
+        return this.http
+        .get("http://localhost:8080/api/home/getMovieDates",
+         {params:params, headers:headers})
+         .map((data:[any]) => data);
+
+      }
 
 
 

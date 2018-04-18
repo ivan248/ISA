@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Friend;
 import com.isa.project.bean.Notification;
+
 import com.isa.project.bean.Play;
 import com.isa.project.bean.ProjectionUserTicket;
+
 import com.isa.project.bean.ProjectionUserTicketId;
 import com.isa.project.bean.Role;
 import com.isa.project.bean.Theatre;
@@ -266,6 +268,7 @@ public class ProfileController {
 		return user;
 	}
 	
+
 	@PostMapping(value = "/ratePlay")
 	public ResponseEntity ratePlay(@RequestHeader(value = "X-Auth-Token") String token, @RequestBody ReservationDTO reservation,
 			@RequestParam("ratevalue") String ratevalue){
@@ -296,6 +299,25 @@ public class ProfileController {
 		
 		
 		return new ResponseEntity(HttpStatus.OK);
+	}
 	
+
+	@PostMapping
+	@RequestMapping(value = "/acceptORdeclineInvitation", consumes = "application/json")
+	public ResponseEntity acceptORdeclineInvitation(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestBody ProjectionUserTicketId projectionUserTicketId,
+			@RequestParam("accept") String accept) {
+
+		TokenProvider p = new TokenProvider();
+
+		System.out.println("pogodio acceptORdeclineInvitation");
+		System.out.println(projectionUserTicketId);
+		System.out.println(accept);
+		
+		if(userService.acceptORdeclineInvitation(projectionUserTicketId, accept))
+			return new ResponseEntity<>(HttpStatus.OK);
+
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
 	}
 }

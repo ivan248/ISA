@@ -40,6 +40,8 @@ public class HomeController {
 	@Autowired 
 	private CinemaService cinemaService;
 	
+	@Autowired
+	private PlayRepository playRepository;
 	
 	@RequestMapping(value = "/test", method = RequestMethod.POST,
 			consumes="application/json",
@@ -255,8 +257,8 @@ public class HomeController {
 
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
-
 	
+
 	@RequestMapping(value="/reserveFast", method = RequestMethod.POST) 
 	public ResponseEntity reserveFast(@RequestParam("ticketid") String ticketid) {
 		return new ResponseEntity<>(cinemaService.setTicketToSold(Long.parseLong(ticketid)) ,HttpStatus.OK);
@@ -269,13 +271,21 @@ public class HomeController {
 	public ResponseEntity searchTheatres(
 			@RequestParam("theatre") String theatre) {
 		
-		System.out.println(theatreService.findByNameContaining("S"));
 		
 		return new ResponseEntity<>(theatreService.findByNameContaining(theatre),HttpStatus.OK);
 	}
 	
-	@Autowired
-	private PlayRepository playRepository;
+	@GetMapping
+	@RequestMapping(value = "/searchCinemas")
+	public ResponseEntity searchCinemas(
+			@RequestParam("cinema") String cinema) {
+		
+		System.out.println(cinemaService.findByNameContaining(cinema));
+		
+		return new ResponseEntity<>(cinemaService.findByNameContaining(cinema),HttpStatus.OK);
+	}
+	
+
 	
 	@GetMapping
 	@RequestMapping(value = "/getPlays")
@@ -293,6 +303,15 @@ public class HomeController {
 			
 		return new ResponseEntity<>(theatreService.getPlayDates(Integer.parseInt(playId)),HttpStatus.OK);
 	}
+	
+	@GetMapping
+	@RequestMapping(value = "/getMovieDates")
+	public ResponseEntity getMovieDates(
+			@RequestParam("movieId") String movieId) {
+			
+		return new ResponseEntity<>(cinemaService.getPlayDates(Integer.parseInt(movieId)),HttpStatus.OK);
+	}
+	
 	
 	
 

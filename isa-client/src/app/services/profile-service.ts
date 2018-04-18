@@ -8,6 +8,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { User } from '../model/dto/userDTO';
+import { ProjectionUserTicketId } from '../model/ProjectionUserTicketId';
 
 var httpOptions = {
     headers: new HttpHeaders({ 
@@ -177,6 +178,23 @@ var httpOptions = {
          return this.http.post('http://localhost:8080//api/profile/addrole',body,{params:params, headers: headers});
         
       }
+
+      acceptORdeclineInvitation(projectionUserTicketId : ProjectionUserTicketId, accept : string) {
+
+        const body = JSON.parse(JSON.stringify(projectionUserTicketId));
+        
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        let params = new HttpParams().append('accept',accept);
+
+        console.log("acceptORdecline"+body.projectionId  + " ispis iz ");
+        return this.http.post('http://localhost:8080/api/profile/acceptORdeclineInvitation',body,{
+            headers: headers, params:params
+        } );
+    }
 
     
       getReservations(): any {
