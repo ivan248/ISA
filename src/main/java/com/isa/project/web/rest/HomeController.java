@@ -40,7 +40,6 @@ public class HomeController {
 	@Autowired 
 	private CinemaService cinemaService;
 	
-	
 	@RequestMapping(value = "/test", method = RequestMethod.POST,
 			consumes="application/json",
 			produces="application/json")
@@ -255,8 +254,8 @@ public class HomeController {
 
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
-
 	
+
 	@RequestMapping(value="/reserveFast", method = RequestMethod.POST) 
 	public ResponseEntity reserveFast(@RequestParam("ticketid") String ticketid) {
 		return new ResponseEntity<>(cinemaService.setTicketToSold(Long.parseLong(ticketid)) ,HttpStatus.OK);

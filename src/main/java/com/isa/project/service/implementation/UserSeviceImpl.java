@@ -15,6 +15,7 @@ import com.isa.project.bean.Friend;
 import com.isa.project.bean.Play;
 import com.isa.project.bean.Projection;
 import com.isa.project.bean.ProjectionUserTicket;
+import com.isa.project.bean.ProjectionUserTicketId;
 import com.isa.project.bean.User;
 import com.isa.project.repository.FriendRepository;
 import com.isa.project.repository.PlayRepository;
@@ -346,6 +347,27 @@ public class UserSeviceImpl implements UserService {
 		System.out.println("\n");
 		
 		return lista;
+	}
+
+	@Override
+	public boolean acceptORdeclineInvitation(ProjectionUserTicketId projectionUserTicketId, String accept) {
+		
+		if(accept.equals("accept"))
+		{
+			ProjectionUserTicket put = projectionUserTicketRepository.findOne(projectionUserTicketId);
+			put.setApproved(true);
+			System.out.println("Ispis iz servisa accept: " + put);
+			projectionUserTicketRepository.save(put);
+			
+			return true;
+		}
+		
+		ProjectionUserTicket put = projectionUserTicketRepository.findOne(projectionUserTicketId);
+		put.setApproved(false);
+		System.out.println("Ispis iz servisa decline: " + put);
+		projectionUserTicketRepository.save(put);
+		
+		return true;
 	}
 
 

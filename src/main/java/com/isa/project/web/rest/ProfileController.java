@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.Friend;
 import com.isa.project.bean.Notification;
+import com.isa.project.bean.ProjectionUserTicketId;
 import com.isa.project.bean.Role;
 import com.isa.project.bean.User;
 import com.isa.project.repository.NotificationRepository;
@@ -240,5 +241,23 @@ public class ProfileController {
 		userRepository.saveAndFlush(user);
 		
 		return user;
+	}
+	
+	@PostMapping
+	@RequestMapping(value = "/acceptORdeclineInvitation", consumes = "application/json")
+	public ResponseEntity acceptORdeclineInvitation(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestBody ProjectionUserTicketId projectionUserTicketId,
+			@RequestParam("accept") String accept) {
+
+		TokenProvider p = new TokenProvider();
+
+		System.out.println("pogodio acceptORdeclineInvitation");
+		System.out.println(projectionUserTicketId);
+		System.out.println(accept);
+		
+		if(userService.acceptORdeclineInvitation(projectionUserTicketId, accept))
+			return new ResponseEntity<>(HttpStatus.OK);
+
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 }

@@ -8,6 +8,11 @@ import javax.validation.constraints.NotNull;
 @Embeddable
 public class ProjectionUserTicketId implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4117729916538736188L;
+
 	@NotNull
 	private Long projectionId;
 	
