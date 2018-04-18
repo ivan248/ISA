@@ -68,6 +68,7 @@ public class User implements Serializable {
     @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "friend_id"))
     private List<Friend> friends;
     
+
     public User() {
     	this.enabled = false;
     	this.activity = 0L;
@@ -183,6 +184,8 @@ public class User implements Serializable {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
+	
+
 
 	@Override
 	public String toString() {

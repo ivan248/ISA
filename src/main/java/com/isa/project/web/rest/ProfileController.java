@@ -273,19 +273,27 @@ public class ProfileController {
 	public ResponseEntity ratePlay(@RequestHeader(value = "X-Auth-Token") String token, @RequestBody ReservationDTO reservation,
 			@RequestParam("ratevalue") String ratevalue){
 		
-		System.out.println(reservation+" "+ratevalue);
-		
-		System.out.println(reservation.getId());
 		Long playid = reservation.getIdPlay();
 		Play p = playRepository.findOne(playid);
-		System.out.println(p.getName());
+		System.out.println(p.getDescription());
 		
+		TokenProvider prov = new TokenProvider();
+		User logged = userRepository.findByUsername(prov.getUsernameFromToken(token)).get() ;
 		
-		//ProjectionUserTicketId putid = new ProjectionUserTicketId(reservation.getId(), );
-	//	projectionUserTicketRepository.findOne(putid); dodavanje u projection ocenu
-		
-		
-		p.setRating(Integer.parseInt(ratevalue));
+		ProjectionUserTicketId putid = new ProjectionUserTicketId(reservation.getId(), logged.getId(), reservation.getIdTicket());
+		ProjectionUserTicket put = projectionUserTicketRepository.findOne(putid); 
+		put.setGradeMov(Integer.parseInt(ratevalue));
+		int brojOcena;
+
+		brojOcena = p.getNumberOfGrades()+1;
+		p.setNumberOfGrades(brojOcena);
+		if (p.getSum()==0) {
+			p.setRating(Integer.parseInt(ratevalue));
+			p.setSum(Integer.parseInt(ratevalue));
+		}else {
+			p.setSum(p.getSum()+Integer.parseInt(ratevalue));
+			p.setRating(p.getSum()/brojOcena);
+		}
 		playRepository.save(p);
 		return new ResponseEntity(HttpStatus.OK);
 		

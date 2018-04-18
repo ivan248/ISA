@@ -28,6 +28,12 @@ public class Play {
     @Column(name = "rating", nullable = false)
  	private int rating;
     
+    @Column(name = "numberOfGrades", nullable = false)
+ 	private int numberOfGrades;
+    
+    @Column(name = "sum", nullable = false)
+ 	private int sum;
+    
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "actors_play", joinColumns = @JoinColumn(name = "play_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
     private List<Actor> actors;
@@ -36,18 +42,42 @@ public class Play {
     @JoinTable(name = "projection_play", joinColumns = @JoinColumn(name = "play_id"), inverseJoinColumns = @JoinColumn(name = "projekcija_id"))
     private List<Projection> projekcije;
     
-    
-    
-   public Play(Long id, String name, String genre, String description, String producer, List<Actor> actors,
-			List<Projection> projekcije) {
+
+	public Play(Long id, String name, String genre, String description, String producer, int rating, int numberOfGrades,
+			List<Actor> actors, List<Projection> projekcije, int sum) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.genre = genre;
 		this.description = description;
 		this.producer = producer;
+		this.rating = rating;
+		this.numberOfGrades = numberOfGrades;
+		this.sum = sum;
 		this.actors = actors;
 		this.projekcije = projekcije;
+	}
+	
+	
+
+	public int getSum() {
+		return sum;
+	}
+
+
+
+	public void setSum(int sum) {
+		this.sum = sum;
+	}
+
+
+
+	public int getNumberOfGrades() {
+		return numberOfGrades;
+	}
+
+	public void setNumberOfGrades(int numberOfGrades) {
+		this.numberOfGrades = numberOfGrades;
 	}
 
 	public List<Projection> getProjekcije() {

@@ -34,12 +34,26 @@ public class ReservationDTO {
     
     private Long idPlay;
     
+    private Long idTicket;
+    
     
     
     
     
  
-    public Long getIdPlay() {
+    public Long getIdTicket() {
+		return idTicket;
+	}
+
+
+
+	public void setIdTicket(Long idTicket) {
+		this.idTicket = idTicket;
+	}
+
+
+
+	public Long getIdPlay() {
 		return idPlay;
 	}
 
@@ -69,7 +83,7 @@ public class ReservationDTO {
     
 	
 
-	public ReservationDTO(String name, Long idPlay, Long id, Date date, String time, String place, float price, int seatNumber,
+	public ReservationDTO(String name, Long idPlay, Long idTicket, Long id, Date date, String time, String place, float price, int seatNumber,
 			boolean enabled, boolean approved, int gradeAmb, int gradeMov) {
 		super();
 		this.name = name;
@@ -84,6 +98,7 @@ public class ReservationDTO {
 		this.gradeMov = gradeMov;
 		this.id = id;
 		this.idPlay = idPlay;
+		this.idTicket = idTicket;
 	
 	}
 
@@ -177,10 +192,6 @@ public class ReservationDTO {
 		this.seatNumber = seatNumber;
 	}
 
-	@Override
-	public String toString() {
-		return "ReservationDTO [name=" + name + ", date=" + date + ", time=" + time + ", place=" + place + ", price="
-				+ price + ", seatNumber=" + seatNumber + ", enabled=" + enabled + "]";
-	}
+	
 
 }

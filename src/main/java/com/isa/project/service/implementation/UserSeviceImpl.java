@@ -326,6 +326,7 @@ public class UserSeviceImpl implements UserService {
 							lista.add(new ReservationDTO(
 									p.getName(),
 									p.getId(),
+									put.getMovieUserTicketID().getTicketId(),
 									proj.getId(),
 									proj.getDate(), 
 									proj.getTime(), 
