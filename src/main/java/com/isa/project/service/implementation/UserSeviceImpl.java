@@ -323,14 +323,18 @@ public class UserSeviceImpl implements UserService {
 						if(proj.getId().equals(put.getMovieUserTicketId().getProjectionId()))
 						{
 							lista.add(new ReservationDTO(
-									p.getName(), 
+									p.getName(),
+									p.getId(),
+									proj.getId(),
 									proj.getDate(), 
 									proj.getTime(), 
 									proj.getPlace(), 
 									proj.getPrice(), 
 									ticketRepository.findOneById(put.getMovieUserTicketID().getTicketId()).getSeatNumber(),
 									put.isEnabled(),
-									put.isApproved()));
+									put.isApproved(),
+									put.getGradeAmb(),
+									put.getGradeMov()));
 						}
 					}
 				}

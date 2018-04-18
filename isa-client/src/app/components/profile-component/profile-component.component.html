@@ -215,7 +215,7 @@
             <th scope="col">Place</th>
             <th scope="col">Seat number</th>
             <th scope="col">Rate ambient</th>
-            <th scope="col">Rate</th>
+            <th scope="col">Rate play</th>
 
           </tr>
           </thead>
@@ -227,8 +227,9 @@
               <td>{{p.time}}</td>
               <td>{{p.place}}</td>
               <td>{{p.seatNumber}}</td>
+            
               <td> 
-                <select class="form-control" id="exampleFormControlSelect1" (change)="sth">
+                <select *ngIf="p.gradeAmb==0" class="form-control" (change)="onChangeRateAmb($event.target.value, p.id, p)">
                     <option hidden selected value="">
                         -- select grade --
                     </option>
@@ -238,17 +239,18 @@
                     <option [value]="4">4</option>
                     <option [value]="5">5</option>
                 </select></td>
+              
                 <td> 
-                  <select class="form-control" id="exampleFormControlSelect1" (change)="sth">
-                      <option hidden selected value="">
-                          -- select grade --
-                      </option>
-                      <option [value]="1">1</option>
-                      <option [value]="2">2</option>
-                      <option [value]="3">3</option>
-                      <option [value]="4">4</option>
-                      <option [value]="5">5</option>
-                  </select></td>
+                    <select *ngIf="p.gradeMov==0" class="form-control" (change)="onChangeRatePlay($event.target.value, p.id, p)">
+                        <option hidden selected value="">
+                            -- select grade --
+                        </option>
+                        <option [value]="1">1</option>
+                        <option [value]="2">2</option>
+                        <option [value]="3">3</option>
+                        <option [value]="4">4</option>
+                        <option [value]="5">5</option>
+                    </select></td>
                 
               
             <!--/tr-->

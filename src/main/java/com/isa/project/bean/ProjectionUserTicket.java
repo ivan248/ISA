@@ -24,7 +24,7 @@ public class ProjectionUserTicket {
     @Column(name = "approved")
     private boolean approved;
     
-    // ne radi
+
     @Column(name = "gradeAmb")
     private int gradeAmb;
     
