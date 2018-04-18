@@ -20,6 +20,7 @@ import com.isa.project.bean.Friend;
 import com.isa.project.bean.Notification;
 
 import com.isa.project.bean.Play;
+import com.isa.project.bean.Projection;
 import com.isa.project.bean.ProjectionUserTicket;
 
 import com.isa.project.bean.ProjectionUserTicketId;
@@ -303,7 +304,13 @@ public class ProfileController {
 	public ResponseEntity rateAmb(@RequestHeader(value = "X-Auth-Token") String token, @RequestBody ReservationDTO reservation,
 			@RequestParam("ratevalue") String ratevalue){
 		
+		System.out.println(ratevalue);
 		// to do: proci kroz listu pozorista i pronaci ovu projekciju i oceniti pozoriste u kome je ona
+		for (Theatre t: theatreRepository.findAll()) {
+			for (Projection p: t.getProjekcije()) {
+				
+			}
+		}
 		
 		
 		return new ResponseEntity(HttpStatus.OK);

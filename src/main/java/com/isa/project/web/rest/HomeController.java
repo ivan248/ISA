@@ -41,14 +41,14 @@ public class HomeController {
 	@Autowired 
 	private CinemaService cinemaService;
 	
-<<<<<<< HEAD
+
 	@Autowired 
 	private TheatreRepository theatreRepository;
 	
-=======
+
 	@Autowired
 	private PlayRepository playRepository;
->>>>>>> eeaef9dfd713cfb2d308251a4c081d9526002e03
+
 	
 	@RequestMapping(value = "/test", method = RequestMethod.POST,
 			consumes="application/json",

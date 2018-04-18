@@ -25,6 +25,12 @@ public class Theatre {
     @Column(name = "rating", nullable = false)
     private int rating;
     
+    @Column(name = "numberOfGrades", nullable = false)
+ 	private int numberOfGrades;
+    
+    @Column(name = "sum", nullable = false)
+ 	private int sum;
+    
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "theatre_projection", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "projekcija_id"))
     private List<Projection> projekcije;
@@ -89,12 +95,15 @@ public class Theatre {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Theatre(Long id, String name, String address, String description) {
+	public Theatre(Long id, String name, String address, String description, int sum, int numberOfGrades, int rating) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.description = description;
+		this.sum = sum;
+		this.numberOfGrades = numberOfGrades;
+		this.rating = rating;
 	}
 
 
