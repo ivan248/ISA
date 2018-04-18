@@ -150,4 +150,16 @@ import { MovieReservation } from '../model/movieReservation';
     );
     }
 
+    getTheatre(id: any){
+        let params = new HttpParams().append('id',id);
+
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http.get('http://localhost:8080/api/home/gettheatre',{headers:headers, params:params});
+    
+    }
+
  } 

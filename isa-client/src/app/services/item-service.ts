@@ -1,17 +1,18 @@
-import { Injectable  } from '@angular/core'; 
-import { Http, Response } from '@angular/http';
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http' ;
+import { Injectable,   } from '@angular/core'; 
+import { Http, Response,  } from '@angular/http';
+import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http' ;
 import 'rxjs/Rx';
 import { BidDTO } from '../model/bidDTO';
 import { Item } from '../model/item';
-
+import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 
 
  @Injectable()
  export class ItemService {  
 
-    constructor(private http:HttpClient) {
+    constructor(private http:HttpClient,private router: Router) {
 
     }
 
@@ -28,17 +29,22 @@ import { Item } from '../model/item';
 
     }
 
-    approveItem(id: any){ //posto je GET ne treba headers jer ne saljem nista, dovoljni su param
-        let params = new HttpParams().append('id',id);
+    approveItem(item: any){ 
+        let body = JSON.parse(JSON.stringify(item));
+        console.log(body);
         var headers = new HttpHeaders({ 
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
          });
-        
+        console.log("USAO U APPROVE ITEM")
 
-        return this.http.get('http://localhost:8080/item/approve',{
-            params: params, headers: headers
-        }).subscribe(data =>console.log(data));
+        return this.http.post('http://localhost:8080/item/approve',body,{headers: headers})
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "This item has changed meanwhile.Please refresh your page");
+            
+            return Observable.throw(err);
+        }); ;
 
     }
 
@@ -63,9 +69,14 @@ import { Item } from '../model/item';
          });
         
 
-        return this.http.post('http://localhost:8080/item/edit',body,{
-            headers: headers
-        } );
+        return this.http.post('http://localhost:8080/item/edit',body,{headers: headers})
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "This item has changed meanwhile.Please refresh your page");
+            this.router.navigateByUrl('/fanzone');
+            return Observable.throw(err);
+        }); ;;
+        
 
     }
 

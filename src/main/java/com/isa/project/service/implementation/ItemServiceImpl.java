@@ -1,10 +1,10 @@
 package com.isa.project.service.implementation;
 
 
-import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.isa.project.bean.Item;
 import com.isa.project.repository.ItemRepository;
@@ -18,26 +18,19 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public Boolean editItem(Item item) {
+	public Item editItem(Item i) {
 		try {
-			Item i = itemRepository.findOneByItemID(item.getItemID());
-			
-			i.setDescription(item.getDescription());
-			i.setEndDate(item.getEndDate());
-			i.setName(item.getName());
-			i.setImage(item.getImage());
-			
-			
-			itemRepository.flush();
+
+			itemRepository.save(i);
 		}
 		catch(Exception e) {
 			System.out.println("Error occured while writing to database. Constraints were not satisfied.");
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 		
 		
-		return true;
+		return i;
 	}
 	
 	@Override
@@ -59,17 +52,16 @@ public class ItemServiceImpl implements ItemService {
 		
 
 	@Override
-	@Transactional(readOnly = false)
-	public Boolean approveItem(int id) { 
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public Boolean approveItem(Item i) { 
 		try {
-			Item i = itemRepository.findOneByItemID(id);
-			System.out.println(i.toString());
+			System.out.println("UsaoOOOOOOOOOOOOOOOOOOoooooooooooooooooooooOOOOOOOOOOOOOOOOOOO");
 			i.setApproved(true);
-			itemRepository.flush();
+			itemRepository.save(i);
 			return true;
 		}
 		catch(Exception e) {
-			System.out.println("Error occured while reading from  database. Constraints were not satisfied.");
+			System.out.println("Error occured while writing to  database. Constraints were not satisfied.");
 			e.printStackTrace();
 			return false;
 		}

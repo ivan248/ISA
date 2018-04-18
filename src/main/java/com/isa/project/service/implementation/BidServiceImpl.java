@@ -2,8 +2,11 @@ package com.isa.project.service.implementation;
 
 import java.util.List;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import com.isa.project.bean.Bid;
 import com.isa.project.bean.Item;
@@ -23,21 +26,16 @@ public class BidServiceImpl implements BidService {
 	public Boolean acceptBid(Bid bid) {
 		//Uzeti bid
 		try {
-			Item i = itemRepository.findOneByItemID(bid.getItem().getItemID());
+			Item i = bid.getItem();
 			i.setSold(true);
-			System.out.println("Usao u servis");
-			itemRepository.flush();
+			
+			itemRepository.save(i);
 			return true;
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("Error while updating database");
 			return false;
 		}
-		
-		
-		
-		
-			
 		
 		//Naci item
 		//staviti item da je prodat
@@ -52,8 +50,16 @@ public class BidServiceImpl implements BidService {
 	public Boolean addBid(Bid bid) {
 		try {
 			System.out.println("SAVEOVAO BID");
-			bidRepository.saveAndFlush(bid);
-			return true;
+			Item i = bid.getItem();
+			i = itemRepository.findOneByItemID(i.getItemID());
+			if (i.getSold()) {
+				return false;
+			} else {
+				bidRepository.saveAndFlush(bid);
+				return true;
+			}
+			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 			return false;
@@ -69,8 +75,24 @@ public class BidServiceImpl implements BidService {
 
 	@Override
 	public Boolean changeBidValue(Bid bid) {
-		bidRepository.save(bid);
-		return true;
+		
+		try {
+			
+			Item i = bid.getItem();
+			i = itemRepository.findOneByItemID(i.getItemID());
+			if (i.getSold()) {
+				return false;
+			} else {
+				bidRepository.saveAndFlush(bid);
+				return true;
+			}
+			
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 
 }

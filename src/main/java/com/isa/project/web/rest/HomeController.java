@@ -22,6 +22,7 @@ import com.isa.project.bean.Theatre;
 import com.isa.project.bean.Ticket;
 import com.isa.project.bean.User;
 import com.isa.project.repository.PlayRepository;
+import com.isa.project.repository.TheatreRepository;
 import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.CinemaService;
 import com.isa.project.service.TheatreService;
@@ -39,6 +40,9 @@ public class HomeController {
 	
 	@Autowired 
 	private CinemaService cinemaService;
+	
+	@Autowired 
+	private TheatreRepository theatreRepository;
 	
 	
 	@RequestMapping(value = "/test", method = RequestMethod.POST,
@@ -120,6 +124,8 @@ public class HomeController {
 		return new ResponseEntity(cinemaService.getMovies(c.getName()), HttpStatus.OK);
 
 	}
+	
+	
 
 	
 	@RequestMapping(value = "/deleteMovie", method = RequestMethod.DELETE,
@@ -321,6 +327,14 @@ public class HomeController {
 		return new ResponseEntity<>(cinemaService.deleteTicket(Long.parseLong(ticketid)) ,HttpStatus.OK);
 	}
 	
-
+	@GetMapping(value="/getcinema")
+	public ResponseEntity<Cinema> getCinema(@RequestHeader("X-Auth-Token") String token, @RequestParam("id") int id) {
+		return new ResponseEntity<Cinema>(cinemaService.getCinemaById(new Long(id)),HttpStatus.OK);
+	}
+	
+	@GetMapping(value="/gettheatre")
+	public ResponseEntity<Theatre> getTheatre(@RequestHeader("X-Auth-Token") String token, @RequestParam("id") int id) {
+		return new ResponseEntity<Theatre>( theatreRepository.findOneById((long)id) ,HttpStatus.OK);
+	}
 	
 }

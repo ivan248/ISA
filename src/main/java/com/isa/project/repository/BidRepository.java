@@ -20,7 +20,7 @@ import com.isa.project.bean.User;
 public interface BidRepository extends JpaRepository<Bid, Integer> {
 	
 	Bid findOneBybidID(Integer id);
-	List<Bid> findAllByBuyer(Integer id);
+	List<Bid> findAllByBuyer(User u);
 	List<Bid> findAllByItemOrderByValueDesc(Item item);
 	@Query("select b from Bid b where b.item.itemID = :itemID and b.buyer.username= :userName")
 	Bid findBidValue(@Param("itemID") Integer itemID, @Param("userName") String userName);

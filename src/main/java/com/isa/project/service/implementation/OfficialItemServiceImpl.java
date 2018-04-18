@@ -19,18 +19,10 @@ public class OfficialItemServiceImpl implements OfficialItemService {
 	private OfficialItemRepository officialItemRepository;
 	
 	@Override
-	public Boolean editItem(OfficialItem item) {
+	public Boolean editItem(OfficialItem i) {
 		try {
-			OfficialItem i = officialItemRepository.findOneByItemID(item.getItemID());
-			System.out.println("AAAAAAAAAAAAAAAAAAAA " + item.getPrice() );
-			i.setPrice(item.getPrice());
-			i.setDescription(item.getDescription());
-			i.setImage(item.getImage());
-			i.setName(item.getName());
-			i.setCinemaOwner(item.getCinemaOwner());
-			i.setTheatreOwner(item.getTheatreOwner());
 			
-			officialItemRepository.flush();
+			officialItemRepository.save(i);
 		}
 		catch(Exception e) {
 			System.out.println("Error occured while writing to database. Constraints were not satisfied.");
@@ -43,11 +35,11 @@ public class OfficialItemServiceImpl implements OfficialItemService {
 	}
 
 	@Override
-	public Boolean reserve(int id) {
+	public Boolean reserve(OfficialItem i) {
 		try {
-			OfficialItem i = officialItemRepository.findOneByItemID(id);
+			
 			i.setReserved(true);
-			officialItemRepository.flush();
+			officialItemRepository.save(i);
 		}
 		catch(Exception e) {
 			System.out.println("Error occured while writing to database. Constraints were not satisfied.");

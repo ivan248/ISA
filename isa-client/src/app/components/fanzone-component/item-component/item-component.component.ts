@@ -54,11 +54,11 @@ export class ItemComponent implements OnInit {
       
     }
 
-    onClickApprove(id: number){
-      var index = this.items.indexOf('itemID',id)
+    onClickApprove(item : Item){
+      var index = this.items.indexOf('itemID',item.itemID)
       this.items.splice(index,1);
-      console.log(this.items);
-      this.itemService.approveItem(id);
+      console.log(item);
+      this.itemService.approveItem(item).subscribe();
      
     }
 

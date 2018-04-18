@@ -29,7 +29,7 @@ export class EditnewitemComponent implements OnInit {
     description : "",
     price : null,
     image : "",
-    place : "Cinema",
+    place : 'Cinema',
     placeID : 1
   };
 
@@ -51,10 +51,10 @@ export class EditnewitemComponent implements OnInit {
       this.originalItem = data;
       console.log(this.originalItem);
       if(this.originalItem.cinemaOwner == null){
-        this.place="Theatre";
+        this.place='Theatre';
         this.placeID=this.originalItem.theatreOwner.theatre_id;
       } else {
-        this.place="Cinema"
+        this.place='Cinema';
         this.placeID=this.originalItem.cinemaOwner.cinema_id;
       }
 
@@ -85,10 +85,56 @@ export class EditnewitemComponent implements OnInit {
   }
 
   onSubmit(form : NgForm) {
-    console.log(this.item);
+    
+    if( this.item.place === 'Cinema'){
+      //znaci da se item moze kupiti u nekom bioskopu
+      console.log(this.originalItem)
+      console.log("Usao u cinema")
+      this.cinemaService.getCinema(this.item.placeID).subscribe(data => {
+        this.originalItem.cinemaOwner = data;
+        console.log(this.item);
+        console.log(this.originalItem);
+        this.originalItem.name = this.item.name;
+        this.originalItem.description = this.item.description;
+        this.originalItem.price = this.item.price;
+        this.originalItem.image = this.item.image;
+        this.newItemService.sendEdditedItem(this.originalItem).subscribe(data=> {
+          if (data == false){
+            alert("This item has changed meanwhile.Please refresh your page");
+            this.router.navigateByUrl('/fanzone')
+          }
+          
+        });
+        this.router.navigateByUrl("/fanzone");
+      })
+      this.originalItem.theatreOwner = null;
+    } else {
+      //znc da se item moze kupiti u nekom pozoristu
+      console.log(this.originalItem)
+      console.log("Usao u theatre")
+      this.originalItem.cinemaOwner = null;
+      this.theatresService.getTheatre(this.item.placeID).subscribe(data => {
+        this.originalItem.theatreOwner = data;
+        console.log(this.item);
+        console.log(this.originalItem);
+        this.originalItem.name = this.item.name;
+        this.originalItem.description = this.item.description;
+        this.originalItem.price = this.item.price;
+        this.originalItem.image = this.item.image;
+        this.newItemService.sendEdditedItem(this.originalItem).subscribe(data=> {
+          if (data == false){
+            alert("This item has changed meanwhile.Please refresh your page");
+            this.router.navigateByUrl('/fanzone')
+          }
+        });
+        this.router.navigateByUrl("/fanzone");
+      });
+    }
 
-    this.newItemService.sendEdditedItem(this.item).subscribe(data=> console.log(data));
-    this.router.navigateByUrl("/fanzone");
+    
+    
+
+    
   }
 
 }

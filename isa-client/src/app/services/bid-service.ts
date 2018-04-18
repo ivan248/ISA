@@ -68,4 +68,14 @@ import { Item } from '../model/item';
 
     }
 
+    getAllByUser(){
+        
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+        
+        return this.http.get('http://localhost:8080/bid/getallbyuser',{ headers: headers});
+    }
+
  } 

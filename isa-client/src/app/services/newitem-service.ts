@@ -1,8 +1,9 @@
 import { Injectable  } from '@angular/core'; 
 import { Http, Response } from '@angular/http';
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http' ;
+import { HttpHeaders, HttpClient, HttpParams,HttpErrorResponse} from '@angular/common/http' ;
 import 'rxjs/Rx';
-
+import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 
 
@@ -10,7 +11,7 @@ import 'rxjs/Rx';
  @Injectable()
  export class NewItemService {  
 
-    constructor(private http:HttpClient) {
+    constructor(private http:HttpClient,private router: Router) {
 
     }
 
@@ -52,21 +53,31 @@ import 'rxjs/Rx';
 
         return this.http.post('http://localhost:8080/officialitem/edit',body,{
             headers: headers
-        } );
+        } ).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "This item has changed meanwhile.Please refresh your page");
+            this.router.navigateByUrl('/fanzone')
+            return Observable.throw(err);
+        }); ;
 
     }
 
-    reserveItem(id: any){
-        const body = JSON.parse(JSON.stringify(id));
-        let params = new HttpParams().append("id", id);
+    reserveItem(item: any){
+        const body = JSON.parse(JSON.stringify(item));
+        
         var headers = new HttpHeaders({ 
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
          });
 
         return this.http.post('http://localhost:8080/officialitem/reserve',body,{
-            headers: headers, params: params
-        } );
+            headers: headers
+        } ).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "This item has changed meanwhile.Please refresh your page");
+            this.router.navigateByUrl('/fanzone')
+            return Observable.throw(err);
+        });;
     }
 
     

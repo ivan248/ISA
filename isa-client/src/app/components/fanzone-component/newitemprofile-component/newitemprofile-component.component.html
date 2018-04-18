@@ -15,7 +15,7 @@
   </div>
   <div class="row">
     <div class="col-3">
-        <img   src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" alt="" class="img-fluid rounded w-100  h-100">
+        <img   [src]="item.image" alt="" class="img-fluid rounded w-100  h-100" height=100 width=100>
     </div>
     <div class="col-3 border-left border-right">
       <h3>Description</h3>
@@ -29,7 +29,7 @@
       <p *ngIf="userType == 3" > Price with discount for gold user: <font color="gold"><b>{{item.price*0.85}}$</b> </font></p>
       <div class="justify-content-center align-items-center">
         <div class="form-area ">  
-          <button type="submit" [disabled]="item.reserved" (click)="onClickReserve(item.itemID)"  class="btn btn-success btn-lg" >Reserve</button>
+          <button type="submit" [disabled]="item.reserved" (click)="onClickReserve(item)"  class="btn btn-success btn-lg" >Reserve</button>
         </div>
       </div>
     </div>
@@ -42,7 +42,7 @@
     <div class="col-md-3">
       Posted:  <br>
       
-      Owner:  <br>
+      Owner:  <br><br>
       Reserved:  <br>
       
     </div>
@@ -55,7 +55,8 @@
         ,  {{item.cinemaOwner?.address}}{{item.theatreOwner?.address}}
         <br> 
         
-       <b><label *ngIf="item.reserved">Yes</label>  </b>
+        
+       <b><label *ngIf="item.reserved">Yes</label>  </b> 
        <b><label *ngIf="!item.reserved">No</label>  </b> <br>
        
     </div>

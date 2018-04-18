@@ -37,7 +37,28 @@
 
 
 <div class="container" >
-    <h1>Ovo treba odraditi (ne pise u specifikaciji)</h1>
+  <h1>My bids</h1>
+  <table class="table table-hover table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        
+        <th scope="col-md-4">Item</th>
+        <th scope="col-md-4">Owner</th>
+        <th scope="col-md-2">Value</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bid of bidList">
+        
+        <td>{{bid.item.name}}</td>
+        <td>{{bid.buyer.username}}</td>
+        <td class="text-danger"><b>{{bid.value}}</b></td>
+        
+      </tr>
+      
+    </tbody>
+  </table>
 </div>
 
 

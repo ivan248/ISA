@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BidService } from '../../../services/bid-service';
 
 @Component({
   selector: 'app-myfanzone-component',
@@ -6,11 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyfanzoneComponent implements OnInit {
 
-  constructor() { }
+  constructor(private bidService: BidService) { }
 
   current: boolean = true;
+  bidList : any;
 
   ngOnInit() {
+    this.bidService.getAllByUser().subscribe(data => {
+      this.bidList = data;
+    })
   }
 
   onClickMyBids(){
