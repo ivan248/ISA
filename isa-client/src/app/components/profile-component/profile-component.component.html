@@ -214,18 +214,44 @@
             <th scope="col">Time</th>
             <th scope="col">Place</th>
             <th scope="col">Seat number</th>
+            <th scope="col">Rate ambient</th>
+            <th scope="col">Rate</th>
+
           </tr>
           </thead>
           <tbody *ngFor="let p of projectionsReserved; let i = index;">
-            <tr *ngIf="!p.enabled && p.approved">
+            <!--tr *ngIf="!p.enabled && p.approved"-->
               <th scope="row">{{i+1}}</th>
               <td>{{p.name}}</td>
               <td>{{p.date}}</td>
               <td>{{p.time}}</td>
               <td>{{p.place}}</td>
-              <td>{{p.seatNumber}}
-              </td>
-            </tr>
+              <td>{{p.seatNumber}}</td>
+              <td> 
+                <select class="form-control" id="exampleFormControlSelect1" (change)="sth">
+                    <option hidden selected value="">
+                        -- select grade --
+                    </option>
+                    <option [value]="1">1</option>
+                    <option [value]="2">2</option>
+                    <option [value]="3">3</option>
+                    <option [value]="4">4</option>
+                    <option [value]="5">5</option>
+                </select></td>
+                <td> 
+                  <select class="form-control" id="exampleFormControlSelect1" (change)="sth">
+                      <option hidden selected value="">
+                          -- select grade --
+                      </option>
+                      <option [value]="1">1</option>
+                      <option [value]="2">2</option>
+                      <option [value]="3">3</option>
+                      <option [value]="4">4</option>
+                      <option [value]="5">5</option>
+                  </select></td>
+                
+              
+            <!--/tr-->
             
           </tbody>
         </table>

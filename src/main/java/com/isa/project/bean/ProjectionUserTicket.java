@@ -23,6 +23,13 @@ public class ProjectionUserTicket {
     // da li je rezervacija approvovana
     @Column(name = "approved")
     private boolean approved;
+    
+    // ne radi
+    @Column(name = "gradeAmb")
+    private int gradeAmb;
+    
+    @Column(name = "gradeMov")
+    private int gradeMov;
 	
 	public ProjectionUserTicket() {
 		
@@ -71,6 +78,24 @@ public class ProjectionUserTicket {
 
 	public void setMovie(boolean isMovie) {
 		this.isMovie = isMovie;
+	}
+	
+	
+
+	public int getGradeAmb() {
+		return gradeAmb;
+	}
+
+	public void setGradeAmb(int gradeAmb) {
+		this.gradeAmb = gradeAmb;
+	}
+
+	public int getGradeMov() {
+		return gradeMov;
+	}
+
+	public void setGradeMov(int gradeMov) {
+		this.gradeMov = gradeMov;
 	}
 
 	@Override
