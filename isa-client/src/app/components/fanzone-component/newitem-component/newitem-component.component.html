@@ -4,7 +4,7 @@
             <div class="card-body" (click)="onClickSetSelectedNewItem(item.itemID)">
                 <div class="row">
                     <div class="col">
-                        <img  src="https://www.w3schools.com/images/w3schools_green.jpg" alt="">
+                        <img  [src]="item.image" class="img-fluid rounded w-100  h-100" alt="">
                     </div>
                     <div class="col-8">
                         <h4>
@@ -24,7 +24,7 @@
                             
                             
                         </div>
-                        <button [disabled]="item.reserved" class="btn btn-success">Reserve this item</button>
+                        <button [disabled]="item.reserved" class="btn btn-success">Click to reserve this item</button>
                         
                     </div>
                     <div class="col">

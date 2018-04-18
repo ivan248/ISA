@@ -37,8 +37,7 @@
                                     <label>Item description</label>
                                     <textarea class="form-control" type="textarea"  minlength="10" maxlength="300" rows="3" name="description"
                                         [(ngModel)]= "item.description"
-                                        required
-                                        >
+                                        required>
                                     </textarea>
                             </div>  
                             
@@ -51,8 +50,8 @@
                             </div>
                             <hr>
                             <div class="form-group">
-                                    <label> Choose picture </label>
-                                    <input type="file" class="form-control-file"   name="image" 
+                                    <label> Write down the picture url </label>
+                                    <input type="text" class="form-control-file"   name="image" 
                                     [(ngModel)]= "item.image"
                                     >
                                    

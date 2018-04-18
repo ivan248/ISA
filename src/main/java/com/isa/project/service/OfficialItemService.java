@@ -10,7 +10,7 @@ import com.isa.project.bean.User;
 public interface OfficialItemService {
 	
 	Boolean editItem(OfficialItem item);
-	Boolean reserve(int id);
+	Boolean reserve(OfficialItem item);
 	Boolean setSold(int id);
 	Boolean reserve(int id, User u);
 	

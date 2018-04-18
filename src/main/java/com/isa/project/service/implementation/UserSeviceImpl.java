@@ -12,12 +12,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.isa.project.bean.Friend;
+import com.isa.project.bean.Movie;
 import com.isa.project.bean.Play;
 import com.isa.project.bean.Projection;
 import com.isa.project.bean.ProjectionUserTicket;
 import com.isa.project.bean.ProjectionUserTicketId;
 import com.isa.project.bean.User;
 import com.isa.project.repository.FriendRepository;
+import com.isa.project.repository.MovieRepository;
 import com.isa.project.repository.PlayRepository;
 import com.isa.project.repository.ProjectionRepository;
 import com.isa.project.repository.ProjectionUserTicketRepository;
@@ -54,6 +56,9 @@ public class UserSeviceImpl implements UserService {
 	
 	@Autowired
 	private TicketRepository ticketRepository;
+	
+	@Autowired
+	private MovieRepository movieRepository;
 	
 	@Override
 	public boolean registerUser(RegistrationUserDto userDto, HttpServletRequest request) {
@@ -313,7 +318,28 @@ public class UserSeviceImpl implements UserService {
 			
 			if(put.isMovie())
 			{
-				
+				for(Movie m : movieRepository.findAll())
+				{
+					for(Projection proj : m.getProjekcije())
+					{
+						if(proj.getId().equals(put.getMovieUserTicketId().getProjectionId()))
+						{
+							lista.add(new ReservationDTO(
+									m.getName(),
+									m.getId(),
+									proj.getId(),
+									proj.getDate(), 
+									proj.getTime(), 
+									proj.getPlace(), 
+									proj.getPrice(), 
+									ticketRepository.findOneById(put.getMovieUserTicketID().getTicketId()).getSeatNumber(),
+									put.isEnabled(),
+									put.isApproved(),
+									put.getGradeAmb(),
+									put.getGradeMov()));
+						}
+					}
+				}
 			}
 			else
 			{

@@ -1,5 +1,6 @@
 package com.isa.project.web.rest;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -44,6 +46,9 @@ public class BidController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired 
+	private BidRepository bidRepository;
+	
 
 	
 	@PostMapping("/add")
@@ -75,8 +80,7 @@ public class BidController {
 	}
 
 
-	@Autowired 
-	private BidRepository bidRepository;
+
 	
 	
 /*//	@PostMapping("/add")
@@ -204,6 +208,14 @@ public class BidController {
 	
 	@PostMapping("/changevalue")
 	public Boolean changeBidValue(@RequestHeader(value="X-Auth-Token") String token, @RequestBody Bid bid) {
+		java.util.Date date = new java.util.Date();
+		Date nowDate = new java.sql.Date(date.getTime());
+		int status = bid.getItem().getEndDate().compareTo(nowDate);  //provera da li je unesen krajnji datum stariji ili mladji od danasnjeg
+	    if (status <=0) {
+	    	System.out.println("Time on placing bids expired");
+	      	return  false;
+	    }
+		
 		TokenProvider p = new TokenProvider();
 		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
 		System.out.println(currentUser.getUsername());
@@ -213,13 +225,13 @@ public class BidController {
 		} else {
 			return bidService.changeBidValue(bid); 
 		}
-		
-		
-		
-		
 	}
 	
-	
-	
+	@GetMapping("/getallbyuser")
+	public ResponseEntity<List<Bid>> getAllBtUser(@RequestHeader("X-Auth-Token") String token){
+		TokenProvider p = new TokenProvider();
+		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		return new ResponseEntity<List<Bid>> (bidRepository.findAllByBuyer(currentUser),HttpStatus.OK); 
+	}
 	
 }

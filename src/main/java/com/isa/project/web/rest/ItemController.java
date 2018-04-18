@@ -7,16 +7,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.RestController;
 
-import com.isa.project.bean.Bid;
+
 import com.isa.project.bean.Item;
-import com.isa.project.bean.User;
-import com.isa.project.repository.UserRepository;
-import com.isa.project.security.jwt.TokenProvider;
+
 import com.isa.project.service.ItemService;
-import com.isa.project.web.dto.BidDTO;
+
 ;
 
 
@@ -28,20 +26,20 @@ public class ItemController {
 	@Autowired
 	private ItemService itemService;
 	
-	@Autowired
-	private UserRepository userRepository;
+	
 
 	
 	
 	@RequestMapping(value="/edit", method = RequestMethod.POST) //ovaj drugi korak edita zapravo menja item u BP
-	public Boolean editItemStep(@RequestBody Item item) {
+	public Item editItemStep(@RequestBody Item item) {
 		System.out.println("Promenio!");
 		return itemService.editItem(item);
 	}
 	
-	@RequestMapping(value="/approve", method = RequestMethod.GET)
-	public Boolean approveItem(@RequestParam("id") int id) {
-		return itemService.approveItem(id);
+	@RequestMapping(value="/approve", method = RequestMethod.POST, consumes="application/json")
+	public Boolean approveItem(@RequestBody Item item,@RequestHeader("X-Auth-Token") String token) {
+		System.out.println("UsaoOOOOOOOOOOOOOOOOOOoooooooooooooooooooooOOOOOOOOOOOOOOOOOOO");
+		return itemService.approveItem(item);
 	}
 
 //	@RequestMapping(value="/bid", method = RequestMethod.POST) //promena ponude

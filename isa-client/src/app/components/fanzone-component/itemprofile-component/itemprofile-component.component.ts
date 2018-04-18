@@ -57,7 +57,8 @@ export class ItemprofileComponent implements OnInit {
       this.bidService.changeBidValue(this.bid).subscribe(data2 => {
         console.log(data2)
         if(data2 == false){
-          alert("Error ocurred");
+          alert("Item has  already been sold.");
+          this.router.navigateByUrl('/fanzone')
         }
       });
         

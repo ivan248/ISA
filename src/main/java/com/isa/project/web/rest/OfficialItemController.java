@@ -13,17 +13,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.isa.project.bean.Cinema;
 import com.isa.project.bean.OfficialItem;
-import com.isa.project.bean.Theatre;
+
 import com.isa.project.bean.User;
-import com.isa.project.repository.CinemaRepository;
-import com.isa.project.repository.TheatreRepository;
+
 import com.isa.project.repository.UserRepository;
 import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.OfficialItemService;
-import com.isa.project.web.Converter;
-import com.isa.project.web.dto.OfficialItemDTO;
+
 
 @RestController
 @CrossOrigin
@@ -32,37 +29,23 @@ public class OfficialItemController {
 	
 	@Autowired
 	private OfficialItemService officialItemService;
-	@Autowired
-	private CinemaRepository cinemaRepository;
-	@Autowired
-	private TheatreRepository theatreRepository;
+
 	@Autowired
 	private UserRepository userRepository;
 
 	
 	@RequestMapping(value="/edit", method = RequestMethod.POST) //ovaj drugi korak edita zapravo menja item u BP
-	public ResponseEntity<Boolean> editItemStep(@RequestBody OfficialItemDTO i) {
-		
-		OfficialItem item = new OfficialItem();
-		item = Converter.convertOfficialItemDTO(i);
-		item.setItemID(i.getItemID());
-		
-		if(i.getPlace().equals("Cinema")) {
-			Cinema c = cinemaRepository.findOneById(new Long(i.getPlaceID()));
-			item.setCinemaOwner(c);
-		} else if (i.getPlace().equals("Theatre")) {
-			Theatre t = theatreRepository.findOneById(new Long(i.getPlaceID()));
-			item.setTheatreOwner(t);
-		} else {
-			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
-		}
-		
-		
-		
-		
-		
-		Boolean b = officialItemService.editItem(item);
+	public ResponseEntity<Boolean> editItemStep(@RequestBody OfficialItem i) {
+		System.out.println("Verzija: " + i.getVersion());
+		Boolean b = officialItemService.editItem(i);
 		System.out.println("Promenio!");
+		
+		if(i.getCinemaOwner() == null) {
+			System.out.println("Cinema je null");
+		}
+		if (i.getTheatreOwner() == null) {
+			System.out.println("theatre je null");
+		}
 		return new ResponseEntity<Boolean>(b,HttpStatus.OK);
 	}
 	
@@ -78,13 +61,15 @@ public class OfficialItemController {
 	
 	
 	@PostMapping(value="/reserve")
-	public ResponseEntity<Boolean> reserveItem(@RequestParam("id") int id, @RequestHeader(value="X-Auth-Token") String token) {
+	public ResponseEntity<Boolean> reserveItem(@RequestBody OfficialItem item, @RequestHeader(value="X-Auth-Token") String token) {
 		
 		
 		TokenProvider p = new TokenProvider();
 		User u = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
 		
-		Boolean b = officialItemService.reserve(id, u);
+		item.setBuyer(u);
+		
+		Boolean b = officialItemService.reserve(item);
 		
 		if( b ) {
 			return new ResponseEntity<Boolean>(b,HttpStatus.OK);

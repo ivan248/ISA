@@ -7,8 +7,8 @@ import com.isa.project.bean.Item;
 @Service
 public interface ItemService {
 
-	Boolean editItem(Item item);
-	Boolean approveItem(int id);
+	Item editItem(Item item);
+	Boolean approveItem(Item item);
 	//Boolean bid(Item i, float value) throws Exception;
 	//Boolean bid(Item i, float value) throws Exception;
 	//Boolean bid(Item i, float value) throws Exception;
