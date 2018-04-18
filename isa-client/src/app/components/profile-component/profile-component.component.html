@@ -217,7 +217,7 @@
           </tr>
           </thead>
           <tbody *ngFor="let p of projectionsReserved; let i = index;">
-            <tr *ngIf="!p.enabled">
+            <tr *ngIf="!p.enabled && p.approved">
               <th scope="row">{{i+1}}</th>
               <td>{{p.name}}</td>
               <td>{{p.date}}</td>
@@ -252,7 +252,7 @@
             </tr>
             </thead>
             <tbody *ngFor="let p of projectionsReserved; let i = index;">
-              <tr *ngIf="p.enabled">
+              <tr *ngIf="p.enabled && p.approved">
                 <th scope="row">{{i+1}}</th>
                 <td>{{p.name}}</td>
                 <td>{{p.date}}</td>

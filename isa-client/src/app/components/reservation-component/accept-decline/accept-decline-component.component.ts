@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -13,14 +13,23 @@ export class AcceptDeclineComponent implements OnInit {
 
   
 
-    constructor(private router: Router) {
+    constructor(private activatedRoute: ActivatedRoute) {
+      this.activatedRoute.queryParams.subscribe(params => {
+        let projectionId = params['projection_id'];
+        let userId = params['user_id'];
+        let ticketId = params['ticket_id'];
 
+        console.log(projectionId); // Print the parameter to the console. 
+        console.log(userId); // Print the parameter to the console. 
+        console.log(ticketId); // Print the parameter to the console. 
+
+    });
     }
 
     ngOnInit() {
 
     
-    console.log(this.router.url.substring(12, this.router.url.length));
+    
     }
 
 }

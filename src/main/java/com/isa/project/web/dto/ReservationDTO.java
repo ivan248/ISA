@@ -17,14 +17,18 @@ public class ReservationDTO {
     
     private int seatNumber;
     
+    // da li je rezervacija postala projekcija
     private boolean enabled;
+    
+    // da li je rezervacija approvovana
+    private boolean approved;
     
     public ReservationDTO() {
     	
     }
     
 	public ReservationDTO(String name, Date date, String time, String place, float price, int seatNumber,
-			boolean enabled) {
+			boolean enabled, boolean approved) {
 		super();
 		this.name = name;
 		this.date = date;
@@ -33,9 +37,16 @@ public class ReservationDTO {
 		this.price = price;
 		this.seatNumber = seatNumber;
 		this.enabled = enabled;
+		this.approved = approved;
 	}
 
+	public boolean isApproved() {
+		return approved;
+	}
 
+	public void setApproved(boolean approved) {
+		this.approved = approved;
+	}
 
 	public boolean isEnabled() {
 		return enabled;

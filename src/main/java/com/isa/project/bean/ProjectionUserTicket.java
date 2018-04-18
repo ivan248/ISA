@@ -16,8 +16,13 @@ public class ProjectionUserTicket {
     @Column(name = "isMovie")
     private boolean isMovie;
     
+    // da li je rezervacija postala projekcija
     @Column(name = "enabled")
     private boolean enabled;
+    
+    // da li je rezervacija approvovana
+    @Column(name = "approved")
+    private boolean approved;
 	
 	public ProjectionUserTicket() {
 		
@@ -44,6 +49,14 @@ public class ProjectionUserTicket {
 		this.enabled = enabled;
 	}
 
+	public boolean isApproved() {
+		return approved;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
+	}
+
 	public ProjectionUserTicketId getMovieUserTicketId() {
 		return movieUserTicketId;
 	}
@@ -63,9 +76,8 @@ public class ProjectionUserTicket {
 	@Override
 	public String toString() {
 		return "ProjectionUserTicket [movieUserTicketId=" + movieUserTicketId + ", isMovie=" + isMovie + ", enabled="
-				+ enabled + "]";
+				+ enabled + ", approved=" + approved + "]";
 	}
-
 
 	
 }

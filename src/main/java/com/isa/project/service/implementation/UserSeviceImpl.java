@@ -329,7 +329,8 @@ public class UserSeviceImpl implements UserService {
 									proj.getPlace(), 
 									proj.getPrice(), 
 									ticketRepository.findOneById(put.getMovieUserTicketID().getTicketId()).getSeatNumber(),
-									put.isEnabled()));
+									put.isEnabled(),
+									put.isApproved()));
 						}
 					}
 				}
