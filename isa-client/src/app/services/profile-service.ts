@@ -6,7 +6,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { User } from '../model/dto/userDTO';
 import { ProjectionUserTicketId } from '../model/ProjectionUserTicketId';
 
@@ -208,6 +208,28 @@ var httpOptions = {
         .get(this.url + "getReservations", {headers:headers})
         .map((data:[any]) => data);
       }
+
+      cancelProjectionReservation(projectionId: any, seatNumber: any): any {
+        
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        var params = new HttpParams().set('projectionId', projectionId);
+        params = params.set('seatNumber', seatNumber);
+
+        return this.http
+        .get(this.url + "cancelProjectionReservation", {headers:headers,params:params})
+        .catch((err:HttpErrorResponse) =>
+       {
+           alert(err.status + "You can't delete 30 minutes before the projection!");
+           return Observable.throw(err);
+       }); 
+
+      }
+
+      
 
       ratePlay(id: any, ratevalue: any, p: any){
         let body = JSON.stringify(p);

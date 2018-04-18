@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,26 +16,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Friend;
 import com.isa.project.bean.Notification;
-
-import com.isa.project.bean.Play;
-import com.isa.project.bean.Projection;
+import com.isa.project.bean.Play;project.bean.Projection;
 import com.isa.project.bean.ProjectionUserTicket;
 
 import com.isa.project.bean.ProjectionUserTicketId;
 import com.isa.project.bean.Role;
-import com.isa.project.bean.Theatre;
 import com.isa.project.bean.User;
-import com.isa.project.repository.CinemaRepository;
 import com.isa.project.repository.NotificationRepository;
 import com.isa.project.repository.PlayRepository;
 import com.isa.project.repository.ProjectionUserTicketRepository;
 import com.isa.project.repository.TheatreRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.security.jwt.TokenProvider;
-import com.isa.project.service.CinemaService;
 import com.isa.project.service.TheatreService;
 import com.isa.project.service.UserService;
 import com.isa.project.web.dto.RegistrationUserDto;
@@ -240,6 +235,34 @@ public class ProfileController {
 
 
 	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping
+	@RequestMapping(value = "/cancelProjectionReservation")
+	public ResponseEntity cancelProjectionReservation(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestParam("projectionId") String projectionId,
+			@RequestParam("seatNumber") String seatNumber) {
+
+		TokenProvider p = new TokenProvider();
+		
+		if(userService.cancelProjectionReservation(
+				p.getUsernameFromToken(token),
+				Integer.parseInt(projectionId),
+				Integer.parseInt(seatNumber)) == null)
+		return new ResponseEntity
+		(userService.cancelProjectionReservation(
+				p.getUsernameFromToken(token),
+				Integer.parseInt(projectionId),
+				Integer.parseInt(seatNumber)),
+				HttpStatus.OK);
+		
+		return new ResponseEntity
+				(HttpStatus.OK); 
+
+
+	}
+	
+	
 	
 	@PostMapping("/addrole")
 	public User addRole(@RequestHeader(value = "X-Auth-Token") String token,@RequestBody User u, @RequestParam("role") String role) {
