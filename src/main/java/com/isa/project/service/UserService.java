@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import com.isa.project.bean.Friend;
-import com.isa.project.bean.Projection;
 import com.isa.project.bean.ProjectionUserTicketId;
 import com.isa.project.bean.User;
 import com.isa.project.web.dto.RegistrationUserDto;
@@ -34,5 +33,6 @@ public interface UserService {
 	public List<User> searchUsers(String usernameFromToken, String searchName, String searchLastName);
 	public List<ReservationDTO> getReservations(String usernameFromToken);
 	public boolean acceptORdeclineInvitation(ProjectionUserTicketId projectionUserTicketId, String accept);
+	public List<ReservationDTO> cancelProjectionReservation(String usernameFromToken, int parseInt, int parseInt2);
 
 }
