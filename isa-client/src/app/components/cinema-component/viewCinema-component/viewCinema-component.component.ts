@@ -16,7 +16,6 @@ export class ViewCinemaComponent implements OnInit {
  
 
     private changeSeatingChartHidden : boolean = false;
-
     private currentCinema: any;
     private movies:  any[] = [];
     private hiddenEditing: boolean[] = [];
@@ -69,7 +68,7 @@ export class ViewCinemaComponent implements OnInit {
         var cinemaid = this.currentCinema.id;
         this.cinemasService.selectMovie(movie);
 
-        this.router.navigateByUrl('/addProjection');
+        this.router.navigateByUrl('/addProjectionCinema');
   
         
         

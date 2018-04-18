@@ -269,6 +269,14 @@ makeCinemaReservation(movieReservation : MovieReservation) {
 
     }
 
+    getCinema(id : any){
+        let params = new HttpParams().append('id',id);
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+        return this.http.get('http://localhost:8080/api/home/getcinema',{headers:headers, params:params});
+    }
     searchCinemas(cinema : string) {
         
         let params = new HttpParams().set('cinema', cinema.toString());
@@ -294,13 +302,14 @@ makeCinemaReservation(movieReservation : MovieReservation) {
             'X-Auth-Token' : localStorage.getItem('token')
          });
 
-
         return this.http
         .get("http://localhost:8080/api/home/getMovieDates",
          {params:params, headers:headers})
          .map((data:[any]) => data);
 
       }
+
+
 
 
 

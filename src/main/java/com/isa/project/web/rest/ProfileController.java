@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.Friend;
 import com.isa.project.bean.Notification;
-import com.isa.project.bean.Play;
+import com.isa.project.bean.Play;project.bean.Projection;
+import com.isa.project.bean.ProjectionUserTicket;
+
 import com.isa.project.bean.ProjectionUserTicketId;
 import com.isa.project.bean.Role;
 import com.isa.project.bean.User;
@@ -295,19 +297,28 @@ public class ProfileController {
 	public ResponseEntity ratePlay(@RequestHeader(value = "X-Auth-Token") String token, @RequestBody ReservationDTO reservation,
 			@RequestParam("ratevalue") String ratevalue){
 		
-		System.out.println(reservation+" "+ratevalue);
-		
-		System.out.println(reservation.getId());
 		Long playid = reservation.getIdPlay();
 		Play p = playRepository.findOne(playid);
-		System.out.println(p.getName());
 		
 		
-		//ProjectionUserTicketId putid = new ProjectionUserTicketId(reservation.getId(), );
-	//	projectionUserTicketRepository.findOne(putid); dodavanje u projection ocenu
+		TokenProvider prov = new TokenProvider();
+		User logged = userRepository.findByUsername(prov.getUsernameFromToken(token)).get() ;
 		
-		
-		p.setRating(Integer.parseInt(ratevalue));
+		ProjectionUserTicketId putid = new ProjectionUserTicketId(reservation.getId(), logged.getId(), reservation.getIdTicket());
+		ProjectionUserTicket put = projectionUserTicketRepository.findOne(putid); 
+		put.setGradeMov(Integer.parseInt(ratevalue));
+		projectionUserTicketRepository.save(put);
+		int brojOcena;
+
+		brojOcena = p.getNumberOfGrades()+1;
+		p.setNumberOfGrades(brojOcena);
+		if (p.getSum()==0) {
+			p.setRating(Integer.parseInt(ratevalue));
+			p.setSum(Integer.parseInt(ratevalue));
+		}else {
+			p.setSum(p.getSum()+Integer.parseInt(ratevalue));
+			p.setRating(p.getSum()/brojOcena);
+		}
 		playRepository.save(p);
 		return new ResponseEntity(HttpStatus.OK);
 		
@@ -317,8 +328,39 @@ public class ProfileController {
 	public ResponseEntity rateAmb(@RequestHeader(value = "X-Auth-Token") String token, @RequestBody ReservationDTO reservation,
 			@RequestParam("ratevalue") String ratevalue){
 		
-		// to do: proci kroz listu pozorista i pronaci ovu projekciju i oceniti pozoriste u kome je ona
+		System.out.println(ratevalue);
 		
+		Theatre t=null;
+		for (Theatre te: theatreRepository.findAll()) {
+			for (Projection p: te.getProjekcije()) {
+				if (p.getId()==reservation.getId()) {
+					t = te;
+					System.out.println(t.getName());
+					int brojOcena;
+
+					brojOcena = t.getNumberOfGrades()+1;
+					t.setNumberOfGrades(brojOcena);
+					if (t.getSum()==0) {
+						t.setRating(Integer.parseInt(ratevalue));
+						t.setSum(Integer.parseInt(ratevalue));
+					}else {
+						t.setSum(t.getSum()+Integer.parseInt(ratevalue));
+						t.setRating(t.getSum()/brojOcena);
+					}
+					theatreRepository.save(t);
+					
+				}
+			}
+		}
+		TokenProvider prov = new TokenProvider();
+		User logged = userRepository.findByUsername(prov.getUsernameFromToken(token)).get() ;
+		
+		ProjectionUserTicketId putid = new ProjectionUserTicketId(reservation.getId(), logged.getId(), reservation.getIdTicket());
+		ProjectionUserTicket put = projectionUserTicketRepository.findOne(putid); 
+		
+		put.setGradeAmb(Integer.parseInt(ratevalue));
+		projectionUserTicketRepository.save(put);
+		System.out.println("grade: "+put.getGradeAmb());
 		
 		return new ResponseEntity(HttpStatus.OK);
 	}

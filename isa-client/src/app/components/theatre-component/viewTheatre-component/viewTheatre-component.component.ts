@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TheatresService } from '../../../services/theatres-service.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'viewTheatre-component',
@@ -60,7 +61,7 @@ export class ViewTheatreComponent implements OnInit {
   
       }
 
-  /*    deleteProjection(playid : number, projekcijaid: number, theatreid:number) {
+     deleteProjection(playid : number, projekcijaid: number, theatreid:number) {
 
         this.theatresService.deleteProjection(playid, projekcijaid, theatreid).subscribe(data =>
           this.plays = data);
@@ -73,7 +74,7 @@ export class ViewTheatreComponent implements OnInit {
         this.projekcijaId=projekcijaid;
 
 
-      
+       
       }
 
       openAdding(projekcijaid: number){
@@ -88,7 +89,7 @@ export class ViewTheatreComponent implements OnInit {
         .subscribe();
 
       }
-      addToFast(theatreid: any, ticketid: any, ticket: any){
+    /*  addToFast(theatreid: any, ticketid: any, ticket: any){
         console.log(ticketid);
         this.theatresService.addToFast(cinemaid, ticketid, ticket).subscribe();
         

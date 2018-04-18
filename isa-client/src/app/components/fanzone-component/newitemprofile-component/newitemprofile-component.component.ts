@@ -34,8 +34,8 @@ export class NewitemprofileComponent implements OnInit {
     console.log(UserType[this.userType])
   }
 
-  onClickReserve(id: number) {
-    this.newItemService.reserveItem(id).subscribe(data => console.log(data));
+  onClickReserve(item : any) {
+    this.newItemService.reserveItem(item).subscribe(data => console.log(data));
     
     this.router.navigateByUrl('/fanzone');
   }

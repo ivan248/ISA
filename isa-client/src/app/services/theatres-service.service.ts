@@ -109,7 +109,7 @@ import { MovieReservation } from '../model/movieReservation';
             'X-Auth-Token' : localStorage.getItem('token')
         });
         return this.http
-        .get("http://localhost:8080/api/home/getFastProjectionTicketsTheatre", {params:params,headers:headers})
+        .get("http://localhost:8080/api/theatres/getFastProjectionTicketsTheatre", {params:params,headers:headers})
         .map((data:[any]) => data);
     }
 
@@ -148,6 +148,68 @@ import { MovieReservation } from '../model/movieReservation';
         movieReservation,
         {headers:headers, params:params}
     );
+    }
+
+    getTheatre(id: any){
+        let params = new HttpParams().append('id',id);
+
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http.get('http://localhost:8080/api/home/gettheatre',{headers:headers, params:params});
+    
+    }
+
+    deleteProjection(movieid: any, projekcijaid:any, theatreid: any) {
+        let params = new HttpParams().set('movieid',movieid); 
+        params = params.set('projekcijaid',projekcijaid);   
+        params = params.set('theatreid',theatreid); 
+    
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+    
+        return this.http
+        .delete("http://localhost:8080/api/theatres/deleteProjection", {params:params,headers:headers})
+        .map((data:[any]) => data);
+    
+       }
+
+       sendEdditedProjection(projekcija : any, id: number){
+        projekcija.id=id;
+        const body = JSON.parse(JSON.stringify(projekcija));
+        
+        console.log("sendeditedprojection"+body.price);
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http.post('http://localhost:8080/api/home/editProjection',body,{
+            headers: headers
+        } ).map((data:[any]) => data);
+
+    }
+    addToFast(theatreid: any, ticketid:any, ticket: any){
+        ticket.fastRes = true;
+        const body = JSON.parse(JSON.stringify(ticket));
+        let params = new HttpParams().set('theatreid',theatreid);  
+        params = params.set('ticketid',ticketid); 
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http.post('http://localhost:8080/api/theatre/addProjectionToFast',body,{
+            params:params,
+            headers: headers
+        } );
+
+
+
     }
 
  } 

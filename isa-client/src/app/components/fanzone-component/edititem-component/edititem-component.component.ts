@@ -37,8 +37,11 @@ export class EditItemComponent implements OnInit {
 
         this.itemList[index] = this.item;
          this.itemService.sendEdditedItem(this.item)
-          .subscribe();
-         this.router.navigateByUrl('/fanzone');
+          .subscribe( data =>{
+              this.dataService.changePreownedItemListForShow(this.itemList);
+              this.router.navigateByUrl('/fanzone');
+          });
+         
       }
     
 

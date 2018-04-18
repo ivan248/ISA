@@ -380,6 +380,7 @@ public class UserSeviceImpl implements UserService {
 							lista.add(new ReservationDTO(
 									m.getName(),
 									m.getId(),
+									put.getMovieUserTicketID().getTicketId(),
 									proj.getId(),
 									proj.getDate(), 
 									proj.getTime(), 
@@ -405,6 +406,7 @@ public class UserSeviceImpl implements UserService {
 							lista.add(new ReservationDTO(
 									p.getName(),
 									p.getId(),
+									put.getMovieUserTicketID().getTicketId(),
 									proj.getId(),
 									proj.getDate(), 
 									proj.getTime(), 

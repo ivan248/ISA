@@ -4,7 +4,7 @@
             <div class="card-body" (click)="onClickSetSelectedItem(item.itemID)">
                 <div class="row">
                     <div class="col">
-                        <img  src="https://www.w3schools.com/images/w3schools_green.jpg" alt="">
+                        <img  [src]="item.image" class="img-fluid rounded w-60  h-60" alt="">
                     </div>
                     <div class="col-8">
                         <h4><b>{{item.name}}</b> 
@@ -26,7 +26,7 @@
                             
                             
                         </div>
-                        <button class="btn btn-success" *ngIf="!item.sold">Bid</button>
+                        <button class="btn btn-success" *ngIf="!item.sold && item.approved">Bid</button>
                         
                     </div>
                     <div class="col">
@@ -49,7 +49,7 @@
                     <div class="text-left">
                         <button  class="btn btn-dark btn-sm" (click)="onClickDelete(item.itemID)">Delete</button>
                         <button *ngIf="!item.sold" class="btn btn-dark btn-sm" (click)="onClickEdit(item.itemID)">Edit</button>
-                        <button *ngIf="!item.approved && !item.sold" class="btn btn-dark btn-sm" (click)="onClickApprove(item.itemID)">Approve</button>
+                        <button *ngIf="!item.approved && !item.sold" class="btn btn-dark btn-sm" (click)="onClickApprove(item)">Approve</button>
                     </div>
                 </div>
             </div>

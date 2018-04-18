@@ -57,13 +57,13 @@
                             <div class="form-group">
                                 <select required title="All cinemas" class="custom-select"  name="cinemas" [(ngModel)]="item.placeID" *ngIf="item.place === 'Cinema'">
                                     
-                                    <option [value] ="c.cinema_id"  *ngFor='let c  of cinemas' >{{c.name}}</option>
+                                    <option [value] ="c.id"  *ngFor='let c  of cinemas' >{{c.name}}</option>
                                     
                                 </select>
 
                                 <select  required title="All theatres" class="custom-select"  name="theatres" [(ngModel)]="item.placeID" *ngIf="item.place === 'Theatre'">
                                     
-                                    <option [value] = "t.theatre_id"  *ngFor='let t of theatres' >{{t.name}}</option>
+                                    <option [value] = "t.id"  *ngFor='let t of theatres' >{{t.name}}</option>
                                     
                                 </select>
                             </div>
