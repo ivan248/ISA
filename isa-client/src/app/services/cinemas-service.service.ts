@@ -197,9 +197,12 @@ makeCinemaReservation(movieReservation : MovieReservation) {
 
     return this.http
     .post('http://localhost:8080/api/home/makeCinemaReservation',
-     movieReservation,
-      {headers:headers}
-       );
+     movieReservation, {headers:headers})
+    .catch((err:HttpErrorResponse) =>
+       {
+           alert(err.status + "GDE SI POSAO? TRANSACTINAL SAM JA I TO SVAKO ZNA!");
+           return Observable.throw(err);
+       }); 
 }
 
     reserveFast(ticket:any, ticketid: any){

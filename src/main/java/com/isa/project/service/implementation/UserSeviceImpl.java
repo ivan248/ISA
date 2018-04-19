@@ -13,11 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.isa.project.bean.Friend;
 import com.isa.project.bean.Movie;
 import com.isa.project.bean.Play;
 import com.isa.project.bean.Projection;
+import com.isa.project.bean.ProjectionSeats;
 import com.isa.project.bean.ProjectionUserTicket;
 import com.isa.project.bean.ProjectionUserTicketId;
 import com.isa.project.bean.Ticket;
@@ -26,6 +29,7 @@ import com.isa.project.repository.FriendRepository;
 import com.isa.project.repository.MovieRepository;
 import com.isa.project.repository.PlayRepository;
 import com.isa.project.repository.ProjectionRepository;
+import com.isa.project.repository.ProjectionSeatsRepository;
 import com.isa.project.repository.ProjectionUserTicketRepository;
 import com.isa.project.repository.TicketRepository;
 import com.isa.project.repository.UserRepository;
@@ -63,6 +67,9 @@ public class UserSeviceImpl implements UserService {
 	
 	@Autowired
 	private MovieRepository movieRepository;
+	
+	@Autowired
+	private ProjectionSeatsRepository projectionSeatsRepository;
 	
 	@Override
 	public boolean registerUser(RegistrationUserDto userDto, HttpServletRequest request) {
@@ -597,6 +604,27 @@ public class UserSeviceImpl implements UserService {
 		}
 		
 		return false;
+	}
+
+	@Override
+	@Transactional(readOnly=false, propagation = Propagation.REQUIRES_NEW)
+	public boolean makeReservation(ProjectionSeats projectionSeat) {
+
+		try {
+			System.out.println("Evo me u makeres + " + projectionSeat.getVersion());
+			projectionSeat.setSeatTaken(true);
+			projectionSeatsRepository.save(projectionSeat);
+			return true;
+			
+		} catch(Exception e)
+		{
+		
+			System.out.println("Usao u catch!!!!!! transactional");
+			System.out.println(e);
+			return false;
+		}
+		
+		
 	}
 
 

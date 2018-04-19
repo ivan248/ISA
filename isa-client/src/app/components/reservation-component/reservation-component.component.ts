@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { CinemasService } from '../../services/cinemas-service.service';
 import { TheatresService } from '../../services/theatres-service.service';
 import { MovieReservation } from '../../model/movieReservation';
+import { HomeService } from '../../services/home-service.service';
+import { CATCH_STACK_VAR, CATCH_ERROR_VAR } from '@angular/compiler/src/output/abstract_emitter';
 
 @Component({
   selector: 'reservation-component',
@@ -26,10 +28,14 @@ export class ReservationComponent implements OnInit {
 
     private selectedSeats : any[] = [];
 
+    // for transactional
+    private projectionSeats : any[] = [];
 
-    constructor(private router : Router,
-    private cinemaService : CinemasService,
-    private theatreService : TheatresService,) {
+
+    constructor(private router: Router,
+    private cinemaService: CinemasService,
+    private theatreService: TheatresService,
+    private homeService: HomeService) {
 
     }
 
@@ -66,10 +72,22 @@ export class ReservationComponent implements OnInit {
     onChangeSelectedSeats(selectedSeats : any) {
         this.selectedSeats = selectedSeats;
         console.log("Iz reservationa : " + selectedSeats);
+
+        // for transactional
+        // for transactional
+
+
+
     }
 
     onMovieReservationChanged(movieReservation: MovieReservation) {
         this.movieReservation = movieReservation;
+
+        this.homeService.getProjectionSeats(this.movieReservation.projectionId, this.movieReservation.movieORplayID)
+        .subscribe(data =>{
+            this.projectionSeats = data;
+            console.log(this.projectionSeats + "ispis sedista");
+        } );
     }
 
     onFriendsInvitedChanged(friendsInvited : any) {
@@ -108,8 +126,20 @@ export class ReservationComponent implements OnInit {
     finishReservation() {
 
         this.movieReservation.invitedFriends = this.friendsInvited;
+
+        var seats : any[] = [];
+
+        for(var i:number=0; i<this.movieReservation.seatsTaken.length; i++)
+        {
+            seats.push(this.projectionSeats[this.movieReservation.seatsTaken[i]-1]);
+            //this.homeService.reserveSeat(this.projectionSeats[this.movieReservation.seatsTaken[i]-1])
+            //.subscribe(data => console.log(data));
+        }
+
+
+        this.movieReservation.seats = seats;
         console.log("finishReservation : ispis ");
-        console.log(this.movieReservation.invitedFriends);
+        console.log(this.movieReservation.seats);
 
         if(!this.cinemaSelected)
         {

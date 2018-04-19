@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import com.isa.project.bean.Friend;
+import com.isa.project.bean.ProjectionSeats;
 import com.isa.project.bean.ProjectionUserTicketId;
 import com.isa.project.bean.User;
 import com.isa.project.web.dto.RegistrationUserDto;
@@ -34,5 +35,6 @@ public interface UserService {
 	public List<ReservationDTO> getReservations(String usernameFromToken);
 	public boolean acceptORdeclineInvitation(ProjectionUserTicketId projectionUserTicketId, String accept);
 	public boolean cancelProjectionReservation(String usernameFromToken, int parseInt, int parseInt2);
+	public boolean makeReservation(ProjectionSeats projectionSeat);
 
 }

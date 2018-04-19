@@ -18,14 +18,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Projection;
+import com.isa.project.bean.ProjectionSeats;
 import com.isa.project.bean.Theatre;
 import com.isa.project.bean.Ticket;
 import com.isa.project.bean.User;
 import com.isa.project.repository.PlayRepository;
+import com.isa.project.repository.ProjectionSeatsRepository;
 import com.isa.project.repository.TheatreRepository;
 import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.CinemaService;
 import com.isa.project.service.TheatreService;
+import com.isa.project.service.UserService;
 import com.isa.project.web.dto.MovieReservationDTO;
 
 
@@ -48,6 +51,14 @@ public class HomeController {
 
 	@Autowired
 	private PlayRepository playRepository;
+	
+
+	@Autowired
+	private UserService userService;
+	
+	
+	@Autowired
+	private ProjectionSeatsRepository projectionSeatsRepository;
 
 	
 	@RequestMapping(value = "/test", method = RequestMethod.POST,
@@ -229,6 +240,9 @@ public class HomeController {
 			@RequestBody MovieReservationDTO movieReservationDTO) {
 
 		TokenProvider p = new TokenProvider();
+		
+		System.out.println("pogodio makecinema reservation controller");
+
 
 		if(cinemaService.makeReservation(movieReservationDTO, p.getUsernameFromToken(token)))
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -259,7 +273,7 @@ public class HomeController {
 
 		TokenProvider p = new TokenProvider();
 
-		System.out.println("pogodio maketheartre");
+		System.out.println("pogodio maketheartre reservation controller");
 		
 		if(theatreService.makeReservation(movieReservationDTO, p.getUsernameFromToken(token)))
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -358,5 +372,37 @@ public class HomeController {
 	public ResponseEntity<Theatre> getTheatre(@RequestHeader("X-Auth-Token") String token, @RequestParam("id") int id) {
 		return new ResponseEntity<Theatre>( theatreRepository.findOneById((long)id) ,HttpStatus.OK);
 	}
+	
+	@GetMapping(value="/getProjectionSeats")
+	public ResponseEntity getProjectionSeats(@RequestHeader("X-Auth-Token") String token,
+			@RequestParam("projectionId") String projectionId,
+			@RequestParam("movieORplayId") String movieORplayId) {
+		
+		
+		System.out.println("pogodio getprojseats");
+		System.out.println(projectionSeatsRepository.findByProjectionIdAndMovieId(
+						(long)Integer.parseInt(projectionId), (long)Integer.parseInt(movieORplayId)) );
+		
+		return new ResponseEntity( 
+				projectionSeatsRepository.findByProjectionIdAndMovieId(
+						(long)Integer.parseInt(projectionId), (long)Integer.parseInt(movieORplayId)) 
+				,HttpStatus.OK);
+	}
+	
+	@PostMapping
+	@RequestMapping(value = "/reserveSeat", consumes = "application/json")
+	public ResponseEntity reserveSeat(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestBody ProjectionSeats projectionSeat) {
+
+		TokenProvider p = new TokenProvider();
+
+		System.out.println("pogodio reserveSeat");
+		
+		if(userService.makeReservation(projectionSeat))
+			return new ResponseEntity<>(HttpStatus.OK);
+
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+	
 	
 }
