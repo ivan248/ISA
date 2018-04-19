@@ -40,12 +40,12 @@ public class ProfileControllerTest {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 	
-	@Test
-	public void getLoggedUserTest() throws Exception {
-		
-		this.mockMvc.perform(get(url+"/")).andExpect(status().isBadRequest())
-		.andExpect(content().contentType(contentType));
-		
-	}
+//	@Test
+//	public void getLoggedUserTest() throws Exception {
+//		
+//		this.mockMvc.perform(get(url+"/")).andExpect(status().isBadRequest())
+//		.andExpect(content().contentType(contentType));
+//		
+//	}
 	
 }
