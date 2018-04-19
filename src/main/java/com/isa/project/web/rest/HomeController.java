@@ -29,12 +29,12 @@ import com.isa.project.repository.TheatreRepository;
 import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.CinemaService;
 import com.isa.project.service.TheatreService;
-<<<<<<< HEAD
+
 import com.isa.project.web.Converter;
 import com.isa.project.web.dto.CinemaDTO;
-=======
+
 import com.isa.project.service.UserService;
->>>>>>> b8a08ae148a236d90ee9af3b934e6510ef3069d0
+
 import com.isa.project.web.dto.MovieReservationDTO;
 import com.isa.project.web.dto.TheatreDTO;
 
@@ -379,7 +379,7 @@ public class HomeController {
 		return new ResponseEntity<Theatre>( theatreRepository.findOneById((long)id) ,HttpStatus.OK);
 	}
 	
-<<<<<<< HEAD
+
 	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN')")
 	@PostMapping("/addtheatre")
 	public ResponseEntity<Boolean> addTheatre(@RequestHeader("X-Auth-Token") String token, @RequestBody TheatreDTO t) {
@@ -411,8 +411,8 @@ public class HomeController {
 			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
 		}
 		
-		
-=======
+	}	
+
 	@GetMapping(value="/getProjectionSeats")
 	public ResponseEntity getProjectionSeats(@RequestHeader("X-Auth-Token") String token,
 			@RequestParam("projectionId") String projectionId,
@@ -442,7 +442,7 @@ public class HomeController {
 			return new ResponseEntity<>(HttpStatus.OK);
 
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
->>>>>>> b8a08ae148a236d90ee9af3b934e6510ef3069d0
+
 	}
 	
 	
