@@ -275,6 +275,12 @@ public class TheatreServiceImpl implements TheatreService {
 		return null;
 	}
 
+	@Override
+	public boolean setTicketToSold(Long ticketid) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 
 }

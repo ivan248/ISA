@@ -98,12 +98,12 @@ export class ViewTheatreComponent implements OnInit {
         
     }
 
- /*   reserve(ticket:any, ticketid: any, cinemaid: any){
+   reserve(ticket:any, ticketid: any, cinemaid: any){
  
-        console.log(cinemaid);
+        console.log("ooooooooljacinemaid");
         this.theatresService.reserveFast(ticket, ticketid).subscribe();
         console.log(this.currentCinema);
-        this.router.navigateByUrl('/viewCinema');
+        this.router.navigateByUrl('/viewTheatre');
 
     }
 
@@ -131,7 +131,7 @@ export class ViewTheatreComponent implements OnInit {
           this.changeSeatingChartHidden = !this.changeSeatingChartHidden;
       }
 
-      onSubmit1(price: any, seat: any, mid: any, p: any, cid: any){
+    /*  onSubmit1(price: any, seat: any, mid: any, p: any, cid: any){
         console.log(price.value);
         console.log(seat.value);
         this.theatresService.addFastTicket(price.value, seat.value, mid, p, cid).subscribe();
