@@ -8,20 +8,6 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-const httpOptions = {
-    headers: new HttpHeaders({ 
-        'Content-Type': 'application/json',
-        'X-Auth-Token' : localStorage.getItem('token')
-     }),
-};
-
-const httpOptions1 = {
-    headers: new HttpHeaders({ 
-        'Content-Type': 'application/json'
-     }),
-};
-  
- 
  @Injectable()
  export class LoginService {  
 
@@ -39,11 +25,15 @@ const httpOptions1 = {
            "username" : username,
            "password" : password
        }
-       let header = new HttpHeaders({'Content-Type': 'application/json'});  
+       
+       let headers = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'X-Auth-Token' : localStorage.getItem('token')
+     }); 
 
 
 
-       return this.http.post("http://localhost:8080/api/login/login", user, httpOptions1)
+       return this.http.post("http://localhost:8080/api/login/login", user, {headers:headers})
        .catch((err:HttpErrorResponse) =>
        {
            alert(err.status + "Unauthorized.");
@@ -56,8 +46,13 @@ const httpOptions1 = {
         // if(localStorage.getItem('token') == null)
         // return new Observable<any>();
 
+        
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json'
+         });
+
         let json = JSON.parse(JSON.stringify(user));
-        return this.http.post("http://localhost:8080/api/login/registrationMessage", json, httpOptions1);
+        return this.http.post("http://localhost:8080/api/login/registrationMessage", json, {headers:headers});
     }
 
  } 

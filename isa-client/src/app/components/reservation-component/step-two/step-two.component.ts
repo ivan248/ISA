@@ -26,6 +26,7 @@ export class StepTwoComponent implements OnInit {
     private projectionTime : String;
     private projectionId : number;
     private projectionPrice : number = 0;
+    private movieORplayID : number;
 
     private datesAvailable : any[] = [];
     private placesAvailable : any[] = [];
@@ -72,6 +73,7 @@ export class StepTwoComponent implements OnInit {
         {
           console.log(this.moviesArray[i].name);
           this.projectionName = this.moviesArray[i].name;
+          this.movieORplayID = this.moviesArray[i].id;
           console.log(this.projectionName);
         }
       }
@@ -145,6 +147,7 @@ export class StepTwoComponent implements OnInit {
         {
           console.log(this.moviesArray[i].name);
           this.projectionName = this.moviesArray[i].name;
+          this.movieORplayID = this.moviesArray[i].id;
           console.log(this.projectionName);
         }
       }
@@ -187,7 +190,8 @@ export class StepTwoComponent implements OnInit {
         this.projectionDate,
       this.projectionTime,
     this.projectionPlace,
-  this.projectionPrice)
+  this.projectionPrice,
+this.movieORplayID)
       );
     }
 

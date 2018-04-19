@@ -9,6 +9,8 @@ export class MovieReservation
     public seatsTaken : any[];
     public projectionId : number;
     public invitedFriends : any[];
+    public movieORplayID : number;
+    public seats : any;
 
 
 
@@ -18,7 +20,8 @@ export class MovieReservation
         date : Date,
         time : String,
         place : String,
-        price : number ) {
+        price : number,
+        movieORplayID : number ) {
 
         this.projectionId = projectionId;
         this.movieName = movieName;
@@ -26,6 +29,7 @@ export class MovieReservation
         this.time = time;
         this.place = place;
         this.price = price;
+        this.movieORplayID = movieORplayID;
     }
 
 

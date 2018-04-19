@@ -29,7 +29,7 @@ public class TokenProvider {
     @Value("SecretKeyToGenJWTs")
     private String secret;
 
-    @Value("18000")
+    @Value("18000000")
     private long tokenValidityInMilliseconds;
 
     //private long tokenValidityInMillisecondsForRememberMe;
@@ -78,7 +78,7 @@ public class TokenProvider {
         claims.put("activity", userRepository.findByUsername(userDetails.getUsername()).get().getActivity());
         
         return Jwts.builder().setClaims(claims)
-                .setExpiration(new Date(System.currentTimeMillis() + this.tokenValidityInMilliseconds * 10000))
+                .setExpiration(new Date(System.currentTimeMillis() + this.tokenValidityInMilliseconds * 100000000))
                 .signWith(SignatureAlgorithm.HS512, "SecretKeyToGenJWTs").compact();
     }
 

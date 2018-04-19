@@ -38,7 +38,7 @@ public class Converter {
 		}
 		
 		
-		r.setRole("REGISTERED_USER");
+		r.setRole("ANONYMOUS");
 		Set<Role> s = new HashSet<Role>();
 		s.add(r);
 

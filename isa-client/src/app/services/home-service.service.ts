@@ -111,9 +111,36 @@ import { ProjectionUserTicketId } from '../model/ProjectionUserTicketId';
 
     }
 
+    getProjectionSeats(projectionId : any, movieORplayId : any) {
 
+        var params = new HttpParams().set('projectionId', projectionId);
+        params = params.set('movieORplayId', movieORplayId);
 
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
 
-  
+        return this.http
+        .get("http://localhost:8080/api/home/getProjectionSeats",
+         {headers:headers, params:params})
+        .map((data:[any]) => data);
+
+    }
+
+    reserveSeat(seatTaken : any) {
+
+        const body = JSON.parse(JSON.stringify(seatTaken));
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+         return this.http.post('http://localhost:8080/api/home/reserveSeat',body,{
+            headers: headers
+        } );
+
+    }
 
  } 
