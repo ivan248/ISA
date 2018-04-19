@@ -32,15 +32,13 @@ import com.isa.project.repository.PlayRepository;
 import com.isa.project.repository.ProjectionRepository;
 import com.isa.project.repository.ProjectionSeatsRepository;
 import com.isa.project.repository.TheatreRepository;
+import com.isa.project.repository.UserRepository;
 import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.CinemaService;
 import com.isa.project.service.TheatreService;
-
+import com.isa.project.service.UserService;
 import com.isa.project.web.Converter;
 import com.isa.project.web.dto.CinemaDTO;
-
-import com.isa.project.service.UserService;
-
 import com.isa.project.web.dto.MovieReservationDTO;
 import com.isa.project.web.dto.TheatreDTO;
 
@@ -50,6 +48,9 @@ import com.isa.project.web.dto.TheatreDTO;
 @CrossOrigin
 @RequestMapping(value = "/api/home") // This means URL's start with /home	
 public class HomeController {
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Autowired 
 	private TheatreService theatreService;
@@ -411,6 +412,12 @@ public class HomeController {
 	@PostMapping("/addtheatre")
 	public ResponseEntity<Boolean> addTheatre(@RequestHeader("X-Auth-Token") String token, @RequestBody TheatreDTO t) {
 		
+		
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
+		
 		Theatre theatre = Converter.convertTheatreDTO(t);
 		
 		Boolean b = theatreService.addTheatre(theatre);
@@ -427,6 +434,11 @@ public class HomeController {
 	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN')")
 	@PostMapping("/addcinema")
 	public ResponseEntity<Boolean> addCinema(@RequestHeader("X-Auth-Token") String token, @RequestBody CinemaDTO c) {
+		
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 		
 		Cinema cinema = Converter.convertCinemaDTO(c);
 		

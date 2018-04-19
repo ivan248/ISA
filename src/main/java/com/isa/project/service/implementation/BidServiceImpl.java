@@ -84,7 +84,7 @@ public class BidServiceImpl implements BidService {
 				return false;
 			} else {
 				
-				bidRepository.saveAndFlush(bid);
+				bidRepository.save(bid);
 				return true;
 			}
 			

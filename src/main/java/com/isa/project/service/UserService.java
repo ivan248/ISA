@@ -39,6 +39,8 @@ public interface UserService {
 
 	public boolean cancelProjectionReservation(String usernameFromToken, int parseInt, int parseInt2);
 	public boolean makeReservation(ProjectionSeats projectionSeat);
+	
+	public List<User> getAllUsersForAllUsers(User u);
 
 
 }

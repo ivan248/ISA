@@ -40,6 +40,9 @@ public class ItemController {
 		TokenProvider p = new TokenProvider();
 		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
 		
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 		Boolean userIsSystemAdmin = userService.checkIfUserHasRole(currentUser, "SYSTEM_ADMIN");
 		Boolean userIsFanzoneAdmin = userService.checkIfUserHasRole(currentUser, "FANZONE_ADMIN");
 		Boolean userIsOwner = currentUser.getUsername().equals(item.getOwner().getUsername());
@@ -57,14 +60,20 @@ public class ItemController {
 	
 	@RequestMapping(value="/edit", method = RequestMethod.POST) //ovaj drugi korak edita zapravo menja item u BP
 	public Item editItemStep(@RequestBody Item item, @RequestHeader("X-Auth-Token") String token) {
-		
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 		return itemService.editItem(item);
 		
 	}
 	
 	@RequestMapping(value="/approve", method = RequestMethod.POST, consumes="application/json")
 	public Boolean approveItem(@RequestBody Item item,@RequestHeader("X-Auth-Token") String token) {
-		
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 		return itemService.approveItem(item);
 	}
 
@@ -100,7 +109,11 @@ public class ItemController {
 
 	
 	@RequestMapping(value="/acceptbid/{id}", method = RequestMethod.POST) //promena ponude
-	public Boolean acceptBid(@PathVariable("id") int id) {
+	public Boolean acceptBid(@PathVariable("id") int id, @RequestHeader("X-Auth-Token") String token) {
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 		return itemService.acceptBid(id);
 	}
 	

@@ -15,6 +15,7 @@ export class ChangePasswordComponent implements OnInit {
 
     //@Input() selectedSeats : any[];
     @Output() onPasswordChanged =  new EventEmitter<any>();
+    
 
  
     constructor(private profileService: ProfileService) {
@@ -25,11 +26,23 @@ export class ChangePasswordComponent implements OnInit {
 
     }
 
-    changePassword(password:any) {
+    changePassword(password:any, passwordRepeat:any) {
 
-        this.profileService.changePassword(password).subscribe();
 
-        this.onPasswordChanged.emit(true);
+        console.log(password + " " + passwordRepeat);
+
+        if(password===passwordRepeat)
+        {
+            this.profileService.changePassword(password, passwordRepeat).subscribe();
+
+            this.onPasswordChanged.emit(true);
+            alert("Successfully changed password!")
+        }
+        else
+        {
+            alert("Passwords don't match!");
+        }
+
 
     }
 

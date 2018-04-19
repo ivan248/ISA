@@ -123,12 +123,26 @@ public class ProfileController {
 	@GetMapping
 	@RequestMapping(value = "/getAllUsers")
 	public ResponseEntity getAllUsers(@RequestHeader(value = "X-Auth-Token") String token) {
-
+		
 		TokenProvider p = new TokenProvider();
 
 		return new ResponseEntity(userService.getAllUsers(p.getUsernameFromToken(token)), HttpStatus.OK);
 
 	}
+	
+	@GetMapping
+	@RequestMapping(value = "/getallusers")
+	public ResponseEntity<List<User>> getAllUsersForAllUsers(@RequestHeader(value = "X-Auth-Token") String token) {
+		
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		
+		return new ResponseEntity<List<User>> (userService.getAllUsersForAllUsers(logged),HttpStatus.OK);
+
+	}
+	
+	
 
 	@SuppressWarnings("rawtypes")
 	@PostMapping
@@ -215,8 +229,20 @@ public class ProfileController {
 	@GetMapping
 	@RequestMapping(value = "/changePassword")
 	public ResponseEntity changePassword(@RequestHeader(value = "X-Auth-Token") String token,
-			@RequestParam("password") String password) {
+			@RequestParam("password") String password,
+			@RequestParam("passwordRepeat") String passwordRepeat) {
 
+		System.out.println(password);
+		System.out.println(passwordRepeat);
+		
+		if(!password.equals(passwordRepeat))
+		{
+			System.out.println("Passwords don`t match!");
+			return new ResponseEntity(HttpStatus.BAD_REQUEST); 
+		}
+		
+		System.out.println("Passwords match!");
+		
 		TokenProvider p = new TokenProvider();
 		
 		if(userService.changePassword(p.getUsernameFromToken(token), password))
@@ -306,6 +332,12 @@ public class ProfileController {
 	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN')")
 	@PostMapping("/addrole")
 	public User addRole(@RequestHeader(value = "X-Auth-Token") String token,@RequestBody User u, @RequestParam("role") String role) {
+		
+		
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		logged.setActivity(logged.getActivity() + 10L);
+		userRepository.save(logged);
 		
 		User user = userRepository.findByUsername(u.getUsername()).get();
 		

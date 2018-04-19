@@ -31,15 +31,18 @@ export class ItemComponent implements OnInit {
    }
 
     onClickDelete(id: number){
-      console.log(id);
-      let index=-1;
-      for (var i = 0; i < this.items.length; i++) {
-        if (this.items[i].itemID === id) 
-          index = i;
-      } 
-      this.items.splice(index,1);
-      console.log(this.items);
-      this.itemService.deleteItem(id);
+      this.itemService.deleteItem(id).subscribe(data => {
+        console.log(id);
+        let index=-1;
+        for (var i = 0; i < this.items.length; i++) {
+          if (this.items[i].itemID === id) 
+            index = i;
+        } 
+        this.items.splice(index,1);
+        console.log(this.items);
+      });
+      
+      
     }
 
     onClickEdit(id: number){

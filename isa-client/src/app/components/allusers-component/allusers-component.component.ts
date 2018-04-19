@@ -19,7 +19,7 @@ export class AllusersComponent implements OnInit {
   returnedUser : any;
 
   ngOnInit() {
-    this.profileService.getAllUsers().subscribe(data => {
+    this.profileService.getAllUsers2().subscribe(data => {
       this.users = data;
     })
     

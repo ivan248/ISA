@@ -67,7 +67,7 @@ public class FanZoneController {
 		return fanZoneService.getAllOfficialItems();
 	}
 	
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAutority('FANZONE_ADMIN')")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAuthority('FANZONE_ADMIN')")
 	@RequestMapping(value="/unapproved", method= RequestMethod.GET)
 	public List<Item> getAllUnApprovedItems(){
 		
@@ -96,13 +96,14 @@ public class FanZoneController {
 		
 		
 	}
-	
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAuthority('FANZONE_ADMIN')")
 	@RequestMapping(value="/additem", method=RequestMethod.POST)
 	public  ResponseEntity<Item> addItem( @RequestBody AddNewItemDto newItemDTO, @RequestHeader(value="X-Auth-Token") String token) {
 		
 		TokenProvider p = new TokenProvider();
 		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
-		userService.addActivityPoints(20L, logged.getUsername());
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 		
 		Item i = Converter.convertAddNewItemToItem(newItemDTO);
 		int status = i.getEndDate().compareTo(i.getBeginDate());  //provera da li je unesen krajnji datum stariji ili mladji od danasnjeg
@@ -113,28 +114,28 @@ public class FanZoneController {
 	    i.setOwner(logged);
 	    fanZoneService.addItem(i);
       
-		return new ResponseEntity<Item>(i,HttpStatus.OK);
+		return new ResponseEntity<Item>(i,HttpStatus.CREATED);
 
 		
 
 	}
-	
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAuthority('FANZONE_ADMIN')")
 	@RequestMapping(value = "/deleteitem", method= RequestMethod.GET)
 	public ResponseEntity<Boolean> deleteItem(@RequestParam("id") int id,@RequestHeader("X-Auth-Token") String token) {
 		TokenProvider p = new TokenProvider();
 		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
-		userService.addActivityPoints(3L, logged.getUsername());
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 		System.out.println("Usao u delete");
 		return new ResponseEntity<Boolean>(fanZoneService.deleteItem(id),HttpStatus.OK);
-		
-		
 	}
 	
 	@GetMapping("/getitem")
 	public ResponseEntity<Item> getItem(@RequestParam("id") int id,@RequestHeader("X-Auth-Token") String token) {
 		TokenProvider p = new TokenProvider();
 		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
-		userService.addActivityPoints(1L, logged.getUsername());
+		logged.setActivity(logged.getActivity() + 1L);
+		userRepository.save(logged);
 		System.out.println("Usao u delete");
 		System.out.println("Usao u getitem");
 		return new ResponseEntity<Item>(itemRepository.findOneByItemID(id),HttpStatus.OK);	
@@ -144,7 +145,8 @@ public class FanZoneController {
 	public ResponseEntity<OfficialItem> getOfficialItem(@RequestParam("id") int id,@RequestHeader("X-Auth-Token") String token) {
 		TokenProvider p = new TokenProvider();
 		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
-		userService.addActivityPoints(3L, logged.getUsername());
+		logged.setActivity(logged.getActivity() + 3L);
+		userRepository.save(logged);
 		System.out.println("Usao u delete");
 		System.out.println("Usao u getoffitem");
 		OfficialItem k = officialItemRepository.findOneByItemID(id);
@@ -152,10 +154,13 @@ public class FanZoneController {
 		return new ResponseEntity<OfficialItem>(officialItemRepository.findOneByItemID(id),HttpStatus.OK);	
 	}
 	
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAutority('FANZONE_ADMIN')")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAuthority('FANZONE_ADMIN')")
 	@RequestMapping(value="/addofficialitem", method=RequestMethod.POST)
-	public  ResponseEntity<OfficialItem> addOfficialItem( @RequestBody OfficialItemDTO i) {
-		
+	public  ResponseEntity<OfficialItem> addOfficialItem( @RequestBody OfficialItemDTO i,@RequestHeader("X-Auth-Token") String token) {
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 		OfficialItem item = new OfficialItem();
 		item = Converter.convertOfficialItemDTO(i);
 		
@@ -179,9 +184,15 @@ public class FanZoneController {
 		}
 
 	}
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAutority('FANZONE_ADMIN')")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAuthority('FANZONE_ADMIN')")
 	@RequestMapping(value = "/deleteofficialitem", method= RequestMethod.DELETE)
-	public ResponseEntity<Boolean> deleteOfficialItem(@RequestParam("id") int id) {
+	public ResponseEntity<Boolean> deleteOfficialItem(@RequestParam("id") int id, @RequestHeader("X-Auth-Token") String token) {
+		
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
+		
 		System.out.println("Usao u delete official");
 		return new ResponseEntity<Boolean>(fanZoneService.deleteOfficialItem(id),HttpStatus.OK);	
 	}

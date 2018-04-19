@@ -26,4 +26,6 @@ public interface BidRepository extends JpaRepository<Bid, Integer> {
 	Bid findBidValue(@Param("itemID") Integer itemID, @Param("userName") String userName);
 	Bid findOneByBuyer(User buyer);
 	
+	
+	
 }

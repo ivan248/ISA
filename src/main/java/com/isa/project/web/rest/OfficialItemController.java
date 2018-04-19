@@ -33,20 +33,30 @@ public class OfficialItemController {
 	@Autowired
 	private UserRepository userRepository;
 
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAutority('FANZONE_ADMIN')")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAuthority('FANZONE_ADMIN')")
 	@RequestMapping(value="/edit", method = RequestMethod.POST) //ovaj drugi korak edita zapravo menja item u BP
-	public ResponseEntity<Boolean> editItemStep(@RequestBody OfficialItem i) {
-		System.out.println("Verzija: " + i.getVersion());
-		Boolean b = officialItemService.editItem(i);
-		System.out.println("Promenio!");
+	public ResponseEntity<Boolean> editItemStep(@RequestBody OfficialItem i,@RequestHeader("X-Auth-Token") String token) {
 		
-		if(i.getCinemaOwner() == null) {
-			System.out.println("Cinema je null");
+		if ( i.getReserved()) {
+			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+		} else {
+			TokenProvider p = new TokenProvider();
+			User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+			logged.setActivity(logged.getActivity() + 20L);
+			userRepository.save(logged);
+			System.out.println("Verzija: " + i.getVersion());
+			Boolean b = officialItemService.editItem(i);
+			System.out.println("Promenio!");
+			
+			if(i.getCinemaOwner() == null) {
+				System.out.println("Cinema je null");
+			}
+			if (i.getTheatreOwner() == null) {
+				System.out.println("theatre je null");
+			}
+			return new ResponseEntity<Boolean>(b,HttpStatus.OK);
 		}
-		if (i.getTheatreOwner() == null) {
-			System.out.println("theatre je null");
-		}
-		return new ResponseEntity<Boolean>(b,HttpStatus.OK);
+		
 	}
 	
 	
@@ -54,7 +64,10 @@ public class OfficialItemController {
 	@RequestMapping(value="/sell", method = RequestMethod.POST) //ovaj drugi korak edita zapravo menja item u BP
 	public Boolean sellItem(@RequestParam("id")int id, @RequestHeader(value="X-Auth-Token") String token) {
 		
-		
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		logged.setActivity(logged.getActivity() + 10L);
+		userRepository.save(logged);
 		System.out.println("Rezervisao!");
 		return officialItemService.setSold(id);
 	}
@@ -64,9 +77,13 @@ public class OfficialItemController {
 	public ResponseEntity<Boolean> reserveItem(@RequestBody OfficialItem item, @RequestHeader(value="X-Auth-Token") String token) {
 		
 		
+		
 		TokenProvider p = new TokenProvider();
 		User u = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
 		
+		u.setActivity(u.getActivity() + 20L);
+		
+		userRepository.save(u);
 		item.setBuyer(u);
 		
 		Boolean b = officialItemService.reserve(item);
