@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Play;
@@ -112,6 +114,7 @@ public class TheatreServiceImpl implements TheatreService {
 	}
 
 	@Override
+	@Transactional(readOnly=false, propagation = Propagation.REQUIRES_NEW)
 	public boolean makeReservation(MovieReservationDTO movieReservationDTO, String usernameFromToken) {
 
 		try {

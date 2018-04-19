@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Movie;
@@ -236,6 +238,7 @@ public class CinemaServiceImpl implements CinemaService{
 
 
 	@Override
+	@Transactional(readOnly=false, propagation = Propagation.REQUIRES_NEW)
 	public boolean makeReservation(MovieReservationDTO movieReservationDTO, String username) {
 		
 		System.out.println("Make reservation servis + ");
