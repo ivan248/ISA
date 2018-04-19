@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +29,14 @@ import com.isa.project.repository.TheatreRepository;
 import com.isa.project.security.jwt.TokenProvider;
 import com.isa.project.service.CinemaService;
 import com.isa.project.service.TheatreService;
+
+import com.isa.project.web.Converter;
+import com.isa.project.web.dto.CinemaDTO;
+
 import com.isa.project.service.UserService;
+
 import com.isa.project.web.dto.MovieReservationDTO;
+import com.isa.project.web.dto.TheatreDTO;
 
 
 
@@ -170,7 +177,6 @@ public class HomeController {
 		cinemaService.deleteProjection(Long.parseLong(movieid), Long.parseLong(projekcijaid), Long.parseLong(cinemaid));
 		
 		return new ResponseEntity(cinemaService.getMovies(c.getName()), HttpStatus.OK);
-
 	}
 	
 	@RequestMapping(value="/editProjection", method = RequestMethod.POST) 
@@ -180,7 +186,7 @@ public class HomeController {
 		return new ResponseEntity<>(cinemaService.editProjection(projekcija), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/addProjection", method = RequestMethod.POST) 
+	@RequestMapping(value="/addProjectionCinema", method = RequestMethod.POST) 
 	public ResponseEntity addProjection(@RequestBody Projection projekcija, @RequestParam("movieid") String movieid, @RequestParam("cinemaid") String cinemaid) {
 		System.out.println("************"+projekcija);
 		
@@ -373,6 +379,40 @@ public class HomeController {
 		return new ResponseEntity<Theatre>( theatreRepository.findOneById((long)id) ,HttpStatus.OK);
 	}
 	
+
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN')")
+	@PostMapping("/addtheatre")
+	public ResponseEntity<Boolean> addTheatre(@RequestHeader("X-Auth-Token") String token, @RequestBody TheatreDTO t) {
+		
+		Theatre theatre = Converter.convertTheatreDTO(t);
+		
+		Boolean b = theatreService.addTheatre(theatre);
+		
+		if (b) {
+			return new ResponseEntity<Boolean>(true,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+		}
+		
+		
+	}
+	
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN')")
+	@PostMapping("/addcinema")
+	public ResponseEntity<Boolean> addCinema(@RequestHeader("X-Auth-Token") String token, @RequestBody CinemaDTO c) {
+		
+		Cinema cinema = Converter.convertCinemaDTO(c);
+		
+		Boolean b = cinemaService.addCinema(cinema);
+		
+		if (b) {
+			return new ResponseEntity<Boolean>(true,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+		}
+		
+	}	
+
 	@GetMapping(value="/getProjectionSeats")
 	public ResponseEntity getProjectionSeats(@RequestHeader("X-Auth-Token") String token,
 			@RequestParam("projectionId") String projectionId,
@@ -402,6 +442,7 @@ public class HomeController {
 			return new ResponseEntity<>(HttpStatus.OK);
 
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
 	}
 	
 	

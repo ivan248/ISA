@@ -31,7 +31,7 @@ public interface CinemaService {
 	boolean deleteTicket(Long ticketid);
 	ArrayList<Cinema> findByNameContaining(String cinema);
 	ArrayList<Projection> getPlayDates(int parseInt);
-
+	Boolean addCinema(Cinema c);
 	
 
 }

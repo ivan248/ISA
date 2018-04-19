@@ -42,18 +42,15 @@ export class AddProjectionComponentTheatre implements OnInit {
 
       const body = JSON.parse(JSON.stringify(f.value));
     
-      this.cinemasService.addProjection(body, movie, cinema)
+      this.theatresService.addProjection(body, movie, cinema)
       .subscribe(data => {
         this.currentCinema = data;
         this.cinemasService.selectCinema(this.currentCinema);
         console.log(this.currentCinema +  " iz addorojetion");
-        this.router.navigateByUrl('/viewTheatre'); //ne radi osvezavanje prikaza
+        this.router.navigateByUrl('/viewTheatre'); 
       }
        );
-//mozda ne bi trebalo da se zakomentarise? :D
-        //this.cinemasService.currentm.subscribe(movie => this.currentMovie = movie)
-    
-      
+
      
       
 

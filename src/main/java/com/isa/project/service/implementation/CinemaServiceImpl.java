@@ -488,6 +488,20 @@ public class CinemaServiceImpl implements CinemaService{
 	}
 
 
+	@Override
+	public Boolean addCinema(Cinema c) {
+		try {
+			this.cinemaRepository.save(c);
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("error occured");
+			return false;
+		}
+		
+	}
+
+
 	
 
 	

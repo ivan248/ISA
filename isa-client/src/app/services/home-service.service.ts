@@ -73,6 +73,44 @@ import { ProjectionUserTicketId } from '../model/ProjectionUserTicketId';
 
     }
 
+    addTheatre(theatre: any){
+        
+        let body = JSON.stringify(theatre);
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http.post('http://localhost:8080/api/home/addtheatre',body,{
+            headers: headers
+        } ).catch((err:HttpErrorResponse) =>
+        {
+            alert("Unauthorized");
+            return Observable.throw(err);
+        }
+    );;
+
+    }
+
+    addCinema(cinema: any){
+        
+        let body = JSON.stringify(cinema);
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http.post('http://localhost:8080/api/home/addcinema',body,{
+            headers: headers
+        } ).catch((err:HttpErrorResponse) =>
+        {
+            alert("Unauthorized");
+            return Observable.throw(err);
+        }
+    );;
+
+    }
+
     getProjectionSeats(projectionId : any, movieORplayId : any) {
 
         var params = new HttpParams().set('projectionId', projectionId);
