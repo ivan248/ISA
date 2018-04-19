@@ -387,17 +387,24 @@ public class CinemaServiceImpl implements CinemaService{
 
 
 	@Override
+	@Transactional(readOnly=false, propagation = Propagation.REQUIRES_NEW)
 	public boolean setTicketToSold(Long ticketid) {
-		Ticket t = ticketRepository.findOneById(ticketid);
-		t.setSold(true);
-		
+
 		try {
+			Ticket t = ticketRepository.findOneById(ticketid);
+			t.setSold(true);
+			ticketRepository.save(t);
 			ticketRepository.flush();
+			
+			return true;
 
 		}catch(Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+			return false;
 			
 		}
-		return true;
+		
 	}
 
 
