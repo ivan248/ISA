@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit {
     private editClicked : boolean = true;
     private searchButtonClicked : boolean = true;
     private adminLoggedFirstTime : boolean = false;
+    private canChangePassword : boolean = true;
 
     private firstName : string;
     private lastName : string;
@@ -57,12 +58,20 @@ export class ProfileComponent implements OnInit {
         this.phoneNumber = data.phoneNumber;
         this.city = data.city;
         
+        console.log("Roles : " + data.roles);
+
         for(var i:number=0; i<data.roles.length; i++)
-        {
+        { 
+          console.log("Roles : " + data.roles[i].role);
           
           if( (data.roles[i].role === "ADMIN" || data.roles[i].role=="FANZONE_ADMIN") && data.firstTimeLogged)
           {
             this.adminLoggedFirstTime = true;
+          }
+
+          if((data.roles[i].role === "ADMIN" || data.roles[i].role=="FANZONE_ADMIN"))
+          {
+            this.canChangePassword = !this.canChangePassword;
           }
 
         }

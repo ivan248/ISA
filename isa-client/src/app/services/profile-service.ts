@@ -148,16 +148,22 @@ var httpOptions = {
         .get(this.url + "declineFriend", {params:params,headers:headers}).map((data:[any]) => data);
     }
 
-    changePassword(password : any) {
+    changePassword(password : any, passwordRepeat : any) {
 
         let params = new HttpParams().append('password', password);
+        params = params.set('passwordRepeat', passwordRepeat);
         let headers = new HttpHeaders({ 
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
          });
 
         return this.http
-        .get(this.url + "changePassword", {params:params,headers:headers});
+        .get(this.url + "changePassword", {params:params,headers:headers})
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Passwords don`t match error!");
+            return Observable.throw(err);
+        });
 
     }
 

@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Movie;
@@ -175,7 +177,7 @@ public class CinemaServiceImpl implements CinemaService{
 		return true;
 	}
 
-
+// TODO: IVANE AKO OVO ZABORAVIS SVE JE PROPALO !!! 
 	@Override
 	public Cinema addProjection(Projection projekcija, Long movieid, Long cinemaid) {
 		try {
@@ -236,6 +238,7 @@ public class CinemaServiceImpl implements CinemaService{
 
 
 	@Override
+	@Transactional(readOnly=false, propagation = Propagation.REQUIRES_NEW)
 	public boolean makeReservation(MovieReservationDTO movieReservationDTO, String username) {
 		
 		System.out.println("Make reservation servis + ");
@@ -384,17 +387,40 @@ public class CinemaServiceImpl implements CinemaService{
 
 
 	@Override
-	public boolean setTicketToSold(Long ticketid) {
-		Ticket t = ticketRepository.findOneById(ticketid);
-		t.setSold(true);
-		
+	@Transactional(readOnly=false, propagation = Propagation.REQUIRES_NEW)
+	public boolean setTicketToSold(Ticket t, String username, Long projectionId) {
+
 		try {
+			
+			t.setSold(true);
+			System.out.println("Usao u ticket transtaciontal 1  before save" + t.getVersion());
+			ticketRepository.save(t);
 			ticketRepository.flush();
+			
+			
+			
+			ProjectionUserTicket put = 
+					new ProjectionUserTicket(
+							new ProjectionUserTicketId(projectionId,
+									userRepository.findByUsername(username).get().getId(),
+									t.getId()));
+			
+			put.setApproved(true);
+			
+			movieUserTicketRepository.save(put);
+			
+			System.out.println("Usao u ticket transtaciontal 2" + t.getVersion());
+			
+			return true;
 
 		}catch(Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+			
+			return false;
 			
 		}
-		return true;
+		
 	}
 
 

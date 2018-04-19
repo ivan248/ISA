@@ -69,7 +69,7 @@ public class Projection {
 			return date;
 		}
 
-		public void setDate(Date date) {
+		public void setDate(java.sql.Date date) {
 			this.date = date;
 		}
 

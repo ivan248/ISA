@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TheatresService } from '../../../services/theatres-service.service';
 import { NgForm } from '@angular/forms';
 import { CinemasService } from '../../../services/cinemas-service.service';
+import { HomeService } from '../../../services/home-service.service';
 
 @Component({
   selector: 'viewTheatre-component',
@@ -23,19 +24,22 @@ export class ViewTheatreComponent implements OnInit {
     private projekcijaId: any;
     private numberProjections: any = 20;
     private notFastReservations: any[];
+    private addMovie: boolean;
     
     
 
    
 
     constructor(private theatresService: TheatresService,
-        private cinemasService: CinemasService,
+        private cinemasService: CinemasService, private homeService:HomeService,
             private router : Router) {
+                
               
     }
 
     ngOnInit() {
         
+        this.addMovie = true;
         this.theatresService.currentth.subscribe(data => this.currentCinema = data);
 
         this.theatresService.getPlays(this.currentCinema.id).subscribe(data =>
@@ -143,6 +147,26 @@ export class ViewTheatreComponent implements OnInit {
         this.router.navigateByUrl('/viewCinema');
 
       }*/
+
+      addMovieFunct(){
+        this.addMovie = false;
+      }
+  
+      onSubmitAdd(form: NgForm, cinemaid: any){
+        this.addMovie = true;
+        console.log(form.value);
+        this.theatresService.getPlays(this.currentCinema.id).subscribe(data =>
+          this.plays = data);
+  
+        
+  
+        this.homeService.addPlay(form.value, cinemaid).subscribe(data => 
+            this.theatresService.getPlays(this.currentCinema.id).subscribe(data =>
+                this.plays = data)
+        );
+  
+  
+      }
 
   
 

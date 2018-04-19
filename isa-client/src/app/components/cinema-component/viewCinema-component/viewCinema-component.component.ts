@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CinemasService } from '../../../services/cinemas-service.service';
 import { NgForm } from '@angular/forms';
+import { HomeService } from '../../../services/home-service.service';
 
 
 @Component({
@@ -23,9 +24,11 @@ export class ViewCinemaComponent implements OnInit {
     private projekcijaId: any;
     private numberProjections: any = 20;
     private notFastReservations: any[];
+    private addMovie;
 
 
     constructor(private cinemasService: CinemasService,
+      private homeService: HomeService,
             private router : Router) { 
          
     }
@@ -36,6 +39,7 @@ export class ViewCinemaComponent implements OnInit {
             this.currentCinema = data; 
             console.log(this.currentCinema);
             console.log("ispis iz cinema ngoniit viewcinema ");
+            this.addMovie = true;
         
         });   
       
@@ -111,10 +115,10 @@ export class ViewCinemaComponent implements OnInit {
         
     }
 
-    reserve(ticket:any, ticketid: any, cinemaid: any){
+    reserve(ticket:any, ticketid: any, projectionId: any){
  
-        console.log(cinemaid);
-        this.cinemasService.reserveFast(ticket, ticketid).subscribe();
+        console.log(projectionId);
+        this.cinemasService.reserveFast(ticket, ticketid, projectionId).subscribe();
         console.log(this.currentCinema);
         this.router.navigateByUrl('/viewCinema');
 
@@ -154,6 +158,24 @@ export class ViewCinemaComponent implements OnInit {
  
         this.cinemasService.deleteFast(ticket, ticketid).subscribe();
         this.router.navigateByUrl('/viewCinema');
+
+    }
+
+    addMovieFunct(){
+      this.addMovie = false;
+    }
+
+    onSubmitAdd(form: NgForm, cinemaid: any){
+      this.addMovie = true;
+      console.log(form.value);
+      this.cinemasService.getMovies(this.currentCinema.id).subscribe(data =>
+        this.movies = data);
+
+      
+
+      this.homeService.addMovie(form.value, cinemaid).subscribe(data => this.cinemasService.getMovies(this.currentCinema.id).subscribe(data =>
+        this.movies = data));
+
 
     }
 

@@ -50,10 +50,7 @@ export class AddProjectionComponent implements OnInit {
         this.router.navigateByUrl('/viewCinema'); //ne radi osvezavanje prikaza
       }
        );
-//mozda ne bi trebalo da se zakomentarise? :D
-        //this.cinemasService.currentm.subscribe(movie => this.currentMovie = movie)
-    
-      
+
      
       
 

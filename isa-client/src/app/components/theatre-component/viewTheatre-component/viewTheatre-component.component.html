@@ -34,6 +34,22 @@
     <div class="card-body">
         <div class="col-8">
             <h4><b>Repertoar: </b></h4>
+            <button class="btn" (click)="addMovieFunct()">Add movie</button>
+
+            <div>
+                <form  [hidden]="addMovie" (ngSubmit)="onSubmitAdd(f, currentCinema.id)" #f="ngForm" >
+                    <p>Name: </p><input type="text" class="form-control" 
+                    name="name" ngModel required>
+                    <p>Description: </p><input type="text" class="form-control" name="description"
+                        ngModel required> 
+                        <p>Genre: </p><input type="text" class="form-control" name="genre"
+                        ngModel required> 
+                        <p>Producer: </p><input type="text" class="form-control" name="producer"
+                        ngModel required> 
+                            
+            <button type="submit"  class="btn btn-dark btn-lg" [disabled] = "!f.valid">Add</button>
+            </form>
+            </div>
         </div>
         <table>
             <tr *ngFor="let m of plays; let i = index;">

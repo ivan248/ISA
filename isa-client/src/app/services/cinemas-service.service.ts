@@ -124,6 +124,7 @@ import { MovieReservation } from '../model/movieReservation';
     }
 
     addProjection(projekcija: any, movie: any, cinema: any){
+        console.log("ovd3e");
         const body = JSON.parse(JSON.stringify(projekcija));
         var movieid = movie.id;
         var cinemaid = cinema.id;
@@ -205,11 +206,12 @@ makeCinemaReservation(movieReservation : MovieReservation) {
        }); 
 }
 
-    reserveFast(ticket:any, ticketid: any){
+    reserveFast(ticket:any, ticketid: any, projectionId: any){
         
         ticket.sold=true;
         const body = JSON.parse(JSON.stringify(ticket));
-        let params = new HttpParams().set('ticketid',ticketid); 
+        let params = new HttpParams().set('ticketid',ticketid);
+        params = params.set('projectionId',projectionId.toString());
         
 
         let headers = new HttpHeaders({ 
@@ -219,7 +221,12 @@ makeCinemaReservation(movieReservation : MovieReservation) {
         return this.http.post('http://localhost:8080/api/home/reserveFast',body,{
             params:params,
             headers: headers
-        } );
+        } )
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Transactional error. Somebody else reserved before you!");
+            return Observable.throw(err);
+        }); 
 
     }
 

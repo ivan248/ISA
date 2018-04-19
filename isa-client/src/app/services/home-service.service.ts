@@ -143,4 +143,46 @@ import { ProjectionUserTicketId } from '../model/ProjectionUserTicketId';
 
     }
 
+    addMovie(movie: any, cinemaid: any){
+        
+        let body = JSON.stringify(movie);
+
+        var params = new HttpParams().set('cinemaid', cinemaid);
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http.post('http://localhost:8080/api/home/addmovie',body,{
+            headers: headers, params: params
+        } ).catch((err:HttpErrorResponse) =>
+        {
+            alert("Unauthorized");
+            return Observable.throw(err);
+        }
+    );;
+
+    }
+
+    addPlay(movie: any, cinemaid: any){
+        
+        let body = JSON.stringify(movie);
+
+        var params = new HttpParams().set('theatreid', cinemaid);
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http.post('http://localhost:8080/api/home/addplay',body,{
+            headers: headers, params: params
+        } ).catch((err:HttpErrorResponse) =>
+        {
+            alert("Unauthorized");
+            return Observable.throw(err);
+        }
+    );;
+
+    }
+
  } 
