@@ -115,10 +115,10 @@ export class ViewCinemaComponent implements OnInit {
         
     }
 
-    reserve(ticket:any, ticketid: any, cinemaid: any){
+    reserve(ticket:any, ticketid: any, projectionId: any){
  
-        console.log(cinemaid);
-        this.cinemasService.reserveFast(ticket, ticketid).subscribe();
+        console.log(projectionId);
+        this.cinemasService.reserveFast(ticket, ticketid, projectionId).subscribe();
         console.log(this.currentCinema);
         this.router.navigateByUrl('/viewCinema');
 
