@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Projection;
@@ -30,7 +31,7 @@ import com.isa.project.web.dto.MovieReservationDTO;
 
 
 
-@Controller // This means that this class is a Controller
+@RestController // This means that this class is a Controller
 @CrossOrigin
 @RequestMapping(value = "/theatres/home") 	
 public class TheatreController {
@@ -162,14 +163,7 @@ public class TheatreController {
 
 	}
 	
-	
-	
-	@RequestMapping(value="/addProjectionTheatre", method = RequestMethod.POST) 
-	public ResponseEntity addProjectionTheatre(@RequestBody Projection projekcija, @RequestParam("playid") String playid, @RequestParam("theatreid") String theatreid) {
-		System.out.println("************"+projekcija);
-		//cinemaService.addProjection(projekcija, Long.parseLong(movieid), Long.parseLong(cinemaid)),
-		return new ResponseEntity<>( HttpStatus.OK);
-	}
+
 	
 	@GetMapping
 	@RequestMapping(value = "/getProjectionById")
@@ -181,12 +175,11 @@ public class TheatreController {
 	}
 	
 
-	@GetMapping
-	@RequestMapping(value = "/getFastProjectionTicketsTheatre")
-	public ResponseEntity getFastProjectionsByTheatreId(
+	@GetMapping(value = "/getFastProjectionTicketsTheatre")
+	public ResponseEntity getFastProjectionsByTheatreId(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestParam("theatreid") String theatreid) {
 
-		System.out.println(theatreid);
+		System.out.println("(((((((((((("+theatreid);
 		Theatre t  = theatreRepository.findOneById(Long.parseLong(theatreid));
 		List<Ticket> ResTickets = new ArrayList<>();
 		for (Projection p: t.getProjekcije()) {

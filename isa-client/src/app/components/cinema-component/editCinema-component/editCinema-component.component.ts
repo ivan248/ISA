@@ -31,8 +31,11 @@ export class EditCinemaComponent implements OnInit {
         console.log(this.currentCinema);
 
          this.homeService.sendEdditedCinema(this.currentCinema)
-          .subscribe(currentCinema => this.currentCinema = currentCinema);
-         this.router.navigateByUrl('/cinemas');
+          .subscribe(currentCinema =>{
+            this.currentCinema = currentCinema;
+            this.router.navigateByUrl('/cinemas');
+          } 
+        );
     
       }
 
