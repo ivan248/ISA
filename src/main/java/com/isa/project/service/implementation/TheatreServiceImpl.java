@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
+import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Play;
 import com.isa.project.bean.Projection;
 import com.isa.project.bean.ProjectionUserTicket;
@@ -220,6 +221,13 @@ public class TheatreServiceImpl implements TheatreService {
 		emailService.sendEmail(registrationEmail);
 
 		return true;
+	}
+
+	@Override
+	public Theatre addProjection(Projection projekcija, Long playid, Long theatreid) {
+		
+		System.out.println(projekcija+" "+playid+" "+theatreid);
+		return null;
 	}
 
 

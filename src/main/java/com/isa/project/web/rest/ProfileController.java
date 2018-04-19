@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.Friend;
 import com.isa.project.bean.Notification;
-import com.isa.project.bean.Play;project.bean.Projection;
+import com.isa.project.bean.Play;
 import com.isa.project.bean.ProjectionUserTicket;
 
 import com.isa.project.bean.ProjectionUserTicketId;
+import com.isa.project.bean.Projection;
 import com.isa.project.bean.Role;
+import com.isa.project.bean.Theatre;
 import com.isa.project.bean.User;
 import com.isa.project.repository.NotificationRepository;
 import com.isa.project.repository.PlayRepository;

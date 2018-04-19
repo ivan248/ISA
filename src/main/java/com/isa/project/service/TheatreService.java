@@ -26,7 +26,7 @@ public interface TheatreService {
 
 	boolean makeReservation(MovieReservationDTO movieReservationDTO, String usernameFromToken);
 	
-	Cinema addProjection(Projection projekcija, Long movieid, Long cinemaid);
+	Theatre addProjection(Projection projekcija, Long movieid, Long cinemaid);
 
 	
 	/*Cinema getCinemaById(Long id);
