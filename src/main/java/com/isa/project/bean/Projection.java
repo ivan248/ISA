@@ -24,10 +24,10 @@ public class Projection {
 	    @Column(name = "projekcija_id", nullable = false, updatable = false)
 		private Long id;
 
-	 	@Column(name = "date")
+	 	@Column(name = "date", nullable = false)
 	 	private Date date;
 	     
-	    @Column(name = "time")
+	    @Column(name = "time", nullable = false)
 	 	private String time;
 	     
 	    @Column(name = "place", nullable = false)

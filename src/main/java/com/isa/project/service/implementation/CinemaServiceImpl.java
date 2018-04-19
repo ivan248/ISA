@@ -400,6 +400,7 @@ public class CinemaServiceImpl implements CinemaService{
 		}catch(Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
+			
 			return false;
 			
 		}
