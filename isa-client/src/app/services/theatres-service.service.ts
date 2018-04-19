@@ -109,7 +109,7 @@ import { MovieReservation } from '../model/movieReservation';
             'X-Auth-Token' : localStorage.getItem('token')
         });
         return this.http
-        .get("http://localhost:8080/api/theatres/getFastProjectionTicketsTheatre", {params:params,headers:headers})
+        .get("http://localhost:8080/api/theatres/getFastProjectionTicketsTheatre", {headers:headers,params:params})
         .map((data:[any]) => data);
     }
 

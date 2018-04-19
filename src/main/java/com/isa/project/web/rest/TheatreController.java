@@ -32,7 +32,7 @@ import com.isa.project.web.dto.MovieReservationDTO;
 
 @Controller // This means that this class is a Controller
 @CrossOrigin
-@RequestMapping(value = "/theatres/home") 	
+@RequestMapping(value = "/api/theatres") 	
 public class TheatreController {
 	
 	@Autowired 
