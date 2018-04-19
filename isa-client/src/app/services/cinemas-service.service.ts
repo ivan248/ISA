@@ -124,6 +124,7 @@ import { MovieReservation } from '../model/movieReservation';
     }
 
     addProjection(projekcija: any, movie: any, cinema: any){
+        console.log("ovd3e");
         const body = JSON.parse(JSON.stringify(projekcija));
         var movieid = movie.id;
         var cinemaid = cinema.id;
