@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Movie;
@@ -384,17 +386,24 @@ public class CinemaServiceImpl implements CinemaService{
 
 
 	@Override
+	@Transactional(readOnly=false, propagation = Propagation.REQUIRES_NEW)
 	public boolean setTicketToSold(Long ticketid) {
-		Ticket t = ticketRepository.findOneById(ticketid);
-		t.setSold(true);
-		
+
 		try {
+			Ticket t = ticketRepository.findOneById(ticketid);
+			t.setSold(true);
+			ticketRepository.save(t);
 			ticketRepository.flush();
+			
+			return true;
 
 		}catch(Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+			return false;
 			
 		}
-		return true;
+		
 	}
 
 
