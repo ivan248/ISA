@@ -18,6 +18,8 @@ public interface CinemaRepository extends JpaRepository<Cinema, Long> {
 	Cinema findOneById(Long id);
 	ArrayList<Cinema> findByNameContaining(String cinema);
 	
+	ArrayList<Cinema> findAllByOrderByName();
+	
 	
 
 }

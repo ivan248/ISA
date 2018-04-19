@@ -279,5 +279,19 @@ var httpOptions = {
         
       }
 
+      getCinemasSorted() {
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        //var params = new HttpParams().set('projectionId', projectionId);
+        //params = params.set('seatNumber', seatNumber);
+
+        return this.http
+        .get(this.url + "getCinemasSorted", {headers:headers});
+      }
+
 
  } 

@@ -30,6 +30,8 @@ export class ProfileComponent implements OnInit {
     private username : string;
     private phoneNumber : number;
     private city : string;
+    
+    private cinemasArray : any;
 
     private searchName : string = "";
     private searchLastName : string = "";
@@ -48,7 +50,8 @@ export class ProfileComponent implements OnInit {
 
       //TODO: Uzmi sve notifikacije sa servera
 
-      
+      this.profileService.getCinemasSorted().subscribe(data=>
+      this.cinemasArray=data);
 
       this.profileService.getLoggedUser().subscribe( data =>{
         this.loggedUser = data;
@@ -273,5 +276,17 @@ export class ProfileComponent implements OnInit {
       console.log(ratevalue);
       this.profileService.rateAmb(id, ratevalue, p).subscribe();
       this.selectedRateAmb.emit(ratevalue);
+    }
+
+    onChangeSortFriends(value:any) {
+      if(value==="name")
+      {
+        this.userFriends = this.userFriends.sort((a, b) => a.friendFirstName.localeCompare(b.friendFirstName))
+      }
+      else
+      {
+        this.userFriends = this.userFriends.sort((a, b) => a.friendLastName.localeCompare(b.friendLastName))
+
+      }
     }
  }

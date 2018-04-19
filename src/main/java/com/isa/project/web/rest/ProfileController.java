@@ -17,17 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.Friend;
-import com.isa.project.bean.Movie;
 import com.isa.project.bean.Notification;
 import com.isa.project.bean.Play;
 import com.isa.project.bean.Projection;
-import com.isa.project.bean.ProjectionSeats;
 import com.isa.project.bean.ProjectionUserTicket;
 import com.isa.project.bean.ProjectionUserTicketId;
-import com.isa.project.bean.Projection;
 import com.isa.project.bean.Role;
 import com.isa.project.bean.Theatre;
 import com.isa.project.bean.User;
+import com.isa.project.repository.CinemaRepository;
 import com.isa.project.repository.MovieRepository;
 import com.isa.project.repository.NotificationRepository;
 import com.isa.project.repository.PlayRepository;
@@ -76,6 +74,9 @@ public class ProfileController {
 	
 	@Autowired
 	private MovieRepository movieRepository;
+	
+	@Autowired
+	private CinemaRepository cinemaRepository;
 	
 	
 
@@ -456,6 +457,46 @@ public class ProfileController {
 			return new ResponseEntity<>(HttpStatus.OK);
 
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+	}
+	
+	
+	
+	@GetMapping
+	@RequestMapping(value = "/getCinemasSorted")
+	public ResponseEntity getCinemasSorted(@RequestHeader(value = "X-Auth-Token") String token) {
+
+		TokenProvider p = new TokenProvider();
+		
+//		for(Play m : playRepository.findAll())
+//		{
+//			for(Projection proj : m.getProjekcije())
+//			{
+//				for(ProjectionSeats projectionSeats : projectionSeatsRepository.findAll())
+//				{
+//					if(proj.getId() == projectionSeats.getProjectionId())
+//					{
+//						projectionSeats.setMovieId(m.getId());
+//						projectionSeatsRepository.save(projectionSeats);
+//					}
+//					
+////					for(int i=1; i<85; i++)
+////					{
+////						ProjectionSeats ps =
+////								new ProjectionSeats(i, projection.getId());
+////					
+////						projectionSeatsRepository.save(ps);
+////					}
+//				}
+//			}
+//
+//		}
+
+		
+		
+		return new ResponseEntity
+		(cinemaRepository.findAllByOrderByName(), HttpStatus.OK);
+
 
 	}
 }
