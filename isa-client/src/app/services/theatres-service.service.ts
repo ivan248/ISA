@@ -228,7 +228,7 @@ import { MovieReservation } from '../model/movieReservation';
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
         });
-        return this.http.post('http://localhost:8080/api/home/addProjectionTicketsCinema',body,{
+        return this.http.post('http://localhost:8080/api/home/addProjectionTheatre',body,{
             params:params,
             headers: headers
         } );

@@ -1,6 +1,7 @@
 package com.isa.project.service.implementation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -249,12 +250,6 @@ public class TheatreServiceImpl implements TheatreService {
 		
 	}
 
-//	@Override
-//	public Cinema addProjection(Projection projekcija, Long movieid, Long cinemaid) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
 
 
 	@Override
@@ -273,9 +268,43 @@ public class TheatreServiceImpl implements TheatreService {
 
 	@Override
 	public Theatre addProjection(Projection projekcija, Long playid, Long theatreid) {
+		try {
+			System.out.println(")))00000000000000000000000000000000000");
+			List<Projection> projekcijePoz = theatreRepository.findOneById(theatreid).getProjekcije();
+			if (projekcijePoz==null) {
+				projekcijePoz = new ArrayList<>();
+			}
+			
+			projectionRepository.saveAndFlush(projekcija);
+			projekcijePoz.add(projekcija);
+			theatreRepository.findOneById(theatreid).setProjekcije(projekcijePoz);
+			theatreRepository.save(theatreRepository.findOneById(theatreid));
+			theatreRepository.flush();
+			
+			List<Projection> projekcijePred = playRepository.findOne(playid).getProjekcije();
+			System.out.println(")))"+projekcijePred); //delete se javlja???
+			if (projekcijePred==null) {
+				projekcijePred = new ArrayList<>();
+			}
+			projekcijePred.add(projekcija);
+			
+			
+			playRepository.findOne(playid).setProjekcije(projekcijePred);
+			playRepository.save(playRepository.findOne(playid));
+			playRepository.flush();
+			
+			
+			
+			
+		}
+		catch(Exception e) {
+			System.out.println("Error occured while writing to database. Constraints were not satisfied.");
+			e.printStackTrace();
+			return null;
+		}
 		
-		System.out.println(projekcija+" "+playid+" "+theatreid);
-		return null;
+		
+		return theatreRepository.findOneById(theatreid);
 	}
 
 	@Override
