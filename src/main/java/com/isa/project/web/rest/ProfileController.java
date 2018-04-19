@@ -215,8 +215,20 @@ public class ProfileController {
 	@GetMapping
 	@RequestMapping(value = "/changePassword")
 	public ResponseEntity changePassword(@RequestHeader(value = "X-Auth-Token") String token,
-			@RequestParam("password") String password) {
+			@RequestParam("password") String password,
+			@RequestParam("passwordRepeat") String passwordRepeat) {
 
+		System.out.println(password);
+		System.out.println(passwordRepeat);
+		
+		if(!password.equals(passwordRepeat))
+		{
+			System.out.println("Passwords don`t match!");
+			return new ResponseEntity(HttpStatus.BAD_REQUEST); 
+		}
+		
+		System.out.println("Passwords match!");
+		
 		TokenProvider p = new TokenProvider();
 		
 		if(userService.changePassword(p.getUsernameFromToken(token), password))
