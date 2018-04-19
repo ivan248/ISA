@@ -300,8 +300,17 @@ public class HomeController {
 	
 
 	@RequestMapping(value="/reserveFast", method = RequestMethod.POST) 
-	public ResponseEntity reserveFast(@RequestParam("ticketid") String ticketid) {
-		return new ResponseEntity<>(cinemaService.setTicketToSold(Long.parseLong(ticketid)) ,HttpStatus.OK);
+	public ResponseEntity reserveFast(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestBody Ticket t,
+			@RequestParam("ticketid") String ticketid,
+			@RequestParam("projectionId") String projectionId) {
+		
+		TokenProvider p = new TokenProvider();
+		
+		if(cinemaService.setTicketToSold(t, p.getUsernameFromToken(token), (long)Integer.parseInt(projectionId)))
+			return new ResponseEntity<>(HttpStatus.OK);
+		
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
 
