@@ -60,7 +60,7 @@ export class ProfileComponent implements OnInit {
         for(var i:number=0; i<data.roles.length; i++)
         {
           
-          if(data.roles[i].role === "ADMIN" && data.firstTimeLogged)
+          if( (data.roles[i].role === "ADMIN" || data.roles[i].role=="FANZONE_ADMIN") && data.firstTimeLogged)
           {
             this.adminLoggedFirstTime = true;
           }

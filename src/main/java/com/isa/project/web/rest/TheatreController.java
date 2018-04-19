@@ -46,8 +46,7 @@ public class TheatreController {
 	private TheatreRepository theatreRepository;
 	
 
-	@Autowired
-	private PlayRepository playRepository;
+
 
 	
 	@RequestMapping(value = "/test", method = RequestMethod.POST,

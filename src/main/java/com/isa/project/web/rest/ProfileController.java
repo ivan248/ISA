@@ -322,7 +322,7 @@ public class ProfileController {
 		
 		
 		if (role.equals("FANZONE_ADMIN")) {
-			user.setFirstTimeLogged(false);
+			user.setFirstTimeLogged(true);
 		}
 		user.getRoles().add(r);
 		

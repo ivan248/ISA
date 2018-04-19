@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,6 +67,7 @@ public class FanZoneController {
 		return fanZoneService.getAllOfficialItems();
 	}
 	
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAutority('FANZONE_ADMIN')")
 	@RequestMapping(value="/unapproved", method= RequestMethod.GET)
 	public List<Item> getAllUnApprovedItems(){
 		
@@ -150,7 +152,7 @@ public class FanZoneController {
 		return new ResponseEntity<OfficialItem>(officialItemRepository.findOneByItemID(id),HttpStatus.OK);	
 	}
 	
-	
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAutority('FANZONE_ADMIN')")
 	@RequestMapping(value="/addofficialitem", method=RequestMethod.POST)
 	public  ResponseEntity<OfficialItem> addOfficialItem( @RequestBody OfficialItemDTO i) {
 		
@@ -177,7 +179,7 @@ public class FanZoneController {
 		}
 
 	}
-	
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAutority('FANZONE_ADMIN')")
 	@RequestMapping(value = "/deleteofficialitem", method= RequestMethod.DELETE)
 	public ResponseEntity<Boolean> deleteOfficialItem(@RequestParam("id") int id) {
 		System.out.println("Usao u delete official");

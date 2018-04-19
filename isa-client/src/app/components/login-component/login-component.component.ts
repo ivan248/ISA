@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
      
-      localStorage.setItem('token', 'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbeyJhdXRob3JpdHkiOiJBTk9OWU1PVVMifV0sImFjdGl2aXR5IjowLCJleHAiOjE4MDE1MjQxNDA4NjksInVzZXIiOiJhbm5vbnltb3VzQGFubm9ueW1vdXMuY29tIn0.zPJuFvmBGAY5OnF_M3tJ0LRsvDqmPL9ppyZhJRmz6t8_qz8-RltwT8S14DrSGAB_lUKa5fIzf0yBPPfFe1QK9Q');
+      localStorage.setItem('token', 'hkhk');
     }
 
     onSubmit() {

@@ -240,6 +240,7 @@ public class CinemaServiceImpl implements CinemaService{
 		
 		System.out.println("Make reservation servis + ");
 		System.out.println(movieReservationDTO.getSeats());
+		System.out.println(movieReservationDTO);
 		
 		
 		try {
