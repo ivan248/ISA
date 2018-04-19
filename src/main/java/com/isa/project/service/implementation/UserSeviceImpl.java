@@ -642,5 +642,28 @@ public class UserSeviceImpl implements UserService {
 		
 	}
 
+	@Override
+	public List<User> getAllUsersForAllUsers(User u) {
+		List<User> allUsers = userRepository.findAll();
+		
+		int index = 0;
+
+		// remove currently logged user from all users
+		for (User us : allUsers) {
+			if (us.getUsername().equals(u.getUsername())) {
+				break;
+			}
+
+			index++;
+		}
+
+		allUsers.remove(index);
+
+		
+
+		return allUsers;
+	
+	}
+
 
 }

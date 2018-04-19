@@ -123,12 +123,26 @@ public class ProfileController {
 	@GetMapping
 	@RequestMapping(value = "/getAllUsers")
 	public ResponseEntity getAllUsers(@RequestHeader(value = "X-Auth-Token") String token) {
-
+		
 		TokenProvider p = new TokenProvider();
 
 		return new ResponseEntity(userService.getAllUsers(p.getUsernameFromToken(token)), HttpStatus.OK);
 
 	}
+	
+	@GetMapping
+	@RequestMapping(value = "/getallusers")
+	public ResponseEntity<List<User>> getAllUsersForAllUsers(@RequestHeader(value = "X-Auth-Token") String token) {
+		
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		
+		return new ResponseEntity<List<User>> (userService.getAllUsersForAllUsers(logged),HttpStatus.OK);
+
+	}
+	
+	
 
 	@SuppressWarnings("rawtypes")
 	@PostMapping
@@ -306,6 +320,12 @@ public class ProfileController {
 	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN')")
 	@PostMapping("/addrole")
 	public User addRole(@RequestHeader(value = "X-Auth-Token") String token,@RequestBody User u, @RequestParam("role") String role) {
+		
+		
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		logged.setActivity(logged.getActivity() + 10L);
+		userRepository.save(logged);
 		
 		User user = userRepository.findByUsername(u.getUsername()).get();
 		

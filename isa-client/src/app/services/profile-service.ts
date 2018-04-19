@@ -89,6 +89,17 @@ var httpOptions = {
         .map((data:[any]) => data);       
     }
 
+    getAllUsers2(){
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        return this.http
+        .get(this.url + "getallusers", {headers:headers})
+               
+    }
+
     sendFriendRequest(username : string) {
 
         let headers = new HttpHeaders({ 

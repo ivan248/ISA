@@ -50,26 +50,27 @@ public class BidController {
 	@Autowired 
 	private BidRepository bidRepository;
 	
-
+	
 	
 	@PostMapping("/add")
 	public ResponseEntity<Boolean> addBid(@RequestBody BidDTO bid , @RequestHeader(value="X-Auth-Token") String token){
 		
 		TokenProvider p = new TokenProvider();
-		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
-		userService.addActivityPoints(10L, currentUser.getUsername());
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		logged.setActivity(logged.getActivity() + 10L);
+		userRepository.save(logged);
 		
 		
-		if( currentUser.getUsername().equals(bid.getItem().getOwner().getUsername())) {
+		if( logged.getUsername().equals(bid.getItem().getOwner().getUsername())) {
 			System.out.println("NE moze bidovati vlasnik itema");
-			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Boolean>(false,HttpStatus.OK);
 		}else {
 			System.out.println("usao u addbid, parametri: " + bid.getBid());
 			
 			Bid b = new Bid();
 			
 			
-			b.setBuyer(currentUser);
+			b.setBuyer(logged);
 			b.setItem(bid.getItem());
 			b.setValue(bid.getBid());
 			
@@ -125,6 +126,9 @@ public class BidController {
 		TokenProvider p = new TokenProvider();
 		User u = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
 		
+		u.setActivity(u.getActivity() + 20L);
+		userRepository.save(u);
+		
 		Boolean isAdmin = userService.checkIfUserHasRole(u, "FANZONE_ADMIN");
 		Boolean isSysAdmin =  userService.checkIfUserHasRole(u, "SYSTEM_ADMIN");;
 		Boolean isOwner = i.getOwner().getUsername().equals(u.getUsername());
@@ -143,7 +147,10 @@ public class BidController {
 	@PostMapping("/getallbyitem")
 	public ResponseEntity<List<Bid>> getAllByItem(@RequestBody Item item, @RequestHeader(value="X-Auth-Token") String token){
 		
-		
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		logged.setActivity(logged.getActivity() + 1L);
+		userRepository.save(logged);
 		
 		
 		List<Bid> list = new ArrayList<Bid>();
@@ -161,14 +168,15 @@ public class BidController {
 	public ResponseEntity<Boolean> acceptBid(@RequestBody Bid bid, @RequestHeader(value="X-Auth-Token") String token){
 		
 		TokenProvider p = new TokenProvider();
-		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
-		userService.addActivityPoints(10L, currentUser.getUsername());
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 		
 		ArrayList<User> list = new ArrayList<User>( userRepository.findDistinctUsersThatBidOnItem(bid.getItem().getItemID()));
 		
 		
 		
-		if(currentUser.getUsername().equals(bid.getItem().getOwner().getUsername())) { 
+		if(logged.getUsername().equals(bid.getItem().getOwner().getUsername())) { 
 																				
 			if (sendNotifications(list,bid.getBuyer(),bid.getItem().getName())) {
 				Boolean b = bidService.acceptBid(bid);
@@ -213,6 +221,9 @@ public class BidController {
 	public Bid getBid(@RequestHeader(value="X-Auth-Token") String token, @RequestBody Item item) {
 		TokenProvider p = new TokenProvider();
 		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		currentUser.setActivity(currentUser.getActivity() + 20L);
+		userRepository.save(currentUser);
 		System.out.println("ZNaci usau u get value. User: " + currentUser.getUsername() + " Item = " + item.getName() );
 		Bid bid = bidRepository.findBidValue(item.getItemID(), currentUser.getUsername());
 		if (bid == null) {
@@ -242,6 +253,8 @@ public class BidController {
 		TokenProvider p = new TokenProvider();
 		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
 		
+		currentUser.setActivity(currentUser.getActivity() + 20L);
+		userRepository.save(currentUser);
 		
 		
 		if (currentUser.getUsername().equals(bid.getItem().getOwner().getUsername())) {

@@ -25,7 +25,12 @@ import { Router } from '@angular/router';
         
         return this.http.get('http://localhost:8080/fanzone/deleteitem',{
             params: params,  headers: headers
-        }).subscribe(data =>console.log(data));
+        }).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "This item has changed meanwhile.Please refresh your page");
+            this.router.navigateByUrl('/fanzone')
+            return Observable.throw(err);
+        });;
 
     }
 
