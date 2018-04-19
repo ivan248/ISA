@@ -34,7 +34,11 @@ public interface UserService {
 	public List<User> searchUsers(String usernameFromToken, String searchName, String searchLastName);
 	public List<ReservationDTO> getReservations(String usernameFromToken);
 	public boolean acceptORdeclineInvitation(ProjectionUserTicketId projectionUserTicketId, String accept);
+
+	public boolean checkIfUserHasRole(User u, String role);
+
 	public boolean cancelProjectionReservation(String usernameFromToken, int parseInt, int parseInt2);
 	public boolean makeReservation(ProjectionSeats projectionSeat);
+
 
 }

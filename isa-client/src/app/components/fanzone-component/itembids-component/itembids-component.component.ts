@@ -30,8 +30,9 @@ export class ItembidsComponent implements OnInit {
       if (data == false){
         alert("Error ocurred")
       }
+      this.router.navigateByUrl("/fanzone");
     });
-    this.router.navigateByUrl("/itemprofile");
+    
   }
   
 

@@ -23,7 +23,11 @@ import com.isa.project.bean.Projection;
 import com.isa.project.bean.ProjectionSeats;
 import com.isa.project.bean.ProjectionUserTicket;
 import com.isa.project.bean.ProjectionUserTicketId;
+
+import com.isa.project.bean.Role;
+
 import com.isa.project.bean.Ticket;
+
 import com.isa.project.bean.User;
 import com.isa.project.repository.FriendRepository;
 import com.isa.project.repository.MovieRepository;
@@ -470,6 +474,16 @@ public class UserSeviceImpl implements UserService {
 	}
 
 	@Override
+
+	public boolean checkIfUserHasRole(User u,String role) {
+		
+		for( Role r : u.getRoles()) {
+			if (r.getRole().equals(role)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	public boolean cancelProjectionReservation(String usernameFromToken, int projectionId, int seatNumber) {
 		
 		
@@ -600,6 +614,7 @@ public class UserSeviceImpl implements UserService {
 //			    	}
 //			    
 //			    }
+
 			}
 		}
 		

@@ -246,6 +246,12 @@ public class TheatreServiceImpl implements TheatreService {
 		
 	}
 
+//	@Override
+//	public Cinema addProjection(Projection projekcija, Long movieid, Long cinemaid) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
 
 
 
