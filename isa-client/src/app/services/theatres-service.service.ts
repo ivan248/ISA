@@ -109,7 +109,7 @@ import { MovieReservation } from '../model/movieReservation';
             'X-Auth-Token' : localStorage.getItem('token')
         });
         return this.http
-        .get("http://localhost:8080//theatres/home/getFastProjectionTicketsTheatre", {params:params, headers:headers})
+        .get("http://localhost:8080/theatres/home/getFastProjectionTicketsTheatre", {params:params, headers:headers})
         .map((data:[any]) => data);
     }
 
@@ -231,6 +231,24 @@ import { MovieReservation } from '../model/movieReservation';
             params:params,
             headers: headers
         } );
+    }
+
+    reserveFast(ticket:any, ticketid: any){
+        
+        ticket.sold=true;
+        const body = JSON.parse(JSON.stringify(ticket));
+        let params = new HttpParams().set('ticketid',ticketid); 
+        
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http.post('http://localhost:8080/api/home/reserveFast',body,{
+            params:params,
+            headers: headers
+        } );
+
     }
 
  } 
