@@ -241,11 +241,13 @@ public class BidController {
 		
 		TokenProvider p = new TokenProvider();
 		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
-		System.out.println(currentUser.getUsername());
-		System.out.println(bid.getItem().getOwner().getUsername());
+		
+		
+		
 		if (currentUser.getUsername().equals(bid.getItem().getOwner().getUsername())) {
 			return false;
 		} else {
+			//todo: Trebalo bi da provri da ne biduje opet isti lik vec samo da promeni
 			return bidService.changeBidValue(bid); 
 		}
 	}
