@@ -1,6 +1,7 @@
 package com.isa.project.web.rest;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.isa.project.bean.Cinema;
+import com.isa.project.bean.Movie;
+import com.isa.project.bean.Play;
 import com.isa.project.bean.Projection;
 import com.isa.project.bean.ProjectionSeats;
 import com.isa.project.bean.Theatre;
 import com.isa.project.bean.Ticket;
 import com.isa.project.bean.User;
+import com.isa.project.repository.CinemaRepository;
+import com.isa.project.repository.MovieRepository;
 import com.isa.project.repository.PlayRepository;
+import com.isa.project.repository.ProjectionRepository;
 import com.isa.project.repository.ProjectionSeatsRepository;
 import com.isa.project.repository.TheatreRepository;
 import com.isa.project.security.jwt.TokenProvider;
@@ -55,6 +61,16 @@ public class HomeController {
 	@Autowired 
 	private TheatreRepository theatreRepository;
 	
+	@Autowired 
+	private MovieRepository movieRepository;
+	
+	@Autowired 
+	private CinemaRepository cinemaRepository;
+	
+	@Autowired 
+	private ProjectionRepository projectionRepository;
+	
+
 
 	@Autowired
 	private PlayRepository playRepository;
@@ -193,12 +209,7 @@ public class HomeController {
 		return new ResponseEntity<>(cinemaService.addProjection(projekcija, Long.parseLong(movieid), Long.parseLong(cinemaid)), HttpStatus.OK);
 	}
 	
-/*	@RequestMapping(value="/addProjectionTheatre", method = RequestMethod.POST) 
-	public ResponseEntity addProjectionTheatre(@RequestBody Projection projekcija, @RequestParam("playid") String playid, @RequestParam("theatreid") String theatreid) {
-		System.out.println("************"+projekcija);
-		
-		return new ResponseEntity<>(cinemaService.addProjection(projekcija, Long.parseLong(movieid), Long.parseLong(cinemaid)), HttpStatus.OK);
-	}*/
+
 	
 	@GetMapping
 	@RequestMapping(value = "/getProjectionById")
@@ -444,6 +455,75 @@ public class HomeController {
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
 	}
+	
+	@PostMapping
+	@RequestMapping(value = "/addmovie", consumes = "application/json")
+	public ResponseEntity addMovie(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestBody Movie movie, @RequestParam("cinemaid") String cinemaid) {
+
+		System.out.println(movie);
+		Projection defaultP = new Projection();
+		defaultP.setPlace("0");
+		defaultP.setPrice(0);
+		java.util.Date date = new java.util.Date();
+		Date sqlDate = new java.sql.Date(date.getTime());
+		defaultP.setDate((java.sql.Date) sqlDate);
+		defaultP.setTime("00");
+		projectionRepository.save(defaultP);
+		List<Projection> listaProjekcija = new ArrayList<>();
+		listaProjekcija.add(defaultP);
+		movie.setProjekcije(listaProjekcija);
+		movieRepository.save(movie);
+		Cinema c = cinemaRepository.findOneById(Long.parseLong(cinemaid));
+		List<Projection> listaprojekcija2;
+		if (c.getProjekcije()==null) {
+			listaprojekcija2 = new ArrayList<>();
+		}else
+		{
+			listaprojekcija2 = c.getProjekcije();
+		}
+		listaprojekcija2.add(defaultP);
+		c.setProjekcije(listaprojekcija2);
+		cinemaRepository.save(c);
+		return new ResponseEntity<>(HttpStatus.OK);
+
+	}
+	
+	@PostMapping
+	@RequestMapping(value = "/addplay", consumes = "application/json")
+	public ResponseEntity addPlay(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestBody Play play, @RequestParam("theatreid") String theatreid) {
+
+		System.out.println(play);
+		Projection defaultP = new Projection();
+		defaultP.setPlace("0");
+		defaultP.setPrice(0);
+		java.util.Date date = new java.util.Date();
+		Date sqlDate = new java.sql.Date(date.getTime());
+		defaultP.setDate((java.sql.Date) sqlDate);
+		defaultP.setTime("00");
+		projectionRepository.save(defaultP);
+		List<Projection> listaProjekcija = new ArrayList<>();
+		listaProjekcija.add(defaultP);
+		play.setProjekcije(listaProjekcija);
+		playRepository.save(play);
+		Theatre t = theatreRepository.findOneById(Long.parseLong(theatreid));
+		List<Projection> listaprojekcija2;
+		if (t.getProjekcije()==null) {
+			listaprojekcija2 = new ArrayList<>();
+		}else
+		{
+			listaprojekcija2 = t.getProjekcije();
+		}
+		listaprojekcija2.add(defaultP);
+		t.setProjekcije(listaprojekcija2);
+		theatreRepository.save(t);
+		return new ResponseEntity<>(HttpStatus.OK);
+
+	}
+	
+	
+	
 	
 	
 }

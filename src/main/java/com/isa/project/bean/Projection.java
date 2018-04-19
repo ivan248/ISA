@@ -24,10 +24,10 @@ public class Projection {
 	    @Column(name = "projekcija_id", nullable = false, updatable = false)
 		private Long id;
 
-	 	@Column(name = "date", nullable = false)
+	 	@Column(name = "date")
 	 	private Date date;
 	     
-	    @Column(name = "time", nullable = false)
+	    @Column(name = "time")
 	 	private String time;
 	     
 	    @Column(name = "place", nullable = false)
@@ -69,7 +69,7 @@ public class Projection {
 			return date;
 		}
 
-		public void setDate(Date date) {
+		public void setDate(java.sql.Date date) {
 			this.date = date;
 		}
 

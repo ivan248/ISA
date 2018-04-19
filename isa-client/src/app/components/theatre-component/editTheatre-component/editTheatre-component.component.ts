@@ -31,8 +31,8 @@ export class EditTheatreComponent implements OnInit {
         console.log("theatre"+this.currentCinema);
 
          this.homeService.sendEdditedTheatre(this.currentCinema)
-          .subscribe();
-         this.router.navigateByUrl('/theatres');
+          .subscribe(data => this.router.navigateByUrl('/theatres'));
+         
     
       }
     

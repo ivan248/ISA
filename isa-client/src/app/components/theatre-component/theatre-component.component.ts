@@ -53,7 +53,7 @@ export class TheatresComponent implements OnInit {
 
     constructor(private theatresService: TheatresService, private dataService: DataService,
             private router : Router) {
-              this.theatresService.getTheatres().subscribe(data=>{this.theatresArray=data;});
+             
     }
 
     ngOnInit() {
