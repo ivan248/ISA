@@ -247,6 +247,8 @@ public class BidController {
 		if (currentUser.getUsername().equals(bid.getItem().getOwner().getUsername())) {
 			return false;
 		} else {
+			//Bid b = bidRepository.findBidValue(bid.getItem().getItemID(), currentUser.getUsername());
+			
 			//todo: Trebalo bi da provri da ne biduje opet isti lik vec samo da promeni
 			return bidService.changeBidValue(bid); 
 		}
