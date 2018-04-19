@@ -1,0 +1,81 @@
+<div class="container">
+        <form (ngSubmit)="onSubmit(f, currentMovie, currentCinema)" #f="ngForm" >
+            <div class="jumbotron">
+                <h1><b>Projection of {{currentMovie.name}} in {{currentCinema.name}} </b></h1> 
+            </div>
+          <br>
+          <br>
+          <div class="card">
+            <div class="card-body">
+                <div class="col-8">
+                    <h4><b>Date: </b></h4>
+                </div>
+            </div>
+            <div class="card-body">
+
+                    <div class="col-md-8">
+                            <input type="date" class="form-control" name="date" style="text-align:center; margin:1px" ngModel
+                            required>       
+                     </div>
+
+
+                    <!--div class="col-8">
+                        <input type="text" class="form-control" name="date"
+                        ngModel
+                            required>
+                    </div-->
+                </div>
+            </div>
+        
+        <div class="card">
+            <div class="card-body">
+                    <div class="col-8">
+                        <h4><b>Time: </b></h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                        <div class="col-8">
+                            <input type="text" class="form-control" name="time"
+                            ngModel
+                            required>
+                        </div>
+                    </div>
+               
+            </div>
+
+            <div class="card">
+                    <div class="card-body">
+                        <div class="col-8">
+                            <h4><b>Place: </b></h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                            <div class="col-8">
+                                <input type="text" class="form-control" name="place"
+                                ngModel required>
+                            </div>
+                        </div>
+                    </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                            <div class="col-8">
+                                <h4><b>Price: </b></h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                                <div class="col-8">
+                                    <input type="text" class="form-control" name="price"
+                                    ngModel
+                                    required>
+                                </div>
+                            </div>
+                       
+                    </div>
+        
+                    
+            <br>
+            <br>
+            <button type="submit"  class="btn btn-dark btn-lg" [disabled] = "!f.valid">Add projection</button>
+            </form>
+          </div>

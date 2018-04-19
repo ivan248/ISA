@@ -1,7 +1,7 @@
 
 <div class="container" [hidden]="changeSeatingChartHidden">
     <div class="jumbotron">
-        <h1>{{currentTheatre.name}}</h1>    
+        <h1>{{currentCinema.name}}</h1>    
     </div>
   <br>
   <br>
@@ -13,7 +13,7 @@
     </div>
     <div class="card-body">
             <div class="col-8">
-                <p>{{currentTheatre.address}}</p>
+                <p>{{currentCinema.address}}</p>
             </div>
         </div>
 
@@ -25,7 +25,7 @@
         </div>
     <div class="card-body">
                 <div class="col-8">
-                    <p>{{currentTheatre.description}}</p>
+                    <p>{{currentCinema.description}}</p>
                 </div>
             </div>
     </div>
@@ -42,8 +42,8 @@
                 <td>{{m.genre}}</td>
                 <td *ngFor="let a of m.actors">{{a.name}} {{a.lastName}}</td>
                 <td><button class="btn" (click)="addProjection(m)"> Add projection</button></td>
-                <td><button class="btn" (click)="deletePlay(m.id, currentTheatre.id)"> Delete </button></td>
-                <td *ngFor=" let p1 of currentTheatre.projekcije">
+                <td><button class="btn" (click)="deletePlay(m.id, currentCinema.id)"> Delete </button></td>
+                <td *ngFor=" let p1 of currentCinema.projekcije">
                 
                     <div *ngFor=" let p of m.projekcije">
                     
@@ -57,10 +57,10 @@
                             <p> {{p.price}}</p>
                             <p> {{p.rating}}</p>
                             <p><button class="btn" (click)="changeSeatingChart(p.id)"> Change seating chart </button></p>
-                            <p><button class="btn" [hidden]="!hiddenEditing[p.id]" (click)="changeProjection(m.id, p.id, currentTheatre.id)"> Change projection</button></p>
-                            <p><button class="btn" (click)="deleteProjection(m.id, p.id, currentTheatre.id)"> Delete projection</button></p>
+                            <p><button class="btn" [hidden]="!hiddenEditing[p.id]" (click)="changeProjection(m.id, p.id, currentCinema.id)"> Change projection</button></p>
+                            <p><button class="btn" (click)="deleteProjection(m.id, p.id, currentCinema.id)"> Delete projection</button></p>
                             <p><button class="btn" (click)="openAdding(p.id)"> Add fast reservation ticket</button></p>
-                            <form [hidden]="hiddenFastRes[p.id]" (ngSubmit)="onSubmit1(price, seat, m.id, p, currentTheatre.id)" #f1="ngForm">
+                            <form [hidden]="hiddenFastRes[p.id]" (ngSubmit)="onSubmit1(price, seat, m.id, p, currentCinema.id)" #f1="ngForm">
                                 <p>New price</p><input type="text" class="form-control" name="price"
                                     id="price" #price required>
                                 <p>Seat number</p><input type="text" class="form-control" name="seat"
@@ -102,7 +102,7 @@
                 </div>
             <div class="card-body">
                         <div class="col-8">
-                            <div *ngFor="let p of currentTheatre.projekcije">
+                            <div *ngFor="let p of currentCinema.projekcije">
                             
                            
                             <div *ngFor="let t of p.tickets">
@@ -121,8 +121,8 @@
                                                             <p>Play: {{m.name}}</p>
                                                         </div>
                                                     </div>
-                                                <button class="btn" (click)="reserve(t, t.id, currentTheatre.id)">Reserve</button>
-                                                <button class="btn" (click)="delete(t, t.id, currentTheatre.id)">Delete</button>
+                                                <button class="btn" (click)="reserve(t, t.id, currentCinema.id)">Reserve</button>
+                                                <button class="btn" (click)="delete(t, t.id, currentCinema.id)">Delete</button>
                                             </div>
                                             
                                         </div>

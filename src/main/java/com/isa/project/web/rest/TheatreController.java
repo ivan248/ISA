@@ -162,26 +162,14 @@ public class TheatreController {
 
 	}
 	
-	@RequestMapping(value="/editProjection", method = RequestMethod.POST) 
-	public ResponseEntity editProjection(@RequestBody Projection projekcija) {
-		System.out.println("Editovanje"+projekcija);
-		
-		return new ResponseEntity<>(cinemaService.editProjection(projekcija), HttpStatus.OK);
-	}
 	
-	@RequestMapping(value="/addProjectionCinema", method = RequestMethod.POST) 
-	public ResponseEntity addProjection(@RequestBody Projection projekcija, @RequestParam("movieid") String movieid, @RequestParam("cinemaid") String cinemaid) {
-		System.out.println("************"+projekcija);
-		
-		return new ResponseEntity<>(cinemaService.addProjection(projekcija, Long.parseLong(movieid), Long.parseLong(cinemaid)), HttpStatus.OK);
-	}
 	
-/*	@RequestMapping(value="/addProjectionTheatre", method = RequestMethod.POST) 
+	@RequestMapping(value="/addProjectionTheatre", method = RequestMethod.POST) 
 	public ResponseEntity addProjectionTheatre(@RequestBody Projection projekcija, @RequestParam("playid") String playid, @RequestParam("theatreid") String theatreid) {
 		System.out.println("************"+projekcija);
-		
-		return new ResponseEntity<>(cinemaService.addProjection(projekcija, Long.parseLong(movieid), Long.parseLong(cinemaid)), HttpStatus.OK);
-	}*/
+		//cinemaService.addProjection(projekcija, Long.parseLong(movieid), Long.parseLong(cinemaid)),
+		return new ResponseEntity<>( HttpStatus.OK);
+	}
 	
 	@GetMapping
 	@RequestMapping(value = "/getProjectionById")
@@ -217,8 +205,8 @@ public class TheatreController {
 	}
 	
 	@RequestMapping(value="/addProjectionToFast", method = RequestMethod.POST) 
-	public ResponseEntity addTicketToFast(@RequestBody Ticket ticket, @RequestParam("cinemaid") String cinemaid) {
-		return new ResponseEntity<>(cinemaService.changeTicket(ticket, Long.parseLong(cinemaid)) ,HttpStatus.OK);
+	public ResponseEntity addTicketToFast(@RequestBody Ticket ticket, @RequestParam("theatreid") String theatreid) {
+		return new ResponseEntity<>(cinemaService.changeTicket(ticket, Long.parseLong(theatreid)) ,HttpStatus.OK);
 	}
 	
 	
