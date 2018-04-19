@@ -56,10 +56,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
-		http.authorizeRequests()
-				//.antMatchers("/api/profile/get").hasRole("REGISTERED_USER")
-				.antMatchers("/api/login/login").permitAll();
-				//.antMatchers("/api/home/getCinemas").access("hasRole('REGISTERED_USER')");
+//		http.authorizeRequests()
+//				//.antMatchers("/api/profile/get").hasRole("REGISTERED_USER")
+//				.antMatchers("/api/login/login").permitAll();
+//				//.antMatchers("/api/home/getCinemas").access("hasRole('REGISTERED_USER')");
 
 
 		http.cors().and().csrf().disable();
@@ -76,16 +76,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// this disables session creation on Spring Security
 		// .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
-	
-	@Override
-    public void configure(WebSecurity web) throws Exception {
-        // TokenAuthenticationFilter will ignore the below paths
-        web.ignoring().antMatchers(
-                HttpMethod.POST,
-                "/api/login/login"
-        );
-        
+
 
     }
 
-}
+

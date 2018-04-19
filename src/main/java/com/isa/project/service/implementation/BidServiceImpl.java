@@ -83,6 +83,7 @@ public class BidServiceImpl implements BidService {
 			if (i.getSold()) {
 				return false;
 			} else {
+				
 				bidRepository.saveAndFlush(bid);
 				return true;
 			}

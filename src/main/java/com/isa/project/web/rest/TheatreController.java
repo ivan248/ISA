@@ -33,7 +33,7 @@ import com.isa.project.web.dto.MovieReservationDTO;
 
 @RestController // This means that this class is a Controller
 @CrossOrigin
-@RequestMapping(value = "/theatres/home") 	
+@RequestMapping(value = "/api/theatres") 	
 public class TheatreController {
 	
 	@Autowired 
@@ -47,8 +47,7 @@ public class TheatreController {
 	private TheatreRepository theatreRepository;
 	
 
-	@Autowired
-	private PlayRepository playRepository;
+
 
 	
 	@RequestMapping(value = "/test", method = RequestMethod.POST,

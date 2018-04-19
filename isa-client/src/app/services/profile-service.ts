@@ -175,7 +175,11 @@ var httpOptions = {
          });
          
          let params = new HttpParams().append('role',role);
-         return this.http.post('http://localhost:8080/api/profile/addrole',body,{params:params, headers: headers});
+         return this.http.post('http://localhost:8080/api/profile/addrole',body,{params:params, headers: headers}).catch((err:HttpErrorResponse) =>
+         {
+             alert(err.status + "Unauthorized");
+             return Observable.throw(err);
+         });
         
       }
 

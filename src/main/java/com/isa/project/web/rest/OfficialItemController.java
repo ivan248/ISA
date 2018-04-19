@@ -3,7 +3,7 @@ package com.isa.project.web.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +33,7 @@ public class OfficialItemController {
 	@Autowired
 	private UserRepository userRepository;
 
-	
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAutority('FANZONE_ADMIN')")
 	@RequestMapping(value="/edit", method = RequestMethod.POST) //ovaj drugi korak edita zapravo menja item u BP
 	public ResponseEntity<Boolean> editItemStep(@RequestBody OfficialItem i) {
 		System.out.println("Verzija: " + i.getVersion());

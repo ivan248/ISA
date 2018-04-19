@@ -24,7 +24,6 @@ public interface BidRepository extends JpaRepository<Bid, Integer> {
 	List<Bid> findAllByItemOrderByValueDesc(Item item);
 	@Query("select b from Bid b where b.item.itemID = :itemID and b.buyer.username= :userName")
 	Bid findBidValue(@Param("itemID") Integer itemID, @Param("userName") String userName);
-	
 	Bid findOneByBuyer(User buyer);
 	
 }
