@@ -202,11 +202,18 @@ public class HomeController {
 		return new ResponseEntity<>(cinemaService.editProjection(projekcija), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/addProjectionCinema", method = RequestMethod.POST) 
+	@RequestMapping(value="/addProjection", method = RequestMethod.POST) 
 	public ResponseEntity addProjection(@RequestBody Projection projekcija, @RequestParam("movieid") String movieid, @RequestParam("cinemaid") String cinemaid) {
 		System.out.println("************"+projekcija);
 		
 		return new ResponseEntity<>(cinemaService.addProjection(projekcija, Long.parseLong(movieid), Long.parseLong(cinemaid)), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/addProjectionTheatre", method = RequestMethod.POST) 
+	public ResponseEntity addProjectionT(@RequestBody Projection projekcija, @RequestParam("playid") String playid, @RequestParam("theatreid") String theatreid) {
+		System.out.println("************"+projekcija);
+		
+		return new ResponseEntity<>(theatreService.addProjection(projekcija, Long.parseLong(playid), Long.parseLong(theatreid)), HttpStatus.OK);
 	}
 	
 
