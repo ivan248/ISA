@@ -3,6 +3,8 @@ package com.isa.project.web.dto;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import com.isa.project.bean.ProjectionSeats;
+
 public class MovieReservationDTO {
 	
 	private Long projectionId;
@@ -12,6 +14,7 @@ public class MovieReservationDTO {
 	private String place;
 	private ArrayList<Integer> seatsTaken;
 	private ArrayList<String> invitedFriends;
+	private ArrayList<ProjectionSeats> seats;
 	
 	public MovieReservationDTO() {
 		
@@ -27,6 +30,14 @@ public class MovieReservationDTO {
 
 	public ArrayList<String> getInvitedFriends() {
 		return invitedFriends;
+	}
+
+	public ArrayList<ProjectionSeats> getSeats() {
+		return seats;
+	}
+
+	public void setSeats(ArrayList<ProjectionSeats> seats) {
+		this.seats = seats;
 	}
 
 	public void setInvitedFriends(ArrayList<String> invitedFriends) {
@@ -79,8 +90,10 @@ public class MovieReservationDTO {
 	public String toString() {
 		return "MovieReservationDTO [projectionId=" + projectionId + ", movieName=" + movieName + ", date=" + date
 				+ ", time=" + time + ", place=" + place + ", seatsTaken=" + seatsTaken + ", invitedFriends="
-				+ invitedFriends + "]";
+				+ invitedFriends + ", seats=" + seats + "]";
 	}
+
+
 
 	
 

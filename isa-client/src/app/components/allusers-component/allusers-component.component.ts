@@ -11,7 +11,7 @@ export class AllusersComponent implements OnInit {
 
   roles : Array<string> = [
     'ADMIN',
-    'FAZONE_ADMIN',
+    'FANZONE_ADMIN',
     'SYSTEM_ADMIN'
   ];
   

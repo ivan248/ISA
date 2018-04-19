@@ -128,9 +128,12 @@ import { MovieReservation } from '../model/movieReservation';
 
         return this.http
         .post('http://localhost:8080/api/home/makeTheatreReservation',
-        movieReservation,
-        {headers:headers}
-    );
+        movieReservation, {headers:headers})
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "GDE SI POSAO? TRANSACTINAL SAM JA I TO SVAKO ZNA!");
+            return Observable.throw(err);
+        });
 
 
     }

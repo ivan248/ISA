@@ -29,6 +29,8 @@ import { LocationComponent } from "./components/location-component/location-comp
 import { AcceptDeclineComponent } from "./components/reservation-component/accept-decline/accept-decline-component.component";
 
 import { AllusersComponent } from "./components/allusers-component/allusers-component.component";
+import { AddtheatreComponent } from "./components/addtheatre-component/addtheatre-component.component";
+import { AddcinemaComponent } from "./components/addcinema-component/addcinema-component.component";
 
 const appRoutes: Routes = 
 [
@@ -115,6 +117,13 @@ const appRoutes: Routes =
     {
         path: 'allusers',
         component: AllusersComponent
+    },
+    {
+        path: 'addtheatre',
+        component: AddtheatreComponent},  
+    {
+        path: 'addcinema',
+        component: AddcinemaComponent
     }
     
     // {

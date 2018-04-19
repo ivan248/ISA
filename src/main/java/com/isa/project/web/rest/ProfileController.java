@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,17 +17,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.Friend;
+import com.isa.project.bean.Movie;
 import com.isa.project.bean.Notification;
 import com.isa.project.bean.Play;
+import com.isa.project.bean.Projection;
+import com.isa.project.bean.ProjectionSeats;
 import com.isa.project.bean.ProjectionUserTicket;
-
 import com.isa.project.bean.ProjectionUserTicketId;
 import com.isa.project.bean.Projection;
 import com.isa.project.bean.Role;
 import com.isa.project.bean.Theatre;
 import com.isa.project.bean.User;
+import com.isa.project.repository.MovieRepository;
 import com.isa.project.repository.NotificationRepository;
 import com.isa.project.repository.PlayRepository;
+import com.isa.project.repository.ProjectionRepository;
+import com.isa.project.repository.ProjectionSeatsRepository;
 import com.isa.project.repository.ProjectionUserTicketRepository;
 import com.isa.project.repository.TheatreRepository;
 import com.isa.project.repository.UserRepository;
@@ -62,6 +67,17 @@ public class ProfileController {
 	
 	@Autowired 
 	private NotificationRepository notificationRepository;
+	
+	@Autowired
+	private ProjectionRepository projectionRepository;
+	
+	@Autowired
+	private ProjectionSeatsRepository projectionSeatsRepository;
+	
+	@Autowired
+	private MovieRepository movieRepository;
+	
+	
 
 	@GetMapping
 	@RequestMapping(value = "/")
@@ -232,6 +248,32 @@ public class ProfileController {
 
 		TokenProvider p = new TokenProvider();
 		
+//		for(Play m : playRepository.findAll())
+//		{
+//			for(Projection proj : m.getProjekcije())
+//			{
+//				for(ProjectionSeats projectionSeats : projectionSeatsRepository.findAll())
+//				{
+//					if(proj.getId() == projectionSeats.getProjectionId())
+//					{
+//						projectionSeats.setMovieId(m.getId());
+//						projectionSeatsRepository.save(projectionSeats);
+//					}
+//					
+////					for(int i=1; i<85; i++)
+////					{
+////						ProjectionSeats ps =
+////								new ProjectionSeats(i, projection.getId());
+////					
+////						projectionSeatsRepository.save(ps);
+////					}
+//				}
+//			}
+//
+//		}
+
+		
+		
 		return new ResponseEntity
 		(userService.getReservations(p.getUsernameFromToken(token)), HttpStatus.OK);
 
@@ -250,22 +292,18 @@ public class ProfileController {
 		if(userService.cancelProjectionReservation(
 				p.getUsernameFromToken(token),
 				Integer.parseInt(projectionId),
-				Integer.parseInt(seatNumber)) == null)
-		return new ResponseEntity
-		(userService.cancelProjectionReservation(
-				p.getUsernameFromToken(token),
-				Integer.parseInt(projectionId),
-				Integer.parseInt(seatNumber)),
-				HttpStatus.OK);
+				Integer.parseInt(seatNumber)))
+		return new ResponseEntity(userService.getReservations(p.getUsernameFromToken(token)),HttpStatus.OK);
+				
 		
 		return new ResponseEntity
-				(HttpStatus.OK); 
+				(HttpStatus.BAD_REQUEST); 
 
 
 	}
 	
 	
-	
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN')")
 	@PostMapping("/addrole")
 	public User addRole(@RequestHeader(value = "X-Auth-Token") String token,@RequestBody User u, @RequestParam("role") String role) {
 		
@@ -283,7 +321,9 @@ public class ProfileController {
 		}
 		
 		
-		
+		if (role.equals("FANZONE_ADMIN")) {
+			user.setFirstTimeLogged(false);
+		}
 		user.getRoles().add(r);
 		
 //		user.getRoles().clear();

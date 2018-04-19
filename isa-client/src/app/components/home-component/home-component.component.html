@@ -17,13 +17,13 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link text-white" href="#">About Us</a>
+                    <a class="nav-link text-white" [routerLink]="['/home']">About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="login">Log in</a>
+                    <a class="nav-link text-white" [routerLink]="['/login']"href="login">Log in</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="registration">Register</a>
+                    <a class="nav-link text-white" [routerLink]="['/registration']"href="registration">Register</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" [routerLink]="['/allusers']">All users</a>
@@ -49,7 +49,7 @@
               <div class="card-block p-3">
                   <h4 class="card-title">THEATRES</h4>
                   <p class="card-text"></p>
-                  <a href="theatres" class="btn btn-primary rounded-0 mb-2">See all theatres</a>
+                  <a href="theatres" class="btn btn-primary rounded-0 mb-2" [routerLink]="['/theatres']">See all theatres</a>
               </div>
           </div>
       </div>
@@ -59,7 +59,7 @@
               <div class="card-block p-3">
                   <h4 class="card-title">CINEMAS</h4>
                   <p class="card-text"></p>
-                  <a href="cinemas" class="btn btn-primary rounded-0 mb-2">See all cinemas</a>
+                  <a href="cinemas" class="btn btn-primary rounded-0 mb-2" [routerLink]="['/cinemas']">See all cinemas</a>
               </div>
           </div>
       </div>

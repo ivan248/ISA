@@ -43,13 +43,13 @@ export class ItemComponent implements OnInit {
     }
 
     onClickEdit(id: number){
-     //Dobijam id itema koji treba da editujem i sa sajta vucem ceo taj item
       this.itemService.getItem(id).subscribe(data => {
         this.item = data;
-        console.log(this.item);
-        this.dataService.changeEdditedItem(this.item);
-        this.router.navigateByUrl('/edititem');
-      });
+        this.itemService.checkIfOk(this.item).subscribe(data2 => {
+            this.dataService.changeEdditedItem(this.item);
+            this.router.navigateByUrl('/edititem');
+          });
+        });
       
       
     }

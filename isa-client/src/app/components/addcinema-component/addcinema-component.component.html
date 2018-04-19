@@ -11,7 +11,8 @@
     <a [routerLink]="['/login']">Login </a>
 <div class="container">
   <div class="jumbotron">
-    <h1>Add new item</h1>      
+    <h1>Add new cinema</h1>  
+        
     <!--<p>Browse and bid on !</p> -->
     
   </div>
@@ -26,39 +27,35 @@
                 <br style="clear:both">
                             
                             <div class="form-group">
-                                <label>Item name</label>
-                                <input type="text" class="form-control" name="name"
-                                [(ngModel)] = "item.name"   
+                                <label>Cinema name</label>
+                                <input type="text" class="form-control" name="name" minlength="3"
+                                [(ngModel)] = "cinema.name"   
                                     required
                                     >
 
                             </div>
                             <div class="form-group">
-                                    <label>Item description</label>
+                                    <label>Cinema description</label>
                                     <textarea class="form-control" type="textarea"  minlength="10" maxlength="300" rows="3" name="description"
-                                        [(ngModel)]= "item.description"
+                                        [(ngModel)]= "cinema.description"
                                         required>
                                     </textarea>
                             </div>  
                             
                             <hr>           
-                            <div class="form-group">
-                                    <label>Expire date</label>
-                                <input type="date"  min="1000-01-01" max="3000-12-31" class="form-control" value="Expire date"  name="endDate" 
-                                [(ngModel)] = "item.endDate"
-                                required>            
-                            </div>
+                           
                             <hr>
                             <div class="form-group">
-                                    <label> Write down the picture url </label>
+                                    <label> Write down the Cinema address and make sure that it's in  order </label>
                                     <input type="text" class="form-control"   name="image" 
-                                    [(ngModel)]= "item.image"
+                                    [(ngModel)]= "cinema.address" placeholder="(street, city, country)"
+                                    required
                                     >
                                    
                             </div>
 
                             <hr><hr>
-                <button type="submit"  class="btn btn-dark btn-lg" [disabled] = "!f.valid">Add item</button>
+                <button type="submit"  class="btn btn-dark btn-lg" [disabled] = "!f.valid">Add cinema</button>
                 </form>
             </div>
         </div>

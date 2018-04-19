@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -119,9 +120,31 @@ public class BidController {
 //	
 //	}
 */	
-
+	@PostMapping("/checkallbids")
+	public ResponseEntity<Boolean> checkAllBids(@RequestHeader(value="X-Auth-Token") String token,@RequestBody Item i){
+		TokenProvider p = new TokenProvider();
+		User u = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		Boolean isAdmin = userService.checkIfUserHasRole(u, "FANZONE_ADMIN");
+		Boolean isSysAdmin =  userService.checkIfUserHasRole(u, "SYSTEM_ADMIN");;
+		Boolean isOwner = i.getOwner().getUsername().equals(u.getUsername());
+		
+		System.out.println(isAdmin + " " + isSysAdmin+ " " +  isOwner);
+		
+		
+		if( isAdmin || isSysAdmin || isOwner) {
+			System.out.println("PRosao user proveru");
+			return new ResponseEntity<Boolean>(true,HttpStatus.OK);
+		}
+		System.out.println("Nije prosao user proveru");
+		return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+	}
+	
 	@PostMapping("/getallbyitem")
 	public ResponseEntity<List<Bid>> getAllByItem(@RequestBody Item item, @RequestHeader(value="X-Auth-Token") String token){
+		
+		
+		
 		
 		List<Bid> list = new ArrayList<Bid>();
 		list = bidService.getAllItemBids(item);

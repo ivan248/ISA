@@ -68,7 +68,31 @@ public class FanZoneController {
 	
 	@RequestMapping(value="/unapproved", method= RequestMethod.GET)
 	public List<Item> getAllUnApprovedItems(){
+		
+		
+		
 		return fanZoneService.getAllUnApprovedItems();
+	}
+	
+	@GetMapping(value="/checkIfPendingAvialable")
+	public ResponseEntity<Boolean> checkIfPendingAvialable(@RequestHeader("X-Auth-Token") String token){
+		TokenProvider p = new TokenProvider();
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		Boolean isSystemAdmin = userService.checkIfUserHasRole(logged, "SYSTEM_ADMIN");
+		Boolean isFanzoneAdmin= userService.checkIfUserHasRole(logged, "FANZONE_ADMIN");
+		
+		if( isSystemAdmin||isFanzoneAdmin ) {
+			System.out.println("Ovaj user moze da avidi pending");
+			return new ResponseEntity<Boolean> (true,HttpStatus.OK);
+		} else {
+			System.out.println("Ovaj user NE moze da avidi pending");
+			return new ResponseEntity<Boolean> (false,HttpStatus.BAD_REQUEST);
+		}
+		
+		
+		
+		
 	}
 	
 	@RequestMapping(value="/additem", method=RequestMethod.POST)

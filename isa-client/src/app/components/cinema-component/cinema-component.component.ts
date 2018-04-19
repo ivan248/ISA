@@ -95,6 +95,10 @@ onClickShowLocation(address: string){
   this.router.navigateByUrl('location');
 }
 
+onClickAddCinema() {
+  console.log("SS")
+  this.router.navigateByUrl('/addcinema');
+}
 
 
 }
