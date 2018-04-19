@@ -114,6 +114,7 @@ import { MovieReservation } from '../model/movieReservation';
     }
 
     selectPlay(play: any) {
+        console.log(play);
         this.p.next(play);
       }
 
@@ -203,13 +204,30 @@ import { MovieReservation } from '../model/movieReservation';
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
         });
-        return this.http.post('http://localhost:8080/api/theatre/addProjectionToFast',body,{
+        return this.http.post('http://localhost:8080/api/theatres/addProjectionToFast',body,{
             params:params,
             headers: headers
         } );
 
 
 
+    }
+
+    addProjection(projekcija: any, movie: any, cinema: any){
+        const body = JSON.parse(JSON.stringify(projekcija));
+        var movieid = movie.id;
+        var cinemaid = cinema.id;
+        let params = new HttpParams().set('movieid',movieid);  
+        params = params.set('cinemaid',cinemaid); 
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http.post('http://localhost:8080/api/theatres/addProjectionTheatre',body,{
+            params:params,
+            headers: headers
+        } );
     }
 
  } 

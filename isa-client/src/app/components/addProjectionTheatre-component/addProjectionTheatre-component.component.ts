@@ -6,14 +6,14 @@ import { HomeService } from '../../services/home-service.service';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'addProjection-component',
-  templateUrl: './addProjection-component.component.html',
+  selector: 'addProjectionTheatre-component',
+  templateUrl: './addProjectionTheatre-component.component.html',
   
   
  
 })
 
-export class AddProjectionComponent implements OnInit {
+export class AddProjectionComponentTheatre implements OnInit {
  
     private currentCinema: any;
     private currentMovie: any;
@@ -30,10 +30,10 @@ export class AddProjectionComponent implements OnInit {
     }
 
     ngOnInit() {
-          this.cinemasService.currentc.subscribe(currentCinema => this.currentCinema = currentCinema);
-          this.cinemasService.currentm.subscribe(currentMovie => this.currentMovie = currentMovie);
+          this.theatresService.currentth.subscribe(currentCinema => this.currentCinema = currentCinema);
+          this.theatresService.currentp.subscribe(currentMovie => this.currentMovie = currentMovie);
          
-          this.cinemasService.getMovies(this.currentCinema.id).subscribe(data =>
+          this.theatresService.getPlays(this.currentCinema.id).subscribe(data =>
             this.movies = data);
       }
 
@@ -47,7 +47,7 @@ export class AddProjectionComponent implements OnInit {
         this.currentCinema = data;
         this.cinemasService.selectCinema(this.currentCinema);
         console.log(this.currentCinema +  " iz addorojetion");
-        this.router.navigateByUrl('/viewCinema'); //ne radi osvezavanje prikaza
+        this.router.navigateByUrl('/viewTheatre'); //ne radi osvezavanje prikaza
       }
        );
 //mozda ne bi trebalo da se zakomentarise? :D

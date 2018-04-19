@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TheatresService } from '../../../services/theatres-service.service';
 import { NgForm } from '@angular/forms';
+import { CinemasService } from '../../../services/cinemas-service.service';
 
 @Component({
   selector: 'viewTheatre-component',
@@ -15,7 +16,7 @@ export class ViewTheatreComponent implements OnInit {
  
 
     private changeSeatingChartHidden : boolean = false;
-    private currentTheatre: any;
+    private currentCinema: any;
     private plays:  any[] = [];
     private hiddenEditing: boolean[] = [];
     private hiddenFastRes: boolean[] = [];
@@ -28,20 +29,22 @@ export class ViewTheatreComponent implements OnInit {
    
 
     constructor(private theatresService: TheatresService,
+        private cinemasService: CinemasService,
             private router : Router) {
               
     }
 
     ngOnInit() {
-        this.theatresService.currentth.subscribe(data => this.currentTheatre = data);
+        
+        this.theatresService.currentth.subscribe(data => this.currentCinema = data);
 
-        this.theatresService.getPlays(this.currentTheatre.id).subscribe(data =>
+        this.theatresService.getPlays(this.currentCinema.id).subscribe(data =>
         this.plays = data);
-        this.theatresService.getNotFastProjectionsByTheatreId(this.currentTheatre.id).subscribe(data =>
+        this.theatresService.getNotFastProjectionsByTheatreId(this.currentCinema.id).subscribe(data =>
               this.notFastReservations = data);
           this.theatresService.initBroj.subscribe(numberProjections => this.numberProjections = numberProjections );
               
-          var data = this.currentTheatre.projekcije;
+          var data = this.currentCinema.projekcije;
           data.forEach(p => {
               this.hiddenEditing[p.id] = true;
               this.hiddenFastRes[p.id] = true;
@@ -51,10 +54,10 @@ export class ViewTheatreComponent implements OnInit {
       addProjection(play : any) {
         console.log(play.id);
 
-        var theatreid = this.currentTheatre.id;
+        var cinemaid = this.currentCinema.id;
         this.theatresService.selectPlay(play);
 
-        this.router.navigateByUrl('/addProjection');
+        this.router.navigateByUrl('/addProjectionTheatre');
   
         
         
@@ -89,22 +92,22 @@ export class ViewTheatreComponent implements OnInit {
         .subscribe();
 
       }
-    /*  addToFast(theatreid: any, ticketid: any, ticket: any){
-        console.log(ticketid);
-        this.theatresService.addToFast(cinemaid, ticketid, ticket).subscribe();
+    addToFast(theatreid: any, ticketid: any, ticket: any){
+        console.log("****************addto fast");
+        this.theatresService.addToFast(theatreid, ticketid, ticket).subscribe();
         
     }
 
-    reserve(ticket:any, ticketid: any, cinemaid: any){
+ /*   reserve(ticket:any, ticketid: any, cinemaid: any){
  
         console.log(cinemaid);
-        this.cinemasService.reserveFast(ticket, ticketid).subscribe();
+        this.theatresService.reserveFast(ticket, ticketid).subscribe();
         console.log(this.currentCinema);
         this.router.navigateByUrl('/viewCinema');
 
     }
 
-    
+      
     private currentProjection : any;
 
     changeSeatingChart(projectionId: any) {

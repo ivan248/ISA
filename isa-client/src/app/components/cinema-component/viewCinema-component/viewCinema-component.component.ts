@@ -56,11 +56,6 @@ export class ViewCinemaComponent implements OnInit {
 
       }
 
-      viewMovie(id : number) {
-        console.log(id);
-        // ovde prikazati sve termine i sale projekcije
-  
-      }
 
       addProjection(movie : any) {
         console.log(movie.id);
