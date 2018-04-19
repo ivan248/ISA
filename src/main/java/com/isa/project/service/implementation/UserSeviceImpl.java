@@ -463,7 +463,7 @@ public class UserSeviceImpl implements UserService {
 	}
 
 	@Override
-	public List<ReservationDTO> cancelProjectionReservation(String usernameFromToken, int projectionId, int seatNumber) {
+	public boolean cancelProjectionReservation(String usernameFromToken, int projectionId, int seatNumber) {
 		
 		
 		User u = userRepository.findByUsername(usernameFromToken).get();
@@ -550,7 +550,7 @@ public class UserSeviceImpl implements UserService {
 			    		projectionUserTicketRepository.delete(putid);
 			    		ticketRepository.delete(putid.getTicketId());
 			    		
-			    		return null;
+			    		return true;
 			    	}
 			    
 			    }
@@ -571,7 +571,7 @@ public class UserSeviceImpl implements UserService {
 			    		projectionUserTicketRepository.delete(putid);
 			    		ticketRepository.delete(putid.getTicketId());
 			    		
-			    		return null;
+			    		return true;
 			    	}
 			    	else
 			    	{
@@ -596,7 +596,7 @@ public class UserSeviceImpl implements UserService {
 			}
 		}
 		
-		return null;
+		return false;
 	}
 
 

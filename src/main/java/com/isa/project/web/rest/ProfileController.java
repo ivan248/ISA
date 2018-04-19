@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.project.bean.Friend;
 import com.isa.project.bean.Notification;
-import com.isa.project.bean.Play;project.bean.Projection;
+import com.isa.project.bean.Play;
+import com.isa.project.bean.Projection;
 import com.isa.project.bean.ProjectionUserTicket;
 
 import com.isa.project.bean.ProjectionUserTicketId;
 import com.isa.project.bean.Role;
+import com.isa.project.bean.Theatre;
 import com.isa.project.bean.User;
 import com.isa.project.repository.NotificationRepository;
 import com.isa.project.repository.PlayRepository;
@@ -248,16 +250,12 @@ public class ProfileController {
 		if(userService.cancelProjectionReservation(
 				p.getUsernameFromToken(token),
 				Integer.parseInt(projectionId),
-				Integer.parseInt(seatNumber)) == null)
-		return new ResponseEntity
-		(userService.cancelProjectionReservation(
-				p.getUsernameFromToken(token),
-				Integer.parseInt(projectionId),
-				Integer.parseInt(seatNumber)),
-				HttpStatus.OK);
+				Integer.parseInt(seatNumber)))
+		return new ResponseEntity(userService.getReservations(p.getUsernameFromToken(token)),HttpStatus.OK);
+				
 		
 		return new ResponseEntity
-				(HttpStatus.OK); 
+				(HttpStatus.BAD_REQUEST); 
 
 
 	}

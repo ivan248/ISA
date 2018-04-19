@@ -245,8 +245,8 @@ export class ProfileComponent implements OnInit {
     cancelReservation(id : any, seatNumber : any) {
       console.log(id + "  " + seatNumber);
       this.profileService.cancelProjectionReservation(id, seatNumber)
-      .subscribe(data => {//window.location.reload();
-        console.log(data);}
+      .subscribe(data => {this.projectionsReserved = data;
+        console.log(data + " ispis iz cancelRes");}
         );
       
         
