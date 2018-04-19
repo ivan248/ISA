@@ -256,10 +256,10 @@ public class TheatreController {
 	}
 	
 
-	@RequestMapping(value="/reserveFast", method = RequestMethod.POST) 
+/*	@RequestMapping(value="/reserveFast", method = RequestMethod.POST) 
 	public ResponseEntity reserveFast(@RequestParam("ticketid") String ticketid) {
-		return new ResponseEntity<>(cinemaService.setTicketToSold(Long.parseLong(ticketid)) ,HttpStatus.OK);
-	}
+		return new ResponseEntity<>(cinemasService.setTicketToSold(Long.parseLong(ticketid)) ,HttpStatus.OK);
+	}*/
 	
 
 

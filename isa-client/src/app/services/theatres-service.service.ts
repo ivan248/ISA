@@ -233,4 +233,22 @@ import { MovieReservation } from '../model/movieReservation';
         } );
     }
 
+    reserveFast(ticket:any, ticketid: any){
+        
+        ticket.sold=true;
+        const body = JSON.parse(JSON.stringify(ticket));
+        let params = new HttpParams().set('ticketid',ticketid); 
+        
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http.post('http://localhost:8080/api/home/reserveFast',body,{
+            params:params,
+            headers: headers
+        } );
+
+    }
+
  } 

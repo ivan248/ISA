@@ -32,21 +32,20 @@ public interface TheatreService {
 
 	
 	Boolean addTheatre(Theatre t);
+	boolean setTicketToSold(Long ticketid);
 
-	//Cinema addProjection(Projection projekcija, Long movieid, Long cinemaid);
-
+	
 
 
 	
-	/*Cinema getCinemaById(Long id);
+	/*Theatre getTheatreById(Long id);
 	public Boolean deletePlay(Long movieid, Long cinemaid);
 	public Boolean deleteProjection(Long movieid, Long projectionid, Long cinemaid);
-	Boolean editProjection(Projection projekcija);
 	
 	Boolean changeTicket(Ticket ticket, Long cinemaid);
 	
 	boolean makeReservation(MovieReservationDTO movieReservationDTO, String string);
-	boolean setTicketToSold(Long ticketid);
+	
 	boolean setTicketToDeleted(Projection projection, String seat);
 	boolean addTicketToFast(String price, String seat, Long cinemaid, Long movieid, Long projectionid);
 	boolean deleteTicket(Long ticketid);
