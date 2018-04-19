@@ -229,6 +229,19 @@ public class TheatreServiceImpl implements TheatreService {
 		return null;
 	}
 
+	@Override
+	public Boolean addTheatre(Theatre t) {
+		try {
+			theatreRepository.save(t);
+			return true;
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error occured");
+			return false;
+		}
+		
+	}
+
 
 
 }
