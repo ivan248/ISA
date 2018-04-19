@@ -69,7 +69,13 @@ onClickAddNewNewItem() {
 }
 
 onClickPending(){
-  this.router.navigateByUrl('/pending');
+  //Poslati zahtev da vidis da li je fanzone admin ili system admin, ako jeste moze, ako ne ne moze
+  this.fanzoneService.checkIfOk().subscribe(data => {
+    console.log(data);
+    this.router.navigateByUrl('/pending');
+  })
+
+  
 }
 
 onClickMyFanzone(){

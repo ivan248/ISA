@@ -87,11 +87,24 @@ import { Router } from '@angular/router';
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
          });
-        
-
-
         return this.http.post('http://localhost:8080/item/bid',body,{headers: headers});
     }
     
+    checkIfOk(item: Item){
+        
+        const body = JSON.stringify(item);
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+         
+        return this.http.post('http://localhost:8080/item/checkifok',body,{headers: headers}).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "You are not allowed to edit this item");
+            this.router.navigateByUrl('/fanzone')
+            return Observable.throw(err);
+        });;
+
+    }
 
  } 

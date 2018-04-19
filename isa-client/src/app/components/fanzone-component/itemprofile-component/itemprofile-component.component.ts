@@ -57,7 +57,7 @@ export class ItemprofileComponent implements OnInit {
       this.bidService.changeBidValue(this.bid).subscribe(data2 => {
         console.log(data2)
         if(data2 == false){
-          alert("Item has  already been sold.");
+          alert("Item has  already been sold.Or the owner is trying to bid");
           this.router.navigateByUrl('/fanzone')
         }
       });
@@ -66,9 +66,13 @@ export class ItemprofileComponent implements OnInit {
     
   }
 
-  onClickShowAllBids(id : number) {
-    console.log(id);
-    this.router.navigateByUrl("showbids");
+  onClickShowAllBids(item : any) {
+    this.bidService.checkAllBids(this.item).subscribe(data => {
+      this.router.navigateByUrl("showbids");
+    })
+    
+    //proveri da li je owner itema 
+    
     
   }
 

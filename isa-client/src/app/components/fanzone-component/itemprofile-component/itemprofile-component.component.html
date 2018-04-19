@@ -30,7 +30,7 @@
           <form *ngIf="!item.sold" (ngSubmit)="onSubmit(f)" #f="ngForm" >
             <br style="clear:both">            
             <div class="form-group input-lg">
-              <label>How much money would you bid for {{item.name}}</label> <button class="btn btn-sm btn-dark" (click)="onClickShowAllBids(item.itemID)">Show bids</button>
+              <label>How much money would you bid for {{item.name}}</label> 
               <input type="text" class="form-control" name="currentBid" placeholder="Place your bid here"
                 [(ngModel)]="value"
                 required
@@ -40,6 +40,8 @@
             
             <button type="submit"  class="btn btn-success btn-lg" [disabled] = "!f.valid">Bid</button>
           </form>
+          <hr>
+          <button class="btn  btn-dark float-right" (click)="onClickShowAllBids(item)">Show all bids</button>
         </div>
       </div>
     </div>
