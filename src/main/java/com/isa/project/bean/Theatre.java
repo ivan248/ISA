@@ -81,6 +81,24 @@ public class Theatre {
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
+	
+	
+
+	public int getNumberOfGrades() {
+		return numberOfGrades;
+	}
+
+	public void setNumberOfGrades(int numberOfGrades) {
+		this.numberOfGrades = numberOfGrades;
+	}
+
+	public int getSum() {
+		return sum;
+	}
+
+	public void setSum(int sum) {
+		this.sum = sum;
+	}
 
 	public List<Projection> getProjekcije() {
 		return projekcije;

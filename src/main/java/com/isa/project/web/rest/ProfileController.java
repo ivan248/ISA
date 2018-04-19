@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.isa.project.bean.Cinema;
 import com.isa.project.bean.Friend;
 import com.isa.project.bean.Notification;
-
 import com.isa.project.bean.Play;
 import com.isa.project.bean.Projection;
 import com.isa.project.bean.ProjectionUserTicket;
@@ -27,14 +26,12 @@ import com.isa.project.bean.ProjectionUserTicketId;
 import com.isa.project.bean.Role;
 import com.isa.project.bean.Theatre;
 import com.isa.project.bean.User;
-import com.isa.project.repository.CinemaRepository;
 import com.isa.project.repository.NotificationRepository;
 import com.isa.project.repository.PlayRepository;
 import com.isa.project.repository.ProjectionUserTicketRepository;
 import com.isa.project.repository.TheatreRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.security.jwt.TokenProvider;
-import com.isa.project.service.CinemaService;
 import com.isa.project.service.TheatreService;
 import com.isa.project.service.UserService;
 import com.isa.project.web.dto.RegistrationUserDto;
@@ -241,6 +238,30 @@ public class ProfileController {
 
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping
+	@RequestMapping(value = "/cancelProjectionReservation")
+	public ResponseEntity cancelProjectionReservation(@RequestHeader(value = "X-Auth-Token") String token,
+			@RequestParam("projectionId") String projectionId,
+			@RequestParam("seatNumber") String seatNumber) {
+
+		TokenProvider p = new TokenProvider();
+		
+		if(userService.cancelProjectionReservation(
+				p.getUsernameFromToken(token),
+				Integer.parseInt(projectionId),
+				Integer.parseInt(seatNumber)))
+		return new ResponseEntity(userService.getReservations(p.getUsernameFromToken(token)),HttpStatus.OK);
+				
+		
+		return new ResponseEntity
+				(HttpStatus.BAD_REQUEST); 
+
+
+	}
+	
+	
+	
 	@PostMapping("/addrole")
 	public User addRole(@RequestHeader(value = "X-Auth-Token") String token,@RequestBody User u, @RequestParam("role") String role) {
 		
@@ -276,7 +297,7 @@ public class ProfileController {
 		
 		Long playid = reservation.getIdPlay();
 		Play p = playRepository.findOne(playid);
-		System.out.println(p.getDescription());
+		
 		
 		TokenProvider prov = new TokenProvider();
 		User logged = userRepository.findByUsername(prov.getUsernameFromToken(token)).get() ;
@@ -284,6 +305,7 @@ public class ProfileController {
 		ProjectionUserTicketId putid = new ProjectionUserTicketId(reservation.getId(), logged.getId(), reservation.getIdTicket());
 		ProjectionUserTicket put = projectionUserTicketRepository.findOne(putid); 
 		put.setGradeMov(Integer.parseInt(ratevalue));
+		projectionUserTicketRepository.save(put);
 		int brojOcena;
 
 		brojOcena = p.getNumberOfGrades()+1;
@@ -305,13 +327,38 @@ public class ProfileController {
 			@RequestParam("ratevalue") String ratevalue){
 		
 		System.out.println(ratevalue);
-		// to do: proci kroz listu pozorista i pronaci ovu projekciju i oceniti pozoriste u kome je ona
-		for (Theatre t: theatreRepository.findAll()) {
-			for (Projection p: t.getProjekcije()) {
-				
+		
+		Theatre t=null;
+		for (Theatre te: theatreRepository.findAll()) {
+			for (Projection p: te.getProjekcije()) {
+				if (p.getId()==reservation.getId()) {
+					t = te;
+					System.out.println(t.getName());
+					int brojOcena;
+
+					brojOcena = t.getNumberOfGrades()+1;
+					t.setNumberOfGrades(brojOcena);
+					if (t.getSum()==0) {
+						t.setRating(Integer.parseInt(ratevalue));
+						t.setSum(Integer.parseInt(ratevalue));
+					}else {
+						t.setSum(t.getSum()+Integer.parseInt(ratevalue));
+						t.setRating(t.getSum()/brojOcena);
+					}
+					theatreRepository.save(t);
+					
+				}
 			}
 		}
+		TokenProvider prov = new TokenProvider();
+		User logged = userRepository.findByUsername(prov.getUsernameFromToken(token)).get() ;
 		
+		ProjectionUserTicketId putid = new ProjectionUserTicketId(reservation.getId(), logged.getId(), reservation.getIdTicket());
+		ProjectionUserTicket put = projectionUserTicketRepository.findOne(putid); 
+		
+		put.setGradeAmb(Integer.parseInt(ratevalue));
+		projectionUserTicketRepository.save(put);
+		System.out.println("grade: "+put.getGradeAmb());
 		
 		return new ResponseEntity(HttpStatus.OK);
 	}

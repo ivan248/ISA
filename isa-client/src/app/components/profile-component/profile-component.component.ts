@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { NotificationService } from '../../services/notification-service';
 import * as jwt_decode from "jwt-decode";
 
+
 @Component({
   selector: 'profile-component',
   templateUrl: './profile-component.component.html',
@@ -241,8 +242,14 @@ export class ProfileComponent implements OnInit {
         this.adminLoggedFirstTime = false;
     }
 
-    cancelReservation(id : any) {
-
+    cancelReservation(id : any, seatNumber : any) {
+      console.log(id + "  " + seatNumber);
+      this.profileService.cancelProjectionReservation(id, seatNumber)
+      .subscribe(data => {this.projectionsReserved = data;
+        console.log(data + " ispis iz cancelRes");}
+        );
+      
+        
     }
 
     onChangeRatePlay(ratevalue, id: any, p: any ){
@@ -253,8 +260,9 @@ export class ProfileComponent implements OnInit {
       
     }
 
-    onChangeRateAmb(ratevalue){
+    onChangeRateAmb(ratevalue, id: any, p: any){
       console.log(ratevalue);
+      this.profileService.rateAmb(id, ratevalue, p).subscribe();
       this.selectedRateAmb.emit(ratevalue);
     }
  }

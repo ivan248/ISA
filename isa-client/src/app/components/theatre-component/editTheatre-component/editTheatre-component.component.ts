@@ -13,7 +13,7 @@ import { HomeService } from '../../../services/home-service.service';
 
 export class EditTheatreComponent implements OnInit {
  
-    private currentTheatre: any;
+    private currentCinema: any;
     private currentTheatreList: any[];
 
 
@@ -24,13 +24,13 @@ export class EditTheatreComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.theatresService.currentth.subscribe(currentTheatre => this.currentTheatre = currentTheatre);
+        this.theatresService.currentth.subscribe(currentCinema => this.currentCinema = currentCinema);
       
       }
     onSubmit(){
-        console.log("theatre"+this.currentTheatre);
+        console.log("theatre"+this.currentCinema);
 
-         this.homeService.sendEdditedTheatre(this.currentTheatre)
+         this.homeService.sendEdditedTheatre(this.currentCinema)
           .subscribe();
          this.router.navigateByUrl('/theatres');
     

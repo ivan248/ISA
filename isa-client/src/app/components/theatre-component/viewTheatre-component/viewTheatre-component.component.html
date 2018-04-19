@@ -1,9 +1,7 @@
-<script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
-<script src="/assets/gmap3.js?body=1" type="text/javascript"></script>
 
-<div class="container">
+<div class="container" [hidden]="changeSeatingChartHidden">
     <div class="jumbotron">
-        <h1>{{currentTheatre.name}}</h1>    
+        <h1>{{currentCinema.name}}</h1>    
     </div>
   <br>
   <br>
@@ -15,10 +13,9 @@
     </div>
     <div class="card-body">
             <div class="col-8">
-                <p>{{currentTheatre.address}}</p>
+                <p>{{currentCinema.address}}</p>
             </div>
         </div>
-    
 
 <div class="card">
     <div class="card-body">
@@ -28,7 +25,7 @@
         </div>
     <div class="card-body">
                 <div class="col-8">
-                    <p>{{currentTheatre.description}}</p>
+                    <p>{{currentCinema.description}}</p>
                 </div>
             </div>
     </div>
@@ -45,8 +42,8 @@
                 <td>{{m.genre}}</td>
                 <td *ngFor="let a of m.actors">{{a.name}} {{a.lastName}}</td>
                 <td><button class="btn" (click)="addProjection(m)"> Add projection</button></td>
-                <td><button class="btn" (click)="deleteMovie(m.id, currentTheatre.id)"> Delete </button></td>
-                <td *ngFor=" let p1 of currentTheatre.projekcije">
+                <td><button class="btn" (click)="deletePlay(m.id, currentCinema.id)"> Delete </button></td>
+                <td *ngFor=" let p1 of currentCinema.projekcije">
                 
                     <div *ngFor=" let p of m.projekcije">
                     
@@ -59,8 +56,19 @@
                             <p> {{p.place}}</p>
                             <p> {{p.price}}</p>
                             <p> {{p.rating}}</p>
-                            <p><button class="btn" (click)="deleteProjection(m.id, p.id, currentTheatre.id)"> Delete projection</button></p>
-                            <p><button class="btn" [hidden]="!hiddenEditing[p.id]" (click)="changeProjection(m.id, p.id, currentTheatre.id)"> Change projection</button></p>
+                            <p><button class="btn" (click)="changeSeatingChart(p.id)"> Change seating chart </button></p>
+                            <p><button class="btn" [hidden]="!hiddenEditing[p.id]" (click)="changeProjection(m.id, p.id, currentCinema.id)"> Change projection</button></p>
+                            <p><button class="btn" (click)="deleteProjection(m.id, p.id, currentCinema.id)"> Delete projection</button></p>
+                            <p><button class="btn" (click)="openAdding(p.id)"> Add fast reservation ticket</button></p>
+                            <form [hidden]="hiddenFastRes[p.id]" (ngSubmit)="onSubmit1(price, seat, m.id, p, currentCinema.id)" #f1="ngForm">
+                                <p>New price</p><input type="text" class="form-control" name="price"
+                                    id="price" #price required>
+                                <p>Seat number</p><input type="text" class="form-control" name="seat"
+                                    id="seat" #seat required> 
+
+                                  <button type="submit"  class="btn btn-dark btn-lg" [disabled] = "!f.valid">Add</button>
+                            </form>
+                            
                         </div>
                             <form  [hidden]="hiddenEditing[p.id]" (ngSubmit)="onSubmit(f, p.id)" #f="ngForm" >
                                     <input type="text" class="form-control" name="date"
@@ -87,39 +95,37 @@
 
     <div class="card">
             <div class="card-body">
-                    <ul>
-                            <li *ngFor="let t of notFastReservations">
-                                
-                                   
-                                    <p> {{t.id}}</p><button (click)="addToFast(currentTheatre.id, t.id, t)">Add to fast</button>
-                                    </li>
-                    
-                                </ul>
-                                
+               
                     <div class="col-8">
                         <h4><b>Tickets for fast reservation: </b></h4>
                     </div>
                 </div>
             <div class="card-body">
                         <div class="col-8">
-                            <div *ngFor="let p of currentTheatre.projekcije">
+                            <div *ngFor="let p of currentCinema.projekcije">
                             
                            
                             <div *ngFor="let t of p.tickets">
                                     <div *ngIf="t.fastRes==true">
+                                            <div *ngIf="t.sold==false">
                                             <p>{{p.id}}</p>
-                                            <p>Price: {{p.price}}</p>
+                                            <p>Original price: {{p.price}}</p>
+                                            <p><b>New price: {{t.salePrice}}</b> (you will save: {{p.price-t.salePrice}})</p>
                                             <p>Place: {{p.place}}</p>
                                             <p>Time: {{p.time}}</p>
                                             <p>Seat number: {{t.seatNumber}}</p>
 
-                                            <div *ngFor="let m of movies">
+                                            <div *ngFor="let m of plays">
                                                     <div *ngFor="let p1 of m.projekcije">
                                                         <div *ngIf="p1.id==p.id">
-                                                            <p>Movie: {{m.name}}</p>
+                                                            <p>Play: {{m.name}}</p>
                                                         </div>
                                                     </div>
+                                                <button class="btn" (click)="reserve(t, t.id, currentCinema.id)">Reserve</button>
+                                                <button class="btn" (click)="delete(t, t.id, currentCinema.id)">Delete</button>
                                             </div>
+                                            
+                                        </div>
                                         </div>
                                     </div>
                                     <br>
@@ -136,6 +142,17 @@
     </div>
        
     </div>
- 
 
+</div>
+
+</div>
+<div [hidden]="!changeSeatingChartHidden">
+    <seating-chart 
+    [currentProjection]=currentProjection
+    (selectedSeats)="onChangeSelectedSeats($event)"
+    >
+
+    </seating-chart>
+    <button class="btn btn-primary" (click)="finishChangingSeats()">Finish changing seats</button>
+</div>
  

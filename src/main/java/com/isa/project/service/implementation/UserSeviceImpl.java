@@ -1,5 +1,8 @@
 package com.isa.project.service.implementation;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -17,7 +20,11 @@ import com.isa.project.bean.Play;
 import com.isa.project.bean.Projection;
 import com.isa.project.bean.ProjectionUserTicket;
 import com.isa.project.bean.ProjectionUserTicketId;
+
 import com.isa.project.bean.Role;
+
+import com.isa.project.bean.Ticket;
+
 import com.isa.project.bean.User;
 import com.isa.project.repository.FriendRepository;
 import com.isa.project.repository.MovieRepository;
@@ -313,6 +320,55 @@ public class UserSeviceImpl implements UserService {
 		
 		User u = userRepository.findByUsername(usernameFromToken).get();
 		List<ReservationDTO> lista = new ArrayList<ReservationDTO>();
+		
+		for(ProjectionUserTicket put : projectionUserTicketRepository.findAll())
+		{
+			
+			LocalTime timeOfProjection = LocalTime.parse(projectionRepository.findOneById(put.getMovieUserTicketID().getProjectionId())
+					.getTime());
+			LocalTime currentTime = LocalTime.now();
+			
+			Date dateOfProjection = projectionRepository
+					.findOneById(put.getMovieUserTicketID().getProjectionId())
+					.getDate();
+			
+			LocalDate date = LocalDate.now();
+			
+//			System.out.println("\n\n\n");
+//			
+//			System.out.println("TimeOfProjection : " + timeOfProjection + " \n");
+//			System.out.println("currentTime : " + currentTime + " \n");
+//			
+//
+//			
+//			System.out.println("dateOfProjection : " + dateOfProjection + " \n");
+//			System.out.println("date : " + date + " \n");
+			
+			if(date.isAfter(dateOfProjection.toLocalDate()))
+			{
+				//System.out.println("Projekcija je pre trenutnog datuma. ODGLEDAN FILM");
+				put.setEnabled(true);
+			}
+			else
+			{
+				//System.out.println("Projekcija je posle trenutnog datuma. NEODGLEDAN FILM");
+				
+				if(timeOfProjection.isBefore(currentTime))
+				{
+					//System.out.println("Projekcija je pre trenutnog vremena. ODGLEDAN FILM!");
+					put.setEnabled(true);
+				}
+//				else
+//				{
+//					System.out.println("Projekcija je posle trenutnog vremena. NEODGLEDAN FILM!");
+//				}
+			}
+			
+			projectionUserTicketRepository.save(put);
+			
+//			System.out.println("\n\n\n");
+
+		}
 	
 		for(ProjectionUserTicket put : projectionUserTicketRepository.findByMovieUserTicketIdUserId(u.getId()))
 		{
@@ -411,11 +467,147 @@ public class UserSeviceImpl implements UserService {
 	}
 
 	@Override
+
 	public boolean checkIfUserHasRole(User u,String role) {
 		
 		for( Role r : u.getRoles()) {
 			if (r.getRole().equals(role)) {
 				return true;
+			}
+		}
+		return false;
+	}
+	public boolean cancelProjectionReservation(String usernameFromToken, int projectionId, int seatNumber) {
+		
+		
+		User u = userRepository.findByUsername(usernameFromToken).get();
+		
+		Ticket tickedINeed = new Ticket();
+		
+		for(Ticket t : ticketRepository.findAll())
+		{
+//			for(ProjectionUserTicket put : projectionUserTicketRepository
+//					.findByMovieUserTicketIdUserIdAndProjectionId(u.getId(), (long) projectionId))
+//			{
+//				
+//			}
+			for(Ticket ticket : projectionRepository.findOneById((long) projectionId).getTickets())
+			{
+				if(t.getId() == ticket.getId() && t.getSeatNumber() == ticket.getSeatNumber())
+				{
+					System.out.println("Pronasao kartu moju! ");
+					tickedINeed = ticket;
+					System.out.println(tickedINeed);
+				}
+			}
+		}
+		
+		ProjectionUserTicketId putid = new ProjectionUserTicketId(
+				(long) projectionId,
+				u.getId(),
+				tickedINeed.getId());
+		
+		//ProjectionUserTicket put = projectionUserTicketRepository.findOne(putid);
+		
+		LocalTime timeOfProjection = LocalTime.parse(projectionRepository.findOneById((long) projectionId)
+				.getTime());
+		LocalTime currentTime = LocalTime.now();
+		
+		Date dateOfProjection = projectionRepository
+				.findOneById((long) projectionId)
+				.getDate();
+		
+		LocalDate date = LocalDate.now();
+		
+		if(date.isAfter(dateOfProjection.toLocalDate()))
+		{
+			
+			// ODGLEDANO
+		}
+		else
+		{
+			
+			// NIJE ODGLEDANO
+			if(timeOfProjection.isBefore(currentTime))
+			{
+				
+				// ODGLEDANO
+			}
+			else
+			{
+				// NIJE ODGLEDANO
+				
+
+				System.out.println("Hour timeOfProjection: " + timeOfProjection.getHour());
+			    System.out.println("Minute timeOfProjection: " + timeOfProjection.getMinute());
+			    
+			    System.out.println("Hour currentTime: " + currentTime.getHour());
+			    System.out.println("Minute currentTime: " + currentTime.getMinute());
+				
+			    
+			    if(timeOfProjection.getHour() == currentTime.getHour())
+			    {
+			    	if((timeOfProjection.getMinute()-currentTime.getMinute())<=30)
+			    	{
+			    		// DONT DELETE
+			    	}
+			    	else
+			    	{
+			    		// DELETE
+			    		//put.setApproved(false);
+			    		//System.out.println("Ispis iz servisa REMOVE RESERVATION: " + put);
+			    		
+			    		Projection proj = projectionRepository.findOneById(putid.getProjectionId());
+			    		proj.getTickets().remove(ticketRepository.findOneById(putid.getTicketId()));
+			    		projectionRepository.save(proj);
+			    		
+			    		projectionUserTicketRepository.delete(putid);
+			    		ticketRepository.delete(putid.getTicketId());
+			    		
+			    		return true;
+			    	}
+			    
+			    }
+			    
+			    if(timeOfProjection.getHour() > currentTime.getHour())
+			    {
+			    	if( ( 60 - currentTime.getMinute() + timeOfProjection.getMinute()) > 30 ||
+			    			(timeOfProjection.getHour() - currentTime.getHour()) > 1 )
+			    	{
+			    		// DELETE
+			    		//put.setApproved(false);
+			    		//System.out.println("Ispis iz servisa REMOVE RESERVATION: " + put);
+			    		
+			    		Projection proj = projectionRepository.findOneById(putid.getProjectionId());
+			    		proj.getTickets().remove(ticketRepository.findOneById(putid.getTicketId()));
+			    		projectionRepository.save(proj);
+			    		
+			    		projectionUserTicketRepository.delete(putid);
+			    		ticketRepository.delete(putid.getTicketId());
+			    		
+			    		return true;
+			    	}
+			    	else
+			    	{
+			    		// DONT DELETE
+			    	}
+			    
+			    }
+			    
+//			   	OVAJ SLUCAJ BI TREBALO DA JE POKRIVEN NA POCETKU JOS
+//			    if(timeOfProjection.getHour() < currentTime.getHour())
+//			    {
+//			    	if( ( 60 - currentTime.getMinute() + timeOfProjection.getMinute()) > 30 )
+//			    	{
+//			    		// DELETE
+//			    	}
+//			    	else
+//			    	{
+//			    		// DONT DELETE
+//			    	}
+//			    
+//			    }
+
 			}
 		}
 		

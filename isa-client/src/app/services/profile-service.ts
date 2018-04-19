@@ -6,7 +6,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { User } from '../model/dto/userDTO';
 import { ProjectionUserTicketId } from '../model/ProjectionUserTicketId';
 
@@ -209,10 +209,31 @@ var httpOptions = {
         .map((data:[any]) => data);
       }
 
+      cancelProjectionReservation(projectionId: any, seatNumber: any): any {
+        
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+        var params = new HttpParams().set('projectionId', projectionId);
+        params = params.set('seatNumber', seatNumber);
+
+        return this.http
+        .get(this.url + "cancelProjectionReservation", {headers:headers,params:params})
+        .catch((err:HttpErrorResponse) =>
+       {
+           alert(err.status + "You can't delete 30 minutes before the projection!");
+           return Observable.throw(err);
+       }); 
+
+      }
+
+      
+
       ratePlay(id: any, ratevalue: any, p: any){
         let body = JSON.stringify(p);
 
-        console.log("usli"+ratevalue);
         let headers = new HttpHeaders({ 
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
@@ -222,5 +243,20 @@ var httpOptions = {
          return this.http.post('http://localhost:8080//api/profile/ratePlay',body,{params:params, headers: headers});
         
       }
+
+      rateAmb(id: any, ratevalue: any, p: any){
+        let body = JSON.stringify(p);
+
+        console.log("usli"+ratevalue);
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+         
+         let params = new HttpParams().set('ratevalue',ratevalue);
+         return this.http.post('http://localhost:8080//api/profile/rateAmb',body,{params:params, headers: headers});
+        
+      }
+
 
  } 

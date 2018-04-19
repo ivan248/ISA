@@ -56,11 +56,6 @@ export class ViewCinemaComponent implements OnInit {
 
       }
 
-      viewMovie(id : number) {
-        console.log(id);
-        // ovde prikazati sve termine i sale projekcije
-  
-      }
 
       addProjection(movie : any) {
         console.log(movie.id);
@@ -68,7 +63,7 @@ export class ViewCinemaComponent implements OnInit {
         var cinemaid = this.currentCinema.id;
         this.cinemasService.selectMovie(movie);
 
-        this.router.navigateByUrl('/addProjectionCinema');
+        this.router.navigateByUrl('/addProjection');
   
         
         

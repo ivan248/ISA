@@ -32,8 +32,8 @@ import com.isa.project.web.dto.MovieReservationDTO;
 
 @Controller // This means that this class is a Controller
 @CrossOrigin
-@RequestMapping(value = "/api/home") // This means URL's start with /home	
-public class HomeController {
+@RequestMapping(value = "/theatres/home") 	
+public class TheatreController {
 	
 	@Autowired 
 	private TheatreService theatreService;
@@ -162,26 +162,14 @@ public class HomeController {
 
 	}
 	
-	@RequestMapping(value="/editProjection", method = RequestMethod.POST) 
-	public ResponseEntity editProjection(@RequestBody Projection projekcija) {
-		System.out.println("Editovanje"+projekcija);
-		
-		return new ResponseEntity<>(cinemaService.editProjection(projekcija), HttpStatus.OK);
-	}
 	
-	@RequestMapping(value="/addProjection", method = RequestMethod.POST) 
-	public ResponseEntity addProjection(@RequestBody Projection projekcija, @RequestParam("movieid") String movieid, @RequestParam("cinemaid") String cinemaid) {
-		System.out.println("************"+projekcija);
-		
-		return new ResponseEntity<>(cinemaService.addProjection(projekcija, Long.parseLong(movieid), Long.parseLong(cinemaid)), HttpStatus.OK);
-	}
 	
-/*	@RequestMapping(value="/addProjectionTheatre", method = RequestMethod.POST) 
+	@RequestMapping(value="/addProjectionTheatre", method = RequestMethod.POST) 
 	public ResponseEntity addProjectionTheatre(@RequestBody Projection projekcija, @RequestParam("playid") String playid, @RequestParam("theatreid") String theatreid) {
 		System.out.println("************"+projekcija);
-		
-		return new ResponseEntity<>(cinemaService.addProjection(projekcija, Long.parseLong(movieid), Long.parseLong(cinemaid)), HttpStatus.OK);
-	}*/
+		//cinemaService.addProjection(projekcija, Long.parseLong(movieid), Long.parseLong(cinemaid)),
+		return new ResponseEntity<>( HttpStatus.OK);
+	}
 	
 	@GetMapping
 	@RequestMapping(value = "/getProjectionById")
@@ -194,18 +182,18 @@ public class HomeController {
 	
 
 	@GetMapping
-	@RequestMapping(value = "/getFastProjectionTicketsCinema")
-	public ResponseEntity getFastProjectionsByCinemaId(
-			@RequestParam("cinemaid") String cinemaid) {
+	@RequestMapping(value = "/getFastProjectionTicketsTheatre")
+	public ResponseEntity getFastProjectionsByTheatreId(
+			@RequestParam("theatreid") String theatreid) {
 
-		System.out.println(cinemaid);
-		Cinema c  = cinemaService.getCinemaById(Long.parseLong(cinemaid));
+		System.out.println(theatreid);
+		Theatre t  = theatreRepository.findOneById(Long.parseLong(theatreid));
 		List<Ticket> ResTickets = new ArrayList<>();
-		for (Projection p: c.getProjekcije()) {
+		for (Projection p: t.getProjekcije()) {
 			System.out.println(p);
-			for (Ticket t: p.getTickets()) {
-				if (!t.isFastRes() && !t.isSold() && !t.isDeleted()){
-					ResTickets.add(t);
+			for (Ticket ti: p.getTickets()) {
+				if (!ti.isFastRes() && !ti.isSold() && !ti.isDeleted()){
+					ResTickets.add(ti);
 				}
 
 			}
@@ -217,8 +205,8 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/addProjectionToFast", method = RequestMethod.POST) 
-	public ResponseEntity addTicketToFast(@RequestBody Ticket ticket, @RequestParam("cinemaid") String cinemaid) {
-		return new ResponseEntity<>(cinemaService.changeTicket(ticket, Long.parseLong(cinemaid)) ,HttpStatus.OK);
+	public ResponseEntity addTicketToFast(@RequestBody Ticket ticket, @RequestParam("theatreid") String theatreid) {
+		return new ResponseEntity<>(cinemaService.changeTicket(ticket, Long.parseLong(theatreid)) ,HttpStatus.OK);
 	}
 	
 	
