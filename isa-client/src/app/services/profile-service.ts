@@ -330,7 +330,6 @@ var httpOptions = {
         .catch((err:HttpErrorResponse) =>
        {
            alert(err.status + "You can't delete 30 minutes before the projection!");
-           this.router.navigateByUrl('login');
            return Observable.throw(err);
        }); 
 
