@@ -164,7 +164,7 @@ public class TheatreServiceImpl implements TheatreService {
 			razlika++;
 			
 			projectionUserTicket1.setMovie(false);
-			projectionUserTicket1.setEnabled(true);
+			projectionUserTicket1.setEnabled(false);
 			projectionUserTicket1.setApproved(true);
 			
 			movieUserTicketRepository.save(projectionUserTicket1);
@@ -220,7 +220,7 @@ public class TheatreServiceImpl implements TheatreService {
 					System.out.println(projectionUserTicket);
 					
 					projectionUserTicket.setMovie(false);
-					projectionUserTicket.setEnabled(true);
+					projectionUserTicket.setEnabled(false);
 					projectionUserTicket.setApproved(true);
 					
 					invitedIndex++;
