@@ -84,6 +84,22 @@ import { MovieReservation } from '../model/movieReservation';
 
     }
 
+    getAllPlays(theatreId : any) {
+
+        let params = new HttpParams().set('theatreId', theatreId.toString());
+     
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+
+        return this.http
+        .get("http://localhost:8080/api/home/getAllPlays",
+         {params:params, headers:headers}).map((data:[any]) => data);
+
+    }
+
 
     getProjectionDate(playId : any) {
 
@@ -232,7 +248,7 @@ import { MovieReservation } from '../model/movieReservation';
         {
             alert(err.status + " Date is not correct!");
             return Observable.throw(err);
-        });;;
+        });;
     }
 
     reserveFast(ticket:any, ticketid: any){
@@ -246,7 +262,25 @@ import { MovieReservation } from '../model/movieReservation';
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
         });
-        return this.http.post('http://localhost:8080/api/theatres/reserveFast',body,{
+        return this.http.post('http://localhost:8080/api/home/reserveFast',body,{
+            params:params,
+            headers: headers
+        } );
+
+    }
+
+    deleteFast(ticket:any, ticketid: any){
+        
+        ticket.sold=true;
+        const body = JSON.parse(JSON.stringify(ticket));
+        let params = new HttpParams().set('ticketid',ticketid); 
+        
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http.post('http://localhost:8080/api/home/deleteFastTheatre',body,{
             params:params,
             headers: headers
         } );

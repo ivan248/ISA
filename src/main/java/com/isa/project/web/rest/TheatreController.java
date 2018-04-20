@@ -273,6 +273,7 @@ public class TheatreController {
 			
 		return new ResponseEntity<>(theatreService.getPlays(Integer.parseInt(theatreId)),HttpStatus.OK);
 	}
+
 	
 	
 	@GetMapping
