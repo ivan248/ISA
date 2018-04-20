@@ -81,7 +81,6 @@ public class ProfileController {
 	
 
 	@GetMapping
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	@RequestMapping(value = "/")
 	public ResponseEntity<User> getLoggedUser(@RequestHeader(value = "X-Auth-Token") String token) {
 

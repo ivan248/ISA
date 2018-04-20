@@ -8,7 +8,7 @@
 
                     <div class="form-group">
                             <label for="email"><span class="req">* </span> Email Address: </label> 
-                            <input ngModel #email="ngModel" class="form-control" required type="email" id="email" name="email" />   
+                            <input ngModel #email="ngModel" class="form-control" type="email" id="email" name="email" required/>   
                             <div [hidden]="email.valid || email.pristine"
                                 class="alert alert-danger">
                             Invalid email. Please fill in the email correctly.
@@ -47,7 +47,7 @@
 
                    
                     <div class="form-group">
-                       <input class="btn btn-success" type="submit" name="submit_reg" value="Register">
+                       <input class="btn btn-success" type="submit" name="submit_reg" value="Register" [disabled]="!registrationForm.form.valid">
                     </div>
                     <h5>You will receive an email to complete the registration and validation process. </h5>
                     <h5>Be sure to check your spam folders. </h5>

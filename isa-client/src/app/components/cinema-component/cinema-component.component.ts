@@ -52,7 +52,6 @@ export class CinemasComponent implements OnInit {
 
     private editButtonHidden: boolean = true;
 
-    private loggedUser: any;
 
     constructor(private cinemasService: CinemasService, private dataService: DataService,
       private profileService: ProfileService,
@@ -70,10 +69,6 @@ export class CinemasComponent implements OnInit {
           console.log(data);
         }
       );
-      this.profileService.getLoggedUser().subscribe( data =>
-        this.loggedUser = data);
-        console.log(this.loggedUser);
-      
     }
 
     onSelect(cinema: any): void {

@@ -52,7 +52,14 @@ import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http
          });
 
         let json = JSON.parse(JSON.stringify(user));
-        return this.http.post("http://localhost:8080/api/login/registrationMessage", json, {headers:headers});
+        return this.http
+        .post("http://localhost:8080/api/login/registrationMessage", json, {headers:headers})
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Registration failed.");
+            return Observable.throw(err);
+        }); 
+        
     }
 
  } 
