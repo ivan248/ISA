@@ -104,7 +104,7 @@ public class HomeController {
 		
 	}
 	
-	@PreAuthorize("hasAuthority('ADMIN')")
+
 	@RequestMapping(value = "/editCinema", method = RequestMethod.GET,
 			produces="application/json")
 	public ResponseEntity editCinema(@RequestBody Cinema cinema){
@@ -116,7 +116,7 @@ public class HomeController {
 		return new ResponseEntity<>(cinema, HttpStatus.OK);
 		
 	}
-	@PreAuthorize("hasAuthority('ADMIN')")
+
 	@RequestMapping(value = "/editTheatre", method = RequestMethod.GET,
 			produces="application/json")
 	public ResponseEntity<Theatre> editTheatre(@RequestBody Theatre theatre){
@@ -131,15 +131,21 @@ public class HomeController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value="/editC", method = RequestMethod.POST) 
 	public ResponseEntity editCinemaPost(@RequestBody Cinema cinema) {
-		System.out.println("Editovanje");
-		return new ResponseEntity<>(cinemaService.editCinema(cinema), HttpStatus.OK);
+
+		if (cinemaService.editCinema(cinema)) 
+			return new ResponseEntity<>(cinemaService.editCinema(cinema), HttpStatus.OK);
+		
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		
 	}
 	
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value="/editTh", method = RequestMethod.POST) 
 	public ResponseEntity editTheatrePost(@RequestBody Theatre theatre) {
-		System.out.println("Editovanje");
-		return new ResponseEntity<>(theatreService.editTheatre(theatre), HttpStatus.OK);
+
+		if (theatreService.editTheatre(theatre))
+			return new ResponseEntity<>(theatreService.editTheatre(theatre), HttpStatus.OK);
+		return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	}
 	
 	
@@ -180,9 +186,11 @@ public class HomeController {
 
 		Cinema c = new Cinema();
 		c = cinemaService.getCinemaById(Long.parseLong(cinemaid));
-		cinemaService.deleteProjection(Long.parseLong(movieid), Long.parseLong(projekcijaid), Long.parseLong(cinemaid));
+		if (cinemaService.deleteProjection(Long.parseLong(movieid), Long.parseLong(projekcijaid), Long.parseLong(cinemaid)))
+			return new ResponseEntity(cinemaService.getMovies(Long.parseLong(cinemaid)), HttpStatus.OK);
+		return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
 		
-		return new ResponseEntity(cinemaService.getMovies(Long.parseLong(cinemaid)), HttpStatus.OK);
+		
 	}
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/deleteProjectionTheatre", method = RequestMethod.DELETE,
@@ -192,28 +200,37 @@ public class HomeController {
 
 
 				Theatre t = theatreRepository.findOneById(Long.parseLong(theatreid));
-				theatreService.deleteProjection(Long.parseLong(playid), Long.parseLong(projekcijaid), Long.parseLong(theatreid));
+				if (theatreService.deleteProjection(Long.parseLong(playid), Long.parseLong(projekcijaid), Long.parseLong(theatreid)))
 				
-				return new ResponseEntity(theatreService.getAllPlays(Long.parseLong(theatreid)), HttpStatus.OK);
+					return new ResponseEntity(theatreService.getAllPlays(Long.parseLong(theatreid)), HttpStatus.OK);
+				return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
 			}
+	
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value="/editProjection", method = RequestMethod.POST) 
 	public ResponseEntity editProjection(@RequestBody Projection projekcija) {
 		System.out.println("Editovanje"+projekcija);
 		
-		return new ResponseEntity<>(cinemaService.editProjection(projekcija), HttpStatus.OK);
+		if(cinemaService.editProjection(projekcija))
+			return new ResponseEntity<>(HttpStatus.OK);
+		
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		
+		
 	}
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value="/addProjection", method = RequestMethod.POST) 
 	public ResponseEntity addProjection(@RequestBody Projection projekcija, @RequestParam("movieid") String movieid, @RequestParam("cinemaid") String cinemaid) {
-		
-		return new ResponseEntity<>(cinemaService.addProjection(projekcija, Long.parseLong(movieid), Long.parseLong(cinemaid)), HttpStatus.OK);
+		if (cinemaService.addProjection(projekcija, Long.parseLong(movieid), Long.parseLong(cinemaid)))
+			return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value="/addProjectionTheatre", method = RequestMethod.POST) 
 	public ResponseEntity addProjectionT(@RequestBody Projection projekcija, @RequestParam("playid") String playid, @RequestParam("theatreid") String theatreid) {
-	
-		return new ResponseEntity<>(theatreService.addProjection(projekcija, Long.parseLong(playid), Long.parseLong(theatreid)), HttpStatus.OK);
+		if (theatreService.addProjection(projekcija, Long.parseLong(playid), Long.parseLong(theatreid)))
+			return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
 
@@ -250,13 +267,6 @@ public class HomeController {
 		return new ResponseEntity(ResTickets, HttpStatus.OK);
 
 	}
-	@PreAuthorize("hasAuthority('ADMIN')")
-	@RequestMapping(value="/addProjectionToFast", method = RequestMethod.POST) 
-	public ResponseEntity addTicketToFast(@RequestBody Ticket ticket, @RequestParam("cinemaid") String cinemaid) {
-		return new ResponseEntity<>(cinemaService.changeTicket(ticket, Long.parseLong(cinemaid)) ,HttpStatus.OK);
-	}
-	
-	
 
 	@PostMapping
 	@RequestMapping(value = "/makeCinemaReservation", consumes = "application/json")
@@ -378,8 +388,9 @@ public class HomeController {
 	public ResponseEntity deleteSeats(@RequestBody Projection projection, @RequestParam("seat") String seat) {
 		System.out.println(projection.getId());
 		System.out.println(seat);
-		cinemaService.setTicketToDeleted(projection, seat);
-		return new ResponseEntity<>(HttpStatus.OK);
+		if (cinemaService.setTicketToDeleted(projection, seat))
+			return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
 	@PreAuthorize("hasAuthority('ADMIN')")
@@ -389,13 +400,16 @@ public class HomeController {
 		System.out.println("PROJEKCIJA ID"+projection.getId());
 		System.out.println("SEAT "+seat);
 		System.out.println(price);
-		cinemaService.addTicketToFast(price, seat, Long.parseLong(cid), Long.parseLong(mid), projection.getId());
-	return new ResponseEntity<>(HttpStatus.OK);
+		if (cinemaService.addTicketToFast(price, seat, Long.parseLong(cid), Long.parseLong(mid), projection.getId()))
+			return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value="/deleteFast", method = RequestMethod.POST) 
 	public ResponseEntity deleteFast(@RequestParam("ticketid") String ticketid) {
-		return new ResponseEntity<>(cinemaService.deleteTicket(Long.parseLong(ticketid)) ,HttpStatus.OK);
+		if (cinemaService.deleteTicket(Long.parseLong(ticketid)))
+			return new ResponseEntity<>( HttpStatus.OK);
+		return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
 	}
 
 	

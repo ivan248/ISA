@@ -151,7 +151,9 @@ public class UserSeviceImpl implements UserService {
 	public List<Friend> removeFriend(int id, String username) {
 
 		User otherUser = userRepository.findByUsername(friendRepository.findByFriendId(id).getFriendUsername()).get();
+		User currentUser = userRepository.findByUsername(username).get();
 		int friendId = 0;
+		int friendId2 = 0;
 
 		for (Friend f : otherUser.getFriends()) {
 			if (f.getFriendUsername().equals(username)) {
@@ -160,10 +162,27 @@ public class UserSeviceImpl implements UserService {
 				break;
 			}
 		}
+		
+		userRepository.saveAndFlush(otherUser);
+		
+		for(Friend f : currentUser.getFriends())
+		{
+			if(f.getFriendUsername().equals(otherUser.getUsername()))
+			{
+				friendId2 = f.getFriendId();
+				currentUser.getFriends().remove(f);
+				break;
+			}
+		}
 
-		userRepository.save(otherUser);
-		friendRepository.delete(friendId);
-		friendRepository.delete(id);
+		System.out.println("FriendId : " + friendId);
+		System.out.println("FriendId2 : " + friendId2);
+		
+		
+		System.out.println(currentUser.getFriends() + " \n a drugi \n");
+		System.out.println(otherUser.getFriends());
+	
+		userRepository.saveAndFlush(currentUser);
 
 		return getEnabledFriends(username);
 	}
@@ -283,18 +302,30 @@ public class UserSeviceImpl implements UserService {
 		String username = friendRepository.findByFriendId(id).getFriendUsername();
 
 		User user = userRepository.findByUsername(username).get();
+		User currentUser = userRepository.findByUsername(usernameFromToken).get();
 
 		for (Friend f : user.getFriends()) {
 			if (f.getFriendUsername().equals(usernameFromToken)) {
 
 				friendDelete = friendRepository.findByFriendId(f.getFriendId());
+				System.out.println(friendDelete + " 1");
 				user.getFriends().remove(f);
+				userRepository.saveAndFlush(user);
 				break;
 			}
 		}
+		
+		for (Friend f : currentUser.getFriends()) {
+			if (f.getFriendUsername().equals(username)) {
 
-		friendRepository.delete(friendDelete);
-		friendRepository.delete(friend);
+				friendDelete = friendRepository.findByFriendId(f.getFriendId());
+				System.out.println(friendDelete + " 2");
+				currentUser.getFriends().remove(f);
+				userRepository.saveAndFlush(currentUser);
+				break;
+			}
+		}
+		
 
 		return getEnabledFriends(usernameFromToken);
 	}
@@ -362,17 +393,20 @@ public class UserSeviceImpl implements UserService {
 			
 			if(date.isAfter(dateOfProjection.toLocalDate()))
 			{
-				//System.out.println("Projekcija je pre trenutnog datuma. ODGLEDAN FILM");
+				System.out.println("Projekcija je pre trenutnog datuma. ODGLEDAN FILM 1" + date + " " + dateOfProjection.toLocalDate());
 				put.setEnabled(true);
 			}
 			else
 			{
-				//System.out.println("Projekcija je posle trenutnog datuma. NEODGLEDAN FILM");
-				
-				if(timeOfProjection.isBefore(currentTime))
+				System.out.println("Projekcija je posle trenutnog datuma. NEODGLEDAN FILM 2" + date + " " + dateOfProjection.toLocalDate());
+				if(date.isEqual(dateOfProjection.toLocalDate()))
 				{
-					//System.out.println("Projekcija je pre trenutnog vremena. ODGLEDAN FILM!");
-					put.setEnabled(true);
+
+					if(timeOfProjection.isBefore(currentTime))
+					{
+						System.out.println("Projekcija je pre trenutnog vremena. ODGLEDAN FILM! 3" + date + " " + dateOfProjection.toLocalDate());
+						put.setEnabled(true);
+					}
 				}
 //				else
 //				{
@@ -539,9 +573,28 @@ public class UserSeviceImpl implements UserService {
 		{
 			
 			// ODGLEDANO
+			System.out.println(date);
+			System.out.println("date of proj odgledano");
+			System.out.println(dateOfProjection.toLocalDate());
 		}
 		else
 		{
+			
+			System.out.println(date);
+			System.out.println("date of proj neodgledano");
+			System.out.println(dateOfProjection.toLocalDate());
+			
+			if(!date.isEqual(dateOfProjection.toLocalDate()))
+			{
+	    		Projection proj = projectionRepository.findOneById(putid.getProjectionId());
+	    		proj.getTickets().remove(ticketRepository.findOneById(putid.getTicketId()));
+	    		projectionRepository.save(proj);
+	    		
+	    		projectionUserTicketRepository.delete(putid);
+	    		ticketRepository.delete(putid.getTicketId());
+	    		
+	    		return true;
+			}
 			
 			// NIJE ODGLEDANO
 			if(timeOfProjection.isBefore(currentTime))
@@ -560,6 +613,8 @@ public class UserSeviceImpl implements UserService {
 			    System.out.println("Hour currentTime: " + currentTime.getHour());
 			    System.out.println("Minute currentTime: " + currentTime.getMinute());
 				
+			    
+			    
 			    
 			    if(timeOfProjection.getHour() == currentTime.getHour())
 			    {

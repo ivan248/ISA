@@ -54,7 +54,11 @@ import { ProjectionUserTicketId } from '../model/ProjectionUserTicketId';
         console.log("sendeditedcinema"+body.name);
         return this.http.post('http://localhost:8080/api/home/editC',body,{
             headers: headers
-        } );
+        } ).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Forbidden!");
+            return Observable.throw(err);
+        });;
 
     }
 
@@ -69,7 +73,11 @@ import { ProjectionUserTicketId } from '../model/ProjectionUserTicketId';
         console.log("sendeditedtheatre"+body.name);
         return this.http.post('http://localhost:8080/api/home/editTh',body,{
             headers: headers
-        } );
+        } ).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Forbidden!");
+            return Observable.throw(err);
+        });;
 
     }
 

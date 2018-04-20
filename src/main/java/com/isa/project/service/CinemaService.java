@@ -22,7 +22,6 @@ public interface CinemaService {
 	public Boolean deleteProjection(Long movieid, Long projectionid, Long cinemaid);
 	Boolean editProjection(Projection projekcija);
 	Boolean addProjection(Projection projekcija, Long movieid, Long cinemaid);
-	Boolean changeTicket(Ticket ticket, Long cinemaid);
 	Projection getProjection(Long projectionId);
 	boolean makeReservation(MovieReservationDTO movieReservationDTO, String string);
 	boolean setTicketToSold(Ticket t, String username, Long projectionId);
