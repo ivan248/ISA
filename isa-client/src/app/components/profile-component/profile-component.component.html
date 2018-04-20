@@ -357,6 +357,89 @@
     </div>
 </div>
 
+<!-- Section:Cinemas -->
+<div class="row" >
+  <div class="col-md-12">
+      <div class="card card-block">
+        <h2 class="card-title"  style="color:#009688; padding-top:15px; padding-left: 10px;" ><i class="fa fa-trophy fa-fw"></i> Cinemas </h2>
+        
+        <select class="form-control" id="sortCinemas" (change)="onChangeSortCinemas($event.target.value)">
+          <option hidden selected value="">
+                  -- sort by --
+              </option>
+          <option value="name"> name </option>
+          <option value="city"> address </option>
+        </select>
+
+        <div style="height: 15px"></div>
+        <table class="table table-bordered table-hover">
+          <thead class="thead-default">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Description</th>
+            <th scope="col">Rating</th>
+          </tr>
+          </thead>
+          <tbody *ngFor="let p of cinemasArray; let i = index;">
+            <tr>
+              <th scope="row">{{i+1}}</th>
+              <td>{{p.name}}</td>
+              <td>{{p.address}}</td>
+              <td>{{p.description}}</td>
+              <td>{{p.rating}}</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>
+<!-- End:Cinemas -->
+
+<!-- Section:Theatres-->
+<div class="row" >
+  <div class="col-md-12">
+      <div class="card card-block">
+        <h2 class="card-title"  style="color:#009688; padding-top:15px; padding-left: 10px;" ><i class="fa fa-trophy fa-fw"></i> Theatres </h2>
+        
+        <select class="form-control" id="sortTheatres" (change)="onChangeSortTheatres($event.target.value)">
+          <option hidden selected value="">
+                  -- sort by --
+              </option>
+          <option value="name"> name </option>
+          <option value="city"> address </option>
+        </select>
+        
+        <div style="height: 15px"></div>
+        <table class="table table-bordered table-hover">
+          <thead class="thead-default">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Address</th>
+              <th scope="col">Description</th>
+              <th scope="col">Rating</th>
+            </tr>
+            </thead>
+            <tbody *ngFor="let p of theatresArray; let i = index;">
+              <tr>
+                <th scope="row">{{i+1}}</th>
+                <td>{{p.name}}</td>
+                <td>{{p.address}}</td>
+                <td>{{p.description}}</td>
+                <td>{{p.rating}}</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>
+<!-- End:Theatres -->
+
+
 
 </div> <!--End of Container-->
 
@@ -365,8 +448,9 @@
 >
 </change-password-component>
 
-<ul *ngFor="let c of cinemasArray">
+<!-- <ul *ngFor="let c of cinemasArray">
   <li>
     {{c?.name}}
   </li>
-</ul>
+</ul> -->
+

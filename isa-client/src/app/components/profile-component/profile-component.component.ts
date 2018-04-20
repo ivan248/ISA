@@ -4,6 +4,8 @@ import { User } from '../../model/dto/userDTO';
 import { Location } from '@angular/common';
 import { NotificationService } from '../../services/notification-service';
 import * as jwt_decode from "jwt-decode";
+import { CinemasService } from '../../services/cinemas-service.service';
+import { TheatresService } from '../../services/theatres-service.service';
 
 
 @Component({
@@ -32,6 +34,7 @@ export class ProfileComponent implements OnInit {
     private city : string;
     
     private cinemasArray : any;
+    private theatresArray : any;
 
     private searchName : string = "";
     private searchLastName : string = "";
@@ -42,7 +45,10 @@ export class ProfileComponent implements OnInit {
     private selectedRateMov: any;
 
     constructor(private profileService: ProfileService,
-      private location: Location, private notificationService : NotificationService) {
+      private location: Location,
+      private notificationService : NotificationService,
+      private theatresService: TheatresService,
+      private cinemasService: CinemasService) {
 
     }
 
@@ -99,6 +105,12 @@ export class ProfileComponent implements OnInit {
       this.profileService.getReservations().subscribe(data =>
         {this.projectionsReserved = data;
         console.log(this.projectionsReserved);});
+
+      this.theatresService.getTheatres().subscribe(data =>
+        this.theatresArray = data);
+
+      this.cinemasService.getCinemas().subscribe(data =>
+        this.cinemasArray = data);
       
     }
 
@@ -286,6 +298,30 @@ export class ProfileComponent implements OnInit {
       else
       {
         this.userFriends = this.userFriends.sort((a, b) => a.friendLastName.localeCompare(b.friendLastName))
+
+      }
+    }
+
+    onChangeSortCinemas(value:any) {
+      if(value==="name")
+      {
+        this.cinemasArray = this.cinemasArray.sort((a, b) => a.name.localeCompare(b.name))
+      }
+      else
+      {
+        this.cinemasArray = this.cinemasArray.sort((a, b) => a.address.localeCompare(b.address))
+
+      }
+    }
+
+    onChangeSortTheatres(value:any) {
+      if(value==="name")
+      {
+        this.theatresArray = this.theatresArray.sort((a, b) => a.name.localeCompare(b.name))
+      }
+      else
+      {
+        this.theatresArray = this.theatresArray.sort((a, b) => a.address.localeCompare(b.address))
 
       }
     }
