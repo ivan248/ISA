@@ -345,6 +345,17 @@ public class TheatreServiceImpl implements TheatreService {
 			pl.setProjekcije(projekcijePred);
 			playRepository.save(pl);
 			playRepository.flush();
+			
+			
+			// FOR TRANSACTIONAL RESERVATION OF TICKET
+			Projection p = playRepository.findOne(playid).getProjekcije().get(playRepository.findOne(playid).getProjekcije().size()-1);
+	
+			for(int i=1; i<85; i++)
+			{
+				ProjectionSeats ps = new ProjectionSeats(i, p.getId(), pl.getId());
+				projectionSeatsRepository.save(ps);
+			}
+			
 			return true;
 			
 			
