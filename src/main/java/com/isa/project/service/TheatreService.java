@@ -34,8 +34,9 @@ public interface TheatreService {
 	
 	Boolean addTheatre(Theatre t);
 	boolean setTicketToSold(Long ticketid);
-	public Boolean deleteProjection(Long movieid, Long projectionid, Long cinemaid);
+	public Boolean deleteProjection(Long playid, Long projectionid, Long theatreid);
 	public List<Play> getAllPlays(Long theatreId);
+	public boolean addTicketToFast(String price, String seat, Long theatreid, Long playid, Long projectionid);
 
 	
 

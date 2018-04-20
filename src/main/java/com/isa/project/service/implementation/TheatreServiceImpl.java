@@ -26,6 +26,7 @@ import com.isa.project.repository.ProjectionRepository;
 import com.isa.project.repository.ProjectionSeatsRepository;
 import com.isa.project.repository.ProjectionUserTicketRepository;
 import com.isa.project.repository.TheatreRepository;
+import com.isa.project.repository.TicketRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.service.TheatreService;
 import com.isa.project.web.dto.MovieReservationDTO;
@@ -56,6 +57,9 @@ public class TheatreServiceImpl implements TheatreService {
 	
 	@Autowired
 	private ProjectionSeatsRepository projectionSeatsRepository;
+	
+	@Autowired
+	private TicketRepository ticketRepository;
 
 	@Override
 	public ArrayList<Theatre> getAllTheatres() {
@@ -266,6 +270,46 @@ public class TheatreServiceImpl implements TheatreService {
 		}
 		
 	}
+	
+	@Override
+	public boolean addTicketToFast(String price, String seat, Long theatreid, Long playid, Long projectionid) {
+		
+
+		Projection p = projectionRepository.findOneById(projectionid);
+		List<Ticket> listaKarata;
+		if (p.getTickets()==null) {
+			listaKarata = new ArrayList<>();
+			Ticket t = new Ticket(Integer.parseInt(seat), true, Integer.parseInt(price), false, false );
+			try{
+				ticketRepository.save(t);
+			} catch (Exception e) {
+				System.out.println("Constraints violated!");
+			}
+			
+			listaKarata.add(t);
+		}else {
+			listaKarata = p.getTickets();
+			for (Ticket t1: listaKarata) {
+				if (t1.getSeatNumber()==Integer.parseInt(seat)) {
+					System.out.println("Forbidden!");
+					return false;
+				}
+			}
+			
+			Ticket t = new Ticket(Integer.parseInt(seat), true, Integer.parseInt(price), false, false );
+			try{
+				ticketRepository.save(t);
+			} catch (Exception e) {
+				System.out.println("Constraints violated!");
+			}
+			
+			listaKarata.add(t);
+			
+		}
+		projectionRepository.save(p);
+		return true;
+	}
+
 
 
 	@Override

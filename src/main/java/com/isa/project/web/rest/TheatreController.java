@@ -33,7 +33,7 @@ import com.isa.project.web.dto.MovieReservationDTO;
 
 @RestController // This means that this class is a Controller
 @CrossOrigin
-@RequestMapping(value = "/theatres/home") 	
+@RequestMapping(value = "api/theatres") 	
 public class TheatreController {
 	
 	@Autowired 
@@ -303,11 +303,11 @@ public class TheatreController {
 
 	@RequestMapping(value="/addFastTicket", method = RequestMethod.POST) 
 	public ResponseEntity addFastTicket(@RequestBody Projection projection, @RequestParam("seat") String seat, 
-			@RequestParam("price") String price, @RequestParam("cid") String cid, @RequestParam("mid") String mid) {
+			@RequestParam("price") String price, @RequestParam("tid") String tid, @RequestParam("plid") String plid) {
 		System.out.println("PROJEKCIJA ID"+projection.getId());
 		System.out.println("SEAT "+seat);
 		System.out.println(price);
-		cinemaService.addTicketToFast(price, seat, Long.parseLong(cid), Long.parseLong(mid), projection.getId());
+		theatreService.addTicketToFast(price, seat, Long.parseLong(tid), Long.parseLong(plid), projection.getId());
 	return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
