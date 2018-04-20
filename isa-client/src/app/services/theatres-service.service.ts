@@ -167,8 +167,8 @@ import { MovieReservation } from '../model/movieReservation';
     
     }
 
-    deleteProjection(movieid: any, projekcijaid:any, theatreid: any) {
-        let params = new HttpParams().set('movieid',movieid); 
+    deleteProjection(playid: any, projekcijaid:any, theatreid: any) {
+        let params = new HttpParams().set('playid',playid); 
         params = params.set('projekcijaid',projekcijaid);   
         params = params.set('theatreid',theatreid); 
     
@@ -178,7 +178,7 @@ import { MovieReservation } from '../model/movieReservation';
          });
     
         return this.http
-        .delete("http://localhost:8080/theatres/home/deleteProjection", {params:params,headers:headers})
+        .delete("http://localhost:8080/api/home/deleteProjectionTheatre", {params:params,headers:headers})
         .map((data:[any]) => data);
     
        }

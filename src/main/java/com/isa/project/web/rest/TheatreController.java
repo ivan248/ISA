@@ -118,19 +118,7 @@ public class TheatreController {
 		return new ResponseEntity<>(theatreService.editTheatre(theatre), HttpStatus.OK);
 	}
 	
-	
-	@GetMapping
-	@RequestMapping(value = "/getMovies")
-	public ResponseEntity getMovies(
-			@RequestParam("cinema") String cinemaId) {
 
-		Cinema c = new Cinema();
-		c = cinemaService.getCinemaById(Long.parseLong(cinemaId));
-		return new ResponseEntity(cinemaService.getMovies(c.getName()), HttpStatus.OK);
-
-	}
-	
-	
 
 	
 	@RequestMapping(value = "/deleteMovie", method = RequestMethod.DELETE,
@@ -142,7 +130,7 @@ public class TheatreController {
 		c = cinemaService.getCinemaById(Long.parseLong(cinemaId));
 		System.out.println("Foreign key constraint");
 		//cinemaService.deleteMovie(Long.parseLong(movieId), Long.parseLong(cinemaId));
-		return new ResponseEntity(cinemaService.getMovies(c.getName()), HttpStatus.FORBIDDEN);
+		return new ResponseEntity(cinemaService.getMovies(Long.parseLong(cinemaId)), HttpStatus.FORBIDDEN);
 
 	}
 	
@@ -158,7 +146,7 @@ public class TheatreController {
 		c = cinemaService.getCinemaById(Long.parseLong(cinemaid));
 		cinemaService.deleteProjection(Long.parseLong(movieid), Long.parseLong(projekcijaid), Long.parseLong(cinemaid));
 		
-		return new ResponseEntity(cinemaService.getMovies(c.getName()), HttpStatus.OK);
+		return new ResponseEntity(cinemaService.getMovies(Long.parseLong(cinemaid)), HttpStatus.OK);
 
 	}
 	

@@ -93,9 +93,9 @@ public class CinemaServiceImpl implements CinemaService{
 
 
 	@Override
-	public List<Movie> getMovies(String name) {
+	public List<Movie> getMovies(Long id) {
 		// TODO Auto-generated method stub
-		List<Projection> projekcije = cinemaRepository.findOneByName(name).getProjekcije();
+		List<Projection> projekcije = cinemaRepository.findOneById(id).getProjekcije();
 		List<Movie> filmovi = movieRepository.findAll();
 		List<Movie> filmoviUBioskopu = new ArrayList<>();
 		

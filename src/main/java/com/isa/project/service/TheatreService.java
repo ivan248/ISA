@@ -1,6 +1,7 @@
 package com.isa.project.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,8 @@ public interface TheatreService {
 	
 	Boolean addTheatre(Theatre t);
 	boolean setTicketToSold(Long ticketid);
+	public Boolean deleteProjection(Long movieid, Long projectionid, Long cinemaid);
+	public List<Play> getAllPlays(Long theatreId);
 
 	
 
@@ -40,7 +43,7 @@ public interface TheatreService {
 	
 	/*Theatre getTheatreById(Long id);
 	public Boolean deletePlay(Long movieid, Long cinemaid);
-	public Boolean deleteProjection(Long movieid, Long projectionid, Long cinemaid);
+	
 	
 	Boolean changeTicket(Ticket ticket, Long cinemaid);
 	

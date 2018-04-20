@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.isa.project.bean.Cinema;
+import com.isa.project.bean.Movie;
 import com.isa.project.bean.Play;
 import com.isa.project.bean.Projection;
 import com.isa.project.bean.ProjectionSeats;
@@ -318,6 +319,47 @@ public class TheatreServiceImpl implements TheatreService {
 	public boolean setTicketToSold(Long ticketid) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public Boolean deleteProjection(Long playid, Long projectionid, Long theatreid) {
+		
+		Theatre t = theatreRepository.findOneById(theatreid);
+		Play pl = playRepository.findOne(playid);
+		Projection p = projectionRepository.findOneById(projectionid);
+		t.getProjekcije().remove(p); 
+		pl.getProjekcije().remove(p);
+		
+		
+		projectionRepository.delete(p);
+		theatreRepository.flush();
+		projectionRepository.flush();
+		playRepository.flush();
+		
+		return true;
+	}
+	
+	@Override
+	public List<Play> getAllPlays(Long id) {
+		// TODO Auto-generated method stub
+		List<Projection> projekcije = theatreRepository.findOneById(id).getProjekcije();
+		List<Play> predstave = playRepository.findAll();
+		List<Play> predstaveUPoz = new ArrayList<>();
+		
+		for (Play pl: predstave) {
+			for (Projection p: pl.getProjekcije()) {
+				if (!predstaveUPoz.contains(pl)) {
+					for (int i =0; i<projekcije.size(); i++) {
+						if (projekcije.get(i).getId().equals(p.getId())) {
+							predstaveUPoz.add(pl);
+						}
+					}		
+					
+				}
+			}
+		}
+		
+		return predstaveUPoz;
 	}
 
 
