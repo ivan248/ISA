@@ -62,6 +62,7 @@ var httpOptions = {
         .catch((err:HttpErrorResponse) =>
         {
             alert(err.status + "Unauthorized!");
+            this.router.navigateByUrl('login');
             return Observable.throw(err);
         });
     }
@@ -79,6 +80,7 @@ var httpOptions = {
         .catch((err:HttpErrorResponse) =>
         {
             alert(err.status + "Unauthorized!");
+            this.router.navigateByUrl('login');
             return Observable.throw(err);
         });
     }
@@ -97,6 +99,7 @@ var httpOptions = {
         .catch((err:HttpErrorResponse) =>
         {
             alert(err.status + "Unauthorized!");
+            this.router.navigateByUrl('login');
             return Observable.throw(err);
         });
     }
@@ -114,6 +117,7 @@ var httpOptions = {
         .catch((err:HttpErrorResponse) =>
         {
             alert(err.status + "Unauthorized!");
+            this.router.navigateByUrl('login');
             return Observable.throw(err);
         });     
     }
@@ -129,6 +133,7 @@ var httpOptions = {
         .catch((err:HttpErrorResponse) =>
         {
             alert(err.status + "Unauthorized!");
+            this.router.navigateByUrl('login');
             return Observable.throw(err);
         });
                
@@ -147,6 +152,7 @@ var httpOptions = {
         .catch((err:HttpErrorResponse) =>
         {
             alert(err.status + "Unauthorized!");
+            this.router.navigateByUrl('login');
             return Observable.throw(err);
         });
     }
@@ -164,6 +170,7 @@ var httpOptions = {
         .catch((err:HttpErrorResponse) =>
         {
             alert(err.status + "Unauthorized!");
+            this.router.navigateByUrl('login');
             return Observable.throw(err);
         });
     }
@@ -182,6 +189,7 @@ var httpOptions = {
         .catch((err:HttpErrorResponse) =>
         {
             alert(err.status + "Unauthorized!");
+            this.router.navigateByUrl('login');
             return Observable.throw(err);
         });
     }
@@ -200,6 +208,7 @@ var httpOptions = {
         .catch((err:HttpErrorResponse) =>
         {
             alert(err.status + "Unauthorized!");
+            this.router.navigateByUrl('login');
             return Observable.throw(err);
         });
     }
@@ -218,6 +227,7 @@ var httpOptions = {
         .catch((err:HttpErrorResponse) =>
         {
             alert(err.status + "Passwords don`t match error!");
+            this.router.navigateByUrl('login');
             return Observable.throw(err);
         });
 
@@ -240,6 +250,7 @@ var httpOptions = {
         .catch((err:HttpErrorResponse) =>
         {
             alert(err.status + "Unauthorized!");
+            this.router.navigateByUrl('login');
             return Observable.throw(err);
         });
 
@@ -256,6 +267,7 @@ var httpOptions = {
          return this.http.post('http://localhost:8080/api/profile/addrole',body,{params:params, headers: headers}).catch((err:HttpErrorResponse) =>
          {
              alert(err.status + "Unauthorized");
+             this.router.navigateByUrl('login');
              return Observable.throw(err);
          });
         
@@ -279,6 +291,7 @@ var httpOptions = {
         .catch((err:HttpErrorResponse) =>
         {
             alert(err.status + "Unauthorized!");
+            this.router.navigateByUrl('login');
             return Observable.throw(err);
         });
     }
@@ -297,6 +310,7 @@ var httpOptions = {
         .catch((err:HttpErrorResponse) =>
         {
             alert(err.status + "Unauthorized!");
+            this.router.navigateByUrl('login');
             return Observable.throw(err);
         });
       }
@@ -316,6 +330,7 @@ var httpOptions = {
         .catch((err:HttpErrorResponse) =>
        {
            alert(err.status + "You can't delete 30 minutes before the projection!");
+           this.router.navigateByUrl('login');
            return Observable.throw(err);
        }); 
 
@@ -365,6 +380,7 @@ var httpOptions = {
         .catch((err:HttpErrorResponse) =>
         {
             alert(err.status + "Unauthorized!");
+            this.router.navigateByUrl('login');
             return Observable.throw(err);
         });
       }

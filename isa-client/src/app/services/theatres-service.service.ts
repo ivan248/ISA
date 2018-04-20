@@ -148,7 +148,7 @@ import { MovieReservation } from '../model/movieReservation';
         movieReservation, {headers:headers})
         .catch((err:HttpErrorResponse) =>
         {
-            alert(err.status + "GDE SI POSAO? TRANSACTINAL SAM JA I TO SVAKO ZNA!");
+            alert(err.status + "Transactinal error or unauthorized!");
             return Observable.throw(err);
         });
 

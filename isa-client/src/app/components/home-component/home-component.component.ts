@@ -15,6 +15,9 @@ export class HomeComponent implements OnInit {
     constructor( private homeService: HomeService,
             private router : Router) {
 
+        if(localStorage.getItem('token') === null)
+            localStorage.setItem('token', 'not logged user');
+
     }
 
     ngOnInit() {
