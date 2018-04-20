@@ -1,6 +1,7 @@
 package com.isa.project.service.implementation;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -267,9 +268,15 @@ public class TheatreServiceImpl implements TheatreService {
 
 
 	@Override
-	public Theatre addProjection(Projection projekcija, Long playid, Long theatreid) {
+	public Boolean addProjection(Projection projekcija, Long playid, Long theatreid) {
+		java.util.Date date = new java.util.Date();
+		Date sqlDate = new java.sql.Date(date.getTime());
+		if (projekcija.getDate().before((java.sql.Date) sqlDate)){
+			System.out.println("Eroooor");
+			return true;
+		}
 		try {
-			System.out.println(")))00000000000000000000000000000000000");
+
 			List<Projection> projekcijePoz = theatreRepository.findOneById(theatreid).getProjekcije();
 			if (projekcijePoz==null) {
 				projekcijePoz = new ArrayList<>();
@@ -277,22 +284,23 @@ public class TheatreServiceImpl implements TheatreService {
 			
 			projectionRepository.saveAndFlush(projekcija);
 			projekcijePoz.add(projekcija);
-			theatreRepository.findOneById(theatreid).setProjekcije(projekcijePoz);
-			theatreRepository.save(theatreRepository.findOneById(theatreid));
+			Theatre t = theatreRepository.findOneById(theatreid);
+			t.setProjekcije(projekcijePoz);
+			theatreRepository.save(t);
 			theatreRepository.flush();
 			
 			List<Projection> projekcijePred = playRepository.findOne(playid).getProjekcije();
-			System.out.println(")))"+projekcijePred); //delete se javlja???
+			System.out.println(")))"+projekcijePred); 
 			if (projekcijePred==null) {
 				projekcijePred = new ArrayList<>();
 			}
 			projekcijePred.add(projekcija);
 			
-			
-			playRepository.findOne(playid).setProjekcije(projekcijePred);
-			playRepository.save(playRepository.findOne(playid));
+			Play pl = playRepository.findOne(playid);
+			pl.setProjekcije(projekcijePred);
+			playRepository.save(pl);
 			playRepository.flush();
-			
+			return true;
 			
 			
 			
@@ -300,11 +308,10 @@ public class TheatreServiceImpl implements TheatreService {
 		catch(Exception e) {
 			System.out.println("Error occured while writing to database. Constraints were not satisfied.");
 			e.printStackTrace();
-			return null;
+			return false;
 		}
 		
-		
-		return theatreRepository.findOneById(theatreid);
+
 	}
 
 	@Override

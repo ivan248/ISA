@@ -137,7 +137,11 @@ import { MovieReservation } from '../model/movieReservation';
         return this.http.post('http://localhost:8080/api/home/addProjection',body,{
             params:params,
             headers: headers
-        } );
+        } ).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Date is not correct!");
+            return Observable.throw(err);
+        });;
 
 
 

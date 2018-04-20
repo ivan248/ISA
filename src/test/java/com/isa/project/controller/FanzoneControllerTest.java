@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.isa.project.TestUtil;
 import com.isa.project.bean.Item;
 
 @RunWith(SpringRunner.class)

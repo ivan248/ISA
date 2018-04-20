@@ -113,26 +113,27 @@ public class Theatre {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Theatre(Long id, String name, String address, String description, int sum, int numberOfGrades, int rating) {
+	public Theatre(Long id, String name, String address, String description, int rating, int numberOfGrades, int sum,
+			List<Projection> projekcije) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.description = description;
-		this.sum = sum;
-		this.numberOfGrades = numberOfGrades;
 		this.rating = rating;
+		this.numberOfGrades = numberOfGrades;
+		this.sum = sum;
+		this.projekcije = projekcije;
 	}
-
 
 	@Override
 	public String toString() {
-		return "Cinema [id=" + id + ", name=" + name + ", address=" + address + ", description="
-				+ description + "]";
+		return "Theatre [id=" + id + ", name=" + name + ", address=" + address + ", description=" + description
+				+ ", rating=" + rating + ", numberOfGrades=" + numberOfGrades + ", sum=" + sum + ", projekcije="
+				+ projekcije + "]";
 	}
-	
-	
 
+	
 
     
     
