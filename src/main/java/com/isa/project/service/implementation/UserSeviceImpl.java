@@ -151,7 +151,9 @@ public class UserSeviceImpl implements UserService {
 	public List<Friend> removeFriend(int id, String username) {
 
 		User otherUser = userRepository.findByUsername(friendRepository.findByFriendId(id).getFriendUsername()).get();
+		User currentUser = userRepository.findByUsername(username).get();
 		int friendId = 0;
+		int friendId2 = 0;
 
 		for (Friend f : otherUser.getFriends()) {
 			if (f.getFriendUsername().equals(username)) {
@@ -160,10 +162,27 @@ public class UserSeviceImpl implements UserService {
 				break;
 			}
 		}
+		
+		userRepository.saveAndFlush(otherUser);
+		
+		for(Friend f : currentUser.getFriends())
+		{
+			if(f.getFriendUsername().equals(otherUser.getUsername()))
+			{
+				friendId2 = f.getFriendId();
+				currentUser.getFriends().remove(f);
+				break;
+			}
+		}
 
-		userRepository.save(otherUser);
-		friendRepository.delete(friendId);
-		friendRepository.delete(id);
+		System.out.println("FriendId : " + friendId);
+		System.out.println("FriendId2 : " + friendId2);
+		
+		
+		System.out.println(currentUser.getFriends() + " \n a drugi \n");
+		System.out.println(otherUser.getFriends());
+	
+		userRepository.saveAndFlush(currentUser);
 
 		return getEnabledFriends(username);
 	}
@@ -283,18 +302,30 @@ public class UserSeviceImpl implements UserService {
 		String username = friendRepository.findByFriendId(id).getFriendUsername();
 
 		User user = userRepository.findByUsername(username).get();
+		User currentUser = userRepository.findByUsername(usernameFromToken).get();
 
 		for (Friend f : user.getFriends()) {
 			if (f.getFriendUsername().equals(usernameFromToken)) {
 
 				friendDelete = friendRepository.findByFriendId(f.getFriendId());
+				System.out.println(friendDelete + " 1");
 				user.getFriends().remove(f);
+				userRepository.saveAndFlush(user);
 				break;
 			}
 		}
+		
+		for (Friend f : currentUser.getFriends()) {
+			if (f.getFriendUsername().equals(username)) {
 
-		friendRepository.delete(friendDelete);
-		friendRepository.delete(friend);
+				friendDelete = friendRepository.findByFriendId(f.getFriendId());
+				System.out.println(friendDelete + " 2");
+				currentUser.getFriends().remove(f);
+				userRepository.saveAndFlush(currentUser);
+				break;
+			}
+		}
+		
 
 		return getEnabledFriends(usernameFromToken);
 	}

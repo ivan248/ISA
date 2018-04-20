@@ -82,6 +82,7 @@ public class ProfileController {
 
 	@GetMapping
 	@RequestMapping(value = "/")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity<User> getLoggedUser(@RequestHeader(value = "X-Auth-Token") String token) {
 
 		TokenProvider p = new TokenProvider();
@@ -113,7 +114,6 @@ public class ProfileController {
 	}
 
 	@GetMapping
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	@RequestMapping(value = "/getFriends")
 	public ResponseEntity getFriends(@RequestHeader(value = "X-Auth-Token") String token) {
 
@@ -128,7 +128,6 @@ public class ProfileController {
 	}
 
 	@GetMapping
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	@RequestMapping(value = "/removeFriend")
 	public ResponseEntity removeFriend(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestParam("friendId") int id) {
@@ -147,7 +146,6 @@ public class ProfileController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping
 	@RequestMapping(value = "/getAllUsers")
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity getAllUsers(@RequestHeader(value = "X-Auth-Token") String token) {
 		
 		TokenProvider p = new TokenProvider();
@@ -163,7 +161,7 @@ public class ProfileController {
 	
 	@GetMapping
 	@RequestMapping(value = "/getallusers")
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN')")
 	public ResponseEntity<List<User>> getAllUsersForAllUsers(@RequestHeader(value = "X-Auth-Token") String token) {
 		
 		TokenProvider p = new TokenProvider();
@@ -182,7 +180,6 @@ public class ProfileController {
 	@SuppressWarnings("rawtypes")
 	@PostMapping
 	@RequestMapping(value = "/friendRequest", consumes = "application/json")
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity friendRequest(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestBody String username) {
 
@@ -200,7 +197,6 @@ public class ProfileController {
 
 	@GetMapping
 	@RequestMapping(value = "/getFriendRequests")
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity<List<Friend>> getFriendRequests(@RequestHeader(value = "X-Auth-Token") String token) {
 
 		TokenProvider p = new TokenProvider();
@@ -216,7 +212,6 @@ public class ProfileController {
 
 	@GetMapping
 	@RequestMapping(value = "/acceptFriend")
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity<List<Friend>> acceptFriend(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestParam("friendId") String id) {
 
@@ -235,7 +230,6 @@ public class ProfileController {
 	
 	@GetMapping
 	@RequestMapping(value = "/declineFriend")
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity<List<Friend>> declineFriend(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestParam("friendId") String id) {
 
@@ -252,7 +246,6 @@ public class ProfileController {
 	}
 	
 	@GetMapping(value= "/getnotifications")
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity<List<Notification>> getAllNotifications(@RequestHeader(value = "X-Auth-Token") String token) {
 		TokenProvider p = new TokenProvider();
 		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
@@ -274,7 +267,6 @@ public class ProfileController {
 	}
 	
 	@PostMapping(value = "/readnotification")
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity<Boolean> readNotification(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestParam("id") int id){
 		
@@ -511,7 +503,6 @@ public class ProfileController {
 	}
 	
 	@PostMapping(value = "/rateAmb")
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity rateAmb(@RequestHeader(value = "X-Auth-Token") String token, @RequestBody ReservationDTO reservation,
 			@RequestParam("ratevalue") String ratevalue){
 		
@@ -560,7 +551,6 @@ public class ProfileController {
 
 	@PostMapping
 	@RequestMapping(value = "/acceptORdeclineInvitation", consumes = "application/json")
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity acceptORdeclineInvitation(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestBody ProjectionUserTicketId projectionUserTicketId,
 			@RequestParam("accept") String accept) {
