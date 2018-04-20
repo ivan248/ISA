@@ -67,7 +67,7 @@ public class FanZoneController {
 		return fanZoneService.getAllOfficialItems();
 	}
 	
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('FANZONE_ADMIN')")
+	//@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('FANZONE_ADMIN')")
 	@RequestMapping(value="/unapproved", method= RequestMethod.GET)
 	public List<Item> getAllUnApprovedItems(){
 		
