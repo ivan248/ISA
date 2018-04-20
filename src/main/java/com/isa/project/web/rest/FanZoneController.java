@@ -67,7 +67,7 @@ public class FanZoneController {
 		return fanZoneService.getAllOfficialItems();
 	}
 	
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAuthority('FANZONE_ADMIN')")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('FANZONE_ADMIN')")
 	@RequestMapping(value="/unapproved", method= RequestMethod.GET)
 	public List<Item> getAllUnApprovedItems(){
 		
@@ -96,7 +96,7 @@ public class FanZoneController {
 		
 		
 	}
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('FANZONE_ADMIN')")
+	
 	@RequestMapping(value="/additem", method=RequestMethod.POST)
 	public  ResponseEntity<Item> addItem( @RequestBody AddNewItemDto newItemDTO, @RequestHeader(value="X-Auth-Token") String token) {
 		

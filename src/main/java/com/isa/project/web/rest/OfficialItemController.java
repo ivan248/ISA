@@ -34,7 +34,7 @@ public class OfficialItemController {
 	private UserRepository userRepository;
 
 	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('FANZONE_ADMIN')")
-	@RequestMapping(value="/edit", method = RequestMethod.POST) //ovaj drugi korak edita zapravo menja item u BP
+	@RequestMapping(value="/edit", method = RequestMethod.POST) 
 	public ResponseEntity<Boolean> editItemStep(@RequestBody OfficialItem i,@RequestHeader("X-Auth-Token") String token) {
 		
 		if ( i.getReserved()) {

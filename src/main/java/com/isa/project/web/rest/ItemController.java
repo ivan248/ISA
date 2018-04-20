@@ -3,6 +3,7 @@ package com.isa.project.web.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,16 +61,31 @@ public class ItemController {
 	
 	@RequestMapping(value="/edit", method = RequestMethod.POST) //ovaj drugi korak edita zapravo menja item u BP
 	public Item editItemStep(@RequestBody Item item, @RequestHeader("X-Auth-Token") String token) {
+		
 		TokenProvider p = new TokenProvider();
-		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
-		logged.setActivity(logged.getActivity() + 20L);
-		userRepository.save(logged);
-		return itemService.editItem(item);
+		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		currentUser.setActivity(currentUser.getActivity() + 20L);
+		userRepository.save(currentUser);
+		
+		Boolean userIsSystemAdmin = userService.checkIfUserHasRole(currentUser, "SYSTEM_ADMIN");
+		Boolean userIsFanzoneAdmin = userService.checkIfUserHasRole(currentUser, "FANZONE_ADMIN");
+		Boolean userIsOwner = currentUser.getUsername().equals(item.getOwner().getUsername());
+		
+		if (userIsOwner || userIsFanzoneAdmin || userIsSystemAdmin ) {
+			System.out.println("usao true");
+			return itemService.editItem(item);
+		} else {
+			System.out.println("usao false");
+			return null;
+		}
+		
+		
+		
 		
 	}
 	
 	
-	
+	@PreAuthorize(value="hasAuthority('FANZONE_ADMIN') or hasAuthority('SYSTEM_ADMIN')")
 	@RequestMapping(value="/approve", method = RequestMethod.POST, consumes="application/json")
 	public Boolean approveItem(@RequestBody Item item,@RequestHeader("X-Auth-Token") String token) {
 		TokenProvider p = new TokenProvider();

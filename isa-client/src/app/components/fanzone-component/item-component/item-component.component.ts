@@ -58,10 +58,16 @@ export class ItemComponent implements OnInit {
     }
 
     onClickApprove(item : Item){
-      var index = this.items.indexOf('itemID',item.itemID)
-      this.items.splice(index,1);
-      console.log(item);
-      this.itemService.approveItem(item).subscribe();
+      
+      this.itemService.approveItem(item).subscribe(data => {
+        
+        let index=-1;
+        for (var i = 0; i < this.items.length; i++) {
+          if (this.items[i].itemID === item.itemID) 
+            index = i;
+        } 
+        this.items.splice(index,1);
+      });
      
     }
 

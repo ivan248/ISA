@@ -30,8 +30,10 @@ export class AdditemComponent implements OnInit {
 
   onSubmit(){
     this.fanzone.sendNewItem(this.item)
-      .subscribe();
-    this.router.navigateByUrl('/fanzone');
+      .subscribe(data => {
+        this.router.navigateByUrl('/fanzone');
+      });
+    
   }
 
 

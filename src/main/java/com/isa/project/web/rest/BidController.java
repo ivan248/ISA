@@ -85,42 +85,7 @@ public class BidController {
 
 	
 	
-/*//	@PostMapping("/add")
-//	public ResponseEntity<Boolean> addBid(@RequestBody Bid bid , @RequestHeader(value="X-Auth-Token") String token){
-//		
-//		TokenProvider p = new TokenProvider();
-//		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
-//		userService.addActivityPoints(20L, currentUser.getUsername());
-//		
-//		
-//		if( currentUser.getUsername().equals(bid.getItem().getOwner().getUsername())) {
-//			System.out.println("Owner of the item can't bid on it");
-//			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
-//		}else {
-//			ArrayList<User> users = new ArrayList<User> (userRepository.findDistinctUsersThatBidOnItem(bid.getItem().getItemID()));
-//			if ( !users.contains(currentUser)) {
-//				System.out.println("usao u addbid, parametri: " + bid.getBid());
-//				
-//				Bid b = new Bid();
-//				
-//				
-//				b.setBuyer(currentUser);
-//				b.setItem(bid.getItem());
-//				b.setValue(bid.getBid());
-//				
-//				bidService.addBid(b);
-//				
-//				return new ResponseEntity<Boolean>(bidService.addBid(b), HttpStatus.OK);
-//			}
-//			else {
-//				System.out.println("This user already gave his bid for this item");
-//				return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
-//			}
-//			
-//		}
-//	
-//	}
-*/	
+
 	@PostMapping("/checkallbids")
 	public ResponseEntity<Boolean> checkAllBids(@RequestHeader(value="X-Auth-Token") String token,@RequestBody Item i){
 		TokenProvider p = new TokenProvider();
@@ -166,34 +131,39 @@ public class BidController {
 	
 	@PostMapping("/accept")
 	public ResponseEntity<Boolean> acceptBid(@RequestBody Bid bid, @RequestHeader(value="X-Auth-Token") String token){
-		
-		TokenProvider p = new TokenProvider();
-		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
-		logged.setActivity(logged.getActivity() + 20L);
-		userRepository.save(logged);
-		
-		ArrayList<User> list = new ArrayList<User>( userRepository.findDistinctUsersThatBidOnItem(bid.getItem().getItemID()));
-		
-		
-		
-		if(logged.getUsername().equals(bid.getItem().getOwner().getUsername())) { 
-																				
-			if (sendNotifications(list,bid.getBuyer(),bid.getItem().getName())) {
-				Boolean b = bidService.acceptBid(bid);
-				if (b) {
-					
-					return new ResponseEntity<Boolean>(b,HttpStatus.OK);
-				} else {
-					return new ResponseEntity<Boolean>(b,HttpStatus.BAD_REQUEST);
-				}
-			} 
-			else {
-				System.out.println("Notifications were not sent correctly");
-				return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);	
-			}
-		} else {
-			System.out.println("Only the owner of the item can accept bids");	
+		if (bid.getItem().getSold()) {
+			System.out.println("Item is already sold");
 			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+		} else {
+			TokenProvider p = new TokenProvider();
+			User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+			logged.setActivity(logged.getActivity() + 20L);
+			userRepository.save(logged);
+			
+			ArrayList<User> list = new ArrayList<User>( userRepository.findDistinctUsersThatBidOnItem(bid.getItem().getItemID()));
+			
+			
+			
+			if(logged.getUsername().equals(bid.getItem().getOwner().getUsername())) { 
+																					
+				if (sendNotifications(list,bid.getBuyer(),bid.getItem().getName())) {
+					Boolean b = bidService.acceptBid(bid);
+					if (b) {
+						
+						return new ResponseEntity<Boolean>(b,HttpStatus.OK);
+					} else {
+						return new ResponseEntity<Boolean>(b,HttpStatus.BAD_REQUEST);
+					}
+				} 
+				else {
+					System.out.println("Notifications were not sent correctly");
+					return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);	
+				}
+			} else {
+				System.out.println("Only the owner of the item can accept bids");	
+				return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+			}
+			
 		}
 		
 		
@@ -224,7 +194,7 @@ public class BidController {
 		
 		currentUser.setActivity(currentUser.getActivity() + 20L);
 		userRepository.save(currentUser);
-		System.out.println("ZNaci usau u get value. User: " + currentUser.getUsername() + " Item = " + item.getName() );
+		
 		Bid bid = bidRepository.findBidValue(item.getItemID(), currentUser.getUsername());
 		if (bid == null) {
 			Bid b = new Bid();

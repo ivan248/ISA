@@ -38,17 +38,14 @@ export class NewitemComponent implements OnInit {
    }
 
     onClickDelete(id: number){
-      console.log(this.items);
-      console.log(id);
-      let index=-1;
-      for (var i = 0; i < this.items.length; i++) {
-        if (this.items[i].itemID === id) 
-          index = i;
-      } 
-      this.items.splice(index,1);
-      console.log(this.items);
-      
-      this.newItemService.deleteItem(id).subscribe();
+      this.newItemService.deleteItem(id).subscribe(data =>{
+        let index=-1;
+        for (var i = 0; i < this.items.length; i++) {
+          if (this.items[i].itemID === id) 
+            index = i;
+        } 
+        this.items.splice(index,1);
+      });
     }
 
     onClickEdit(id: number){
