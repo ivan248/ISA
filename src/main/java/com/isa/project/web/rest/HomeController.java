@@ -273,6 +273,7 @@ public class HomeController {
 
 	@PostMapping
 	@RequestMapping(value = "/makeCinemaReservation", consumes = "application/json")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity makeCinemaReservation(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestBody MovieReservationDTO movieReservationDTO) {
 
@@ -304,6 +305,7 @@ public class HomeController {
 	
 	
 	@PostMapping
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	@RequestMapping(value = "/makeTheatreReservation", consumes = "application/json")
 	public ResponseEntity makeTheatreReservation(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestBody MovieReservationDTO movieReservationDTO) {
