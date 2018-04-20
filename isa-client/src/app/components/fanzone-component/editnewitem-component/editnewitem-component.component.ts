@@ -125,9 +125,12 @@ export class EditnewitemComponent implements OnInit {
           if (data == false){
             alert("This item has changed meanwhile.Please refresh your page");
             this.router.navigateByUrl('/fanzone')
+          } else {
+            this.router.navigateByUrl("/fanzone");
           }
+
         });
-        this.router.navigateByUrl("/fanzone");
+        
       });
     }
 

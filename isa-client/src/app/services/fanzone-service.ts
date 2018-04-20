@@ -55,8 +55,14 @@ import { Observable } from 'rxjs/Observable';
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
          });
-        return this.http.post('http://localhost:8080/fanzone/addofficialitem',body,{ headers: headers});
+        return this.http.post('http://localhost:8080/fanzone/addofficialitem',body,{ headers: headers}).catch((err:HttpErrorResponse)=>{
+         alert("Unauthorized");
+         this.router.navigateByUrl('/fanzone');
+         return Observable.throw(err);
+    });
 
+
+       
     }
 
     checkIfOk(){

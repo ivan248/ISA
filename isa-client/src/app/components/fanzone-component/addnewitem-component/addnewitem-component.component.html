@@ -72,7 +72,7 @@
 
                             <div class="form-group">
                                     <label>Price</label>
-                                    <input type="text" class="form-control selected" name="price" 
+                                    <input type="text" class="form-control selected" name="price"  
                                         [(ngModel)] = "item.price" 
                                         required
                                         pattern="[+]?([0-9]+([.][0-9]*)?|[.][0-9]+)"
@@ -84,7 +84,7 @@
                             <hr>
                             <div class="form-group">
                                     <label> Enter item picture url </label>
-                                    <input type="text" class="form-control"   name="image" 
+                                    <input type="text" class="form-control"   name="image" maxlength="300"
                                     [(ngModel)]= "item.image"
                                     >
                                    

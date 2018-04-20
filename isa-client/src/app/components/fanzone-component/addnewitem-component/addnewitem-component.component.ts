@@ -56,10 +56,17 @@ export class AddnewitemComponent implements OnInit {
     let newItem : any;
     let novaLista : any;
     this.fanzoneService.sendNewNewItem(this.item).subscribe(data=> newItem = data);
-    this.dataService.currentNewItemListForShow.subscribe(data => novaLista = data );
-    novaLista.push(newItem);
+    this.dataService.currentNewItemListForShow.subscribe(data =>  { 
+        novaLista = data
+        novaLista.push(newItem);
+        this.router.navigateByUrl("/fanzone");
+      } );
+    
+
+    
+    
    
-    this.router.navigateByUrl("/fanzone");
+    
   }
 
 }

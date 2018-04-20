@@ -96,7 +96,7 @@ public class FanZoneController {
 		
 		
 	}
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAuthority('FANZONE_ADMIN')")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('FANZONE_ADMIN')")
 	@RequestMapping(value="/additem", method=RequestMethod.POST)
 	public  ResponseEntity<Item> addItem( @RequestBody AddNewItemDto newItemDTO, @RequestHeader(value="X-Auth-Token") String token) {
 		
@@ -119,7 +119,7 @@ public class FanZoneController {
 		
 
 	}
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAuthority('FANZONE_ADMIN')")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('FANZONE_ADMIN')")
 	@RequestMapping(value = "/deleteitem", method= RequestMethod.GET)
 	public ResponseEntity<Boolean> deleteItem(@RequestParam("id") int id,@RequestHeader("X-Auth-Token") String token) {
 		TokenProvider p = new TokenProvider();
@@ -154,7 +154,7 @@ public class FanZoneController {
 		return new ResponseEntity<OfficialItem>(officialItemRepository.findOneByItemID(id),HttpStatus.OK);	
 	}
 	
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAuthority('FANZONE_ADMIN')")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('FANZONE_ADMIN')")
 	@RequestMapping(value="/addofficialitem", method=RequestMethod.POST)
 	public  ResponseEntity<OfficialItem> addOfficialItem( @RequestBody OfficialItemDTO i,@RequestHeader("X-Auth-Token") String token) {
 		TokenProvider p = new TokenProvider();
@@ -184,7 +184,7 @@ public class FanZoneController {
 		}
 
 	}
-	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') and hasAuthority('FANZONE_ADMIN')")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('FANZONE_ADMIN')")
 	@RequestMapping(value = "/deleteofficialitem", method= RequestMethod.DELETE)
 	public ResponseEntity<Boolean> deleteOfficialItem(@RequestParam("id") int id, @RequestHeader("X-Auth-Token") String token) {
 		

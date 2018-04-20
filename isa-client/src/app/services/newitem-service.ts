@@ -24,7 +24,12 @@ import { Router } from '@angular/router';
         
         return this.http.delete('http://localhost:8080/fanzone/deleteofficialitem',{
             params: params,  headers: headers
-        }).subscribe(data =>console.log(data));
+        }).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Unauthorized");
+            this.router.navigateByUrl('/fanzone')
+            return Observable.throw(err);
+        });
 
     }
 

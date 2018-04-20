@@ -68,6 +68,8 @@ public class ItemController {
 		
 	}
 	
+	
+	
 	@RequestMapping(value="/approve", method = RequestMethod.POST, consumes="application/json")
 	public Boolean approveItem(@RequestBody Item item,@RequestHeader("X-Auth-Token") String token) {
 		TokenProvider p = new TokenProvider();
@@ -77,35 +79,7 @@ public class ItemController {
 		return itemService.approveItem(item);
 	}
 
-//	@RequestMapping(value="/bid", method = RequestMethod.POST) //promena ponude
-//	public Boolean bid(@RequestBody BidDTO bid,  @RequestHeader(value="X-Auth-Token") String token) {
-//		
-//		
-//		if( bid.getBid() <= bid.getItem().getCurrentBid()) {
-//			return false;
-//		} else {
-//			
-//			
-//			Bid b = new Bid();
-//			TokenProvider p = new TokenProvider();
-//			User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
-//			
-//			b.setBuyer(currentUser);
-//			b.setItem(bid.getItem());
-//			b.setValue(bid.getBid());
-//			
-//			try {
-//				return itemService.bid(bid.getItem(),bid.getBid());
-//			} catch(Exception e) {
-//				e.printStackTrace();
-//				System.out.println("Exception happened");
-//				return false;
-//			}
-//			
-//			
-//		}
-//		
-//	}
+
 
 	
 	@RequestMapping(value="/acceptbid/{id}", method = RequestMethod.POST) //promena ponude

@@ -48,7 +48,7 @@ export class NewitemComponent implements OnInit {
       this.items.splice(index,1);
       console.log(this.items);
       
-      this.newItemService.deleteItem(id);
+      this.newItemService.deleteItem(id).subscribe();
     }
 
     onClickEdit(id: number){
