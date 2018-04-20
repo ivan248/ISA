@@ -38,9 +38,14 @@ export class ViewTheatreComponent implements OnInit {
     }
 
     ngOnInit() {
-        
+
+      this.theatresService.currentth.subscribe(data => {
+        this.currentCinema = data; 
+        console.log(this.currentCinema);
+        console.log("ispis iz cinema ngoniit viewcinema ");
         this.addMovie = true;
-        this.theatresService.currentth.subscribe(data => this.currentCinema = data);
+      });
+
 
         this.theatresService.getPlays(this.currentCinema.id).subscribe(data =>
         this.plays = data);
@@ -53,6 +58,8 @@ export class ViewTheatreComponent implements OnInit {
               this.hiddenEditing[p.id] = true;
               this.hiddenFastRes[p.id] = true;
           });
+
+
       }
 
       addProjection(play : any) {
@@ -96,16 +103,10 @@ export class ViewTheatreComponent implements OnInit {
         .subscribe();
 
       }
-    addToFast(theatreid: any, ticketid: any, ticket: any){
-        console.log("****************addto fast");
-        this.theatresService.addToFast(theatreid, ticketid, ticket).subscribe();
-        
-    }
 
-   reserve(ticket:any, ticketid: any, cinemaid: any){
+   reserve(ticket:any, ticketid: any, projectionId: any){
  
-        console.log("ooooooooljacinemaid");
-        this.theatresService.reserveFast(ticket, ticketid).subscribe();
+        this.cinemasService.reserveFast(ticket, ticketid, projectionId).subscribe();
         console.log(this.currentCinema);
         this.router.navigateByUrl('/viewTheatre');
 
@@ -119,6 +120,7 @@ export class ViewTheatreComponent implements OnInit {
         console.log(this.changeSeatingChartHidden);
         this.cinemasService.getProjectionById(projectionId)
         .subscribe(data => this.currentProjection = data);
+         
     }
 
 
@@ -133,20 +135,22 @@ export class ViewTheatreComponent implements OnInit {
 
       finishChangingSeats() {
           this.changeSeatingChartHidden = !this.changeSeatingChartHidden;
+          this.router.navigateByUrl('/theatres');
       }
 
-    /*  onSubmit1(price: any, seat: any, mid: any, p: any, cid: any){
+      onSubmit1(price: any, seat: any, mid: any, p: any, cid: any){
         console.log(price.value);
         console.log(seat.value);
         this.theatresService.addFastTicket(price.value, seat.value, mid, p, cid).subscribe();
+        this.router.navigateByUrl('/theatres');
       }
 
-      delete(ticket:any, ticketid: any, cinemaid: any){
+      delete(ticket:any, ticketid: any, theatreid: any){
  
-        this.theatresService.deleteFast(ticket, ticketid).subscribe();
-        this.router.navigateByUrl('/viewCinema');
+        this.cinemasService.deleteFast(ticket, ticketid).subscribe();
+        this.router.navigateByUrl('/theatres');
 
-      }*/
+      }
 
       addMovieFunct(){
         this.addMovie = false;
@@ -157,6 +161,7 @@ export class ViewTheatreComponent implements OnInit {
         console.log(form.value);
         this.theatresService.getPlays(this.currentCinema.id).subscribe(data =>
           this.plays = data);
+          
   
         
   

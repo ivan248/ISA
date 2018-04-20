@@ -87,7 +87,11 @@ import { MovieReservation } from '../model/movieReservation';
 
     return this.http
     .delete("http://localhost:8080/api/home/deleteMovie", {params:params,headers:headers})
-    .map((data:[any]) => data);
+    .map((data:[any]) => data).catch((err:HttpErrorResponse) =>
+    {
+        alert(err.status + " Forbidden!");
+        return Observable.throw(err);
+    });
 
    }
 
@@ -103,7 +107,11 @@ import { MovieReservation } from '../model/movieReservation';
 
     return this.http
     .delete("http://localhost:8080/api/home/deleteProjection", {params:params,headers:headers})
-    .map((data:[any]) => data);
+    .map((data:[any]) => data).catch((err:HttpErrorResponse) =>
+    {
+        alert(err.status + " Forbidden!");
+        return Observable.throw(err);
+    });
 
    }
 
@@ -119,7 +127,11 @@ import { MovieReservation } from '../model/movieReservation';
         });
         return this.http.post('http://localhost:8080/api/home/editProjection',body,{
             headers: headers
-        } ).map((data:[any]) => data);
+        } ).map((data:[any]) => data).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Data is not correct or you do not have the permission for action!");
+            return Observable.throw(err);
+        });
 
     }
 
@@ -137,7 +149,11 @@ import { MovieReservation } from '../model/movieReservation';
         return this.http.post('http://localhost:8080/api/home/addProjection',body,{
             params:params,
             headers: headers
-        } );
+        } ).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Data is not correct or you do not have the permission for action!");
+            return Observable.throw(err);
+        });
 
 
 
@@ -181,7 +197,11 @@ import { MovieReservation } from '../model/movieReservation';
         return this.http.post('http://localhost:8080/api/home/addProjectionToFast',body,{
             params:params,
             headers: headers
-        } );
+        } ).map((data:[any]) => data).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Forbidden!");
+            return Observable.throw(err);
+        });
 
 
 
@@ -239,7 +259,11 @@ makeCinemaReservation(movieReservation : MovieReservation) {
             'X-Auth-Token' : localStorage.getItem('token')
         });
         return this.http
-        .post("http://localhost:8080/api/home/deleteSeats", body, {params:params,headers:headers});
+        .post("http://localhost:8080/api/home/deleteSeats", body, {params:params,headers:headers}).map((data:[any]) => data).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Forbidden!");
+            return Observable.throw(err);
+        });;
 
     }
 
@@ -256,7 +280,11 @@ makeCinemaReservation(movieReservation : MovieReservation) {
             'X-Auth-Token' : localStorage.getItem('token')
         });
         return this.http
-        .post("http://localhost:8080/api/home/addFastTicket", body, {params:params,headers:headers});
+        .post("http://localhost:8080/api/home/addFastTicket", body, {params:params,headers:headers}).map((data:[any]) => data).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Forbidden!");
+            return Observable.throw(err);
+        });;
 
     }
 
@@ -274,7 +302,11 @@ makeCinemaReservation(movieReservation : MovieReservation) {
         return this.http.post('http://localhost:8080/api/home/deleteFast',body,{
             params:params,
             headers: headers
-        } );
+        } ).map((data:[any]) => data).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Forbidden!");
+            return Observable.throw(err);
+        });;
 
     }
 

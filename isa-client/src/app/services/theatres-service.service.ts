@@ -84,6 +84,22 @@ import { MovieReservation } from '../model/movieReservation';
 
     }
 
+    getAllPlays(theatreId : any) {
+
+        let params = new HttpParams().set('theatreId', theatreId.toString());
+     
+        var headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+         });
+
+
+        return this.http
+        .get("http://localhost:8080/api/home/getAllPlays",
+         {params:params, headers:headers}).map((data:[any]) => data);
+
+    }
+
 
     getProjectionDate(playId : any) {
 
@@ -109,7 +125,7 @@ import { MovieReservation } from '../model/movieReservation';
             'X-Auth-Token' : localStorage.getItem('token')
          });
         return this.http
-        .get("http://localhost:8080/theatres/home/getFastProjectionTicketsTheatre",
+        .get("http://localhost:8080/api/theatres/getFastProjectionTicketsTheatre",
          {params:params,headers:headers})
         .map((data:[any]) => data);
     }
@@ -167,8 +183,8 @@ import { MovieReservation } from '../model/movieReservation';
     
     }
 
-    deleteProjection(movieid: any, projekcijaid:any, theatreid: any) {
-        let params = new HttpParams().set('movieid',movieid); 
+    deleteProjection(playid: any, projekcijaid:any, theatreid: any) {
+        let params = new HttpParams().set('playid',playid); 
         params = params.set('projekcijaid',projekcijaid);   
         params = params.set('theatreid',theatreid); 
     
@@ -178,8 +194,12 @@ import { MovieReservation } from '../model/movieReservation';
          });
     
         return this.http
-        .delete("http://localhost:8080/theatres/home/deleteProjection", {params:params,headers:headers})
-        .map((data:[any]) => data);
+        .delete("http://localhost:8080/api/home/deleteProjectionTheatre", {params:params,headers:headers})
+        .map((data:[any]) => data).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Forbidden!");
+            return Observable.throw(err);
+        });;;
     
        }
 
@@ -195,29 +215,35 @@ import { MovieReservation } from '../model/movieReservation';
         });
         return this.http.post('http://localhost:8080/api/home/editProjection',body,{
             headers: headers
-        } ).map((data:[any]) => data);
+        } ).map((data:[any]) => data).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Forbidden!");
+            return Observable.throw(err);
+        });;
 
     }
-    addToFast(theatreid: any, ticketid:any, ticket: any){
-        ticket.fastRes = true;
-        const body = JSON.parse(JSON.stringify(ticket));
-        let params = new HttpParams().set('theatreid',theatreid);  
-        params = params.set('ticketid',ticketid); 
+    addFastTicket(price: any, seat: any, plid: any, p: any, tid: any ){
+
+        let params = new HttpParams().set('seat', seat); 
+        params = params.set('tid',tid);
+        params = params.set('plid',plid);
+        params = params.set('price',price);
+        const body = JSON.parse(JSON.stringify(p));
 
         let headers = new HttpHeaders({ 
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
         });
-        return this.http.post('http://localhost:8080/theatres/home/addProjectionToFast',body,{
-            params:params,
-            headers: headers
-        } );
-
-
+        return this.http
+        .post("http://localhost:8080/api/theatres/addFastTicket", body, {params:params,headers:headers})
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Forbidden!");
+            return Observable.throw(err);
+        });;;
 
     }
     addProjection(projekcija: any, movie: any, cinema: any){
-        console.log("oujoihiog");
         const body = JSON.parse(JSON.stringify(projekcija));
         var playid = movie.id;
         var theatreid = cinema.id;
@@ -231,7 +257,11 @@ import { MovieReservation } from '../model/movieReservation';
         return this.http.post('http://localhost:8080/api/home/addProjectionTheatre',body,{
             params:params,
             headers: headers
-        } );
+        } ).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Data is not correct or you do not have the permission for action!");
+            return Observable.throw(err);
+        });;
     }
 
     reserveFast(ticket:any, ticketid: any){
@@ -245,10 +275,32 @@ import { MovieReservation } from '../model/movieReservation';
             'Content-Type': 'application/json',
             'X-Auth-Token' : localStorage.getItem('token')
         });
-        return this.http.post('http://localhost:8080/theatres/home/reserveFast',body,{
+        return this.http.post('http://localhost:8080/api/home/reserveFast',body,{
             params:params,
             headers: headers
         } );
+
+    }
+
+    deleteFast(ticket:any, ticketid: any){
+        
+        ticket.sold=true;
+        const body = JSON.parse(JSON.stringify(ticket));
+        let params = new HttpParams().set('ticketid',ticketid); 
+        
+
+        let headers = new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'X-Auth-Token' : localStorage.getItem('token')
+        });
+        return this.http.post('http://localhost:8080/api/home/deleteFastTheatre',body,{
+            params:params,
+            headers: headers
+        } ).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Forbidden!");
+            return Observable.throw(err);
+        });;;
 
     }
 
