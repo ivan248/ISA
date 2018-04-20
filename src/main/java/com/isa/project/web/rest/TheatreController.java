@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -192,6 +193,7 @@ public class TheatreController {
 
 	@PostMapping
 	@RequestMapping(value = "/makeCinemaReservation", consumes = "application/json")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity makeCinemaReservation(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestBody MovieReservationDTO movieReservationDTO) {
 
@@ -221,6 +223,7 @@ public class TheatreController {
 	
 	@PostMapping
 	@RequestMapping(value = "/makeTheatreReservation", consumes = "application/json")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity makeTheatreReservation(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestBody MovieReservationDTO movieReservationDTO) {
 

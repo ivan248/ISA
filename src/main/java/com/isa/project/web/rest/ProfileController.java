@@ -81,40 +81,65 @@ public class ProfileController {
 	
 
 	@GetMapping
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	@RequestMapping(value = "/")
 	public ResponseEntity<User> getLoggedUser(@RequestHeader(value = "X-Auth-Token") String token) {
 
 		TokenProvider p = new TokenProvider();
+		// points for visiting certain page
 		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 
 		return new ResponseEntity<User>(logged, HttpStatus.OK);
 	}
 
 	@PostMapping
 	@RequestMapping(value = "/editUser", consumes = "application/json")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity<User> editUser(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestBody RegistrationUserDto editedUser) {
 
 		TokenProvider p = new TokenProvider();
+		
+		// points for visiting certain page
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
+
 
 		return new ResponseEntity<User>(userService.editUser(editedUser, p.getUsernameFromToken(token)), HttpStatus.OK);
 	}
 
 	@GetMapping
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	@RequestMapping(value = "/getFriends")
 	public ResponseEntity getFriends(@RequestHeader(value = "X-Auth-Token") String token) {
 
 		TokenProvider p = new TokenProvider();
+		// points for visiting certain page
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 
 		return new ResponseEntity(userService.getFriends(p.getUsernameFromToken(token)), HttpStatus.OK);
 	}
 
 	@GetMapping
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	@RequestMapping(value = "/removeFriend")
 	public ResponseEntity removeFriend(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestParam("friendId") int id) {
 
 		TokenProvider p = new TokenProvider();
+		// points for visiting certain page
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 
 		return new ResponseEntity(userService.removeFriend(id, p.getUsernameFromToken(token)), HttpStatus.OK);
 
@@ -123,9 +148,15 @@ public class ProfileController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping
 	@RequestMapping(value = "/getAllUsers")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity getAllUsers(@RequestHeader(value = "X-Auth-Token") String token) {
 		
 		TokenProvider p = new TokenProvider();
+		// points for visiting certain page
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 
 		return new ResponseEntity(userService.getAllUsers(p.getUsernameFromToken(token)), HttpStatus.OK);
 
@@ -133,11 +164,15 @@ public class ProfileController {
 	
 	@GetMapping
 	@RequestMapping(value = "/getallusers")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity<List<User>> getAllUsersForAllUsers(@RequestHeader(value = "X-Auth-Token") String token) {
 		
 		TokenProvider p = new TokenProvider();
 		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		// points for visiting certain page
 		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 		
 		return new ResponseEntity<List<User>> (userService.getAllUsersForAllUsers(logged),HttpStatus.OK);
 
@@ -148,10 +183,16 @@ public class ProfileController {
 	@SuppressWarnings("rawtypes")
 	@PostMapping
 	@RequestMapping(value = "/friendRequest", consumes = "application/json")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity friendRequest(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestBody String username) {
 
 		TokenProvider p = new TokenProvider();
+		// points for visiting certain page
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 
 		return new ResponseEntity(userService.handleFriendRequest(p.getUsernameFromToken(token), username),HttpStatus.OK);
 		
@@ -160,9 +201,15 @@ public class ProfileController {
 
 	@GetMapping
 	@RequestMapping(value = "/getFriendRequests")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity<List<Friend>> getFriendRequests(@RequestHeader(value = "X-Auth-Token") String token) {
 
 		TokenProvider p = new TokenProvider();
+		// points for visiting certain page
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 
 		return new ResponseEntity<List<Friend>>(userService.getFriendRequests(p.getUsernameFromToken(token)), HttpStatus.OK);
 
@@ -170,10 +217,16 @@ public class ProfileController {
 
 	@GetMapping
 	@RequestMapping(value = "/acceptFriend")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity<List<Friend>> acceptFriend(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestParam("friendId") String id) {
 
 		TokenProvider p = new TokenProvider();
+		// points for visiting certain page
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 		
 		return new ResponseEntity<List<Friend>>(userService.acceptFriend(p.getUsernameFromToken(token), Integer.parseInt(id)),HttpStatus.OK);
 
@@ -183,10 +236,16 @@ public class ProfileController {
 	
 	@GetMapping
 	@RequestMapping(value = "/declineFriend")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity<List<Friend>> declineFriend(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestParam("friendId") String id) {
 
 		TokenProvider p = new TokenProvider();
+		// points for visiting certain page
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 	
 		return new ResponseEntity<List<Friend>>(userService.declineFriend(p.getUsernameFromToken(token), Integer.parseInt(id)),HttpStatus.OK);
 
@@ -194,9 +253,16 @@ public class ProfileController {
 	}
 	
 	@GetMapping(value= "/getnotifications")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity<List<Notification>> getAllNotifications(@RequestHeader(value = "X-Auth-Token") String token) {
 		TokenProvider p = new TokenProvider();
 		User currentUser = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		// points for visiting certain page
+		
+		currentUser.setActivity(currentUser.getActivity() + 20L);
+		userRepository.save(currentUser);
+		
 		
 		try {
 			ArrayList<Notification> list = new ArrayList<Notification>(notificationRepository.findAllByUser(currentUser));
@@ -209,8 +275,17 @@ public class ProfileController {
 	}
 	
 	@PostMapping(value = "/readnotification")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity<Boolean> readNotification(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestParam("id") int id){
+		
+		TokenProvider p = new TokenProvider();
+		// points for visiting certain page
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
+		
 		
 		try {
 			Notification n = notificationRepository.findOneByNotificationID(id);
@@ -229,12 +304,20 @@ public class ProfileController {
 	
 	@GetMapping
 	@RequestMapping(value = "/changePassword")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity changePassword(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestParam("password") String password,
 			@RequestParam("passwordRepeat") String passwordRepeat) {
 
 		System.out.println(password);
 		System.out.println(passwordRepeat);
+		
+		TokenProvider p = new TokenProvider();
+		// points for visiting certain page
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 		
 		if(!password.equals(passwordRepeat))
 		{
@@ -244,7 +327,6 @@ public class ProfileController {
 		
 		System.out.println("Passwords match!");
 		
-		TokenProvider p = new TokenProvider();
 		
 		if(userService.changePassword(p.getUsernameFromToken(token), password))
 			return new ResponseEntity(HttpStatus.OK);
@@ -254,11 +336,18 @@ public class ProfileController {
 	
 	@GetMapping
 	@RequestMapping(value = "/searchUsers")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity searchUsers(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestParam("searchName") String searchName,
 			@RequestParam("searchLastName") String searchLastName) {
 
 		TokenProvider p = new TokenProvider();
+		
+		// points for visiting certain page
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 		
 		String name = "%" + searchName + "%";
 		String lastName = "%" + searchLastName + "%";
@@ -271,9 +360,17 @@ public class ProfileController {
 	
 	@GetMapping
 	@RequestMapping(value = "/getReservations")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity getReservations(@RequestHeader(value = "X-Auth-Token") String token) {
 
 		TokenProvider p = new TokenProvider();
+		
+		// points for visiting certain page
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
+		
 		
 //		for(Play m : playRepository.findAll())
 //		{
@@ -310,11 +407,19 @@ public class ProfileController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping
 	@RequestMapping(value = "/cancelProjectionReservation")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity cancelProjectionReservation(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestParam("projectionId") String projectionId,
 			@RequestParam("seatNumber") String seatNumber) {
 
 		TokenProvider p = new TokenProvider();
+		
+		// points for visiting certain page
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
+		
 		
 		if(userService.cancelProjectionReservation(
 				p.getUsernameFromToken(token),
@@ -369,15 +474,22 @@ public class ProfileController {
 	
 
 	@PostMapping(value = "/ratePlay")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity ratePlay(@RequestHeader(value = "X-Auth-Token") String token, @RequestBody ReservationDTO reservation,
 			@RequestParam("ratevalue") String ratevalue){
 		
 		Long playid = reservation.getIdPlay();
 		Play p = playRepository.findOne(playid);
 		
+
+		
+		
 		
 		TokenProvider prov = new TokenProvider();
 		User logged = userRepository.findByUsername(prov.getUsernameFromToken(token)).get() ;
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 		
 		ProjectionUserTicketId putid = new ProjectionUserTicketId(reservation.getId(), logged.getId(), reservation.getIdTicket());
 		ProjectionUserTicket put = projectionUserTicketRepository.findOne(putid); 
@@ -400,10 +512,13 @@ public class ProfileController {
 	}
 	
 	@PostMapping(value = "/rateAmb")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity rateAmb(@RequestHeader(value = "X-Auth-Token") String token, @RequestBody ReservationDTO reservation,
 			@RequestParam("ratevalue") String ratevalue){
 		
 		System.out.println(ratevalue);
+		
+
 		
 		Theatre t=null;
 		for (Theatre te: theatreRepository.findAll()) {
@@ -430,6 +545,9 @@ public class ProfileController {
 		TokenProvider prov = new TokenProvider();
 		User logged = userRepository.findByUsername(prov.getUsernameFromToken(token)).get() ;
 		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
+		
 		ProjectionUserTicketId putid = new ProjectionUserTicketId(reservation.getId(), logged.getId(), reservation.getIdTicket());
 		ProjectionUserTicket put = projectionUserTicketRepository.findOne(putid); 
 		
@@ -443,11 +561,18 @@ public class ProfileController {
 
 	@PostMapping
 	@RequestMapping(value = "/acceptORdeclineInvitation", consumes = "application/json")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity acceptORdeclineInvitation(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestBody ProjectionUserTicketId projectionUserTicketId,
 			@RequestParam("accept") String accept) {
 
 		TokenProvider p = new TokenProvider();
+		
+		// points for visiting certain page
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
 
 		System.out.println("pogodio acceptORdeclineInvitation");
 		System.out.println(projectionUserTicketId);
@@ -464,33 +589,19 @@ public class ProfileController {
 	
 	@GetMapping
 	@RequestMapping(value = "/getCinemasSorted")
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	public ResponseEntity getCinemasSorted(@RequestHeader(value = "X-Auth-Token") String token) {
 
+		
+		
 		TokenProvider p = new TokenProvider();
 		
-//		for(Play m : playRepository.findAll())
-//		{
-//			for(Projection proj : m.getProjekcije())
-//			{
-//				for(ProjectionSeats projectionSeats : projectionSeatsRepository.findAll())
-//				{
-//					if(proj.getId() == projectionSeats.getProjectionId())
-//					{
-//						projectionSeats.setMovieId(m.getId());
-//						projectionSeatsRepository.save(projectionSeats);
-//					}
-//					
-////					for(int i=1; i<85; i++)
-////					{
-////						ProjectionSeats ps =
-////								new ProjectionSeats(i, projection.getId());
-////					
-////						projectionSeatsRepository.save(ps);
-////					}
-//				}
-//			}
-//
-//		}
+		// points for visiting certain page
+		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
+		
+		logged.setActivity(logged.getActivity() + 20L);
+		userRepository.save(logged);
+		
 
 		
 		

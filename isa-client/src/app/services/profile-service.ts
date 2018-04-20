@@ -9,6 +9,7 @@ import 'rxjs/add/operator/toPromise';
 import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { User } from '../model/dto/userDTO';
 import { ProjectionUserTicketId } from '../model/ProjectionUserTicketId';
+import { Router } from '@angular/router';
 
 var httpOptions = {
     headers: new HttpHeaders({ 
@@ -24,7 +25,8 @@ var httpOptions = {
 
     private url : string = "http://localhost:8080/api/profile/";
 
-    constructor(private http:HttpClient) {
+    constructor(private http:HttpClient,
+    private router: Router) {
 
     }
 
@@ -36,7 +38,14 @@ var httpOptions = {
             'X-Auth-Token' : localStorage.getItem('token')
          });
 
-        return this.http.get(this.url, {headers:headers}).map((data:Observable<any>) => data); 
+        return this.http.get(this.url, {headers:headers})
+        .map((data:Observable<any>) => data)
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Unauthorized!");
+            this.router.navigateByUrl('login');
+            return Observable.throw(err);
+        });
     }
 
     editUser(user : User) {
@@ -49,7 +58,12 @@ var httpOptions = {
             'X-Auth-Token' : localStorage.getItem('token')
          });
 
-        return this.http.post(this.url + "editUser", user, {headers:headers});
+        return this.http.post(this.url + "editUser", user, {headers:headers})
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Unauthorized!");
+            return Observable.throw(err);
+        });
     }
 
     getFriends() {
@@ -61,7 +75,12 @@ var httpOptions = {
 
         return this.http
         .get(this.url+"getFriends", {headers:headers})
-        .map((data:[any]) => data);
+        .map((data:[any]) => data)
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Unauthorized!");
+            return Observable.throw(err);
+        });
     }
 
     removeFriend(id : any) {
@@ -74,7 +93,12 @@ var httpOptions = {
 
         return this.http
         .get(this.url + "removeFriend", {params:params,headers:headers})
-        .map((data:[any]) => data);
+        .map((data:[any]) => data)
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Unauthorized!");
+            return Observable.throw(err);
+        });
     }
 
     getAllUsers() {
@@ -86,7 +110,12 @@ var httpOptions = {
 
         return this.http
         .get(this.url + "getAllUsers", {headers:headers})
-        .map((data:[any]) => data);       
+        .map((data:[any]) => data)
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Unauthorized!");
+            return Observable.throw(err);
+        });     
     }
 
     getAllUsers2(){
@@ -97,6 +126,11 @@ var httpOptions = {
 
         return this.http
         .get(this.url + "getallusers", {headers:headers})
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Unauthorized!");
+            return Observable.throw(err);
+        });
                
     }
 
@@ -109,7 +143,12 @@ var httpOptions = {
 
         return this.http
         .post(this.url + "friendRequest", username, {headers:headers})
-        .map((data:[any])=> data);;
+        .map((data:[any])=> data)
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Unauthorized!");
+            return Observable.throw(err);
+        });
     }
 
     getFriendRequests() {
@@ -121,7 +160,12 @@ var httpOptions = {
 
         return this.http
         .get(this.url + "getFriendRequests", {headers:headers})
-        .map((data:[any])=> data);
+        .map((data:[any])=> data)
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Unauthorized!");
+            return Observable.throw(err);
+        });
     }
 
     acceptFriend(friendId : any) {
@@ -133,7 +177,13 @@ var httpOptions = {
          });
 
         return this.http
-        .get(this.url + "acceptFriend", {params:params,headers:headers}).map((data:[any]) => data);
+        .get(this.url + "acceptFriend", {params:params,headers:headers})
+        .map((data:[any]) => data)
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Unauthorized!");
+            return Observable.throw(err);
+        });
     }
 
     declineFriend(friendId : any) {
@@ -145,7 +195,13 @@ var httpOptions = {
          });
 
         return this.http
-        .get(this.url + "declineFriend", {params:params,headers:headers}).map((data:[any]) => data);
+        .get(this.url + "declineFriend", {params:params,headers:headers})
+        .map((data:[any]) => data)
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Unauthorized!");
+            return Observable.throw(err);
+        });
     }
 
     changePassword(password : any, passwordRepeat : any) {
@@ -180,7 +236,12 @@ var httpOptions = {
 
         return this.http
         .get(this.url + "searchUsers", {params:params,headers:headers})
-        .map((data:[any]) => data);
+        .map((data:[any]) => data)
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Unauthorized!");
+            return Observable.throw(err);
+        });
 
       }
 
@@ -214,7 +275,12 @@ var httpOptions = {
         console.log("acceptORdecline"+body.projectionId  + " ispis iz ");
         return this.http.post('http://localhost:8080/api/profile/acceptORdeclineInvitation',body,{
             headers: headers, params:params
-        } );
+        } )
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Unauthorized!");
+            return Observable.throw(err);
+        });
     }
 
     
@@ -227,7 +293,12 @@ var httpOptions = {
 
         return this.http
         .get(this.url + "getReservations", {headers:headers})
-        .map((data:[any]) => data);
+        .map((data:[any]) => data)
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Unauthorized!");
+            return Observable.throw(err);
+        });
       }
 
       cancelProjectionReservation(projectionId: any, seatNumber: any): any {
@@ -290,7 +361,12 @@ var httpOptions = {
         //params = params.set('seatNumber', seatNumber);
 
         return this.http
-        .get(this.url + "getCinemasSorted", {headers:headers});
+        .get(this.url + "getCinemasSorted", {headers:headers})
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + "Unauthorized!");
+            return Observable.throw(err);
+        });
       }
 
 
