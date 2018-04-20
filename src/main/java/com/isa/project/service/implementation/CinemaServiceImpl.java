@@ -164,6 +164,12 @@ public class CinemaServiceImpl implements CinemaService{
 
 	@Override
 	public Boolean editProjection(Projection projekcija) {
+		java.util.Date date = new java.util.Date();
+		Date sqlDate = new java.sql.Date(date.getTime());
+		if (projekcija.getDate().before((java.sql.Date) sqlDate)){
+			System.out.println("Eroooor");
+			return false;
+		}
 		try {
 			projekcijaRepository.findOneById(projekcija.getId()).setDate(projekcija.getDate());
 			projekcijaRepository.findOneById(projekcija.getId()).setPlace(projekcija.getPlace());
