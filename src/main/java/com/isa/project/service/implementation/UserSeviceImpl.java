@@ -393,17 +393,20 @@ public class UserSeviceImpl implements UserService {
 			
 			if(date.isAfter(dateOfProjection.toLocalDate()))
 			{
-				//System.out.println("Projekcija je pre trenutnog datuma. ODGLEDAN FILM");
+				System.out.println("Projekcija je pre trenutnog datuma. ODGLEDAN FILM 1" + date + " " + dateOfProjection.toLocalDate());
 				put.setEnabled(true);
 			}
 			else
 			{
-				//System.out.println("Projekcija je posle trenutnog datuma. NEODGLEDAN FILM");
-				
-				if(timeOfProjection.isBefore(currentTime))
+				System.out.println("Projekcija je posle trenutnog datuma. NEODGLEDAN FILM 2" + date + " " + dateOfProjection.toLocalDate());
+				if(date.isEqual(dateOfProjection.toLocalDate()))
 				{
-					//System.out.println("Projekcija je pre trenutnog vremena. ODGLEDAN FILM!");
-					put.setEnabled(true);
+
+					if(timeOfProjection.isBefore(currentTime))
+					{
+						System.out.println("Projekcija je pre trenutnog vremena. ODGLEDAN FILM! 3" + date + " " + dateOfProjection.toLocalDate());
+						put.setEnabled(true);
+					}
 				}
 //				else
 //				{
@@ -570,9 +573,28 @@ public class UserSeviceImpl implements UserService {
 		{
 			
 			// ODGLEDANO
+			System.out.println(date);
+			System.out.println("date of proj odgledano");
+			System.out.println(dateOfProjection.toLocalDate());
 		}
 		else
 		{
+			
+			System.out.println(date);
+			System.out.println("date of proj neodgledano");
+			System.out.println(dateOfProjection.toLocalDate());
+			
+			if(!date.isEqual(dateOfProjection.toLocalDate()))
+			{
+	    		Projection proj = projectionRepository.findOneById(putid.getProjectionId());
+	    		proj.getTickets().remove(ticketRepository.findOneById(putid.getTicketId()));
+	    		projectionRepository.save(proj);
+	    		
+	    		projectionUserTicketRepository.delete(putid);
+	    		ticketRepository.delete(putid.getTicketId());
+	    		
+	    		return true;
+			}
 			
 			// NIJE ODGLEDANO
 			if(timeOfProjection.isBefore(currentTime))
@@ -591,6 +613,8 @@ public class UserSeviceImpl implements UserService {
 			    System.out.println("Hour currentTime: " + currentTime.getHour());
 			    System.out.println("Minute currentTime: " + currentTime.getMinute());
 				
+			    
+			    
 			    
 			    if(timeOfProjection.getHour() == currentTime.getHour())
 			    {

@@ -215,6 +215,8 @@ public class HomeController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		
+		
 	}
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value="/addProjection", method = RequestMethod.POST) 
