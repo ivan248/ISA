@@ -201,7 +201,10 @@ public class HomeController {
 	public ResponseEntity editProjection(@RequestBody Projection projekcija) {
 		System.out.println("Editovanje"+projekcija);
 		
-		return new ResponseEntity<>(cinemaService.editProjection(projekcija), HttpStatus.OK);
+		if(cinemaService.editProjection(projekcija))
+			return new ResponseEntity<>(HttpStatus.OK);
+		
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value="/addProjection", method = RequestMethod.POST) 
