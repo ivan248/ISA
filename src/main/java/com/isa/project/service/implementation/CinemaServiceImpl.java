@@ -208,7 +208,19 @@ public class CinemaServiceImpl implements CinemaService{
 			
 			
 			projekcijaRepository.saveAndFlush(projekcija);
+			
+			
+			// FOR TRANSACTIONAL RESERVATION OF TICKET
+			Projection p = movieRepository.findOne(movieid).getProjekcije().get(movieRepository.findOne(movieid).getProjekcije().size()-1);
+	
+			for(int i=1; i<85; i++)
+			{
+				ProjectionSeats ps = new ProjectionSeats(i, p.getId(), movieid);
+				projectionSeatsRepository.save(ps);
+			}
+			
 			return true;
+			
 		}
 		catch(Exception e) {
 			System.out.println("Error occured while writing to database. Constraints were not satisfied.");
