@@ -1,6 +1,7 @@
 package com.isa.project.service.implementation;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.isa.project.bean.Cinema;
+import com.isa.project.bean.Movie;
 import com.isa.project.bean.Play;
 import com.isa.project.bean.Projection;
 import com.isa.project.bean.ProjectionSeats;
@@ -24,6 +26,7 @@ import com.isa.project.repository.ProjectionRepository;
 import com.isa.project.repository.ProjectionSeatsRepository;
 import com.isa.project.repository.ProjectionUserTicketRepository;
 import com.isa.project.repository.TheatreRepository;
+import com.isa.project.repository.TicketRepository;
 import com.isa.project.repository.UserRepository;
 import com.isa.project.service.TheatreService;
 import com.isa.project.web.dto.MovieReservationDTO;
@@ -54,6 +57,9 @@ public class TheatreServiceImpl implements TheatreService {
 	
 	@Autowired
 	private ProjectionSeatsRepository projectionSeatsRepository;
+	
+	@Autowired
+	private TicketRepository ticketRepository;
 
 	@Override
 	public ArrayList<Theatre> getAllTheatres() {
@@ -264,12 +270,58 @@ public class TheatreServiceImpl implements TheatreService {
 		}
 		
 	}
+	
+	@Override
+	public boolean addTicketToFast(String price, String seat, Long theatreid, Long playid, Long projectionid) {
+		
+
+		Projection p = projectionRepository.findOneById(projectionid);
+		List<Ticket> listaKarata;
+		if (p.getTickets()==null) {
+			listaKarata = new ArrayList<>();
+			Ticket t = new Ticket(Integer.parseInt(seat), true, Integer.parseInt(price), false, false );
+			try{
+				ticketRepository.save(t);
+			} catch (Exception e) {
+				System.out.println("Constraints violated!");
+			}
+			
+			listaKarata.add(t);
+		}else {
+			listaKarata = p.getTickets();
+			for (Ticket t1: listaKarata) {
+				if (t1.getSeatNumber()==Integer.parseInt(seat)) {
+					System.out.println("Forbidden!");
+					return false;
+				}
+			}
+			
+			Ticket t = new Ticket(Integer.parseInt(seat), true, Integer.parseInt(price), false, false );
+			try{
+				ticketRepository.save(t);
+			} catch (Exception e) {
+				System.out.println("Constraints violated!");
+			}
+			
+			listaKarata.add(t);
+			
+		}
+		projectionRepository.save(p);
+		return true;
+	}
+
 
 
 	@Override
-	public Theatre addProjection(Projection projekcija, Long playid, Long theatreid) {
+	public Boolean addProjection(Projection projekcija, Long playid, Long theatreid) {
+		java.util.Date date = new java.util.Date();
+		Date sqlDate = new java.sql.Date(date.getTime());
+		if (projekcija.getDate().before((java.sql.Date) sqlDate)){
+			System.out.println("Eroooor");
+			return true;
+		}
 		try {
-			System.out.println(")))00000000000000000000000000000000000");
+
 			List<Projection> projekcijePoz = theatreRepository.findOneById(theatreid).getProjekcije();
 			if (projekcijePoz==null) {
 				projekcijePoz = new ArrayList<>();
@@ -277,22 +329,23 @@ public class TheatreServiceImpl implements TheatreService {
 			
 			projectionRepository.saveAndFlush(projekcija);
 			projekcijePoz.add(projekcija);
-			theatreRepository.findOneById(theatreid).setProjekcije(projekcijePoz);
-			theatreRepository.save(theatreRepository.findOneById(theatreid));
+			Theatre t = theatreRepository.findOneById(theatreid);
+			t.setProjekcije(projekcijePoz);
+			theatreRepository.save(t);
 			theatreRepository.flush();
 			
 			List<Projection> projekcijePred = playRepository.findOne(playid).getProjekcije();
-			System.out.println(")))"+projekcijePred); //delete se javlja???
+			System.out.println(")))"+projekcijePred); 
 			if (projekcijePred==null) {
 				projekcijePred = new ArrayList<>();
 			}
 			projekcijePred.add(projekcija);
 			
-			
-			playRepository.findOne(playid).setProjekcije(projekcijePred);
-			playRepository.save(playRepository.findOne(playid));
+			Play pl = playRepository.findOne(playid);
+			pl.setProjekcije(projekcijePred);
+			playRepository.save(pl);
 			playRepository.flush();
-			
+			return true;
 			
 			
 			
@@ -300,17 +353,57 @@ public class TheatreServiceImpl implements TheatreService {
 		catch(Exception e) {
 			System.out.println("Error occured while writing to database. Constraints were not satisfied.");
 			e.printStackTrace();
-			return null;
+			return false;
 		}
 		
-		
-		return theatreRepository.findOneById(theatreid);
+
 	}
 
 	@Override
 	public boolean setTicketToSold(Long ticketid) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public Boolean deleteProjection(Long playid, Long projectionid, Long theatreid) {
+		
+		Theatre t = theatreRepository.findOneById(theatreid);
+		Play pl = playRepository.findOne(playid);
+		Projection p = projectionRepository.findOneById(projectionid);
+		t.getProjekcije().remove(p); 
+		pl.getProjekcije().remove(p);
+		
+		
+		projectionRepository.delete(p);
+		theatreRepository.flush();
+		projectionRepository.flush();
+		playRepository.flush();
+		
+		return true;
+	}
+	
+	@Override
+	public List<Play> getAllPlays(Long id) {
+		// TODO Auto-generated method stub
+		List<Projection> projekcije = theatreRepository.findOneById(id).getProjekcije();
+		List<Play> predstave = playRepository.findAll();
+		List<Play> predstaveUPoz = new ArrayList<>();
+		
+		for (Play pl: predstave) {
+			for (Projection p: pl.getProjekcije()) {
+				if (!predstaveUPoz.contains(pl)) {
+					for (int i =0; i<projekcije.size(); i++) {
+						if (projekcije.get(i).getId().equals(p.getId())) {
+							predstaveUPoz.add(pl);
+						}
+					}		
+					
+				}
+			}
+		}
+		
+		return predstaveUPoz;
 	}
 
 

@@ -1,6 +1,7 @@
 package com.isa.project.service.implementation;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,9 +93,9 @@ public class CinemaServiceImpl implements CinemaService{
 
 
 	@Override
-	public List<Movie> getMovies(String name) {
+	public List<Movie> getMovies(Long id) {
 		// TODO Auto-generated method stub
-		List<Projection> projekcije = cinemaRepository.findOneByName(name).getProjekcije();
+		List<Projection> projekcije = cinemaRepository.findOneById(id).getProjekcije();
 		List<Movie> filmovi = movieRepository.findAll();
 		List<Movie> filmoviUBioskopu = new ArrayList<>();
 		
@@ -179,7 +180,13 @@ public class CinemaServiceImpl implements CinemaService{
 
 // TODO: IVANE AKO OVO ZABORAVIS SVE JE PROPALO !!! 
 	@Override
-	public Cinema addProjection(Projection projekcija, Long movieid, Long cinemaid) {
+	public Boolean addProjection(Projection projekcija, Long movieid, Long cinemaid) {
+		java.util.Date date = new java.util.Date();
+		Date sqlDate = new java.sql.Date(date.getTime());
+		if (projekcija.getDate().before((java.sql.Date) sqlDate)){
+			System.out.println("Eroooor");
+			return false;
+		}
 		try {
 			
 			List<Projection> projekcijeBioskop = cinemaRepository.findOneById(cinemaid).getProjekcije();
@@ -201,15 +208,16 @@ public class CinemaServiceImpl implements CinemaService{
 			
 			
 			projekcijaRepository.saveAndFlush(projekcija);
+			return true;
 		}
 		catch(Exception e) {
 			System.out.println("Error occured while writing to database. Constraints were not satisfied.");
 			e.printStackTrace();
-			return null;
+			return false;
 		}
 		
 		
-		return cinemaRepository.findOneById(cinemaid);
+		
 	}
 
 

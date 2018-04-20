@@ -161,7 +161,7 @@ public class HomeController {
 
 		Cinema c = new Cinema();
 		c = cinemaService.getCinemaById(Long.parseLong(cinemaId));
-		return new ResponseEntity(cinemaService.getMovies(c.getName()), HttpStatus.OK);
+		return new ResponseEntity(cinemaService.getMovies(Long.parseLong(cinemaId)), HttpStatus.OK);
 
 	}
 	
@@ -177,7 +177,7 @@ public class HomeController {
 		c = cinemaService.getCinemaById(Long.parseLong(cinemaId));
 		System.out.println("Foreign key constraint");
 		//cinemaService.deleteMovie(Long.parseLong(movieId), Long.parseLong(cinemaId));
-		return new ResponseEntity(cinemaService.getMovies(c.getName()), HttpStatus.FORBIDDEN);
+		return new ResponseEntity(cinemaService.getMovies(Long.parseLong(cinemaId)), HttpStatus.FORBIDDEN);
 
 	}
 	
@@ -193,8 +193,20 @@ public class HomeController {
 		c = cinemaService.getCinemaById(Long.parseLong(cinemaid));
 		cinemaService.deleteProjection(Long.parseLong(movieid), Long.parseLong(projekcijaid), Long.parseLong(cinemaid));
 		
-		return new ResponseEntity(cinemaService.getMovies(c.getName()), HttpStatus.OK);
+		return new ResponseEntity(cinemaService.getMovies(Long.parseLong(cinemaid)), HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/deleteProjectionTheatre", method = RequestMethod.DELETE,
+			produces="application/json", consumes="application/json")
+			public ResponseEntity deleteProjectionTheatre(
+			@RequestParam("playid") String playid, @RequestParam("projekcijaid") String projekcijaid, @RequestParam("theatreid") String theatreid ) {
+
+
+				Theatre t = theatreRepository.findOneById(Long.parseLong(theatreid));
+				theatreService.deleteProjection(Long.parseLong(playid), Long.parseLong(projekcijaid), Long.parseLong(theatreid));
+				
+				return new ResponseEntity(theatreService.getAllPlays(Long.parseLong(theatreid)), HttpStatus.OK);
+			}
 	
 	@RequestMapping(value="/editProjection", method = RequestMethod.POST) 
 	public ResponseEntity editProjection(@RequestBody Projection projekcija) {

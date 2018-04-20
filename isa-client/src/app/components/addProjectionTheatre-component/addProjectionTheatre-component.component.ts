@@ -45,11 +45,13 @@ export class AddProjectionComponentTheatre implements OnInit {
       this.theatresService.addProjection(body, movie, cinema)
       .subscribe(data => {
         this.currentCinema = data;
-        this.cinemasService.selectCinema(this.currentCinema);
+        this.theatresService.selectTheatre(this.currentCinema);
         console.log(this.currentCinema +  " iz addorojetion");
         this.router.navigateByUrl('/viewTheatre'); 
       }
        );
+
+  
 
      
       

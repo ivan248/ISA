@@ -96,15 +96,9 @@ export class ViewTheatreComponent implements OnInit {
         .subscribe();
 
       }
-    addToFast(theatreid: any, ticketid: any, ticket: any){
-        console.log("****************addto fast");
-        this.theatresService.addToFast(theatreid, ticketid, ticket).subscribe();
-        
-    }
 
    reserve(ticket:any, ticketid: any, cinemaid: any){
  
-        console.log("ooooooooljacinemaid");
         this.theatresService.reserveFast(ticket, ticketid).subscribe();
         console.log(this.currentCinema);
         this.router.navigateByUrl('/viewTheatre');
@@ -135,13 +129,13 @@ export class ViewTheatreComponent implements OnInit {
           this.changeSeatingChartHidden = !this.changeSeatingChartHidden;
       }
 
-    /*  onSubmit1(price: any, seat: any, mid: any, p: any, cid: any){
+      onSubmit1(price: any, seat: any, mid: any, p: any, cid: any){
         console.log(price.value);
         console.log(seat.value);
         this.theatresService.addFastTicket(price.value, seat.value, mid, p, cid).subscribe();
       }
 
-      delete(ticket:any, ticketid: any, cinemaid: any){
+   /*   delete(ticket:any, ticketid: any, cinemaid: any){
  
         this.theatresService.deleteFast(ticket, ticketid).subscribe();
         this.router.navigateByUrl('/viewCinema');
