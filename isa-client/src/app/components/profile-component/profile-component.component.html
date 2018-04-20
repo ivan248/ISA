@@ -115,7 +115,21 @@
   <div class="row">
       <div class="col-md-12">
           <div class="card card-block">
-            <h2 class="card-title"  style="color:#009688; padding-top:15px; padding-left: 10px;" ><i class="fa fa-trophy fa-fw"></i> My Friends</h2>
+            <h2 class="card-title"  style="color:#009688; padding-top:15px; padding-left: 10px;" >
+              <i class="fa fa-trophy fa-fw"></i> 
+              
+              My Friends</h2>
+              <div class="justify-content-center align-items-center">
+                
+              </div>
+              <select class="form-control" id="sortUserFriends" (change)="onChangeSortFriends($event.target.value)">
+                  <option hidden selected value="">
+                          -- sort by --
+                      </option>
+          <option value="name"> name</option>
+          <option value="lastname"> lastname</option>
+          </select>
+
             <div style="height: 15px"></div>
             <table class="table table-bordered table-hover">
               <thead class="thead-default">
@@ -350,3 +364,9 @@
 (onPasswordChanged)="onPasswordChanged($event)"
 >
 </change-password-component>
+
+<ul *ngFor="let c of cinemasArray">
+  <li>
+    {{c?.name}}
+  </li>
+</ul>
