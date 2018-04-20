@@ -193,6 +193,15 @@ public class UserSeviceImpl implements UserService {
 				}
 			}
 		}
+		
+		for(int i=0; i<allUsers.size(); i++)
+		{
+			if(!allUsers.get(i).isEnabled())
+			{
+				System.out.println(allUsers.get(i));
+				allUsers.remove(i);
+			}
+		}
 
 		return allUsers;
 	}
