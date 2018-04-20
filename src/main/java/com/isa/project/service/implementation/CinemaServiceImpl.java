@@ -73,6 +73,7 @@ public class CinemaServiceImpl implements CinemaService{
 
 	@Override
 	public Boolean editCinema(Cinema cinema) {
+		
 		try {
 			Cinema c = cinemaRepository.findOne(cinema.getId());
 			c.setName(cinema.getName());
@@ -81,6 +82,7 @@ public class CinemaServiceImpl implements CinemaService{
 			c.setId(cinema.getId());
 			
 			cinemaRepository.flush();
+			return true;
 		}
 		catch(Exception e) {
 			System.out.println("Error occured while writing to database. Constraints were not satisfied.");
@@ -88,7 +90,7 @@ public class CinemaServiceImpl implements CinemaService{
 			return false;
 		}
 				
-		return true;
+	
 	}
 
 
@@ -239,30 +241,7 @@ public class CinemaServiceImpl implements CinemaService{
 	}
 
 
-	@Override
-	public Boolean changeTicket(Ticket ticket, Long cinemaid) {
-		
-		Cinema c = cinemaRepository.findOneById(cinemaid);
-		List<Ticket> listaKarata = new ArrayList<>();
-
-		Ticket t = ticketRepository.findOneById(ticket.getId());
-		t.setSalePrice(100); // make parameter
-		t.setFastRes(true);
-		
-		try {
-			ticketRepository.flush();
-		}catch(Exception e) {
-			
-		}
-		return true;
-	}
-
-	public Projection getProjection(Long projectionId) {
-		
-		return projekcijaRepository.findOneById(projectionId);
-	}
-
-
+	
 	@Override
 	@Transactional(readOnly=false, propagation = Propagation.REQUIRES_NEW)
 	public boolean makeReservation(MovieReservationDTO movieReservationDTO, String username) {
@@ -552,6 +531,13 @@ public class CinemaServiceImpl implements CinemaService{
 			return false;
 		}
 		
+	}
+
+
+	@Override
+	public Projection getProjection(Long projectionId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
