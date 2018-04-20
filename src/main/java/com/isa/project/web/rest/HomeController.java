@@ -307,7 +307,7 @@ public class HomeController {
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
-
+	@PreAuthorize(value="hasAuthority('SYSTEM_ADMIN') or hasAuthority('ADMIN') or hasAuthority('FANZONE_ADMIN') or hasAuthority('REGISTERED_USER')")
 	@RequestMapping(value="/reserveFast", method = RequestMethod.POST) 
 	public ResponseEntity reserveFast(@RequestHeader(value = "X-Auth-Token") String token,
 			@RequestBody Ticket t,

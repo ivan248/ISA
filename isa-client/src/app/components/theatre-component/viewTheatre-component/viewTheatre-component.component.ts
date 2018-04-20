@@ -120,6 +120,7 @@ export class ViewTheatreComponent implements OnInit {
         console.log(this.changeSeatingChartHidden);
         this.cinemasService.getProjectionById(projectionId)
         .subscribe(data => this.currentProjection = data);
+         
     }
 
 
@@ -134,18 +135,20 @@ export class ViewTheatreComponent implements OnInit {
 
       finishChangingSeats() {
           this.changeSeatingChartHidden = !this.changeSeatingChartHidden;
+          this.router.navigateByUrl('/theatres');
       }
 
       onSubmit1(price: any, seat: any, mid: any, p: any, cid: any){
         console.log(price.value);
         console.log(seat.value);
         this.theatresService.addFastTicket(price.value, seat.value, mid, p, cid).subscribe();
+        this.router.navigateByUrl('/theatres');
       }
 
       delete(ticket:any, ticketid: any, theatreid: any){
  
         this.cinemasService.deleteFast(ticket, ticketid).subscribe();
-        this.router.navigateByUrl('/viewTheatre');
+        this.router.navigateByUrl('/theatres');
 
       }
 
@@ -158,6 +161,7 @@ export class ViewTheatreComponent implements OnInit {
         console.log(form.value);
         this.theatresService.getPlays(this.currentCinema.id).subscribe(data =>
           this.plays = data);
+          
   
         
   

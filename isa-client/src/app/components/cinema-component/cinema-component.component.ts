@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CinemasService } from '../../services/cinemas-service.service';
 import { HomeService } from '../../services/home-service.service';
 import { DataService } from '../../services/data-service';
+import { ProfileService } from '../../services/profile-service';
 
 @Component({
   selector: 'cinemas-component',
@@ -51,12 +52,16 @@ export class CinemasComponent implements OnInit {
 
     private editButtonHidden: boolean = true;
 
+    private loggedUser: any;
+
     constructor(private cinemasService: CinemasService, private dataService: DataService,
+      private profileService: ProfileService,
             private router : Router) {
               this.cinemasService.getCinemas().subscribe(data=>{this.cinemasArray=data;console.log(data);});
     }
 
     ngOnInit() {
+
       this.cinemasService.getCinemas()
       .subscribe(
         data=> 
@@ -65,6 +70,9 @@ export class CinemasComponent implements OnInit {
           console.log(data);
         }
       );
+      this.profileService.getLoggedUser().subscribe( data =>
+        this.loggedUser = data);
+        console.log(this.loggedUser);
       
     }
 

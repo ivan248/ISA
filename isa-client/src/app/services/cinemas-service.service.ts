@@ -131,7 +131,7 @@ import { MovieReservation } from '../model/movieReservation';
         {
             alert(err.status + " Data is not correct or you do not have the permission for action!");
             return Observable.throw(err);
-        });;;
+        });
 
     }
 
@@ -153,7 +153,7 @@ import { MovieReservation } from '../model/movieReservation';
         {
             alert(err.status + " Data is not correct or you do not have the permission for action!");
             return Observable.throw(err);
-        });;
+        });
 
 
 
