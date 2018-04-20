@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
      
-      localStorage.setItem('token', 'asfas');
+      localStorage.setItem('token', 'not logged user');
     }
 
     onSubmit() {
