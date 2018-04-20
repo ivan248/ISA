@@ -69,7 +69,7 @@ public class TheatreServiceImpl implements TheatreService {
 
 	@Override
 	public Boolean editTheatre(Theatre theatre) {
-
+		
 		try {
 			Theatre t = theatreRepository.findOne(theatre.getId());
 			t.setName(theatre.getName());
@@ -318,7 +318,7 @@ public class TheatreServiceImpl implements TheatreService {
 		Date sqlDate = new java.sql.Date(date.getTime());
 		if (projekcija.getDate().before((java.sql.Date) sqlDate)){
 			System.out.println("Eroooor");
-			return true;
+			return false;
 		}
 		try {
 

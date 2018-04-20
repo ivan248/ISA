@@ -195,7 +195,11 @@ import { MovieReservation } from '../model/movieReservation';
     
         return this.http
         .delete("http://localhost:8080/api/home/deleteProjectionTheatre", {params:params,headers:headers})
-        .map((data:[any]) => data);
+        .map((data:[any]) => data).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Forbidden!");
+            return Observable.throw(err);
+        });;;
     
        }
 
@@ -211,7 +215,11 @@ import { MovieReservation } from '../model/movieReservation';
         });
         return this.http.post('http://localhost:8080/api/home/editProjection',body,{
             headers: headers
-        } ).map((data:[any]) => data);
+        } ).map((data:[any]) => data).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Forbidden!");
+            return Observable.throw(err);
+        });;
 
     }
     addFastTicket(price: any, seat: any, plid: any, p: any, tid: any ){
@@ -227,7 +235,12 @@ import { MovieReservation } from '../model/movieReservation';
             'X-Auth-Token' : localStorage.getItem('token')
         });
         return this.http
-        .post("http://localhost:8080/api/theatres/addFastTicket", body, {params:params,headers:headers});
+        .post("http://localhost:8080/api/theatres/addFastTicket", body, {params:params,headers:headers})
+        .catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Forbidden!");
+            return Observable.throw(err);
+        });;;
 
     }
     addProjection(projekcija: any, movie: any, cinema: any){
@@ -246,7 +259,7 @@ import { MovieReservation } from '../model/movieReservation';
             headers: headers
         } ).catch((err:HttpErrorResponse) =>
         {
-            alert(err.status + " Date is not correct!");
+            alert(err.status + " Data is not correct or you do not have the permission for action!");
             return Observable.throw(err);
         });;
     }
@@ -283,7 +296,11 @@ import { MovieReservation } from '../model/movieReservation';
         return this.http.post('http://localhost:8080/api/home/deleteFastTheatre',body,{
             params:params,
             headers: headers
-        } );
+        } ).catch((err:HttpErrorResponse) =>
+        {
+            alert(err.status + " Forbidden!");
+            return Observable.throw(err);
+        });;;
 
     }
 
