@@ -40,23 +40,23 @@ export class AddProjectionComponentTheatre implements OnInit {
     onSubmit(f: NgForm, movie: any, cinema: any){
 
 
-      const body = JSON.parse(JSON.stringify(f.value));
+        console.log(f.value);
+        console.log(cinema);
+        console.log(movie);
+        const body = JSON.parse(JSON.stringify(f.value));
     
       this.theatresService.addProjection(body, movie, cinema)
       .subscribe(data => {
         this.currentCinema = data;
-        this.theatresService.selectTheatre(this.currentCinema);
+        this.theatresService.selectTheatre(cinema);
         console.log(this.currentCinema +  " iz addorojetion");
-        this.router.navigateByUrl('/viewTheatre'); 
+    this.router.navigateByUrl('/viewTheatre'); 
+
+        
       }
        );
 
-  
 
-     
-      
-
-        
 
       }
   

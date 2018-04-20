@@ -408,6 +408,7 @@ public class HomeController {
 	public ResponseEntity deleteFast(@RequestParam("ticketid") String ticketid) {
 		return new ResponseEntity<>(cinemaService.deleteTicket(Long.parseLong(ticketid)) ,HttpStatus.OK);
 	}
+
 	
 	@GetMapping(value="/getcinema")
 	public ResponseEntity<Cinema> getCinema(@RequestHeader("X-Auth-Token") String token, @RequestParam("id") int id) {
@@ -508,7 +509,7 @@ public class HomeController {
 		java.util.Date date = new java.util.Date();
 		Date sqlDate = new java.sql.Date(date.getTime());
 		defaultP.setDate((java.sql.Date) sqlDate);
-		defaultP.setTime("00");
+		defaultP.setTime("18:00");
 		projectionRepository.save(defaultP);
 		List<Projection> listaProjekcija = new ArrayList<>();
 		listaProjekcija.add(defaultP);
@@ -560,6 +561,15 @@ public class HomeController {
 		theatreRepository.save(t);
 		return new ResponseEntity<>(HttpStatus.OK);
 
+	}
+	
+	
+	@GetMapping
+	@RequestMapping(value = "/getAllPlays")
+	public ResponseEntity getAllPlays(
+			@RequestParam("theatreId") String theatreId) {
+			
+		return new ResponseEntity<>(theatreService.getAllPlays(Long.parseLong(theatreId)),HttpStatus.OK);
 	}
 	
 	

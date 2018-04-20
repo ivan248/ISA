@@ -24,7 +24,7 @@ export class ViewCinemaComponent implements OnInit {
     private projekcijaId: any;
     private numberProjections: any = 20;
     private notFastReservations: any[];
-    private addMovie;
+    private addMovie: boolean;
 
 
     constructor(private cinemasService: CinemasService,
@@ -41,7 +41,7 @@ export class ViewCinemaComponent implements OnInit {
             console.log("ispis iz cinema ngoniit viewcinema ");
             this.addMovie = true;
         
-        });   
+          });
       
 
         this.cinemasService.getMovies(this.currentCinema.id).subscribe(data =>
@@ -173,7 +173,7 @@ export class ViewCinemaComponent implements OnInit {
 
       
 
-      this.homeService.addMovie(form.value, cinemaid).subscribe(data => this.cinemasService.getMovies(this.currentCinema.id).subscribe(data =>
+      this.homeService.addMovie(form.value, this.currentCinema.id).subscribe(data => this.cinemasService.getMovies(this.currentCinema.id).subscribe(data =>
         this.movies = data));
 
 

@@ -51,8 +51,8 @@
             </form>
             </div>
         </div>
-        <table>
-            <tr *ngFor="let m of movies; let i = index;">
+        <table *ngFor="let m of movies; let i = index;">
+            <tr >
                 <th scope="row">{{i+1}}</th>
                 <td>{{m.name}}</td>
                 <td>{{m.genre}}</td>
@@ -135,10 +135,11 @@
                                                     <div *ngFor="let p1 of m.projekcije">
                                                         <div *ngIf="p1.id==p.id">
                                                             <p>Movie: {{m.name}}</p>
+                                                            <button class="btn" (click)="reserve(t, t.id, p.id)">Reserve</button>
+                                                            <button class="btn" (click)="delete(t, t.id, currentCinema.id)">Delete from fast</button>
                                                         </div>
                                                     </div>
-                                                <button class="btn" (click)="reserve(t, t.id, p.id)">Reserve</button>
-                                                <button class="btn" (click)="delete(t, t.id, currentCinema.id)">Delete</button>
+                                                
                                             </div>
                                             
                                         </div>
