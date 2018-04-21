@@ -43,6 +43,7 @@ import com.isa.project.web.dto.ReservationDTO;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/api/profile")
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class ProfileController {
 
 	@Autowired
@@ -143,7 +144,7 @@ public class ProfileController {
 
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+
 	@GetMapping
 	@RequestMapping(value = "/getAllUsers")
 	public ResponseEntity getAllUsers(@RequestHeader(value = "X-Auth-Token") String token) {
