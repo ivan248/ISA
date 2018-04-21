@@ -46,7 +46,7 @@ public class LoginController {
 	
 
 	@RequestMapping(value = "/registrationMessage", method = RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<String> displayregistrationMessage(
+	public ResponseEntity displayregistrationMessage(
 			@RequestBody RegistrationUserDto registrationUserDto,
 			HttpServletRequest request) {
 		
@@ -54,9 +54,9 @@ public class LoginController {
 		
 		
 		if(userService.registerUser(registrationUserDto, request))
-			return new ResponseEntity<String>("Activation link has been sent to your email address!",HttpStatus.OK);
+			return new ResponseEntity(HttpStatus.OK);
 		
-		return new ResponseEntity<String>("Registration failed!",HttpStatus.BAD_REQUEST);
+		return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		
 		
 	}

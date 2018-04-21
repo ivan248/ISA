@@ -5,6 +5,7 @@ import { TheatresService } from '../../services/theatres-service.service';
 import { MovieReservation } from '../../model/movieReservation';
 import { HomeService } from '../../services/home-service.service';
 import { CATCH_STACK_VAR, CATCH_ERROR_VAR } from '@angular/compiler/src/output/abstract_emitter';
+import { ProfileService } from '../../services/profile-service';
 
 @Component({
   selector: 'reservation-component',
@@ -35,7 +36,8 @@ export class ReservationComponent implements OnInit {
     constructor(private router: Router,
     private cinemaService: CinemasService,
     private theatreService: TheatresService,
-    private homeService: HomeService) {
+    private homeService: HomeService,
+    private profileService: ProfileService) {
 
     }
 
@@ -47,6 +49,7 @@ export class ReservationComponent implements OnInit {
         this.theatreService.getTheatres()
         .subscribe(data => this.theatresArray = data);
         
+        this.profileService.getLoggedUser().subscribe(data=>console.log(data));
 
     }
 
