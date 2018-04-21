@@ -4,10 +4,11 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
 import java.nio.charset.Charset;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -21,12 +22,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
+
+import com.isa.project.TestUtil;
+import com.isa.project.bean.Item;
+import com.isa.project.web.dto.BidDTO;
 
 
 
@@ -34,9 +41,9 @@ import org.springframework.web.context.WebApplicationContext;
 @ContextConfiguration
 @WebAppConfiguration
 @SpringBootTest
-
-public class FanzoneControllerTest {
-	private static final String url = "/fanzone";
+public class BidControllerTest {
+	
+private static final String url = "/bid";
 	
 	private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
 			MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
@@ -54,55 +61,51 @@ public class FanzoneControllerTest {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
 	}
 	
-	@Test
-	public void testGetAllItems() throws Exception {
-		mockMvc.perform(get(url+"/")).andExpect(status().isOk())
-		.andExpect(content().contentType(contentType))
-		.andExpect(jsonPath("$.[*].endDate").exists());
-	}
-	
-	@Test
-	public void testGetAllOfficialItems() {
-		try {
-			mockMvc.perform(get(url+"/new")).andExpect(status().isOk())
-			.andExpect(jsonPath("$.[*].reserved").exists());
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-		
-	}
-	
 	@WithMockUser(roles= {"SYSTEM_ADMIN"})
-	@Test //Da li svaki polovni item ima postavljen istek ponude
-	public void testGetAllUnApprovedItems() {
-		try {
-			 mockMvc.perform(get(url+"/unapproved")).andExpect(status().isOk())
-			.andExpect(content().contentType(contentType)).andExpect(jsonPath("$.[*].endDate").exists());
-			
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testCheckAllBids() throws Exception {
+		
+		Item i = new Item();
+		i.setName("Name");
+		
+		i.setApproved(false);
+		i.setDescription("asfafsafafasfsafasfas"); 
+		i.setSold(false);
+		i.setSomeoneBid(false); 
+		i.setImage("");
+		java.util.Date date = new java.util.Date();
+		Date sqlDateb = new java.sql.Date(date.getTime());
+		i.setBeginDate(sqlDateb);
+		
+	    java.sql.Date sqlDate = java.sql.Date.valueOf("2019-12-12");
+		i.setEndDate(sqlDate);
+		
+		
+		String json = TestUtil.json(i);
+		
+		mockMvc.perform(post(url+"/checkallbids").contentType(contentType).content(json))
+		.andExpect(status().isBadRequest());
 		
 	}
+	
 	
 	@Test
-	public void testGetItem()  {
+	@Transactional
+	@Rollback(true)
+	public void testaddBid() throws Exception {
 		
-		try {
-			mockMvc.perform(get(url+"/getitem").header("X-Auth-Token", "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbeyJhdXRob3JpdHkiOiJSRUdJU1RFUkVEX1VTRVIifV0sImFjdGl2aXR5IjozODYwLCJleHAiOjE1MjQ0NDA0ODYsInVzZXIiOiJpdmFuX2phbmNpY0B1bnMuYWMucnMifQ.u5uMcSNGvuovzigB4LT6LHaMzQWjT4e2eCtSFbDkdViMfBBrLppUBfVT1R5zlMaPQTQwTcr1mxc9WHqvPSExAQ")
-					.param("id", "1"))
-					.andExpect(status().isOk());
-		} catch (Exception e) {
-			//ignore
-		}
+		BidDTO b = new BidDTO();
+		b.setItem(new Item());
+		b.setBid(944);
+		
+		String json = TestUtil.json(b);
+		
+		mockMvc.perform(post(url+"/add").contentType(contentType).content(json))
+		.andExpect(status().isOk());
+		
 	}
-	
-	
-	
-	 
 	
 	
 	

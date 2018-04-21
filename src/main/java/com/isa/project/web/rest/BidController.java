@@ -53,32 +53,21 @@ public class BidController {
 	
 	
 	@PostMapping("/add")
-	public ResponseEntity<Boolean> addBid(@RequestBody BidDTO bid , @RequestHeader(value="X-Auth-Token") String token){
-		
-		TokenProvider p = new TokenProvider();
-		User logged = userRepository.findByUsername(p.getUsernameFromToken(token)).get();
-		logged.setActivity(logged.getActivity() + 10L);
-		userRepository.save(logged);
-		
-		
-		if( logged.getUsername().equals(bid.getItem().getOwner().getUsername())) {
-			System.out.println("NE moze bidovati vlasnik itema");
-			return new ResponseEntity<Boolean>(false,HttpStatus.OK);
-		}else {
+	public ResponseEntity<Boolean> addBid(@RequestBody BidDTO bid ){
+
 			System.out.println("usao u addbid, parametri: " + bid.getBid());
 			
 			Bid b = new Bid();
 			
 			
-			b.setBuyer(logged);
+			b.setBuyer(new User());
 			b.setItem(bid.getItem());
 			b.setValue(bid.getBid());
 			
 			bidService.addBid(b);
 			
 			return new ResponseEntity<Boolean>(bidService.addBid(b), HttpStatus.OK);
-		}
-	
+		
 	}
 
 
@@ -106,7 +95,7 @@ public class BidController {
 			return new ResponseEntity<Boolean>(true,HttpStatus.OK);
 		}
 		System.out.println("Nije prosao user proveru");
-		return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<Boolean>(false,HttpStatus.OK);
 	}
 	
 	@PostMapping("/getallbyitem")
